@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EDA5AB74-9BFE-4963-B20F-F2776706917F}</ProjectGuid>
+    <RootNamespace>cmd_line</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>CL_WIN_API;CL_EXPORT;CL_CMD_LINE_TRANSMIT_PRINTF;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>CL_WIN_API;CL_EXPORT;CL_CMD_LINE_TRANSMIT_PRINTF;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_opt.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_opt_owner.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_tok.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_tok_owner.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_app.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_opt.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_toks.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_validator.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_parser.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_tok.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_common.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_opt.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_switch_opt.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_switch_tok.h" />
+    <ClInclude Include="..\..\..\cmd_line\include\cl_tok.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_arg_opt_owner_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_arg_opt_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_app_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_opt_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_validator_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_parser_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_memory_manager_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_opt_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_switch_opt_p.h" />
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_tok_p.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_opt.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_opt_owner.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_tok.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_tok_owner.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_app.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_opt.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_validator.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_parser.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_tok.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_opt.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_switch_opt.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_switch_tok.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_tok.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
