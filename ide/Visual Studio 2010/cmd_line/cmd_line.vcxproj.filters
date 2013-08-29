@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include_p">
+      <UniqueIdentifier>{72b0cb75-5da3-484d-865e-57743d1e36c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_opt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_opt_owner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_tok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_arg_tok_owner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_app.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_opt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_toks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_validator.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_parser.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_tok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_opt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_switch_opt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_switch_tok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_tok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_arg_opt_owner_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_arg_opt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_app_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_opt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_validator_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_parser_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_memory_manager_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_opt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_switch_opt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include_p\cl_tok_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_opt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_opt_owner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_tok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_arg_tok_owner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_app.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_opt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_validator.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_parser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_tok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_opt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_switch_opt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_switch_tok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_tok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
