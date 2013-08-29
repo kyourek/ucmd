@@ -6,7 +6,7 @@
  * token sizes.
  */
 #ifndef CL_CMD_LEN_MAX
-#define CL_CMD_LEN_MAX                  200
+#define CL_CMD_LEN_MAX                  1000
 #endif
 #ifndef CL_TOK_LEN_MAX
 #define CL_TOK_LEN_MAX                  CL_CMD_LEN_MAX
