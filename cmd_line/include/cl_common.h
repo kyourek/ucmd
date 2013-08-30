@@ -34,19 +34,37 @@
 #endif
 
 /*
+ * Prepend extern "C" if we're in a C++
+ * compiler
+ */
+#ifdef __cplusplus
+#define CL_EXTERN_C extern "C"
+#else
+#define CL_EXTERN_C
+#endif
+
+/*
  * When compiling on Windows, CL_IMPORT can
  * be used when using this header file in
  * another program. CL_EXPORT should be defined 
  * when compiling this program itself.
  */
+#ifdef CL_WIN_API
 #ifdef CL_IMPORT
-#define CL_EXPORTED __declspec(dllimport)
+#define CL_EXPORTED CL_EXTERN_C __declspec(dllimport)
 #else
 #ifdef CL_EXPORT
-#define CL_EXPORTED __declspec(dllexport)
-#else
-#define CL_EXPORTED
+#define CL_EXPORTED CL_EXTERN_C __declspec(dllexport)
 #endif
+#endif
+#endif
+
+/*
+ * Default to setting CL_EXPORTED to the result
+ * of our extern "C" check.
+ */
+#ifndef CL_EXPORTED
+#define CL_EXPORTED CL_EXTERN_C
 #endif
 
 /*
