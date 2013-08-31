@@ -10,8 +10,6 @@
 #include "cl_switch_tok.h"
 #include "cl_cmd_line.h"
 #include "cl_cmd_line_p.h"
-#include "cl_cmd_line_opt.h"
-#include "cl_cmd_line_opt_p.h"
 #include "cl_cmd_line_toks.h"
 
 static void transmit(const char *response) {
