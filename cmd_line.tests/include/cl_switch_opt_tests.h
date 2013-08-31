@@ -2,7 +2,8 @@
 #define CL_SWITCH_OPT_TESTS_H
 
 #include "cl_common.h"
+#include "cl_tests.h"
 
-CL_EXPORTED char *cl_switch_opt_tests(void);
+CL_EXPORTED cl_tests_err cl_switch_opt_tests(void);
 
 #endif

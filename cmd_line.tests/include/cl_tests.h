@@ -3,13 +3,54 @@
 
 #include "cl_common.h"
 
-#define cl_fail(message) do { return message; } while (0)
-#define cl_assert(message, test) do { if (!(test)) return message; else cl_assertions++; } while (0)
-#define cl_run_test(test) do { char *message = test(); cl_tests_run++; \
-                          if (message) return message; } while (0)
-extern int cl_tests_run;
-extern int cl_assertions;
+#define CL_TESTS_FAIL() \
+    do { \
+        return -1; \
+    } while (0) \
 
-CL_EXPORTED char *cl_run_all_tests(void);
+#define CL_TESTS_RUN(test) \
+    do { \
+        cl_tests_err_returned = test(); \
+        if (cl_tests_err_returned) { \
+            return cl_tests_err_returned; \
+        } \
+        cl_tests_run_count++; \
+        cl_tests_group_run_count++; \
+    } while (0) \
+
+#define CL_TESTS_ASSERT(test) \
+    do { \
+        if (!(test)) { \
+            return -1; \
+        } \
+        cl_tests_assertions_made++; \
+        cl_tests_group_assertions_made++; \
+    } while (0) \
+
+#define CL_TESTS_RUN_GROUP(group_test) \
+    do { \
+        cl_tests_group_run_count = 0; \
+        cl_tests_group_assertions_made = 0; \
+        cl_tests_err_returned = group_test(); \
+        if (cl_tests_err_returned) { \
+            return cl_tests_err_returned; \
+        } \
+        cl_tests_run_group_count++; \
+    } while (0) \
+        
+#define CL_TESTS_NO_ERR 0;
+
+typedef int cl_tests_err;
+
+extern cl_tests_err cl_tests_err_returned;
+
+extern int cl_tests_run_count;
+extern int cl_tests_run_group_count;
+extern int cl_tests_assertions_made;
+
+extern int cl_tests_group_run_count;
+extern int cl_tests_group_assertions_made;
+
+CL_EXPORTED cl_tests_err cl_tests(void);
 
 #endif
