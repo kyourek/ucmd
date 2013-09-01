@@ -3,6 +3,7 @@
 #include "cl_cmd_line_opt_p.h"
 #include "cl_cmd_line_opt_tests.h"
 #include "cl_tests.h"
+#include "cl_tests_p.h"
 
 static const char *uart_func_one(cl_cmd_line *p, void *state) {
     return CL_TESTS_NO_ERR;
@@ -12,7 +13,7 @@ static const char *uart_func_two(cl_cmd_line *p, void *state) {
     return "The result of uart_func_two.";
 }
 
-static cl_tests_err cl_cmd_line_opt_create_creates_structure(void) {
+static CL_TESTS_ERR cl_cmd_line_opt_create_creates_structure(void) {
     int state;
     cl_arg_opt *arg_opt;
     cl_switch_opt* switch_opt;
@@ -62,7 +63,7 @@ static cl_tests_err cl_cmd_line_opt_create_creates_structure(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_opt_process_calls_func(void) {
+static CL_TESTS_ERR cl_cmd_line_opt_process_calls_func(void) {
     cl_cmd_line *cmd;
     cl_cmd_line_opt *cmd_opt;
 
@@ -77,9 +78,8 @@ static cl_tests_err cl_cmd_line_opt_process_calls_func(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_opt_create_creates_different_instances(void) {
+static CL_TESTS_ERR cl_cmd_line_opt_create_creates_different_instances(void) {
     cl_cmd_line_opt *c1, *c2, *c3;
-    char *message = "cl_cmd_line_opt_create did not create different instances.";
 
     c1 = cl_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
     c2 = cl_cmd_line_opt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
@@ -95,9 +95,8 @@ static cl_tests_err cl_cmd_line_opt_create_creates_different_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_opt_destroy_releases_instance(void) {
+static CL_TESTS_ERR cl_cmd_line_opt_destroy_releases_instance(void) {
     cl_cmd_line_opt *c1, *c2, *c3, *c4;
-    char *message = "cl_cmd_line_opt_destroy did not release instance.";
 
     c1 = cl_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
     c2 = cl_cmd_line_opt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
@@ -116,7 +115,7 @@ static cl_tests_err cl_cmd_line_opt_destroy_releases_instance(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
+static CL_TESTS_ERR cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
     cl_arg_opt *a1, *a2, *a3, *a4, *a4_2;
     cl_switch_opt *s1, *s2, *s3, *s3_2;
     cl_cmd_line_opt *c1, *c2, *c3, *c3_2;
@@ -152,7 +151,7 @@ static cl_tests_err cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
-cl_tests_err cl_cmd_line_opt_tests(void) {
+CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_structure);
     CL_TESTS_RUN(cl_cmd_line_opt_process_calls_func);
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_different_instances);

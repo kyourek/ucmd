@@ -1,28 +1,116 @@
-#include "cl_tests.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "cl_arg_opt_tests.h"
 #include "cl_arg_tok_owner_tests.h"
 #include "cl_arg_tok_tests.h"
 #include "cl_cmd_parser_tests.h"
 #include "cl_cmd_tok_tests.h"
+#include "cl_common.h"
 #include "cl_common_tests.h"
 #include "cl_opt_tests.h"
 #include "cl_switch_opt_tests.h"
 #include "cl_switch_tok_tests.h"
+#include "cl_tests.h"
+#include "cl_tests_p.h"
 #include "cl_tok_tests.h"
 #include "cl_cmd_line_app_tests.h"
 #include "cl_cmd_line_opt_tests.h"
 #include "cl_cmd_line_tests.h"
 
-int cl_tests_err_returned = CL_TESTS_NO_ERR;
+static void default_print(const char *str) {
+#ifdef CL_TESTS_PRINT_PRINTF
+    printf("%s", str);
+#endif
+}
 
-int cl_tests_run_count = 0;
-int cl_tests_run_group_count = 0;
-int cl_tests_assertions_made = 0;
+static CL_BOOL default_exit(void) {
+#ifdef CL_TESTS_EXIT_GETCHAR
+    getchar();
+    return CL_TRUE;
+#else
+    return CL_TRUE;
+#endif
+}
 
-int cl_tests_group_run_count = 0;
-int cl_tests_group_assertions_made = 0;
+cl_tests *cl_tests_get_instance() {
+    static cl_tests instance;
+    static cl_tests *p = NULL;
+    if (NULL == p) {
+        p = &instance;
+        p->exit = default_exit;
+        p->print = default_print;
+        p->run_count = 0;
+        p->run_group_count = 0;
+        p->assertions_made = 0;
+        p->group_run_count = 0;
+        p->group_assertions_made = 0;
+        p->unattended = CL_FALSE;
+        p->err_returned = CL_TESTS_NO_ERR;
+    }
+    return p;
+}
 
-cl_tests_err  cl_tests(void) {
+int cl_tests_get_run_count(cl_tests *p) {
+    if (NULL == p) return 0;
+    return p->run_count;
+}
+
+int cl_tests_get_run_group_count(cl_tests *p) {
+    if (NULL == p) return 0;
+    return p->run_group_count;
+}
+
+int cl_tests_get_assertions_made(cl_tests *p) {
+    if (NULL == p) return 0;
+    return p->assertions_made;
+}
+
+int cl_tests_get_group_run_count(cl_tests *p) {
+    if (NULL == p) return 0;
+    return p->group_run_count;
+}
+
+int cl_tests_get_group_assertions_made(cl_tests *p) {
+    if (NULL == p) return 0;
+    return p->group_assertions_made;
+}
+
+CL_BOOL cl_tests_get_unattended(cl_tests *p) {
+    if (NULL == p) return CL_FALSE;
+    return p->unattended;
+}
+
+void cl_tests_set_unattended(cl_tests *p, CL_BOOL value) {
+    if (NULL == p) return;
+    p->unattended = value;
+}
+
+CL_TESTS_ERR cl_tests_get_err_returned(cl_tests *p) {
+    if (NULL == p) return CL_TESTS_NO_ERR;
+    return p->err_returned;
+}
+
+cl_tests_print_func *cl_tests_get_print(cl_tests *p) {
+    if (NULL == p) return NULL;
+    return p->print;
+}
+
+void cl_tests_set_print(cl_tests *p, cl_tests_print_func *value) {
+    if (NULL == p) return;
+    p->print = value;
+}
+
+cl_tests_exit_func *cl_tests_get_exit(cl_tests *p) {
+    if (NULL == p) return NULL;
+    return p->exit;
+}
+
+void cl_tests_set_exit(cl_tests *p, cl_tests_exit_func *value) {
+    if (NULL == p) return;
+    p->exit = value;
+}
+
+CL_TESTS_ERR cl_tests_run(cl_tests *p) {
     CL_TESTS_RUN_GROUP(cl_arg_opt_tests);
     CL_TESTS_RUN_GROUP(cl_arg_tok_owner_tests);
     CL_TESTS_RUN_GROUP(cl_arg_tok_tests);

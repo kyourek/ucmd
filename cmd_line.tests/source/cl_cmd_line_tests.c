@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <string.h>
-#include "cl_tests.h"
+#include "cl_cmd_line.h"
+#include "cl_cmd_line_p.h"
+#include "cl_cmd_line_tests.h"
+#include "cl_cmd_line_toks.h"
 #include "cl_cmd_parser.h"
 #include "cl_cmd_parser_p.h"
 #include "cl_cmd_tok.h"
 #include "cl_common.h"
 #include "cl_cmd_tok.h"
 #include "cl_switch_tok.h"
+#include "cl_tests.h"
+#include "cl_tests_p.h"
 #include "cl_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_cmd_line_p.h"
-#include "cl_cmd_line_tests.h"
-#include "cl_cmd_line_toks.h"
 
 static cl_cmd_tok *parse_cmd(char *cmd) {
     return cl_cmd_parser_parse(cl_cmd_parser_get_instance(), cmd);
@@ -36,7 +37,7 @@ static CL_BOOL is_cancelled_2(void) {
     return CL_TRUE;
 }
 
-static cl_tests_err cl_cmd_line_get_cmd_tok_returns_cmd_tok(void) {
+static CL_TESTS_ERR cl_cmd_line_get_cmd_tok_returns_cmd_tok(void) {
     cl_cmd_line c;
     cl_cmd_tok *t = "token";
     c.cmd_tok = t;
@@ -44,7 +45,7 @@ static cl_tests_err cl_cmd_line_get_cmd_tok_returns_cmd_tok(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_set_cmd_tok_sets_cmd_tok(void) {
+static CL_TESTS_ERR cl_cmd_line_set_cmd_tok_sets_cmd_tok(void) {
     cl_cmd_line c;
     cl_cmd_tok *t = "cmd_tok";
     cl_cmd_line_set_cmd_tok(&c, t);
@@ -52,7 +53,7 @@ static cl_tests_err cl_cmd_line_set_cmd_tok_sets_cmd_tok(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_get_cmd_toks_returns_toks(void) {
+static CL_TESTS_ERR cl_cmd_line_get_cmd_toks_returns_toks(void) {
     cl_cmd_line_toks toks = { 0 };
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     char c[30] = "cmd arg -s";
@@ -67,7 +68,7 @@ static cl_tests_err cl_cmd_line_get_cmd_toks_returns_toks(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_get_cmd_toks_sets_null_tok_values(void) {
+static CL_TESTS_ERR cl_cmd_line_get_cmd_toks_sets_null_tok_values(void) {
     cl_cmd_line_toks toks = { 0 };
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     char c[12] = "command";
@@ -82,33 +83,35 @@ static cl_tests_err cl_cmd_line_get_cmd_toks_sets_null_tok_values(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_get_instance_is_not_null(void) {
+static CL_TESTS_ERR cl_cmd_line_get_instance_is_not_null(void) {
     CL_TESTS_ASSERT(NULL != cl_cmd_line_get_instance());
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_format_response_sets_response_string(void) {
+static CL_TESTS_ERR cl_cmd_line_format_response_sets_response_string(void) {
+    char expected[50];
     cl_cmd_line *p = cl_cmd_line_get_instance();
     cl_cmd_line_format_response(p, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
-    CL_TESTS_ASSERT(0 == strcmp(p->response, "formatted string 10 5.12 fin"));
+    sprintf(expected, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
+    CL_TESTS_ASSERT(0 == strcmp(p->response, expected));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_set_transmit_sets_transmit(void) {
+static CL_TESTS_ERR cl_cmd_line_set_transmit_sets_transmit(void) {
     cl_cmd_line c;
     cl_cmd_line_set_transmit(&c, transmit_1);
     CL_TESTS_ASSERT(transmit_1 == c.transmit);
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_get_transmit_returns_transmit(void) {
+static CL_TESTS_ERR cl_cmd_line_get_transmit_returns_transmit(void) {
     cl_cmd_line c;
     c.transmit = transmit_2;
     CL_TESTS_ASSERT(transmit_2 == cl_cmd_line_get_transmit(&c));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_respond_uses_transmit(void) {
+static CL_TESTS_ERR cl_cmd_line_respond_uses_transmit(void) {
     cl_cmd_line c;
     c.transmit = transmit_1;
 
@@ -120,23 +123,22 @@ static cl_tests_err cl_cmd_line_respond_uses_transmit(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_get_is_cancelled_returns_value(void) {
+static CL_TESTS_ERR cl_cmd_line_get_is_cancelled_returns_value(void) {
     cl_cmd_line c;
     c.is_cancelled = is_cancelled_1;
     CL_TESTS_ASSERT(is_cancelled_1 == cl_cmd_line_get_is_cancelled(&c));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_set_is_cancelled_sets_value(void) {
+static CL_TESTS_ERR cl_cmd_line_set_is_cancelled_sets_value(void) {
     cl_cmd_line c;
     cl_cmd_line_set_is_cancelled(&c, is_cancelled_2);
     CL_TESTS_ASSERT(is_cancelled_2 == c.is_cancelled);
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_line_is_cancelled_calls_is_cancelled(void) {
+static CL_TESTS_ERR cl_cmd_line_is_cancelled_calls_is_cancelled(void) {
     cl_cmd_line c;
-    char *message = "cl_cmd_line_is_cancelled did not call is_cancelled.";
     c.is_cancelled = is_cancelled_1;
 
     cancel_1 = CL_TRUE;
@@ -148,7 +150,7 @@ static cl_tests_err cl_cmd_line_is_cancelled_calls_is_cancelled(void) {
     return CL_TESTS_NO_ERR;
 }
 
-cl_tests_err cl_cmd_line_tests(void) {
+CL_TESTS_ERR cl_cmd_line_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_get_cmd_toks_returns_toks);
     CL_TESTS_RUN(cl_cmd_line_get_cmd_toks_sets_null_tok_values);
     CL_TESTS_RUN(cl_cmd_line_set_cmd_tok_sets_cmd_tok);

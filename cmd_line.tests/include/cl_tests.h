@@ -2,55 +2,44 @@
 #define CL_TESTS_H
 
 #include "cl_common.h"
-
-#define CL_TESTS_FAIL() \
-    do { \
-        return -1; \
-    } while (0) \
-
-#define CL_TESTS_RUN(test) \
-    do { \
-        cl_tests_err_returned = test(); \
-        if (cl_tests_err_returned) { \
-            return cl_tests_err_returned; \
-        } \
-        cl_tests_run_count++; \
-        cl_tests_group_run_count++; \
-    } while (0) \
-
-#define CL_TESTS_ASSERT(test) \
-    do { \
-        if (!(test)) { \
-            return -1; \
-        } \
-        cl_tests_assertions_made++; \
-        cl_tests_group_assertions_made++; \
-    } while (0) \
-
-#define CL_TESTS_RUN_GROUP(group_test) \
-    do { \
-        cl_tests_group_run_count = 0; \
-        cl_tests_group_assertions_made = 0; \
-        cl_tests_err_returned = group_test(); \
-        if (cl_tests_err_returned) { \
-            return cl_tests_err_returned; \
-        } \
-        cl_tests_run_group_count++; \
-    } while (0) \
         
-#define CL_TESTS_NO_ERR 0;
+#define CL_TESTS_ERR int
+#define CL_TESTS_NO_ERR 0
 
-typedef int cl_tests_err;
+typedef void (cl_tests_print_func)(const char *str);
 
-extern cl_tests_err cl_tests_err_returned;
+typedef CL_BOOL (cl_tests_exit_func)(void);
 
-extern int cl_tests_run_count;
-extern int cl_tests_run_group_count;
-extern int cl_tests_assertions_made;
+typedef struct cl_tests cl_tests;
 
-extern int cl_tests_group_run_count;
-extern int cl_tests_group_assertions_made;
+CL_EXPORTED cl_tests *cl_tests_get_instance();
 
-CL_EXPORTED cl_tests_err cl_tests(void);
+CL_EXPORTED int cl_tests_get_run_count(cl_tests *p);
+
+CL_EXPORTED int cl_tests_get_run_group_count(cl_tests *p);
+
+CL_EXPORTED int cl_tests_get_assertions_made(cl_tests *p);
+
+CL_EXPORTED int cl_tests_get_group_run_count(cl_tests *p);
+
+CL_EXPORTED int cl_tests_get_group_assertions_made(cl_tests *p);
+
+CL_EXPORTED CL_BOOL cl_tests_get_unattended(cl_tests *p);
+
+CL_EXPORTED void cl_tests_set_unattended(cl_tests *p, CL_BOOL value);
+
+CL_EXPORTED CL_TESTS_ERR cl_tests_get_err_returned(cl_tests *p);
+
+CL_EXPORTED cl_tests_print_func *cl_tests_get_print(cl_tests *p);
+
+CL_EXPORTED void cl_tests_set_print(cl_tests *p, cl_tests_print_func *value);
+
+CL_EXPORTED cl_tests_exit_func *cl_tests_get_exit(cl_tests *p);
+
+CL_EXPORTED void cl_tests_set_exit(cl_tests *p, cl_tests_exit_func *value);
+
+CL_EXPORTED CL_TESTS_ERR cl_tests_run(cl_tests *p);
+
+CL_EXPORTED int main (int argc, const char * argv[]);
 
 #endif

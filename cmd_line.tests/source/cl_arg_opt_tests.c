@@ -1,10 +1,10 @@
 #include <string.h>
 #include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_memory_manager_p.h"
 #include "cl_tests.h"
+#include "cl_tests_p.h"
 
-static cl_tests_err cl_arg_opt_is_numeric_returns_is_numeric(void) {
+static CL_TESTS_ERR cl_arg_opt_is_numeric_returns_is_numeric(void) {
     cl_arg_opt o;
     
     o.is_numeric = CL_FALSE;
@@ -16,21 +16,21 @@ static cl_tests_err cl_arg_opt_is_numeric_returns_is_numeric(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_get_numeric_min_returns_value(void) {
+static CL_TESTS_ERR cl_arg_opt_get_numeric_min_returns_value(void) {
     cl_arg_opt o;
     o.numeric_min = -765.432;
     CL_TESTS_ASSERT(-765.432 == cl_arg_opt_get_numeric_min(&o));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_get_numeric_max_returns_value(void) {
+static CL_TESTS_ERR cl_arg_opt_get_numeric_max_returns_value(void) {
     cl_arg_opt o;
     o.numeric_max = 0.123456789;
     CL_TESTS_ASSERT(0.123456789 == cl_arg_opt_get_numeric_max(&o));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_create_creates_arg_opt(void) {
+static CL_TESTS_ERR cl_arg_opt_create_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -47,7 +47,7 @@ static cl_tests_err cl_arg_opt_create_creates_arg_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_create_required_creates_arg_opt(void) {
+static CL_TESTS_ERR cl_arg_opt_create_required_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
 
@@ -64,7 +64,7 @@ static cl_tests_err cl_arg_opt_create_required_creates_arg_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_create_numeric_creates_arg_opt(void) {
+static CL_TESTS_ERR cl_arg_opt_create_numeric_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -83,7 +83,7 @@ static cl_tests_err cl_arg_opt_create_numeric_creates_arg_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
+static CL_TESTS_ERR cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -102,9 +102,8 @@ static cl_tests_err cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_create_creates_different_instances(void) {
+static CL_TESTS_ERR cl_arg_opt_create_creates_different_instances(void) {
     cl_arg_opt *o1, *o2, *o3;
-    char *message = "cl_arg_opt_create did not create different instances.";
 
     o1 = cl_arg_opt_create("o1", "o1", NULL);
     o2 = cl_arg_opt_create("o2", "o2", NULL);
@@ -120,7 +119,7 @@ static cl_tests_err cl_arg_opt_create_creates_different_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_destroy_releases_instance(void) {
+static CL_TESTS_ERR cl_arg_opt_destroy_releases_instance(void) {
     cl_arg_opt *o1, *o2, *o3;
 
     o1 = cl_arg_opt_create("o1", "o1", NULL);
@@ -138,9 +137,8 @@ static cl_tests_err cl_arg_opt_destroy_releases_instance(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_arg_opt_destroy_chain_releases_all_instances(void) {
+static CL_TESTS_ERR cl_arg_opt_destroy_chain_releases_all_instances(void) {
     cl_arg_opt *o1, *o2, *o3, *o1_2, *o2_2, *o3_2;
-    char *message = "cl_arg_opt_destroy_chain did not release all instances.";
 
     o3 = cl_arg_opt_create("o3", "o3", NULL);
     o2 = cl_arg_opt_create("o2", "o2", o3);
@@ -163,7 +161,7 @@ static cl_tests_err cl_arg_opt_destroy_chain_releases_all_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
-cl_tests_err cl_arg_opt_tests(void) {
+CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_is_numeric_returns_is_numeric);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_min_returns_value);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_max_returns_value);
