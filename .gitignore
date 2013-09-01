@@ -1,0 +1,13 @@
+.DS_Store
+cmd_line.tests/.DS_Store
+cmd_line/.DS_Store
+cmd_line/include/.DS_Store
+ide/.DS_Store
+ide/Visual Studio 2010/Debug/
+ide/Visual Studio 2010/cmd_line.example/Debug/
+ide/Visual Studio 2010/cmd_line.example/cmd_line.example.vcxproj.user
+ide/Visual Studio 2010/cmd_line.suo
+ide/Visual Studio 2010/cmd_line.tests/Debug/
+ide/Visual Studio 2010/cmd_line.tests/cmd_line.tests.vcxproj.user
+ide/Visual Studio 2010/cmd_line/Debug/
+ide/Visual Studio 2010/cmd_line/cmd_line.vcxproj.user
