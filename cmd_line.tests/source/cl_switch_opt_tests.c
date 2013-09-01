@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cl_arg_opt_owner.h"
-#include "cl_tests.h"
 #include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 #include "cl_switch_opt_tests.h"
+#include "cl_tests.h"
+#include "cl_tests_p.h"
 
-static cl_tests_err cl_switch_opt_get_next_returns_next(void) {
+static CL_TESTS_ERR cl_switch_opt_get_next_returns_next(void) {
     cl_switch_opt o1;
     cl_switch_opt o2;
     o1.next = &o2;
@@ -14,7 +15,7 @@ static cl_tests_err cl_switch_opt_get_next_returns_next(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_switch_opt_create_creates_switch_opt(void) {
+static CL_TESTS_ERR cl_switch_opt_create_creates_switch_opt(void) {
     cl_arg_opt *a;
     cl_switch_opt *s1;
     cl_switch_opt *s2;
@@ -36,7 +37,7 @@ static cl_tests_err cl_switch_opt_create_creates_switch_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_switch_opt_create_required_creates_switch_opt(void) {
+static CL_TESTS_ERR cl_switch_opt_create_required_creates_switch_opt(void) {
     cl_arg_opt *a;
     cl_switch_opt *s1;
     cl_switch_opt *s2;
@@ -58,9 +59,8 @@ static cl_tests_err cl_switch_opt_create_required_creates_switch_opt(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_switch_opt_create_creates_different_instances() {
+static CL_TESTS_ERR cl_switch_opt_create_creates_different_instances() {
     cl_switch_opt *s1, *s2, *s3;
-    char *message = "cl_switch_opt_create did not create different instances.";
 
     s1 = cl_switch_opt_create("s1", "s1", NULL, NULL);
     s2 = cl_switch_opt_create("s2", "s2", NULL, NULL);
@@ -76,9 +76,8 @@ static cl_tests_err cl_switch_opt_create_creates_different_instances() {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_switch_opt_destroy_releases_instance() {
+static CL_TESTS_ERR cl_switch_opt_destroy_releases_instance() {
     cl_switch_opt *s1, *s2, *s3;
-    char *message = "cl_switch_opt_destroy did not release instance.";
 
     s1 = cl_switch_opt_create("s1", "s1", NULL, NULL);
     s2 = cl_switch_opt_create("s2", "s2", NULL, NULL);
@@ -95,7 +94,7 @@ static cl_tests_err cl_switch_opt_destroy_releases_instance() {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_switch_opt_destroy_chain_releases_all_instances() {
+static CL_TESTS_ERR cl_switch_opt_destroy_chain_releases_all_instances() {
     cl_arg_opt *a1, *a2, *a3, *a4, *a4_2;
     cl_switch_opt *s1, *s2, *s3, *s3_2;
 
@@ -123,7 +122,7 @@ static cl_tests_err cl_switch_opt_destroy_chain_releases_all_instances() {
     return CL_TESTS_NO_ERR;
 }
 
-cl_tests_err cl_switch_opt_tests(void) {
+CL_TESTS_ERR cl_switch_opt_tests(void) {
     CL_TESTS_RUN(cl_switch_opt_get_next_returns_next);
     CL_TESTS_RUN(cl_switch_opt_create_creates_switch_opt);
     CL_TESTS_RUN(cl_switch_opt_create_required_creates_switch_opt);

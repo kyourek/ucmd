@@ -4,6 +4,6 @@
 #include "cl_common.h"
 #include "cl_tests.h"
 
-CL_EXPORTED cl_tests_err cl_cmd_parser_tests(void);
+CL_EXPORTED CL_TESTS_ERR cl_cmd_parser_tests(void);
 
 #endif

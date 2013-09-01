@@ -7,6 +7,7 @@
 #include "cl_cmd_tok.h"
 #include "cl_switch_tok.h"
 #include "cl_tests.h"
+#include "cl_tests_p.h"
 #include "cl_tok.h"
 
 static cl_cmd_parser *get_cmd_parser(void) {
@@ -17,7 +18,7 @@ static cl_cmd_tok *parse_cmd(char *cmd) {
     return cl_cmd_parser_parse(get_cmd_parser(), cmd);
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_command_value(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_command_value(void) {
     char cmd[20] = "command_name";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(NULL != t);
@@ -25,35 +26,35 @@ static cl_tests_err cl_cmd_parser_parse_parses_command_value(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_short_argument(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_short_argument(void) {
     char cmd[24] = "command short_arg";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(CL_TRUE == cl_tok_equals((cl_tok*)cl_cmd_tok_get_arg(t), "short_arg"));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_long_argument(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_long_argument(void) {
     char cmd[31] = "command \"long argument\"";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(CL_TRUE == cl_tok_equals((cl_tok*)cl_cmd_tok_get_arg(t), "long argument"));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_single_quotes(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_single_quotes(void) {
     char cmd[47] = "command 'long argument'";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(CL_TRUE == cl_tok_equals((cl_tok*)cl_cmd_tok_get_arg(t), "long argument"));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_switch(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_switch(void) {
     char cmd[19] = "command -switch";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(CL_TRUE == cl_tok_equals((cl_tok*)cl_cmd_tok_get_switch(t), "-switch"));
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_numeric_argument(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_numeric_argument(void) {
     char cmd[38] = "command -12.34";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(NULL == cl_cmd_tok_get_switch(t));
@@ -61,7 +62,7 @@ static cl_tests_err cl_cmd_parser_parse_parses_numeric_argument(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parses_non_numeric_switch(void) {
+static CL_TESTS_ERR cl_cmd_parser_parses_non_numeric_switch(void) {
     char cmd[23] = "command -32.4.0";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(NULL == cl_cmd_tok_get_arg(t));
@@ -69,7 +70,7 @@ static cl_tests_err cl_cmd_parser_parses_non_numeric_switch(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_arguments_parsed_in_correct_order(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_arguments_parsed_in_correct_order(void) {
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[81] = "command arg1 arg2 arg3 arg4 arg5 arg6 -s1 arg arg1 -s2 arg1 arg2 arg3";
@@ -89,7 +90,7 @@ static cl_tests_err cl_cmd_parser_parse_arguments_parsed_in_correct_order(void) 
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_switches_parsed_in_correct_order(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_switches_parsed_in_correct_order(void) {
     int i = 0;
     char buf[10];
     char cmd[76] = "command arg1 arg2 -sw1 arg1 arg2 -sw2 -sw3 arg1 arg2 -sw4";
@@ -109,7 +110,7 @@ static cl_tests_err cl_cmd_parser_parse_switches_parsed_in_correct_order(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_switch_arguments_in_correct_order(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_switch_arguments_in_correct_order(void) {
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[94] = "command arg1 arg2 -sw1 arg1 arg2 arg3 arg4 arg5 -sw2 arg1 arg2";
@@ -132,7 +133,7 @@ static cl_tests_err cl_cmd_parser_parse_parses_switch_arguments_in_correct_order
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_trailing_quotes(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_trailing_quotes(void) {
     char cmd[38] = "cmd-name -s 'quoted \"arg\"'";
     cl_cmd_tok *t = parse_cmd(cmd);
     CL_TESTS_ASSERT(cl_tok_equals((cl_tok*)t, "cmd-name"));
@@ -141,7 +142,7 @@ static cl_tests_err cl_cmd_parser_parse_parses_trailing_quotes(void) {
     return CL_TESTS_NO_ERR;
 }
 
-static cl_tests_err cl_cmd_parser_parse_parses_command(void) {
+static CL_TESTS_ERR cl_cmd_parser_parse_parses_command(void) {
     int i = 0;
     char cmd[139] = "somecmd 'this is a long argument' shortarg -73.452 -s1 sarg1 sarg2 sarg3 -s2 sarg3 'long switch argument' -12.43";
     cl_arg_tok *arg = NULL;
@@ -208,7 +209,7 @@ static cl_tests_err cl_cmd_parser_parse_parses_command(void) {
     return CL_TESTS_NO_ERR;
 }
 
-cl_tests_err cl_cmd_parser_tests(void) {
+CL_TESTS_ERR cl_cmd_parser_tests(void) {
     CL_TESTS_RUN(cl_cmd_parser_parse_parses_command_value);
     CL_TESTS_RUN(cl_cmd_parser_parse_parses_short_argument);
     CL_TESTS_RUN(cl_cmd_parser_parse_parses_long_argument);
