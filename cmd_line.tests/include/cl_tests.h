@@ -40,6 +40,6 @@ CL_EXPORTED void cl_tests_set_exit(cl_tests *p, cl_tests_exit_func *value);
 
 CL_EXPORTED CL_TESTS_ERR cl_tests_run(cl_tests *p);
 
-CL_EXPORTED int main (int argc, const char * argv[]);
+CL_EXPORTED CL_TESTS_ERR cl_tests_main(cl_tests *p);
 
 #endif

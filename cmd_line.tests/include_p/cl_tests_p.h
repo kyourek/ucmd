@@ -15,6 +15,8 @@ struct cl_tests {
     cl_tests_exit_func *exit;
 };
 
+extern cl_tests *cl_tests_running_instance;
+
 #define CL_TESTS_FAIL() \
     do { \
         return -1; \
@@ -25,8 +27,8 @@ struct cl_tests {
         if (!(assertion)) { \
             return -1; \
         } \
-        cl_tests_get_instance()->assertions_made++; \
-        cl_tests_get_instance()->group_assertions_made++; \
+        cl_tests_running_instance->assertions_made++; \
+        cl_tests_running_instance->group_assertions_made++; \
     } while (0) \
 
 #define CL_TESTS_RUN(test) \
@@ -34,18 +36,18 @@ struct cl_tests {
         if ((test())) { \
             return -1; \
         } \
-        cl_tests_get_instance()->run_count++; \
-        cl_tests_get_instance()->group_run_count++; \
+        cl_tests_running_instance->run_count++; \
+        cl_tests_running_instance->group_run_count++; \
     } while (0) \
 
 #define CL_TESTS_RUN_GROUP(test_group) \
     do { \
-        cl_tests_get_instance()->group_run_count = 0; \
-        cl_tests_get_instance()->group_assertions_made = 0; \
+        cl_tests_running_instance->group_run_count = 0; \
+        cl_tests_running_instance->group_assertions_made = 0; \
         if ((test_group())) { \
             return -1; \
         } \
-        cl_tests_get_instance()->run_group_count++; \
+        cl_tests_running_instance->run_group_count++; \
     } while (0) \
 
 #endif
