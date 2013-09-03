@@ -147,29 +147,20 @@ static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     const char *response;
     cl_cmd_tok *cmd_tok;
     cl_cmd_line *cmd;
+    cl_cmd_line_opt *quit_opt, *main_opt;
     help_state help_state_s;
     quit_state quit_state_s;
 
     if (NULL == p) return -1;
 
-    /* add quit and help commands to the command options */
-    cmd_opt = 
-        cl_cmd_line_opt_create(
-            help, &help_state_s, cl_cmd_line_app_get_help_command(p), "Shows command information.",
-                cl_arg_opt_create("<command>", "If provided, help is shown for the given command.", NULL),
-                NULL,
-        cl_cmd_line_opt_create(
-            quit, &quit_state_s, cl_cmd_line_app_get_quit_command(p), "Exits the command interface.",
-            NULL,
-            NULL,
-        cmd_opt
-        )
-    );
+    /* create options for help and quit */
+    quit_opt = cl_cmd_line_opt_create(quit, &quit_state_s, cl_cmd_line_app_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
+    main_opt = cl_cmd_line_opt_create(help, &help_state_s, cl_cmd_line_app_get_help_command(p), "Shows command information.", cl_arg_opt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* set the state used for the help and quit commands */
     quit_state_s.app = p;
     help_state_s.app = p;
-    help_state_s.cmd_opt = cmd_opt;
+    help_state_s.cmd_opt = main_opt;
 
     /* get this app's command object */
     cmd = cl_cmd_line_app_get_cmd(p);
@@ -191,7 +182,7 @@ static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
         cl_cmd_line_set_cmd_tok(cmd, cmd_tok);
 
         /* process the command */
-        response = cl_cmd_line_opt_process(cmd_opt, cmd);
+        response = cl_cmd_line_opt_process(main_opt, cmd);
 
         /* check if we got a response */
         if (NULL != response) {
@@ -207,6 +198,10 @@ static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
             cl_cmd_line_respond(cmd, response);
         }
     }
+
+    /* clear the options we created */
+    cl_cmd_line_opt_destroy(quit_opt);
+    cl_cmd_line_opt_destroy(main_opt);
 
     /* if we got here, then the app was quit */
     return 0;
