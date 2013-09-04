@@ -1,4 +1,4 @@
 cmd_line
 ========
 
-Command-line parser and application framework for the C programming language.
+Command-line parser and application framework for C and embedded.
