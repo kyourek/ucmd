@@ -11,3 +11,5 @@ ide/Visual Studio 2010/cmd_line.tests/Debug/
 ide/Visual Studio 2010/cmd_line.tests/cmd_line.tests.vcxproj.user
 ide/Visual Studio 2010/cmd_line/Debug/
 ide/Visual Studio 2010/cmd_line/cmd_line.vcxproj.user
+ide/Visual Studio 2010/cmd_line.sdf
+ide/Visual Studio 2010/ipch/
