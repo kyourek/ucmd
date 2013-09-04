@@ -10,7 +10,6 @@
 struct cl_cmd_line_app {
     cl_cmd_line *cmd;
     cl_cmd_parser *cmd_parser;
-    cl_cmd_line_app_ready_func *ready;
     cl_cmd_line_app_receive_func *receive;
     CL_ERR (*run)(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt);
     const char *help_command;
@@ -18,15 +17,5 @@ struct cl_cmd_line_app {
     const char *escape_response;
     char cmd_buf[CL_CMD_LEN_MAX + 1];
 };
-
-/*
- * Summary:
- *   Determines whether or not the application is ready to receive data.
- * Parameters:
- *   p: A pointer to the application object.
- * Returns:
- *   True if the application is ready to receive data. Otherwise, false.
- */
-CL_EXPORTED CL_BOOL cl_cmd_line_app_ready(cl_cmd_line_app *p);
 
 #endif

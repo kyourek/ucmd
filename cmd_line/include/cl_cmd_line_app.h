@@ -20,13 +20,6 @@ typedef char *(cl_cmd_line_app_receive_func)(char *buf, int buf_size);
 
 /*
  * Summary:
- *   The type of function used by an application to
- *   determine if it is ready to receive data.
- */
-typedef CL_BOOL (cl_cmd_line_app_ready_func)(void);
-
-/*
- * Summary:
  *   Sets the escape string that will cause the app to exit.
  * Parameters:
  *   p: A pointer to the app whose property is set.
@@ -150,27 +143,5 @@ CL_EXPORTED cl_cmd_line *cl_cmd_line_app_get_cmd(cl_cmd_line_app *p);
  *   A pointer to the command parser used by the application.
  */
 CL_EXPORTED cl_cmd_parser *cl_cmd_line_app_get_cmd_parser(cl_cmd_line_app *p);
-
-/*
- * Summary:
- *   Sets the function used by the application to determine if it is ready to
- *   receive data.
- * Parameters:
- *   p: A pointer to the app whose property is set.
- *   value: A callback to be used to determine if the application is ready to receive data.
- */
-CL_EXPORTED void cl_cmd_line_app_set_ready(cl_cmd_line_app *p, cl_cmd_line_app_ready_func *value);
-
-/*
- * Summary:
- *   Gets the function used by the application to determine if it is ready to
- *   receive data.
- * Parameters:
- *   p: A pointer to the app whose property is returned.
- * Returns:
- *   A pointer to the function used to determine if the application is ready
- *   to receive data.
- */
-CL_EXPORTED cl_cmd_line_app_ready_func *cl_cmd_line_app_get_ready(cl_cmd_line_app *p);
 
 #endif

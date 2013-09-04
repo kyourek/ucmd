@@ -36,10 +36,6 @@ static char *cl_cmd_line_app_receive(cl_cmd_line_app *p) {
     return p->receive(p->cmd_buf, sizeof(p->cmd_buf) / sizeof(char));
 }
 
-static CL_BOOL ready(void) {
-    return CL_TRUE;
-}
-
 static const char *quit(cl_cmd_line *cmd, void *state) {
     quit_state *s = (quit_state*)state;
     return cl_cmd_line_app_get_escape_response(s->app);
@@ -176,9 +172,6 @@ static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     /* loop until we quit */
     for (;;) {
                 
-        /* loop until we're ready */
-        while (!cl_cmd_line_app_ready(p));
-
         /* read the command */
         command = cl_cmd_line_app_receive(p);
 
@@ -269,22 +262,6 @@ cl_cmd_parser *cl_cmd_line_app_get_cmd_parser(cl_cmd_line_app *p) {
     return p->cmd_parser;
 }
 
-void cl_cmd_line_app_set_ready(cl_cmd_line_app *p, cl_cmd_line_app_ready_func *value) {
-    if (NULL == p) return;
-    p->ready = value;
-}
-
-cl_cmd_line_app_ready_func *cl_cmd_line_app_get_ready(cl_cmd_line_app *p) {
-    if (NULL == p) return NULL;
-    return p->ready;
-}
-
-CL_BOOL cl_cmd_line_app_ready(cl_cmd_line_app *p) {
-    if (NULL == p) return CL_FALSE;
-    if (NULL == p->ready) return CL_FALSE;
-    return p->ready();
-}
-
 cl_cmd_line_app *cl_cmd_line_app_get_instance(void) {
     static cl_cmd_line_app instance = { 0 };
     static cl_cmd_line_app *p = NULL;
@@ -293,7 +270,6 @@ cl_cmd_line_app *cl_cmd_line_app_get_instance(void) {
         p->cmd = cl_cmd_line_get_instance();
         p->cmd_parser = cl_cmd_parser_get_instance();
         p->run = run;
-        p->ready = ready;
         p->receive = receive;
         p->help_command = "help";
         p->quit_command = "quit";
