@@ -12,7 +12,7 @@ typedef CL_BOOL (cl_tests_exit_func)(void);
 
 typedef struct cl_tests cl_tests;
 
-CL_EXPORTED cl_tests *cl_tests_get_instance();
+CL_EXPORTED cl_tests *cl_tests_get_instance(void);
 
 CL_EXPORTED int cl_tests_get_run_count(cl_tests *p);
 
