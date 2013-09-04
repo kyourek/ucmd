@@ -11,6 +11,9 @@ static char *receive_1(char *buf, int buf_size) { return CL_TESTS_NO_ERR; }
 
 static char *receive_2(char *buf, int buf_size) { return CL_TESTS_NO_ERR; }
 
+static CL_BOOL ready_1_returned_value;
+static CL_BOOL ready_1(void) { return ready_1_returned_value; }
+
 static CL_TESTS_ERR cl_cmd_line_app_get_instance_is_not_null(void) {
     CL_TESTS_ASSERT(NULL != cl_cmd_line_app_get_instance());
     return CL_TESTS_NO_ERR;
@@ -102,6 +105,49 @@ static CL_TESTS_ERR cl_cmd_line_app_set_escape_response_sets_value(void) {
     return CL_TESTS_NO_ERR;
 }
 
+static CL_TESTS_ERR cl_cmd_line_app_set_ready_sets_value(void) {
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+    
+    cl_cmd_line_app_ready_func *prev_value = p->ready;
+    CL_TESTS_ASSERT(prev_value != ready_1);
+
+    cl_cmd_line_app_set_ready(p, ready_1);
+    CL_TESTS_ASSERT(p->ready == ready_1);
+
+    p->ready = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_app_get_ready_sets_value(void) {
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+
+    cl_cmd_line_app_ready_func *prev_value = p->ready;
+    CL_TESTS_ASSERT(prev_value != ready_1);
+
+    p->ready = ready_1;
+    CL_TESTS_ASSERT(cl_cmd_line_app_get_ready(p) == ready_1);
+
+    p->ready = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_app_ready_uses_ready(void) {
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+
+    cl_cmd_line_app_ready_func *prev_value = p->ready;
+
+    p->ready = ready_1;
+    
+    ready_1_returned_value = CL_FALSE;
+    CL_TESTS_ASSERT(cl_cmd_line_app_ready(p) == CL_FALSE);
+
+    ready_1_returned_value = CL_TRUE;
+    CL_TESTS_ASSERT(cl_cmd_line_app_ready(p) == CL_TRUE);
+
+    p->ready = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_cmd_line_app_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_app_get_instance_is_not_null);
     CL_TESTS_RUN(cl_cmd_line_app_set_receive_sets_receive);
@@ -115,5 +161,8 @@ CL_TESTS_ERR cl_cmd_line_app_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_app_get_cmd_parser_is_not_null);
     CL_TESTS_RUN(cl_cmd_line_app_get_escape_response_returns_value);
     CL_TESTS_RUN(cl_cmd_line_app_set_escape_response_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_set_ready_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_get_ready_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_ready_uses_ready);
     return CL_TESTS_NO_ERR;
 }
