@@ -12,7 +12,7 @@
 #include "cl_cmd_line_p.h"
 #include "cl_cmd_line_toks.h"
 
-static void transmit(void *state, const char *response) {
+static void transmit(const char *response, void *state) {
 #ifdef CL_CMD_LINE_TRANSMIT_PRINTF
     printf("%s\n", response);
 #endif
@@ -71,7 +71,7 @@ const char *cl_cmd_line_format_response(cl_cmd_line *p, const char *format, ...)
 void cl_cmd_line_respond(cl_cmd_line *p, const char *response) {
     if (NULL == p) return;
     if (NULL == p->transmit) return;
-    p->transmit(p->transmit_state, response);
+    p->transmit(response, p->transmit_state);
 }
 
 void cl_cmd_line_set_transmit(cl_cmd_line *p, cl_cmd_line_transmit_func *value) {

@@ -22,7 +22,7 @@ typedef struct quit_state {
     cl_cmd_line_app *app;
 } quit_state;
 
-static char *receive(void *state, char *buf, size_t buf_size) {
+static char *receive(char *buf, size_t buf_size, void *state) {
 #ifdef CL_CMD_LINE_APP_RECEIVE_FGETS_STDIN
     return fgets(buf, buf_size, stdin);
 #else
@@ -292,5 +292,5 @@ CL_ERR cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
 char *cl_cmd_line_app_receive(cl_cmd_line_app *p) {
     if (NULL == p) return 0;
     if (NULL == p->receive) return 0;
-    return p->receive(p->receive_state, p->cmd_buf, sizeof(p->cmd_buf));
+    return p->receive(p->cmd_buf, sizeof(p->cmd_buf), p->receive_state);
 }
