@@ -19,18 +19,21 @@ typedef struct cl_cmd_line cl_cmd_line;
  *   The type of function used by a command structure
  *   to transmit responses.
  * Parameters:
+ *   state: A stateful object.
  *   response: The string to be transmitted.
  */
-typedef void (cl_cmd_line_transmit_func)(const char *response);
+typedef void (cl_cmd_line_transmit_func)(void *state, const char *response);
 
 /*
  * Summary:
  *   The type of function used by a command structure
  *   to determine whether or not the command is cancelled.
+ * Parameters:
+ *   state: A stateful object.
  * Returns:
  *   CL_TRUE if the command has been cancelled. Otherwise, CL_FALSE.
  */
-typedef CL_BOOL (cl_cmd_line_is_cancelled_func)(void);
+typedef CL_BOOL (cl_cmd_line_is_cancelled_func)(void *state);
 
 /*
  * Summary:
@@ -83,6 +86,25 @@ CL_EXPORTED cl_cmd_line_transmit_func *cl_cmd_line_get_transmit(cl_cmd_line *p);
 
 /*
  * Summary:
+ *   Gets the stateful object passed to the command's transmit function.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is returned.
+ * Returns:
+ *   A pointer to the stateful object passed to the command's transmit function.
+ */
+CL_EXPORTED void *cl_cmd_line_get_transmit_state(cl_cmd_line *p);
+
+/*
+ * Summary:
+ *   Sets the stateful object passed to the command's transmit function.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is to be set.
+ *   value: A pointer to the stateful object that is passed to the command's transmit function.
+ */
+CL_EXPORTED void cl_cmd_line_set_transmit_state(cl_cmd_line *p, void *value);
+
+/*
+ * Summary:
  *   Determines whether or not the command has been cancelled.
  * Parameters:
  *   p: The structure to check for cancellation.
@@ -109,6 +131,25 @@ CL_EXPORTED void cl_cmd_line_set_is_cancelled(cl_cmd_line *p, cl_cmd_line_is_can
  *   A pointer to the function used to check for cancellation.
  */
 CL_EXPORTED cl_cmd_line_is_cancelled_func *cl_cmd_line_get_is_cancelled(cl_cmd_line *p);
+
+/*
+ * Summary:
+ *   Gets the stateful object passed to the command's cancellation function.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is to be returned.
+ * Returns:
+ *   A pointer to the stateful object passed to the command's cancellation function.
+ */
+CL_EXPORTED void *cl_cmd_line_get_is_cancelled_state(cl_cmd_line *p);
+
+/*
+ * Summary:
+ *   Sets the stateful object passed to the command's cancellation function.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is to be set.
+ *   value: The stateful object passed to the command's cancellation function.
+ */
+CL_EXPORTED void cl_cmd_line_set_is_cancelled_state(cl_cmd_line *p, void *value);
 
 /*
  * Summary:
