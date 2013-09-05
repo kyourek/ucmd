@@ -8,12 +8,12 @@
 #include "cl_tests_p.h"
 
 void *receive_1_state;
-static char *receive_1(void *state, char *buf, size_t buf_size) { 
+static char *receive_1(char *buf, size_t buf_size, void *state) { 
     receive_1_state = state;
     return 0; 
 }
 
-static char *receive_2(void *state, char *buf, size_t buf_size) { return 0; }
+static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
 
 static CL_TESTS_ERR cl_cmd_line_app_get_instance_is_not_null(void) {
     CL_TESTS_ASSERT(NULL != cl_cmd_line_app_get_instance());

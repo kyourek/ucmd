@@ -19,10 +19,10 @@ typedef struct cl_cmd_line cl_cmd_line;
  *   The type of function used by a command structure
  *   to transmit responses.
  * Parameters:
- *   state: A stateful object.
  *   response: The string to be transmitted.
+ *   state: A stateful object.
  */
-typedef void (cl_cmd_line_transmit_func)(void *state, const char *response);
+typedef void (cl_cmd_line_transmit_func)(const char *response, void *state);
 
 /*
  * Summary:

@@ -16,13 +16,13 @@ typedef struct cl_cmd_line_app cl_cmd_line_app;
  *   The type of the function used by an application to
  *   receive data.
  * Parameters:
- *   state: A stateful object.
  *   buf: A string buffer that can be used to store the data received.
  *   buf_size: The size of the string buffer used to store received data.
+ *   state: A stateful object.
  * Returns:
  *   The data that was received.
  */
-typedef char *(cl_cmd_line_app_receive_func)(void *state, char *buf, size_t buf_size);
+typedef char *(cl_cmd_line_app_receive_func)(char *buf, size_t buf_size, void *state);
 
 /*
  * Summary:

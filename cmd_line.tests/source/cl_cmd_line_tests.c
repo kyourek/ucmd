@@ -20,12 +20,12 @@ static cl_cmd_tok *parse_cmd(char *cmd) {
 
 static void *transmit_1_state;
 static const char *transmit_1_response;
-static void transmit_1(void *state, const char *response) {
+static void transmit_1(const char *response, void *state) {
     transmit_1_state = state;
     transmit_1_response = response;
 }
 
-static void transmit_2(void *state, const char *response) {
+static void transmit_2(const char *response, void *state) {
 }
 
 static void *is_cancelled_1_state;
