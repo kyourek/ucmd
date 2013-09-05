@@ -12,13 +12,13 @@
 #include "cl_cmd_line_p.h"
 #include "cl_cmd_line_toks.h"
 
-static void transmit(const char *response) {
+static void transmit(void *state, const char *response) {
 #ifdef CL_CMD_LINE_TRANSMIT_PRINTF
     printf("%s\n", response);
 #endif
 }
 
-static CL_BOOL is_cancelled(void) {
+static CL_BOOL is_cancelled(void *state) {
     return CL_FALSE;
 }
 
@@ -29,7 +29,9 @@ cl_cmd_line *cl_cmd_line_get_instance(void) {
         p = &instance;
         p->cmd_tok = NULL;
         p->transmit = transmit;
+        p->transmit_state = NULL;
         p->is_cancelled = is_cancelled;
+        p->is_cancelled_state = NULL;
     }
     return p;
 }
@@ -69,7 +71,7 @@ const char *cl_cmd_line_format_response(cl_cmd_line *p, const char *format, ...)
 void cl_cmd_line_respond(cl_cmd_line *p, const char *response) {
     if (NULL == p) return;
     if (NULL == p->transmit) return;
-    p->transmit(response);
+    p->transmit(p->transmit_state, response);
 }
 
 void cl_cmd_line_set_transmit(cl_cmd_line *p, cl_cmd_line_transmit_func *value) {
@@ -85,7 +87,7 @@ cl_cmd_line_transmit_func *cl_cmd_line_get_transmit(cl_cmd_line *p) {
 CL_BOOL cl_cmd_line_is_cancelled(cl_cmd_line *p) {
     if (NULL == p) return CL_FALSE;
     if (NULL == p->is_cancelled) return CL_FALSE;
-    return p->is_cancelled();
+    return p->is_cancelled(p->is_cancelled_state);
 }
 
 void cl_cmd_line_set_is_cancelled(cl_cmd_line *p, cl_cmd_line_is_cancelled_func *value) {
@@ -96,4 +98,24 @@ void cl_cmd_line_set_is_cancelled(cl_cmd_line *p, cl_cmd_line_is_cancelled_func 
 cl_cmd_line_is_cancelled_func *cl_cmd_line_get_is_cancelled(cl_cmd_line *p) {
     if (NULL == p) return NULL;
     return p->is_cancelled;
+}
+
+void *cl_cmd_line_get_transmit_state(cl_cmd_line *p) {
+    if (NULL == p) return NULL;
+    return p->transmit_state;
+}
+
+CL_EXPORTED void cl_cmd_line_set_transmit_state(cl_cmd_line *p, void *value) {
+    if (NULL == p) return;
+    p->transmit_state = value;
+}
+
+void *cl_cmd_line_get_is_cancelled_state(cl_cmd_line *p) {
+    if (NULL == p) return NULL;
+    return p->is_cancelled_state;
+}
+
+void cl_cmd_line_set_is_cancelled_state(cl_cmd_line *p, void *value) {
+    if (NULL == p) return;
+    p->is_cancelled_state = value;
 }

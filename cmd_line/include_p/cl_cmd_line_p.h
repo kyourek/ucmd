@@ -7,8 +7,10 @@
 
 struct cl_cmd_line {
     cl_cmd_tok *cmd_tok;
-    void (*transmit)(const char *response);
-    CL_BOOL (*is_cancelled)(void);
+    cl_cmd_line_transmit_func *transmit;
+    cl_cmd_line_is_cancelled_func *is_cancelled;
+    void *transmit_state;
+    void *is_cancelled_state;
     char response[CL_RESPONSE_LEN_MAX];
 };
 

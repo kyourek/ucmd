@@ -15,8 +15,14 @@ typedef struct cl_cmd_line_app cl_cmd_line_app;
  * Summary:
  *   The type of the function used by an application to
  *   receive data.
+ * Parameters:
+ *   state: A stateful object.
+ *   buf: A string buffer that can be used to store the data received.
+ *   buf_size: The size of the string buffer used to store received data.
+ * Returns:
+ *   The data that was received.
  */
-typedef char *(cl_cmd_line_app_receive_func)(char *buf, int buf_size);
+typedef char *(cl_cmd_line_app_receive_func)(void *state, char *buf, size_t buf_size);
 
 /*
  * Summary:
@@ -76,6 +82,25 @@ CL_EXPORTED void cl_cmd_line_app_set_receive(cl_cmd_line_app *p, cl_cmd_line_app
  *   A pointer to the function used to receive data.
  */ 
 CL_EXPORTED cl_cmd_line_app_receive_func *cl_cmd_line_app_get_receive(cl_cmd_line_app *p);
+
+/*
+ * Summary:
+ *   Gets the stateful object passed to the application's receive function.
+ * Parameters:
+ *   p: A pointer to the application object whose property is to be returned.
+ * Returns:
+ *   A pointer to the stateful object passed to the application's receive function.
+ */
+CL_EXPORTED void *cl_cmd_line_app_get_receive_state(cl_cmd_line_app *p);
+
+/*
+ * Summary:
+ *   Sets the stateful object passed to the application's receive function.
+ * Parameters:
+ *   p: A pointer to the application object whose property is to be set.
+ *   value: The stateful object passed to the application's receive function.
+ */
+CL_EXPORTED void cl_cmd_line_app_set_receive_state(cl_cmd_line_app *p, void *value);
 
 /*
  * Summary:

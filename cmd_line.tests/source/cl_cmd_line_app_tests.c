@@ -7,9 +7,13 @@
 #include "cl_tests.h"
 #include "cl_tests_p.h"
 
-static char *receive_1(char *buf, int buf_size) { return CL_TESTS_NO_ERR; }
+void *receive_1_state;
+static char *receive_1(void *state, char *buf, size_t buf_size) { 
+    receive_1_state = state;
+    return 0; 
+}
 
-static char *receive_2(char *buf, int buf_size) { return CL_TESTS_NO_ERR; }
+static char *receive_2(void *state, char *buf, size_t buf_size) { return 0; }
 
 static CL_TESTS_ERR cl_cmd_line_app_get_instance_is_not_null(void) {
     CL_TESTS_ASSERT(NULL != cl_cmd_line_app_get_instance());
@@ -91,14 +95,54 @@ static CL_TESTS_ERR cl_cmd_line_app_get_cmd_parser_is_not_null(void) {
 static CL_TESTS_ERR cl_cmd_line_app_get_escape_response_returns_value(void) {
     cl_cmd_line_app a;
     a.escape_response = "escape";
-    CL_TESTS_ASSERT(cl_cmd_line_app_get_escape_response(&a));
+    CL_TESTS_ASSERT(0 == strcmp("escape", cl_cmd_line_app_get_escape_response(&a)));
     return CL_TESTS_NO_ERR;
 }
 
 static CL_TESTS_ERR cl_cmd_line_app_set_escape_response_sets_value(void) {
     cl_cmd_line_app a;
     cl_cmd_line_app_set_escape_response(&a, "esc");
-    CL_TESTS_ASSERT(a.escape_response);
+    CL_TESTS_ASSERT(0 == strcmp("esc", a.escape_response));
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_app_set_receive_state_sets_value(void) {
+    char *state = "val";
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+    void *prev_state = p->receive_state;
+
+    cl_cmd_line_app_set_receive_state(p, state);
+    CL_TESTS_ASSERT(p->receive_state == state);
+
+    p->receive_state = prev_state;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_app_get_receive_state_gets_value(void) {
+    int state;
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+    void *prev_state = p->receive_state;
+
+    cl_cmd_line_app_set_receive_state(p, &state);
+    CL_TESTS_ASSERT(&state == cl_cmd_line_app_get_receive_state(p));
+
+    p->receive_state = prev_state;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_app_receive_uses_state(void) {
+    double state;
+    cl_cmd_line_app *p = cl_cmd_line_app_get_instance();
+    cl_cmd_line_app_receive_func *prev_func = p->receive;
+    void *prev_state = p->receive_state;
+
+    cl_cmd_line_app_set_receive(p, receive_1);
+    cl_cmd_line_app_set_receive_state(p, &state);
+    cl_cmd_line_app_receive(p);
+    CL_TESTS_ASSERT(&state == receive_1_state);
+
+    p->receive = prev_func;
+    p->receive_state = prev_state;
     return CL_TESTS_NO_ERR;
 }
 
@@ -115,5 +159,8 @@ CL_TESTS_ERR cl_cmd_line_app_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_app_get_cmd_parser_is_not_null);
     CL_TESTS_RUN(cl_cmd_line_app_get_escape_response_returns_value);
     CL_TESTS_RUN(cl_cmd_line_app_set_escape_response_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_set_receive_state_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_get_receive_state_gets_value);
+    CL_TESTS_RUN(cl_cmd_line_app_receive_uses_state);
     return CL_TESTS_NO_ERR;
 }

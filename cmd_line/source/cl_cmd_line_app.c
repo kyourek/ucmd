@@ -22,18 +22,12 @@ typedef struct quit_state {
     cl_cmd_line_app *app;
 } quit_state;
 
-static char *receive(char *buf, int buf_size) {
+static char *receive(void *state, char *buf, size_t buf_size) {
 #ifdef CL_CMD_LINE_APP_RECEIVE_FGETS_STDIN
     return fgets(buf, buf_size, stdin);
 #else
     return NULL;
 #endif
-}
-
-static char *cl_cmd_line_app_receive(cl_cmd_line_app *p) {
-    if (NULL == p) return 0;
-    if (NULL == p->receive) return 0;
-    return p->receive(p->cmd_buf, sizeof(p->cmd_buf) / sizeof(char));
 }
 
 static const char *quit(cl_cmd_line *cmd, void *state) {
@@ -227,6 +221,16 @@ cl_cmd_line_app_receive_func *cl_cmd_line_app_get_receive(cl_cmd_line_app *p) {
     return p->receive;
 }
 
+void *cl_cmd_line_app_get_receive_state(cl_cmd_line_app *p) {
+    if (NULL == p) return NULL;
+    return p->receive_state;
+}
+
+void cl_cmd_line_app_set_receive_state(cl_cmd_line_app *p, void *value) {
+    if (NULL == p) return;
+    p->receive_state = value;
+}
+
 void cl_cmd_line_app_set_quit_command(cl_cmd_line_app *p, const char *value) {
     if (NULL == p) return;
     p->quit_command = value;
@@ -271,6 +275,7 @@ cl_cmd_line_app *cl_cmd_line_app_get_instance(void) {
         p->cmd_parser = cl_cmd_parser_get_instance();
         p->run = run;
         p->receive = receive;
+        p->receive_state = NULL;
         p->help_command = "help";
         p->quit_command = "quit";
         p->escape_response = "\x1b";
@@ -282,4 +287,10 @@ CL_ERR cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     if (NULL == p) return -1;
     if (NULL == p->run) return -2;
     return p->run(p, cmd_opt);
+}
+
+char *cl_cmd_line_app_receive(cl_cmd_line_app *p) {
+    if (NULL == p) return 0;
+    if (NULL == p->receive) return 0;
+    return p->receive(p->receive_state, p->cmd_buf, sizeof(p->cmd_buf));
 }

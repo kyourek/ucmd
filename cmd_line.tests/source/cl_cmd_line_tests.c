@@ -18,22 +18,24 @@ static cl_cmd_tok *parse_cmd(char *cmd) {
     return cl_cmd_parser_parse(cl_cmd_parser_get_instance(), cmd);
 }
 
-static const char *transmitted_1;
-
-static void transmit_1(const char *response) {
-    transmitted_1 = response;
+static void *transmit_1_state;
+static const char *transmit_1_response;
+static void transmit_1(void *state, const char *response) {
+    transmit_1_state = state;
+    transmit_1_response = response;
 }
 
-static void transmit_2(const char *response) {
+static void transmit_2(void *state, const char *response) {
 }
 
-static CL_BOOL cancel_1 = CL_FALSE;
-
-static CL_BOOL is_cancelled_1(void) {
-    return cancel_1;
+static void *is_cancelled_1_state;
+static CL_BOOL is_cancelled_1_returned_value = CL_FALSE;
+static CL_BOOL is_cancelled_1(void *state) {
+    is_cancelled_1_state = state;
+    return is_cancelled_1_returned_value;
 }
 
-static CL_BOOL is_cancelled_2(void) {
+static CL_BOOL is_cancelled_2(void *state) {
     return CL_TRUE;
 }
 
@@ -115,10 +117,10 @@ static CL_TESTS_ERR cl_cmd_line_respond_uses_transmit(void) {
     cl_cmd_line c;
     c.transmit = transmit_1;
 
-    transmitted_1 = NULL;
+    transmit_1_response = NULL;
     c.transmit = transmit_1;
     cl_cmd_line_respond(&c, "expected response");
-    CL_TESTS_ASSERT(0 == strcmp(transmitted_1, "expected response"));
+    CL_TESTS_ASSERT(0 == strcmp(transmit_1_response, "expected response"));
 
     return CL_TESTS_NO_ERR;
 }
@@ -141,12 +143,94 @@ static CL_TESTS_ERR cl_cmd_line_is_cancelled_calls_is_cancelled(void) {
     cl_cmd_line c;
     c.is_cancelled = is_cancelled_1;
 
-    cancel_1 = CL_TRUE;
+    is_cancelled_1_returned_value = CL_TRUE;
     CL_TESTS_ASSERT(CL_TRUE == cl_cmd_line_is_cancelled(&c));
 
-    cancel_1 = CL_FALSE;
+    is_cancelled_1_returned_value = CL_FALSE;
     CL_TESTS_ASSERT(CL_FALSE == cl_cmd_line_is_cancelled(&c));
 
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_set_transmit_state_sets_value(void) {
+    int state;
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    void *prev_value = p->transmit_state;
+
+    cl_cmd_line_set_transmit_state(p, &state);
+    CL_TESTS_ASSERT(&state == p->transmit_state);
+
+    p->transmit_state = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_get_transmit_state_gets_value(void) {
+    char *state = "state";
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    void *prev_value = p->transmit_state;
+
+    p->transmit_state = &state;
+    CL_TESTS_ASSERT(&state == cl_cmd_line_get_transmit_state(p));
+
+    p->transmit_state = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_transmit_uses_state(void) {
+    double state;
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    cl_cmd_line_transmit_func *prev_func = p->transmit;
+    void *prev_state = p->transmit_state;
+
+    cl_cmd_line_set_transmit(p, transmit_1);
+    cl_cmd_line_set_transmit_state(p, &state);
+
+    cl_cmd_line_respond(p, "resp");
+
+    CL_TESTS_ASSERT(&state == transmit_1_state);
+
+    p->transmit = prev_func;
+    p->transmit_state = prev_state;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_set_is_cancelled_state_sets_value(void) {
+    int state;
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    void *prev_value = p->is_cancelled_state;
+
+    cl_cmd_line_set_is_cancelled_state(p, &state);
+    CL_TESTS_ASSERT(&state == p->is_cancelled_state);
+
+    p->is_cancelled_state = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_get_is_cancelled_state_returns_value(void) {
+    char *state = "st";
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    void *prev_value = p->is_cancelled_state;
+
+    p->is_cancelled_state = &state;
+    CL_TESTS_ASSERT(&state == cl_cmd_line_get_is_cancelled_state(p));
+
+    p->is_cancelled_state = prev_value;
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_is_cancelled_uses_state(void) {
+    double state;
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    void *prev_value = p->is_cancelled_state;
+
+    cl_cmd_line_set_is_cancelled(p, is_cancelled_1);
+    cl_cmd_line_set_is_cancelled_state(p, &state);
+
+    cl_cmd_line_is_cancelled(p);
+
+    CL_TESTS_ASSERT(&state == is_cancelled_1_state);
+
+    p->is_cancelled_state = prev_value;
     return CL_TESTS_NO_ERR;
 }
 
@@ -163,5 +247,11 @@ CL_TESTS_ERR cl_cmd_line_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_get_is_cancelled_returns_value);
     CL_TESTS_RUN(cl_cmd_line_set_is_cancelled_sets_value);
     CL_TESTS_RUN(cl_cmd_line_is_cancelled_calls_is_cancelled);
+    CL_TESTS_RUN(cl_cmd_line_set_transmit_state_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_get_transmit_state_gets_value);
+    CL_TESTS_RUN(cl_cmd_line_transmit_uses_state);
+    CL_TESTS_RUN(cl_cmd_line_set_is_cancelled_state_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_get_is_cancelled_state_returns_value);
+    CL_TESTS_RUN(cl_cmd_line_is_cancelled_uses_state);
     return CL_TESTS_NO_ERR;
 }
