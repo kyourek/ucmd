@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <string.h>
-#include "cl_tok.h"
-#include "cl_arg_tok.h"
-#include "cl_cmd_tok.h"
-#include "cl_switch_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_cmd_line_app.h"
+#include "cl_app.h"
 #include "cl_math_app.h"
 
-static void run_math_app(cl_cmd_line_app *app) {
-    cl_cmd_line_app_run(app, cl_math_app_create_cmd_opt());
+static void send_data(const char *data) {
+	printf("%s\n", data);
+}
+
+static char *receive_data(char *buf, size_t buf_size) {
+	return fgets(buf, buf_size, stdin);
 }
 
 int main (int argc, const char *argv[]) {
-    cl_cmd_line_app *app = cl_cmd_line_app_get_instance();
-
-    run_math_app(app);
-
+	cl_app *app = cl_math_app_get_instance();
+	cl_app_set_send_data(app, send_data);
+	cl_app_set_receive_data(app, receive_data);
+	cl_app_run(app);
     return 0;
 }
