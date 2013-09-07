@@ -10,12 +10,11 @@ const char cl_cmd_terminator = '\n';
 static CL_BOOL is_char_digit(char c) {
     /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator */
     static char *digits = "0123456789";
-    char *d = digits;
-    while (*d) {
+    char *d;
+    for (d = digits; *d; d++) {
         if (*d == c) {
             return CL_TRUE;
         }
-        d++;
     }
     return CL_FALSE;
 }
