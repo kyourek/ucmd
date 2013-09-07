@@ -23,11 +23,7 @@ size_t cl_tok_get_length(cl_tok *p) {
     int length;
     if (NULL == p) return 0;
 
-    length = 0;
-    while (cl_tok_separator != *p) {
-        p++;
-        length++;
-    }
+    for (length = 0; *p != cl_tok_separator; length++, p++);
 
     return length;
 }
