@@ -23,6 +23,9 @@
     <ClInclude Include="..\..\..\cmd_line.example\include_p\cl_app_p.h">
       <Filter>include_p</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.example\include\cmd_line_example.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cmd_line.example\source\cl_math_app.c">

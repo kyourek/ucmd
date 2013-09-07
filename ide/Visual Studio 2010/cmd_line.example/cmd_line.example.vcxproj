@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\cmd_line.example\include\cl_app.h" />
     <ClInclude Include="..\..\..\cmd_line.example\include\cl_math_app.h" />
+    <ClInclude Include="..\..\..\cmd_line.example\include\cmd_line_example.h" />
     <ClInclude Include="..\..\..\cmd_line.example\include_p\cl_app_p.h" />
   </ItemGroup>
   <ItemGroup>
