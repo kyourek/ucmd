@@ -1,19 +1,11 @@
-#include "cl_cmd_line.h"
-#include "cl_cmd_line_app.h"
-#include "cl_cmd_line_opt.h"
-#include "cl_math_app.h"
- 
-int led = 13;
-int loop_count = 0;
-cl_cmd_line_app *cmd_line_app;
-cl_cmd_line_opt *cmd_line_opt;
+#include "cmd_line_example.h"
 
-char *default_receive(char *buf, int buf_size) {
+cl_app *app;
+
+char *receive_data(char *buf, size_t buf_size) {
   int i = 0;
   char r = 0;
-  while (!Serial.available()) {
-    continue; 
-  }
+  while (!Serial.available());
   
   while (i < buf_size - 1) {
      if (Serial.available()) {
@@ -30,23 +22,20 @@ char *default_receive(char *buf, int buf_size) {
   return buf;
 }
 
-void default_transmit(const char *response) {
+void send_data(const char *response) {
   Serial.println(response); 
 }
 
-void setup() {                
-  pinMode(led, OUTPUT);     
+void setup() {                    
   Serial.begin(9600);
-  while (!Serial) {
-    ;
-  }  
-  cmd_line_opt = cl_math_app_create_cmd_opt();
-  cmd_line_app = cl_cmd_line_app_get_instance();
-  cl_cmd_line_app_set_receive(cmd_line_app, default_receive);
-  cl_cmd_line_set_transmit(cl_cmd_line_app_get_cmd(cmd_line_app), default_transmit);
+  while (!Serial);
+  app = cl_math_app_get_instance();
+  cl_app_set_send_data(app, send_data);
+  cl_app_set_receive_data(app, receive_data);
 }
 
 void loop() {
-  cl_cmd_line_app_run(cmd_line_app, cmd_line_opt);
+  cl_app_run(app);
+  delay(1000);
 }
 
