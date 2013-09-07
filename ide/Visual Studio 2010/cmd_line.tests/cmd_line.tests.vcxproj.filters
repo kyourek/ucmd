@@ -59,6 +59,9 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include_p\cl_tests_p.h">
       <Filter>include_p</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cmd_line_tests.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_opt_tests.c">

@@ -88,6 +88,7 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_tok_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tok_tests.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cmd_line_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include_p\cl_tests_p.h" />
   </ItemGroup>
   <ItemGroup>

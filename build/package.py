@@ -2,12 +2,6 @@ import os
 import os.path
 import zipfile
 
-compression = zipfile.ZIP_DEFLATED
-try:
-    import zlib
-except:
-    compression = zipfile.ZIP_STORED
-
 class Project:
     def __init__(self, name, dirs):
         self.name = name;
@@ -34,5 +28,5 @@ for project in projects:
 
     zout = zipfile.ZipFile(os.path.join(current_dir, project.name + ".zip"), "w")
     for file in files:
-        zout.write(file[0], arcname = file[1], compress_type = compression)
+        zout.write(file[0], arcname = file[1])
     zout.close()
