@@ -9,10 +9,19 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="include_p">
+      <UniqueIdentifier>{b799a6c4-f3d1-439a-8889-202bc6c506d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\cmd_line.example\include\cl_math_app.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.example\include\cl_app.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.example\include_p\cl_app_p.h">
+      <Filter>include_p</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +29,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line.example\source\main.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.example\source\cl_app.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

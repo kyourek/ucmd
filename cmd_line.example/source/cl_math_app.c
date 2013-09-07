@@ -1,5 +1,7 @@
 #include <float.h>
 #include <stdlib.h>
+#include "cl_app.h"
+#include "cl_app_p.h"
 #include "cl_arg_opt.h"
 #include "cl_cmd_tok.h"
 #include "cl_common.h"
@@ -121,7 +123,7 @@ static const char *subtract(cl_cmd_line *cmd, void *state) {
     return cl_cmd_line_format_response(cmd, "%f", result);
 }
 
-cl_cmd_line_opt *cl_math_app_create_cmd_opt(void) {
+static cl_cmd_line_opt *create_cmd_opt(cl_app *p) {
     return 
         cl_cmd_line_opt_create(
             add, &number_state_s, "add", "Adds two numbers together.",
@@ -139,4 +141,13 @@ cl_cmd_line_opt *cl_math_app_create_cmd_opt(void) {
         ),
         NULL
         ));
+}
+
+cl_app *cl_math_app_get_instance(void) {
+	static cl_app instance;
+	static cl_app *instance_p = NULL;
+	if (NULL == instance_p) {
+		instance_p = cl_app_init(&instance, create_cmd_opt);
+	}
+	return instance_p;
 }

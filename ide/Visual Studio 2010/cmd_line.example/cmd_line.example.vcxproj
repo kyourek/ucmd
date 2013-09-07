@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -59,7 +59,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -74,9 +74,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\cmd_line.example\include\cl_app.h" />
     <ClInclude Include="..\..\..\cmd_line.example\include\cl_math_app.h" />
+    <ClInclude Include="..\..\..\cmd_line.example\include_p\cl_app_p.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\cmd_line.example\source\cl_app.c" />
     <ClCompile Include="..\..\..\cmd_line.example\source\cl_math_app.c" />
     <ClCompile Include="..\..\..\cmd_line.example\source\main.c" />
   </ItemGroup>
