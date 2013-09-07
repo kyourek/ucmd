@@ -25,15 +25,6 @@
 #endif
 
 /*
- * Defines snprintf when on Windows.
- */
-#ifdef CL_WIN_API
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-#endif
-
-/*
  * Prepend extern "C" if we're in a C++
  * compiler
  */
