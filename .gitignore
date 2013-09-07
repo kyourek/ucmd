@@ -14,3 +14,13 @@ ide/Visual Studio 2010/cmd_line/cmd_line.vcxproj.user
 ide/Visual Studio 2010/cmd_line.sdf
 ide/Visual Studio 2010/ipch/
 ide/Visual Studio 2010/cmd_line.opensdf
+ide/Eclipse/cmd_line/Debug/
+ide/Eclipse/cmd_line/Release/
+ide/Eclipse/cmd_line.tests/Debug/
+ide/Eclipse/cmd_line.tests/Release/
+ide/Eclipse/RemoteSystemsTempFiles/
+ide/Eclipse/.metadata/
+ide/Eclipse/.DS_Store
+ide/Eclipse/cmd_line/.DS_Store
+ide/Eclipse/cmd_line.tests/.DS_Store
+
