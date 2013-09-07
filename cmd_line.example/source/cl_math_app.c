@@ -23,14 +23,6 @@ static const char *to_switch_name = "-to";
 static const char *from_switch_name = "-from";
 static const char *verbose_switch_name = "-v";
 
-static cl_switch_opt *get_verbose_opt(void) {
-    static cl_switch_opt *verbose_opt = NULL;
-    if (NULL == verbose_opt) {
-        verbose_opt = cl_switch_opt_create(verbose_switch_name, "Print extra information (verbose).", NULL, NULL);
-    }
-    return verbose_opt;
-}
-
 static CL_BOOL is_verbose(cl_cmd_line *cmd) {
     return cl_switch_tok_contains(cl_cmd_tok_get_switch(cl_cmd_line_get_cmd_tok(cmd)), verbose_switch_name);
 }
@@ -124,20 +116,23 @@ static const char *subtract(cl_cmd_line *cmd, void *state) {
 }
 
 static cl_cmd_line_opt *create_cmd_opt(cl_app *p) {
+
+	cl_switch_opt *verbose_opt = cl_switch_opt_create(verbose_switch_name, "Print extra information (verbose).", NULL, NULL);
+
     return 
         cl_cmd_line_opt_create(
             add, &number_state_s, "add", "Adds two numbers together.",
                 cl_arg_opt_create_required_numeric("The number to be added.", DBL_MIN, DBL_MAX, NULL),
                 cl_switch_opt_create(to_switch_name, "Switch that specifies the value to which the number will be added. If not provided, the number is added to the current state.",
                     cl_arg_opt_create_required_numeric("The value to which the number will be added.", DBL_MIN, DBL_MAX, NULL),
-                get_verbose_opt()
+                verbose_opt
         ),
         cl_cmd_line_opt_create(
             subtract, &number_state_s, "subtract", "Subtracts one number from another.",
                 cl_arg_opt_create_required_numeric("The number to be subtracted.", DBL_MIN, DBL_MAX, NULL),
                 cl_switch_opt_create(from_switch_name, "Switch that specifies the value from which the number will be subtracted. If not provided, the number is subtracted from the current state.",
                     cl_arg_opt_create_required_numeric("The value from which the number will be subtracted.", DBL_MIN, DBL_MAX, NULL),
-                get_verbose_opt()
+                verbose_opt
         ),
         NULL
         ));
