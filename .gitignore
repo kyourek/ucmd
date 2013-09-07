@@ -24,5 +24,5 @@ ide/Eclipse/.DS_Store
 ide/Eclipse/cmd_line/.DS_Store
 ide/Eclipse/cmd_line.tests/.DS_Store
 ide/Xcode/cmd_line/cmd_line.xcodeproj/xcuserdata/
-ide/Xcode/cmd_line.tests.xcodeproj/xcuserdata/
+ide/Xcode/cmd_line.tests/cmd_line.tests.xcodeproj/xcuserdata/
 
