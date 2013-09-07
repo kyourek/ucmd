@@ -20,7 +20,7 @@ static CL_BOOL is_char_digit(char c) {
 }
 
 size_t cl_tok_get_length(cl_tok *p) {
-    int length;
+    size_t length;
     if (NULL == p) return 0;
 
     for (length = 0; *p != cl_tok_separator; length++, p++);
@@ -34,7 +34,7 @@ const char *cl_tok_get_value(cl_tok *p) {
 }
 
 CL_BOOL cl_tok_equals(cl_tok *p, const char *value) {
-    int i, len;
+    size_t i, len;
 
     /* check if these pointers are the same */
     if (value == p) return CL_TRUE;
@@ -59,7 +59,7 @@ CL_BOOL cl_tok_equals(cl_tok *p, const char *value) {
 }
 
 CL_BOOL cl_tok_is_numeric(cl_tok *p) {
-    int i, len;
+    size_t i, len;
     CL_BOOL dec_found;
 
     /* check if p is NULL */
@@ -77,7 +77,7 @@ CL_BOOL cl_tok_is_numeric(cl_tok *p) {
         /* but we need more than 1 char if we do */
         if (len < 2) return CL_FALSE;
     }
-	
+
     // initialize vars
     dec_found = CL_FALSE;
 

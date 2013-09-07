@@ -2,7 +2,7 @@
 #define CL_COMMON_H
 
 /* Definitions for command, argument, and
- * token sizes. */
+   token sizes. */
 #ifndef CL_CMD_LEN_MAX
 #define CL_CMD_LEN_MAX                  1000
 #endif
@@ -23,7 +23,7 @@
 #endif
 
 /* Prepend extern "C" if we're in a C++
- * compiler. */
+   compiler. */
 #ifdef __cplusplus
 #define CL_EXTERN_C extern "C"
 #else
@@ -31,9 +31,9 @@
 #endif
 
 /* When compiling on Windows, CL_IMPORT can
- * be used when using this header file in
- * another program. CL_EXPORT should be defined 
- * when compiling this program itself. */
+   be used when using this header file in
+   another program. CL_EXPORT should be defined 
+   when compiling this program itself. */
 #ifdef CL_WIN_API
 #ifdef CL_IMPORT
 #define CL_EXPORTED CL_EXTERN_C __declspec(dllimport)
@@ -45,7 +45,7 @@
 #endif
 
 /* Default to setting CL_EXPORTED to the result
- * of our extern "C" check. */
+   of our extern "C" check. */
 #ifndef CL_EXPORTED
 #define CL_EXPORTED CL_EXTERN_C
 #endif
@@ -56,7 +56,7 @@
 #define CL_TRUE     !CL_FALSE
 
 /* Definition for the type returned
- * by functions that use an error code. */
+   by functions that use an error code. */
 #define CL_ERR      int
 
 #endif
