@@ -3,8 +3,8 @@
 cl_app *app;
 
 char *receive_data(char *buf, size_t buf_size) {
-  int i = 0;
   char r = 0;
+  size_t i = 0;
   while (!Serial.available());
   
   while (i < buf_size - 1) {
