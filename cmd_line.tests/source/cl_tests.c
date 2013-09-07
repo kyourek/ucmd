@@ -150,21 +150,21 @@ CL_TESTS_ERR cl_tests_main(cl_tests *p) {
 
     if (NULL != print) {
         if (err) {
-            sprintf(str, "Test failed in group %d.\r\n", cl_tests_get_run_group_count(p));
+            sprintf(str, "Test failed in group %d.\n", cl_tests_get_run_group_count(p));
             print(str);
         }
         else {
-            sprintf(str, "%s", "All tests passed.\r\n");
+            sprintf(str, "%s", "All tests passed.\n");
             print(str);
         }
-        sprintf(str, "Tests run: %d\r\n", cl_tests_get_run_count(p));
+        sprintf(str, "Tests run: %d\n", cl_tests_get_run_count(p));
         print(str);
-        sprintf(str, "Assertions made: %d\r\n", cl_tests_get_assertions_made(p));
+        sprintf(str, "Assertions made: %d\n", cl_tests_get_assertions_made(p));
         print(str);
 
         if (!cl_tests_get_unattended(p)) {
             if (NULL != exit) {
-                print("Exit?");
+                print("Exit?\n");
                 while (!exit()) {
                     continue;
                 }

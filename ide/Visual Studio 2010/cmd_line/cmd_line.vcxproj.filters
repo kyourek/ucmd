@@ -95,6 +95,9 @@
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_tok_p.h">
       <Filter>include_p</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cmd_line.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cmd_line\source\cl_arg_opt.c">
