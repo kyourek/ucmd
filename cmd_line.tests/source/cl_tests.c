@@ -19,28 +19,13 @@
 
 cl_tests *cl_tests_running_instance = NULL;
 
-static void default_print(const char *str) {
-#ifdef CL_TESTS_PRINT_PRINTF
-    printf("%s", str);
-#endif
-}
-
-static CL_BOOL default_exit(void) {
-#ifdef CL_TESTS_EXIT_GETCHAR
-    getchar();
-    return CL_TRUE;
-#else
-    return CL_TRUE;
-#endif
-}
-
 cl_tests *cl_tests_get_instance() {
     static cl_tests instance;
     static cl_tests *p = NULL;
     if (NULL == p) {
         p = &instance;
-        p->exit = default_exit;
-        p->print = default_print;
+        p->exit = NULL;
+        p->print = NULL;
         p->run_count = 0;
         p->run_group_count = 0;
         p->assertions_made = 0;
