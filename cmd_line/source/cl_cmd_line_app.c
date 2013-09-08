@@ -22,14 +22,6 @@ typedef struct quit_state {
     cl_cmd_line_app *app;
 } quit_state;
 
-static char *receive(char *buf, size_t buf_size, void *state) {
-#ifdef CL_CMD_LINE_APP_RECEIVE_FGETS_STDIN
-    return fgets(buf, buf_size, stdin);
-#else
-    return NULL;
-#endif
-}
-
 static const char *quit(cl_cmd_line *cmd, void *state) {
     quit_state *s = (quit_state*)state;
     return cl_cmd_line_app_get_escape_response(s->app);
@@ -274,7 +266,7 @@ cl_cmd_line_app *cl_cmd_line_app_get_instance(void) {
         p->cmd = cl_cmd_line_get_instance();
         p->cmd_parser = cl_cmd_parser_get_instance();
         p->run = run;
-        p->receive = receive;
+        p->receive = NULL;
         p->receive_state = NULL;
         p->help_command = "help";
         p->quit_command = "quit";
@@ -290,7 +282,7 @@ CL_ERR cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
 }
 
 char *cl_cmd_line_app_receive(cl_cmd_line_app *p) {
-    if (NULL == p) return 0;
-    if (NULL == p->receive) return 0;
+    if (NULL == p) return NULL;
+    if (NULL == p->receive) return NULL;
     return p->receive(p->cmd_buf, sizeof(p->cmd_buf), p->receive_state);
 }

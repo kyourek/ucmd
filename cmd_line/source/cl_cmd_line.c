@@ -12,25 +12,15 @@
 #include "cl_cmd_line_p.h"
 #include "cl_cmd_line_toks.h"
 
-static void transmit(const char *response, void *state) {
-#ifdef CL_CMD_LINE_TRANSMIT_PRINTF
-    printf("%s\n", response);
-#endif
-}
-
-static CL_BOOL is_cancelled(void *state) {
-    return CL_FALSE;
-}
-
 cl_cmd_line *cl_cmd_line_get_instance(void) {
     static cl_cmd_line instance = { 0 };
     static cl_cmd_line *p = NULL;
     if (NULL == p) {
         p = &instance;
         p->cmd_tok = NULL;
-        p->transmit = transmit;
+        p->transmit = NULL;
         p->transmit_state = NULL;
-        p->is_cancelled = is_cancelled;
+        p->is_cancelled = NULL;
         p->is_cancelled_state = NULL;
     }
     return p;
