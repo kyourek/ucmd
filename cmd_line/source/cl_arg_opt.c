@@ -9,7 +9,7 @@
 CL_MEMORY_MANAGER_INIT(cl_arg_opt, (CL_CMD_COUNT_MAX * CL_ARG_COUNT_MAX) + (CL_SWITCH_COUNT_MAX * CL_ARG_COUNT_MAX));
 
 static cl_arg_opt *create_arg_opt(void) {
-    return cl_memory_manager_create_cl_arg_opt();
+    return cl_memory_manager_create();
 }
 
 CL_BOOL cl_arg_opt_is_numeric(cl_arg_opt *p) {
@@ -62,7 +62,7 @@ cl_arg_opt *cl_arg_opt_create_required_numeric(const char *desc, double numeric_
 }
 
 void cl_arg_opt_destroy(cl_arg_opt *p) {
-    cl_memory_manager_destroy_cl_arg_opt(p);
+    cl_memory_manager_destroy(p);
 }
 
 void cl_arg_opt_destroy_chain(cl_arg_opt *p) {

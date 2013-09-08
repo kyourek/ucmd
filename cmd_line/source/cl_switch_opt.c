@@ -13,7 +13,7 @@
 CL_MEMORY_MANAGER_INIT(cl_switch_opt, CL_CMD_COUNT_MAX * CL_SWITCH_COUNT_MAX);
 
 static cl_switch_opt *create_switch_opt(void) {
-    return cl_memory_manager_create_cl_switch_opt();
+    return cl_memory_manager_create();
 }
 
 cl_arg_opt *cl_switch_opt_get_arg_opt(cl_switch_opt *p) {
@@ -52,7 +52,7 @@ cl_switch_opt *cl_switch_opt_create_required(const char *name, const char *desc,
 }
 
 void cl_switch_opt_destroy(cl_switch_opt *p) {
-    cl_memory_manager_destroy_cl_switch_opt(p);
+    cl_memory_manager_destroy(p);
 }
 
 void cl_switch_opt_destroy_chain(cl_switch_opt *p) {

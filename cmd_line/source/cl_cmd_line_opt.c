@@ -19,7 +19,7 @@
 CL_MEMORY_MANAGER_INIT(cl_cmd_line_opt, CL_CMD_COUNT_MAX);
 
 static cl_cmd_line_opt *create_cmd_line_opt(void) {
-    return cl_memory_manager_create_cl_cmd_line_opt();
+    return cl_memory_manager_create();
 }
 
 cl_cmd_line_opt *cl_cmd_line_opt_get_next(cl_cmd_line_opt *p) {
@@ -107,7 +107,7 @@ const char *cl_cmd_line_opt_process(cl_cmd_line_opt* p, cl_cmd_line *cmd) {
 }
 
 void cl_cmd_line_opt_destroy(cl_cmd_line_opt *p) {
-    cl_memory_manager_destroy_cl_cmd_line_opt(p);
+    cl_memory_manager_destroy(p);
 }
 
 void cl_cmd_line_opt_destroy_chain(cl_cmd_line_opt *p) {
