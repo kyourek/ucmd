@@ -109,6 +109,7 @@
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_app.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_opt.c" />
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_toks.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_validator.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_parser.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_tok.c" />

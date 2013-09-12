@@ -142,5 +142,8 @@
     <ClCompile Include="..\..\..\cmd_line\source\cl_tok.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_toks.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
