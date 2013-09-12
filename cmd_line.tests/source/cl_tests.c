@@ -15,6 +15,7 @@
 #include "cl_tok_tests.h"
 #include "cl_cmd_line_app_tests.h"
 #include "cl_cmd_line_opt_tests.h"
+#include "cl_cmd_line_toks_tests.h"
 #include "cl_cmd_line_tests.h"
 
 cl_tests *cl_tests_running_instance = NULL;
@@ -122,6 +123,7 @@ CL_TESTS_ERR cl_tests_run(cl_tests *p) {
     CL_TESTS_RUN_GROUP(cl_cmd_line_app_tests);
     CL_TESTS_RUN_GROUP(cl_cmd_line_opt_tests);
     CL_TESTS_RUN_GROUP(cl_cmd_line_tests);
+    CL_TESTS_RUN_GROUP(cl_cmd_line_toks_tests);
 
     return p->err_returned;
 }

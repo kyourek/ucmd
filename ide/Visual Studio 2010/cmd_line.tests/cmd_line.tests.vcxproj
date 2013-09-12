@@ -80,6 +80,7 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_app_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_tests.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_toks_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_parser_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_tok_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_common_tests.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_app_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_tests.c" />
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_toks_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_parser_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_tok_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_common_tests.c" />

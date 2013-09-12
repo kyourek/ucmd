@@ -62,6 +62,9 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cmd_line_tests.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_toks_tests.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_opt_tests.c">
@@ -107,6 +110,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line.tests\source\main.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_toks_tests.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
