@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include "cl_cmd_line.h"
 #include "cl_cmd_line_p.h"
@@ -95,6 +96,27 @@ static CL_TESTS_ERR cl_cmd_line_format_response_sets_response_string(void) {
     cl_cmd_line *p = cl_cmd_line_get_instance();
     cl_cmd_line_format_response(p, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     sprintf(expected, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
+    CL_TESTS_ASSERT(0 == strcmp(p->response, expected));
+    return CL_TESTS_NO_ERR;
+}
+
+static const char *cl_cmd_line_format_response_va_sets_response_string_helper(cl_cmd_line *p, const char *format, ...) {
+    va_list arg_list;
+    const char *response;
+    va_start(arg_list, format);
+    response = cl_cmd_line_format_response_va(p, format, arg_list);
+    va_end(arg_list);
+    return response;
+}
+
+static CL_TESTS_ERR cl_cmd_line_format_response_va_sets_response_string(void) {
+    char expected[50];
+    const char *actual;
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    
+    actual = cl_cmd_line_format_response_va_sets_response_string_helper(p, "This %d is %s formatted.", 1, "well");
+    sprintf(expected, "This %d is %s formatted.", 1, "well");
+    CL_TESTS_ASSERT(0 == strcmp(actual, expected));
     CL_TESTS_ASSERT(0 == strcmp(p->response, expected));
     return CL_TESTS_NO_ERR;
 }
@@ -241,6 +263,7 @@ CL_TESTS_ERR cl_cmd_line_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_get_cmd_tok_returns_cmd_tok);
     CL_TESTS_RUN(cl_cmd_line_get_instance_is_not_null);
     CL_TESTS_RUN(cl_cmd_line_format_response_sets_response_string);
+    CL_TESTS_RUN(cl_cmd_line_format_response_va_sets_response_string);
     CL_TESTS_RUN(cl_cmd_line_set_transmit_sets_transmit);
     CL_TESTS_RUN(cl_cmd_line_get_transmit_returns_transmit);
     CL_TESTS_RUN(cl_cmd_line_respond_uses_transmit);

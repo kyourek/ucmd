@@ -47,15 +47,21 @@ cl_cmd_line_toks *cl_cmd_line_get_cmd_toks(cl_cmd_line *p, cl_cmd_line_toks *buf
     return buffer;
 }
 
+const char *cl_cmd_line_format_response_va(cl_cmd_line *p, const char *format, va_list arg_list) {
+    if (NULL == p) return NULL;
+    vsnprintf(p->response, sizeof(p->response) - 1, format, arg_list);
+    return p->response;
+}
+
 const char *cl_cmd_line_format_response(cl_cmd_line *p, const char *format, ...) {
     va_list arg_list;
-    if (NULL == p) return NULL;
+    const char *response;
 
     va_start(arg_list, format);
-    vsnprintf(p->response, (sizeof(p->response) / sizeof(char)) - 1, format, arg_list);
+    response = cl_cmd_line_format_response_va(p, format, arg_list);
     va_end(arg_list);
 
-    return p->response;
+    return response;
 }
 
 void cl_cmd_line_respond(cl_cmd_line *p, const char *response) {
