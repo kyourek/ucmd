@@ -172,6 +172,18 @@ CL_EXPORTED cl_cmd_line *cl_cmd_line_get_instance(void);
 CL_EXPORTED const char *cl_cmd_line_format_response(cl_cmd_line *p, const char *format, ...);
 
 /*
+ * Summary:
+ *   Formats the command's response using the given parameters.
+ * Parameters:
+ *   p: A pointer to the command structure whose response is formatted.
+ *   format: The format string.
+ *   arg_list: A variable length argument list with parameters to the format string.
+ * Returns:
+ *   The formatted string.
+ */
+CL_EXPORTED const char *cl_cmd_line_format_response_va(cl_cmd_line *p, const char *format, va_list arg_list);
+
+/*
  * Summary
  *   Responds to the command.
  * Parameters:
