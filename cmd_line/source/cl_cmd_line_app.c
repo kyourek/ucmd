@@ -3,15 +3,15 @@
 #include <string.h>
 #include "cl_arg_opt.h"
 #include "cl_arg_tok.h"
+#include "cl_cmd_line.h"
+#include "cl_cmd_line_app.h"
+#include "cl_cmd_line_app_p.h"
+#include "cl_cmd_line_opt.h"
 #include "cl_cmd_parser.h"
 #include "cl_cmd_parser_p.h"
 #include "cl_opt.h"
 #include "cl_switch_opt.h"
 #include "cl_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_cmd_line_app.h"
-#include "cl_cmd_line_app_p.h"
-#include "cl_cmd_line_opt.h"
 
 typedef struct help_state {
     cl_cmd_line_app *app;
@@ -27,78 +27,6 @@ static const char *quit(cl_cmd_line *cmd, void *state) {
     return cl_cmd_line_app_get_escape_response(s->app);
 }
 
-static void show_opt_help(cl_opt *opt, cl_cmd_line *cmd, const char *prefix) {
-    const char *format = cl_opt_is_required(opt)
-        ? "%s%s: %s"
-        : "%s[%s]: %s";
-    cl_cmd_line_respond(cmd, cl_cmd_line_format_response(cmd, format, prefix, cl_opt_get_name(opt), cl_opt_get_desc(opt)));
-}
-
-static void show_cmd_opt_usage(cl_cmd_line_opt *cmd_opt, cl_cmd_line *cmd) {
-    cl_arg_opt *arg_opt;
-    cl_switch_opt *switch_opt;
-    const char *format;
-    const char *response;
-
-    response = cl_cmd_line_format_response(cmd, "%s", cl_opt_get_name((cl_opt*)cmd_opt));
-
-    arg_opt = cl_cmd_line_opt_get_arg_opt(cmd_opt);
-    while (NULL != arg_opt) {
-        
-        format = cl_opt_is_required((cl_opt*)arg_opt) ? "%s %s" : "%s [%s]";
-        response = cl_cmd_line_format_response(cmd, format, response, cl_opt_get_name((cl_opt*)arg_opt));
-
-        arg_opt = cl_arg_opt_get_next(arg_opt);
-    }
-
-    switch_opt = cl_cmd_line_opt_get_switch_opt(cmd_opt);
-    while (NULL != switch_opt) {
-        
-        format = cl_opt_is_required((cl_opt*)switch_opt) ? "%s %s" : "%s [%s]";
-        response = cl_cmd_line_format_response(cmd, format, response, cl_opt_get_name((cl_opt*)switch_opt));
-
-        arg_opt = cl_switch_opt_get_arg_opt(switch_opt);
-        while (NULL != arg_opt) {
-
-            format = cl_opt_is_required((cl_opt*)arg_opt) ? "%s %s" : "%s [%s]";
-            response = cl_cmd_line_format_response(cmd, format, response, cl_opt_get_name((cl_opt*)arg_opt));
-
-            arg_opt = cl_arg_opt_get_next(arg_opt);
-        }
-
-        switch_opt = cl_switch_opt_get_next(switch_opt);
-    }
-
-    cl_cmd_line_respond(cmd, response);
-}
-
-static void show_cmd_opt_help(cl_cmd_line_opt *cmd_opt, cl_cmd_line *cmd) {
-    cl_arg_opt *arg_opt;
-    cl_switch_opt *switch_opt;
-
-    show_cmd_opt_usage(cmd_opt, cmd);
-
-    show_opt_help((cl_opt*)cmd_opt, cmd, "");
-        
-    arg_opt = cl_cmd_line_opt_get_arg_opt(cmd_opt);
-    while (NULL != arg_opt) {
-        show_opt_help((cl_opt*)arg_opt, cmd, "\t");
-        arg_opt = cl_arg_opt_get_next(arg_opt);
-    }
-
-    switch_opt = cl_cmd_line_opt_get_switch_opt(cmd_opt);
-    while (NULL != switch_opt) {
-        show_opt_help((cl_opt*)switch_opt, cmd, "\t");
-
-        arg_opt = cl_switch_opt_get_arg_opt(switch_opt);            
-        while (NULL != arg_opt) {
-            show_opt_help((cl_opt*)arg_opt, cmd, "\t\t");
-            arg_opt = cl_arg_opt_get_next(arg_opt);
-        }
-        switch_opt = cl_switch_opt_get_next(switch_opt);
-    }
-}
-
 static const char *help(cl_cmd_line *cmd, void *state) {
     help_state *s;
     cl_arg_tok *arg_tok;
@@ -111,7 +39,7 @@ static const char *help(cl_cmd_line *cmd, void *state) {
     if (NULL != arg_tok) {
         cmd_opt = cl_cmd_line_opt_find_by_name(cmd_opt, cl_tok_get_value(arg_tok));
         if (NULL != cmd_opt) {
-            show_cmd_opt_help(cmd_opt, cmd);
+            cl_cmd_line_opt_send_help(cmd_opt, cmd);
             return 0;
         }
         cl_cmd_line_respond(cmd, cl_cmd_line_format_response(cmd, "Invalid command: no option found for \"%s\".", cl_tok_get_value(arg_tok)));
@@ -120,7 +48,7 @@ static const char *help(cl_cmd_line *cmd, void *state) {
 
     cl_cmd_line_respond(cmd, "Commands");
     while (NULL != cmd_opt) {
-        show_opt_help((cl_opt*)cmd_opt, cmd, "\t");
+        cl_opt_send_help((cl_opt*)cmd_opt, cmd, "\t");
         cmd_opt = cl_cmd_line_opt_get_next(cmd_opt);
     }
     cl_cmd_line_respond(cmd, cl_cmd_line_format_response(cmd, "Type \"%s\" followed by a command name for additional help with that command.", cl_cmd_line_app_get_help_command(s->app)));

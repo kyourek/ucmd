@@ -15,9 +15,9 @@ CL_EXPORTED char *cl_app_receive_data(cl_app *p, char *buf, size_t buf_size);
 CL_EXPORTED void cl_app_send_data(cl_app *p, const char *data);
 
 struct cl_app {
-	cl_app_create_cmd_opt_func *create_cmd_opt;
-	cl_app_send_data_func *send_data;
-	cl_app_receive_data_func *receive_data;
+    cl_app_create_cmd_opt_func *create_cmd_opt;
+    cl_app_send_data_func *send_data;
+    cl_app_receive_data_func *receive_data;
 };
 
 #endif

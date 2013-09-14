@@ -117,7 +117,7 @@ static const char *subtract(cl_cmd_line *cmd, void *state) {
 
 static cl_cmd_line_opt *create_cmd_opt(cl_app *p) {
 
-	cl_switch_opt *verbose_opt = cl_switch_opt_create(verbose_switch_name, "Print extra information (verbose).", NULL, NULL);
+    cl_switch_opt *verbose_opt = cl_switch_opt_create(verbose_switch_name, "Print extra information (verbose).", NULL, NULL);
 
     return 
         cl_cmd_line_opt_create(
@@ -139,10 +139,10 @@ static cl_cmd_line_opt *create_cmd_opt(cl_app *p) {
 }
 
 cl_app *cl_math_app_get_instance(void) {
-	static cl_app instance;
-	static cl_app *instance_p = NULL;
-	if (NULL == instance_p) {
-		instance_p = cl_app_init(&instance, create_cmd_opt);
-	}
-	return instance_p;
+    static cl_app instance;
+    static cl_app *instance_p = NULL;
+    if (NULL == instance_p) {
+        instance_p = cl_app_init(&instance, create_cmd_opt);
+    }
+    return instance_p;
 }

@@ -13,8 +13,8 @@ static CL_BOOL tests_exit(void) {
 }
 
 int main (int argc, const char * argv[]) {
-	cl_tests *tests = cl_tests_get_instance();
-	cl_tests_set_print(tests, tests_print);
-	cl_tests_set_exit(tests, tests_exit);
+    cl_tests *tests = cl_tests_get_instance();
+    cl_tests_set_print(tests, tests_print);
+    cl_tests_set_exit(tests, tests_exit);
     return cl_tests_main(tests) ? -1 : 0;
 }

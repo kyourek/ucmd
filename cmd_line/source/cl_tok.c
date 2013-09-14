@@ -64,13 +64,13 @@ CL_BOOL cl_tok_is_numeric(cl_tok *p) {
 
     /* check if p is NULL */
     if (NULL == p) return CL_FALSE;
-	
+    
     /* get the length of the string */
     len = cl_tok_get_length(p);
-	
+    
     /* numbers need to have at least 1 character */
     if (len < 1) return CL_FALSE;
-	
+    
     /* we are allowed to start with a '-' or '.' for negative numbers and decimals */
     if ((p[0] == '-') || (p[0] == '.')) {
         
@@ -90,13 +90,13 @@ CL_BOOL cl_tok_is_numeric(cl_tok *p) {
             case '-':
                 if (i != 0) return CL_FALSE;
                 break;
-				
+                
             /* allow only 1 dot */
             case '.':
                 if (dec_found) return CL_FALSE;
                 dec_found = CL_TRUE;
                 break;
-				
+                
             /* everything else has to be a number */
             default:
                 if (is_char_digit(p[i]) == CL_FALSE) return CL_FALSE;
@@ -113,16 +113,16 @@ CL_BOOL cl_tok_is_switch(cl_tok* p) {
 
     /* check for a null pointer */
     if (NULL == p) return CL_FALSE;
-	
+    
     /* get the length so we can use it */
     len = cl_tok_get_length(p);
-	
+    
     /* check for at least 2 characters (one '-' and at least another char) */
     if (len < 2) return CL_FALSE;
-	
+    
     /* check if it starts with a '-' */
     if (p[0] != '-') return CL_FALSE;
-	
+    
     /* check if this is a numeric argument (negative numbers aren't switches) */
     if (cl_tok_is_numeric(p)) return CL_FALSE;
 

@@ -5,6 +5,11 @@
 #include "cl_tests.h"
 #include "cl_tests_p.h"
 
+static const char *transmit_func_one_response = NULL;
+static void transmit_func_one(const char *response, void *state) {
+    transmit_func_one_response = response;
+}
+
 static const char *uart_func_one(cl_cmd_line *p, void *state) {
     return CL_TESTS_NO_ERR;
 }
@@ -151,11 +156,49 @@ static CL_TESTS_ERR cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
+CL_TESTS_ERR cl_cmd_line_opt_send_usage_responds_with_usage_string(void) {
+    const char *expected;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_cmd_line_transmit_func *prev_transmit_func = cl_cmd_line_get_transmit(cmd);
+
+    cl_cmd_line_opt *cmd_opt = 
+        cl_cmd_line_opt_create(NULL, NULL, "dothis", NULL,
+            cl_arg_opt_create("firstarg", NULL,
+            cl_arg_opt_create_required("secondarg", NULL,
+            cl_arg_opt_create_numeric(NULL, 0, 5,
+            NULL))),
+            cl_switch_opt_create("-s1", NULL, 
+                cl_arg_opt_create_required_numeric(NULL, 0, 10,
+                NULL),
+            cl_switch_opt_create("-s2", NULL,
+                NULL,
+            cl_switch_opt_create_required("-sthree", NULL,
+                cl_arg_opt_create("s3arg", NULL,
+                NULL),
+            NULL))),
+        cl_cmd_line_opt_create(NULL, NULL, "boringcmd", NULL, NULL, NULL, NULL));
+
+    cl_cmd_line_set_transmit(cmd, transmit_func_one);
+    
+    cl_cmd_line_opt_send_usage(cmd_opt, cmd);
+    expected = "dothis [firstarg] secondarg [<number>] [-s1] <number> [-s2] -sthree [s3arg]";
+    CL_TESTS_ASSERT(0 == strcmp(expected, transmit_func_one_response));
+
+    cl_cmd_line_opt_send_usage(cl_cmd_line_opt_get_next(cmd_opt), cmd);
+    expected = "boringcmd";
+    CL_TESTS_ASSERT(0 == strcmp(expected, transmit_func_one_response));
+
+    cl_cmd_line_opt_destroy_chain(cmd_opt);
+    cl_cmd_line_set_transmit(cmd, prev_transmit_func);
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_structure);
     CL_TESTS_RUN(cl_cmd_line_opt_process_calls_func);
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_different_instances);
     CL_TESTS_RUN(cl_cmd_line_opt_destroy_releases_instance);
     CL_TESTS_RUN(cl_cmd_line_opt_destroy_chain_releases_all_instances);
+    CL_TESTS_RUN(cl_cmd_line_opt_send_usage_responds_with_usage_string);
     return CL_TESTS_NO_ERR;
 }

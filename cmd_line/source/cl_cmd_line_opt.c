@@ -4,6 +4,10 @@
 #include "cl_arg_opt_p.h"
 #include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
+#include "cl_cmd_line_opt.h"
+#include "cl_cmd_line_opt_p.h"
+#include "cl_cmd_line_validator.h"
+#include "cl_cmd_line_validator_p.h"
 #include "cl_cmd_tok.h"
 #include "cl_memory_manager_p.h"
 #include "cl_opt.h"
@@ -11,15 +15,39 @@
 #include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 #include "cl_tok.h"
-#include "cl_cmd_line_opt.h"
-#include "cl_cmd_line_opt_p.h"
-#include "cl_cmd_line_validator.h"
-#include "cl_cmd_line_validator_p.h"
 
 CL_MEMORY_MANAGER_INIT(cl_cmd_line_opt, CL_CMD_COUNT_MAX);
 
 static cl_cmd_line_opt *create_cmd_line_opt(void) {
     return cl_memory_manager_create();
+}
+
+static const char *add_opt_to_usage_response(cl_opt *opt, cl_cmd_line *cmd, const char *response) {
+    static const char *required_format = "%s %s";
+    static const char *optional_format = "%s [%s]";
+    return cl_cmd_line_format_response(
+        cmd,
+        cl_opt_is_required(opt) ? required_format : optional_format,
+        response,
+        cl_opt_get_name(opt)
+    );
+}
+
+static const char *add_arg_opts_to_usage_response(cl_arg_opt *arg_opt, cl_cmd_line *cmd, const char *response) {
+    
+    while (NULL != arg_opt) {
+        response = add_opt_to_usage_response((cl_opt*)arg_opt, cmd, response);
+        arg_opt = cl_arg_opt_get_next(arg_opt);
+    }
+
+    return response;
+}
+
+static void send_arg_opts_help(cl_arg_opt *arg_opt, cl_cmd_line *cmd, const char *prefix) {
+    while (NULL != arg_opt) {
+        cl_opt_send_help((cl_opt*)arg_opt, cmd, prefix);
+        arg_opt = cl_arg_opt_get_next(arg_opt);
+    }
 }
 
 cl_cmd_line_opt *cl_cmd_line_opt_get_next(cl_cmd_line_opt *p) {
@@ -75,6 +103,54 @@ void *cl_cmd_line_opt_get_state(cl_cmd_line_opt *p) {
 cl_cmd_line_validator *cl_cmd_line_opt_get_cmd_validator(cl_cmd_line_opt *p) {
     if (NULL == p) return NULL;
     return p->cmd_validator;
+}
+
+void cl_cmd_line_opt_send_usage(cl_cmd_line_opt *p, cl_cmd_line *cmd) {
+    cl_switch_opt *switch_opt;
+
+    /* start the usage string with the name of the command */
+    const char *response = cl_cmd_line_format_response(cmd, "%s", cl_opt_get_name((cl_opt*)p));
+
+    /* add each available argument option of the command
+       to the usage string */
+    response = add_arg_opts_to_usage_response(cl_cmd_line_opt_get_arg_opt(p), cmd, response);
+
+    /* loop through each available switch option */
+    switch_opt = cl_cmd_line_opt_get_switch_opt(p);
+    while (NULL != switch_opt) {
+
+        /* add it to the usage string */
+        response = add_opt_to_usage_response((cl_opt*)switch_opt, cmd, response);
+
+        /* also add each of the switch's argument options to the
+           usage string */
+        response = add_arg_opts_to_usage_response(cl_switch_opt_get_arg_opt(switch_opt), cmd, response);
+
+        /* go to the next switch */
+        switch_opt = cl_switch_opt_get_next(switch_opt);
+    }
+
+    /* send the completed usage string */
+    cl_cmd_line_respond(cmd, response);
+}
+
+void cl_cmd_line_opt_send_help(cl_cmd_line_opt *p, cl_cmd_line *cmd) {
+    static const char *single_tab = "\t";
+    static const char *double_tab = "\t\t";
+
+    cl_switch_opt *switch_opt;
+
+    cl_cmd_line_opt_send_usage(p, cmd);
+
+    cl_opt_send_help((cl_opt*)p, cmd, "");
+    send_arg_opts_help(cl_cmd_line_opt_get_arg_opt(p), cmd, single_tab);    
+
+    switch_opt = cl_cmd_line_opt_get_switch_opt(p);
+    while (NULL != switch_opt) {
+        cl_opt_send_help((cl_opt*)switch_opt, cmd, single_tab);
+        send_arg_opts_help(cl_switch_opt_get_arg_opt(switch_opt), cmd, double_tab);
+        switch_opt = cl_switch_opt_get_next(switch_opt);
+    }
 }
 
 const char *cl_cmd_line_opt_process(cl_cmd_line_opt* p, cl_cmd_line *cmd) {
