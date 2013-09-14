@@ -38,9 +38,6 @@
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_toks.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_validator.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_parser.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -75,9 +72,6 @@
       <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_validator_p.h">
       <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_parser_p.h">
@@ -119,9 +113,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_opt.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_validator.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_parser.c">

@@ -4,6 +4,7 @@
 #include "cl_arg_opt_p.h"
 #include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
+#include "cl_cmd_line.h"
 #include "cl_memory_manager_p.h"
 #include "cl_opt.h"
 #include "cl_opt_p.h"
@@ -63,4 +64,8 @@ void cl_switch_opt_destroy_chain(cl_switch_opt *p) {
         cl_arg_opt_destroy_chain(cl_switch_opt_get_arg_opt(p));
         cl_switch_opt_destroy(p);
     }
+}
+
+const char *cl_switch_opt_format_validation_err(cl_switch_opt *p, cl_cmd_line *cmd, cl_switch_tok *switch_tok) {
+    return cl_arg_opt_owner_format_validation_err((cl_arg_opt_owner*)p, cmd, cl_switch_tok_get_arg(switch_tok), cl_opt_get_name((cl_opt*)p));
 }
