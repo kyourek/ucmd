@@ -137,4 +137,24 @@ CL_EXPORTED void cl_cmd_line_opt_destroy_chain(cl_cmd_line_opt *p);
  */
 CL_EXPORTED const char *cl_cmd_line_opt_process(cl_cmd_line_opt *p, cl_cmd_line *cmd);
 
+/*
+ * Summary:
+ *   Uses the provided command structure to respond with a usage string 
+ *   for this command option.
+ * Parameters:
+ *   p: A pointer to the option whose usage string will be sent.
+ *   cmd: The command structure used to respond with the usage string.
+ */
+CL_EXPORTED void cl_cmd_line_opt_send_usage(cl_cmd_line_opt *p, cl_cmd_line *cmd);
+
+/*
+ * Summary:
+ *   Uses the provided command structure to respond with help information
+ *   for the this command option.
+ * Parameters:
+ *   p: A pointer to the command option for which help is sent.
+ *   cmd: The command structure used to respond with the help information.
+ */
+CL_EXPORTED void cl_cmd_line_opt_send_help(cl_cmd_line_opt *p, cl_cmd_line *cmd);
+
 #endif

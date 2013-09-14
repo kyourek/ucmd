@@ -1,6 +1,7 @@
 #ifndef CL_OPT_H
 #define CL_OPT_H
 
+#include "cl_cmd_line.h"
 #include "cl_common.h"
 
 /*
@@ -39,5 +40,17 @@ CL_EXPORTED const char *cl_opt_get_desc(cl_opt *p);
  *   CL_TRUE if the option is required. Otherwise, CL_FALSE.
  */
 CL_EXPORTED CL_BOOL cl_opt_is_required(cl_opt *p);
+
+/*
+ * Summary:
+ *   Uses the provided command structure to send help information
+ *   for this option.
+ * Parameters:
+ *   p: A pointer to the option for which help is sent.
+ *   cmd: A pointer to the command structure used to respond
+ *        with the help information.
+ *   prefix: A string used to prefix the help information.
+ */
+CL_EXPORTED void cl_opt_send_help(cl_opt *p, cl_cmd_line *cmd, const char *prefix);
 
 #endif
