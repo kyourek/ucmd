@@ -80,7 +80,6 @@
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_app.h" />
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_opt.h" />
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_toks.h" />
-    <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_line_validator.h" />
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_parser.h" />
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_tok.h" />
     <ClInclude Include="..\..\..\cmd_line\include\cl_common.h" />
@@ -94,7 +93,6 @@
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_app_p.h" />
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_opt_p.h" />
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_p.h" />
-    <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_line_validator_p.h" />
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_cmd_parser_p.h" />
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_memory_manager_p.h" />
     <ClInclude Include="..\..\..\cmd_line\include_p\cl_opt_p.h" />
@@ -110,7 +108,6 @@
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_app.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_opt.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_toks.c" />
-    <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_line_validator.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_parser.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_cmd_tok.c" />
     <ClCompile Include="..\..\..\cmd_line\source\cl_opt.c" />

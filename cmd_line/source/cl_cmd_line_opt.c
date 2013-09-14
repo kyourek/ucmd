@@ -6,9 +6,8 @@
 #include "cl_arg_opt_owner_p.h"
 #include "cl_cmd_line_opt.h"
 #include "cl_cmd_line_opt_p.h"
-#include "cl_cmd_line_validator.h"
-#include "cl_cmd_line_validator_p.h"
 #include "cl_cmd_tok.h"
+#include "cl_common.h"
 #include "cl_memory_manager_p.h"
 #include "cl_opt.h"
 #include "cl_opt_p.h"
@@ -71,7 +70,6 @@ cl_cmd_line_opt *cl_cmd_line_opt_init(cl_cmd_line_opt *p, cl_cmd_line_opt_func *
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;
-    p->cmd_validator = cl_cmd_line_validator_get_instance();
     p->next = next;
     return p;
 }
@@ -98,11 +96,6 @@ cl_cmd_line_opt_func *cl_cmd_line_opt_get_func(cl_cmd_line_opt *p) {
 void *cl_cmd_line_opt_get_state(cl_cmd_line_opt *p) {
     if (NULL == p) return NULL;
     return p->state;
-}
-
-cl_cmd_line_validator *cl_cmd_line_opt_get_cmd_validator(cl_cmd_line_opt *p) {
-    if (NULL == p) return NULL;
-    return p->cmd_validator;
 }
 
 void cl_cmd_line_opt_send_usage(cl_cmd_line_opt *p, cl_cmd_line *cmd) {
@@ -153,6 +146,62 @@ void cl_cmd_line_opt_send_help(cl_cmd_line_opt *p, cl_cmd_line *cmd) {
     }
 }
 
+const char *cl_cmd_line_opt_format_validation_err(cl_cmd_line_opt *p, cl_cmd_line *cmd) {
+    static const char *invalid_switch = "Invalid switch: ";
+
+    cl_cmd_tok *cmd_tok;
+    cl_switch_opt *switch_opt, *found_switch_opt, *next_switch_opt;
+    cl_switch_tok *switch_tok, *found_switch_tok, *next_switch_tok;
+    const char *switch_name, *validation;
+
+    cmd_tok = cl_cmd_line_get_cmd_tok(cmd);
+    
+    validation = cl_arg_opt_owner_format_validation_err((cl_arg_opt_owner*)p, cmd, cl_cmd_tok_get_arg(cmd_tok), NULL);
+    if (NULL != validation) return validation;
+
+    switch_tok = cl_cmd_tok_get_switch(cmd_tok);
+    switch_opt = cl_cmd_line_opt_get_switch_opt(p);
+
+    if (NULL == switch_opt) {
+        if (NULL != switch_tok) {
+            return cl_cmd_line_format_response(cmd, "%sno switch options exist for command \"%s\".", invalid_switch, cl_tok_get_value((cl_tok*)cmd_tok));
+        }
+        return NULL;
+    }
+
+    next_switch_tok = switch_tok;
+
+    while (NULL != next_switch_tok) {
+        found_switch_opt = cl_switch_opt_find(switch_opt, cl_tok_get_value((cl_tok*)next_switch_tok));
+        if (NULL == found_switch_opt) {
+            return cl_cmd_line_format_response(cmd, "%sno option exists for switch \"%s\".", invalid_switch, cl_tok_get_value(next_switch_tok));
+        }
+        next_switch_tok = cl_switch_tok_get_next(next_switch_tok);
+    }
+
+    next_switch_opt = switch_opt;
+
+    while (NULL != next_switch_opt) {
+        switch_name = cl_opt_get_name((cl_opt*)next_switch_opt);
+        found_switch_tok = cl_switch_tok_find(switch_tok, switch_name);
+
+        if (cl_opt_is_required((cl_opt*)next_switch_opt)) {
+            if (NULL == found_switch_tok) {
+                return cl_cmd_line_format_response(cmd, "%sthe switch \"%s\" is required.", invalid_switch, switch_name);
+            }
+        }
+
+        if (NULL != found_switch_tok) {
+            validation = cl_switch_opt_format_validation_err(next_switch_opt, cmd, found_switch_tok);
+            if (NULL != validation) return validation;
+        }
+
+        next_switch_opt = cl_switch_opt_get_next(next_switch_opt);
+    }
+    
+    return NULL;
+}
+
 const char *cl_cmd_line_opt_process(cl_cmd_line_opt* p, cl_cmd_line *cmd) {
     cl_cmd_tok *cmd_tok;
     cl_cmd_line_opt *opt;
@@ -171,7 +220,7 @@ const char *cl_cmd_line_opt_process(cl_cmd_line_opt* p, cl_cmd_line *cmd) {
 
     /* validate the command structure against the option.
        if validation fails, then return the validation result */
-    validation = cl_cmd_line_validator_validate(cl_cmd_line_opt_get_cmd_validator(opt), cmd, opt);
+    validation = cl_cmd_line_opt_format_validation_err(opt, cmd);
     if (validation) return validation;
 
     /* get the function callback from the command option */
