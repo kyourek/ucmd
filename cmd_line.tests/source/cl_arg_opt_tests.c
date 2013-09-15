@@ -1,3 +1,4 @@
+#include <float.h>
 #include <string.h>
 #include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
@@ -162,6 +163,57 @@ static CL_TESTS_ERR cl_arg_opt_destroy_chain_releases_all_instances(void) {
     return CL_TESTS_NO_ERR;
 }
 
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_numeric_err(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "non-num", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "-2.243", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_arg_opt_destroy(a);
+    return CL_TESTS_NO_ERR;
+}
+
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_out_of_range_numeric(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_numeric(NULL, -5.4, +2.1, NULL);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "-5.5", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "2.2", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "-5.399", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "2.099", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_arg_opt_destroy(a);
+    return CL_TESTS_NO_ERR;
+}
+
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_required_arg(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_required("arg", NULL, NULL);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, NULL, NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "bla", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_arg_opt_destroy(a);
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_is_numeric_returns_is_numeric);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_min_returns_value);
@@ -173,5 +225,8 @@ CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_create_creates_different_instances);
     CL_TESTS_RUN(cl_arg_opt_destroy_releases_instance);
     CL_TESTS_RUN(cl_arg_opt_destroy_chain_releases_all_instances);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_numeric_err);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_out_of_range_numeric);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_required_arg);
     return CL_TESTS_NO_ERR;
 }

@@ -193,6 +193,40 @@ CL_TESTS_ERR cl_cmd_line_opt_send_usage_responds_with_usage_string(void) {
     return CL_TESTS_NO_ERR;
 }
 
+CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_arg(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_cmd_line_opt *opt = cl_cmd_line_opt_create(NULL, NULL, "opt", NULL, cl_arg_opt_create_required("a", NULL, NULL), NULL, NULL);
+
+    cl_cmd_line_set_cmd_tok(cmd, "opt\0\n");
+    err = cl_cmd_line_opt_format_validation_err(opt, cmd);
+    CL_TESTS_ASSERT(NULL != err);
+
+    cl_cmd_line_set_cmd_tok(cmd, "opt\0arg\0\n");
+    err = cl_cmd_line_opt_format_validation_err(opt, cmd);
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_cmd_line_opt_destroy_chain(opt);
+    return CL_TESTS_NO_ERR;
+}
+
+CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_switch(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_cmd_line_opt *opt = cl_cmd_line_opt_create(NULL, NULL, "opt", NULL, NULL, cl_switch_opt_create_required("-s", NULL, NULL, NULL), NULL);
+
+    cl_cmd_line_set_cmd_tok(cmd, "opt\0-z\0\n");
+    err = cl_cmd_line_opt_format_validation_err(opt, cmd);
+    CL_TESTS_ASSERT(NULL != err);
+
+    cl_cmd_line_set_cmd_tok(cmd, "opt\0-s\0\n");
+    err = cl_cmd_line_opt_format_validation_err(opt, cmd);
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_cmd_line_opt_destroy_chain(opt);
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_structure);
     CL_TESTS_RUN(cl_cmd_line_opt_process_calls_func);
@@ -200,5 +234,7 @@ CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_destroy_releases_instance);
     CL_TESTS_RUN(cl_cmd_line_opt_destroy_chain_releases_all_instances);
     CL_TESTS_RUN(cl_cmd_line_opt_send_usage_responds_with_usage_string);
+    CL_TESTS_RUN(cl_cmd_line_opt_format_validation_err_catches_required_arg);
+    CL_TESTS_RUN(cl_cmd_line_opt_format_validation_err_catches_required_switch);
     return CL_TESTS_NO_ERR;
 }
