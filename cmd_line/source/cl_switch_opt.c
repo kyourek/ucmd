@@ -67,5 +67,24 @@ void cl_switch_opt_destroy_chain(cl_switch_opt *p) {
 }
 
 const char *cl_switch_opt_format_validation_err(cl_switch_opt *p, cl_cmd_line *cmd, cl_switch_tok *switch_tok) {
-    return cl_arg_opt_owner_format_validation_err((cl_arg_opt_owner*)p, cmd, cl_switch_tok_get_arg(switch_tok), cl_opt_get_name((cl_opt*)p));
+
+    /* check if the switch option is required */
+    if (cl_opt_is_required((cl_opt*)p)) {
+
+        /* check if the switch token is missing */
+        if (NULL == switch_tok) {
+
+            /* the switch is required, but it is not
+               present, so send the error */
+            return cl_cmd_line_format_response(cmd, "%sthe switch \"%s\" is required.", cl_opt_validation_err_invalid_switch_prefix, cl_opt_get_name((cl_opt*)p));
+        }
+    }
+
+    /* return the result of the argument validation */
+    return cl_arg_opt_owner_format_validation_err(
+        (cl_arg_opt_owner*)p, 
+        cmd, 
+        cl_switch_tok_get_arg(switch_tok), 
+        cl_opt_get_name((cl_opt*)p)
+    );
 }

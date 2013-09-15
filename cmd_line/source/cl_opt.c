@@ -4,6 +4,10 @@
 #include "cl_opt.h"
 #include "cl_opt_p.h"
 
+const char *cl_opt_validation_err_invalid_argument_prefix = "Invalid argument: ";
+const char *cl_opt_validation_err_invalid_switch_prefix = "Invalid switch: ";
+const char *cl_opt_validation_err_invalid_switch_argument_prefix = "Invalid switch argument: ";
+
 const char *cl_opt_get_name(cl_opt *p) {
     if (NULL == p) return NULL;
     return p->name;

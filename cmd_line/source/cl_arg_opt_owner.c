@@ -4,6 +4,7 @@
 #include "cl_arg_opt_p.h"
 #include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
+#include "cl_arg_tok.h"
 #include "cl_cmd_line.h"
 #include "cl_common.h"
 #include "cl_opt.h"
@@ -23,16 +24,15 @@ cl_arg_opt_owner *cl_arg_opt_owner_init(cl_arg_opt_owner *p, const char *name, c
 }
 
 const char *cl_arg_opt_owner_format_validation_err(cl_arg_opt_owner *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name) {
-    const char *validation, *prefix = switch_name == NULL ? "Invalid argument: " : "Invalid switch argument: ";
+    const char *validation, *prefix = switch_name == NULL ? cl_opt_validation_err_invalid_argument_prefix : cl_opt_validation_err_invalid_switch_argument_prefix;
 
     cl_arg_opt *arg_opt = cl_arg_opt_owner_get_arg_opt(p);
 
     if (NULL == arg_opt) {
         if (NULL != arg_tok) {
-            if (NULL == switch_name) {
-                return cl_cmd_line_format_response(cmd, "%sno argument options exist for command \"%s\".", prefix, cl_tok_get_value(cl_cmd_line_get_cmd_tok(cmd)));
-            }
-            return cl_cmd_line_format_response(cmd, "%sno argument options exist for switch \"%s\".", prefix, switch_name);
+            return NULL == switch_name
+                ? cl_cmd_line_format_response(cmd, "%sno argument options exist for command \"%s\".", prefix, cl_tok_get_value(cl_cmd_line_get_cmd_tok(cmd)))
+                : cl_cmd_line_format_response(cmd, "%sno argument options exist for switch \"%s\".", prefix, switch_name);
         }
         return CL_FALSE;
     }
@@ -47,10 +47,9 @@ const char *cl_arg_opt_owner_format_validation_err(cl_arg_opt_owner *p, cl_cmd_l
     }
 
     if (NULL != arg_tok) {
-        if (NULL == switch_name) {
-            return cl_cmd_line_format_response(cmd, "%sno option exists for argument \"%s\".", prefix, cl_tok_get_value(arg_tok));
-        }
-        return cl_cmd_line_format_response(cmd, "%sno option exists for \"%s\" argument \"%s\".", prefix, switch_name, cl_tok_get_value(arg_tok));
+        return NULL == switch_name
+            ? cl_cmd_line_format_response(cmd, "%sno option exists for argument \"%s\".", prefix, cl_tok_get_value(arg_tok))
+            : cl_cmd_line_format_response(cmd, "%sno option exists for \"%s\" argument \"%s\".", prefix, switch_name, cl_tok_get_value(arg_tok));
     }
 
     return CL_FALSE;
