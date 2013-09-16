@@ -1,8 +1,10 @@
 CC=gcc
 OUTDIR=../out/
-CFLAGS=-I./include -I./include_p -I../cmd_line/include -I../cmd_line/include_p -Wall -c
+PROJECTDIR=../../cmd_line.tests/
+CMDLINEDIR=../../cmd_line/
+CFLAGS=-I$(PROJECTDIR)include -I$(PROJECTDIR)include_p -I$(CMDLINEDIR)include -I$(CMDLINEDIR)include_p -Wall -c
 LDFLAGS=-L$(OUTDIR) -lcmd_line
-SOURCES=$(wildcard ./source/*.c)
+SOURCES=$(wildcard $(PROJECTDIR)source/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=cmd_line.tests
 EXECUTABLEPATH=$(OUTDIR)$(EXECUTABLE)
@@ -11,6 +13,7 @@ EXECUTABLEPATH=$(OUTDIR)$(EXECUTABLE)
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
+	$(MAKE) -C $(CMDLINEDIR)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLEPATH)
 
 .c.o:
