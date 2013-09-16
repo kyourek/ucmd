@@ -3,6 +3,8 @@ cmd_line.tests/.DS_Store
 cmd_line/.DS_Store
 cmd_line/include/.DS_Store
 cmd_line/source/*.o
+cmd_line.tests/source/*.o
+out/*
 ide/.DS_Store
 ide/Visual Studio 2010/Debug/
 ide/Visual Studio 2010/cmd_line.example/Debug/
