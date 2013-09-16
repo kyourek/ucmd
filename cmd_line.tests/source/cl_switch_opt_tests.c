@@ -146,7 +146,7 @@ static CL_TESTS_ERR cl_switch_opt_format_validation_err_catches_required_arg(voi
     err = cl_switch_opt_format_validation_err(s, cmd, "-s\0\n");
     CL_TESTS_ASSERT(NULL != err);
 
-    err = cl_switch_opt_format_validation_err(s, cmd, "-s\0a");
+    err = cl_switch_opt_format_validation_err(s, cmd, "-s\0a\0\n");
     CL_TESTS_ASSERT(NULL == err);
 
     cl_arg_opt_destroy(a);
