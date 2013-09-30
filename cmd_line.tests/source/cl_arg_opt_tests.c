@@ -1,9 +1,6 @@
 #include <float.h>
 #include <string.h>
-#include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_opt.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static CL_TESTS_ERR cl_arg_opt_is_numeric_returns_is_numeric(void) {

@@ -2,7 +2,6 @@
 #define CL_CMD_PARSER_H
 
 #include "cl_cmd_tok.h"
-#include "cl_common.h"
 
 /*
  * Summary:

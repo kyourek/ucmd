@@ -2,8 +2,8 @@
 #define CL_CMD_LINE_APP_H
 
 #include "cl_cmd_parser.h"
-#include "cl_common.h"
 #include "cl_cmd_line_opt.h"
+#include "cl_err.h"
 
 /*
  * Summary:

@@ -1,6 +1,7 @@
 #ifndef CL_ARG_TOK_H
 #define CL_ARG_TOK_H
 
+#include "cl_bool.h"
 #include "cl_common.h"
 
 /*

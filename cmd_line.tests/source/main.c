@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include "cl_common.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static void tests_print(const char *str) {

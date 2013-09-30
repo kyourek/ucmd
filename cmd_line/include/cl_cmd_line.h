@@ -2,10 +2,6 @@
 #define CL_CMD_LINE_H
 
 #include <stdarg.h>
-#include "cl_arg_tok.h"
-#include "cl_cmd_tok.h"
-#include "cl_common.h"
-#include "cl_switch_tok.h"
 #include "cl_cmd_line_toks.h"
 
 /*

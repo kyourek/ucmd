@@ -1,11 +1,6 @@
 #include <stdlib.h>
-#include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_arg_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_common.h"
 #include "cl_memory_manager_p.h"
-#include "cl_opt.h"
 #include "cl_opt_p.h"
 #include "cl_tok.h"
 

@@ -2,7 +2,6 @@
 #define CL_OPT_H
 
 #include "cl_cmd_line.h"
-#include "cl_common.h"
 
 /*
  * Summary:

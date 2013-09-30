@@ -1,9 +1,7 @@
 #include <stdlib.h>
-#include "cl_app.h"
 #include "cl_app_p.h"
 #include "cl_cmd_line.h"
 #include "cl_cmd_line_app.h"
-#include "cl_cmd_line_opt.h"
 
 static char *receive(char *buf, size_t buf_size, void *state) {
     cl_app *app = (cl_app*)state;

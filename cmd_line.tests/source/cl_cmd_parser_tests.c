@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cl_arg_tok.h"
-#include "cl_cmd_parser.h"
 #include "cl_cmd_parser_p.h"
 #include "cl_cmd_parser_tests.h"
 #include "cl_cmd_tok.h"
 #include "cl_switch_tok.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 #include "cl_tok.h"
 

@@ -1,15 +1,9 @@
 #ifndef CL_CMD_LINE_OPT_P_H
 #define CL_CMD_LINE_OPT_P_H
 
-#include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
-#include "cl_cmd_line.h"
 #include "cl_cmd_line_opt.h"
-#include "cl_cmd_line_opt_p.h"
-#include "cl_common.h"
-#include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 
 struct cl_cmd_line_opt {

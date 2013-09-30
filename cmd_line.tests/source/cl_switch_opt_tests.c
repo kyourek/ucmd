@@ -1,10 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cl_arg_opt_owner.h"
-#include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 #include "cl_switch_opt_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static CL_TESTS_ERR cl_switch_opt_get_next_returns_next(void) {

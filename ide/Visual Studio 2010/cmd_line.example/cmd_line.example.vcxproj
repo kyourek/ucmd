@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line\config;..\..\..\cmd_line\config\console;..\..\..\cmd_line\config\console\windows;..\..\..\cmd_line\config\console\windows\export;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -59,7 +59,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line\config;..\..\..\cmd_line\config\console;..\..\..\cmd_line\config\console\windows;..\..\..\cmd_line\config\console\windows\export;..\..\..\cmd_line.example\include;..\..\..\cmd_line.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>

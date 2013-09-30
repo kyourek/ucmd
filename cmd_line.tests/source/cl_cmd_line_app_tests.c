@@ -1,10 +1,7 @@
 #include <string.h>
-#include "cl_cmd_line.h"
 #include "cl_cmd_line_p.h"
-#include "cl_cmd_line_app.h"
 #include "cl_cmd_line_app_p.h"
 #include "cl_cmd_line_app_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 void *receive_1_state;

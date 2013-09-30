@@ -1,6 +1,5 @@
 #include "cl_switch_tok.h"
 #include "cl_switch_tok_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 #include "cl_tok.h"
 

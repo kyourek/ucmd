@@ -2,7 +2,6 @@
 #define CL_ARG_OPT_OWNER_H
 
 #include "cl_arg_opt.h"
-#include "cl_common.h"
 
 /*
  * Summary:
