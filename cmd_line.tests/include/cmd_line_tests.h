@@ -9,7 +9,6 @@
 #include "cl_cmd_line_tests.h"
 #include "cl_cmd_parser_tests.h"
 #include "cl_cmd_tok_tests.h"
-#include "cl_common_tests.h"
 #include "cl_opt_tests.h"
 #include "cl_switch_opt_tests.h"
 #include "cl_switch_tok_tests.h"
