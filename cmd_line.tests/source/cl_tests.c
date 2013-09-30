@@ -3,14 +3,12 @@
 #include "cl_arg_opt_tests.h"
 #include "cl_arg_tok_owner_tests.h"
 #include "cl_arg_tok_tests.h"
+#include "cl_bool_tests.h"
 #include "cl_cmd_parser_tests.h"
 #include "cl_cmd_tok_tests.h"
-#include "cl_common.h"
-#include "cl_common_tests.h"
 #include "cl_opt_tests.h"
 #include "cl_switch_opt_tests.h"
 #include "cl_switch_tok_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 #include "cl_tok_tests.h"
 #include "cl_cmd_line_app_tests.h"
@@ -113,9 +111,9 @@ CL_TESTS_ERR cl_tests_run(cl_tests *p) {
     CL_TESTS_RUN_GROUP(cl_arg_opt_tests);
     CL_TESTS_RUN_GROUP(cl_arg_tok_owner_tests);
     CL_TESTS_RUN_GROUP(cl_arg_tok_tests);
+    CL_TESTS_RUN_GROUP(cl_bool_tests);
     CL_TESTS_RUN_GROUP(cl_cmd_parser_tests);
     CL_TESTS_RUN_GROUP(cl_cmd_tok_tests);
-    CL_TESTS_RUN_GROUP(cl_common_tests);
     CL_TESTS_RUN_GROUP(cl_opt_tests);
     CL_TESTS_RUN_GROUP(cl_switch_opt_tests);
     CL_TESTS_RUN_GROUP(cl_switch_tok_tests);

@@ -2,6 +2,7 @@
 #define CL_TOK_H
 
 #include <stdlib.h>
+#include "cl_bool.h"
 #include "cl_common.h"
 
 /*

@@ -1,8 +1,6 @@
 #include <string.h>
-#include "cl_opt.h"
 #include "cl_opt_p.h"
 #include "cl_opt_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static CL_TESTS_ERR cl_opt_get_name_returns_name(void) {

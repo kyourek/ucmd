@@ -1,6 +1,7 @@
 #ifndef CL_TESTS_H
 #define CL_TESTS_H
 
+#include "cl_bool.h"
 #include "cl_common.h"
         
 #define CL_TESTS_ERR int

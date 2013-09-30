@@ -1,13 +1,7 @@
 #include <float.h>
 #include <stdlib.h>
-#include "cl_app.h"
 #include "cl_app_p.h"
-#include "cl_arg_opt.h"
-#include "cl_cmd_tok.h"
-#include "cl_common.h"
 #include "cl_math_app.h"
-#include "cl_switch_opt.h"
-#include "cl_switch_tok.h"
 #include "cl_tok.h"
 #include "cl_cmd_line.h"
 #include "cl_cmd_line_opt.h"

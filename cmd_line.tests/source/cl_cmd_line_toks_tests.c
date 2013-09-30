@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "cl_cmd_line_toks.h"
 #include "cl_cmd_line_toks_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static CL_TESTS_ERR cl_cmd_line_toks_get_cmd_tok_returns_value(void) {

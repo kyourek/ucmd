@@ -1,7 +1,6 @@
 #include <string.h>
 #include "cl_cmd_tok.h"
 #include "cl_cmd_tok_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 #include "cl_tok.h"
 

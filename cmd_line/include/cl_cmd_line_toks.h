@@ -1,10 +1,7 @@
 #ifndef CL_CMD_LINE_TOKS_H
 #define CL_CMD_LINE_TOKS_H
 
-#include "cl_arg_tok.h"
 #include "cl_cmd_tok.h"
-#include "cl_common.h"
-#include "cl_switch_tok.h"
 
 /*
  * Summary:

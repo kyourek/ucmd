@@ -1,7 +1,6 @@
 #ifndef CL_OPT_P_H
 #define CL_OPT_P_H
 
-#include "cl_common.h"
 #include "cl_opt.h"
 
 struct cl_opt {

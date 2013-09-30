@@ -1,8 +1,6 @@
 #ifndef CL_SWITCH_TOK_H
 #define CL_SWITCH_TOK_H
 
-#include "cl_common.h"
-#include "cl_arg_tok.h"
 #include "cl_arg_tok_owner.h"
 
 /*

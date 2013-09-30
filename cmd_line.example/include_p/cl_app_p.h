@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include "cl_app.h"
-#include "cl_common.h"
 #include "cl_cmd_line_opt.h"
 
 typedef cl_cmd_line_opt *(cl_app_create_cmd_opt_func)(cl_app *p);

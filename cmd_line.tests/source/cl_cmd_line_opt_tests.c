@@ -1,8 +1,6 @@
 #include <string.h>
-#include "cl_cmd_line_opt.h"
 #include "cl_cmd_line_opt_p.h"
 #include "cl_cmd_line_opt_tests.h"
-#include "cl_tests.h"
 #include "cl_tests_p.h"
 
 static const char *transmit_func_one_response = NULL;

@@ -45,7 +45,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.tests\include;..\..\..\cmd_line.tests\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line\config;..\..\..\cmd_line\config\console;..\..\..\cmd_line\config\console\windows;..\..\..\cmd_line\config\console\windows\export;..\..\..\cmd_line.tests\include;..\..\..\cmd_line.tests\include_p</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -63,7 +63,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line.tests\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\cmd_line\include;..\..\..\cmd_line\include_p;..\..\..\cmd_line\config;..\..\..\cmd_line\config\console;..\..\..\cmd_line\config\console\windows;..\..\..\cmd_line\config\console\windows\export;..\..\..\cmd_line.tests\include;..\..\..\cmd_line.tests\include_p</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -77,13 +77,13 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_arg_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_arg_tok_owner_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_arg_tok_tests.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_bool_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_app_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_line_toks_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_parser_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_cmd_tok_tests.h" />
-    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_common_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_tok_tests.h" />
@@ -96,13 +96,13 @@
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_tok_owner_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_tok_tests.c" />
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_bool_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_app_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_line_toks_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_parser_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_cmd_tok_tests.c" />
-    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_common_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_switch_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_switch_tok_tests.c" />

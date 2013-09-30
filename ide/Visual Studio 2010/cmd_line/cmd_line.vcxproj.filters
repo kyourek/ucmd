@@ -12,6 +12,21 @@
     <Filter Include="include_p">
       <UniqueIdentifier>{72b0cb75-5da3-484d-865e-57743d1e36c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{c3027dbf-543e-4150-b967-0f52dda9eeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\console">
+      <UniqueIdentifier>{8139dbb7-98e6-4c1b-b16d-adeee923b91b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\console\windows">
+      <UniqueIdentifier>{4db83695-5201-41cd-b4b7-ee26637d357e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\console\windows\export">
+      <UniqueIdentifier>{06a52d11-619c-450a-a0ce-489b100e9dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\console\windows\import">
+      <UniqueIdentifier>{52c308da-f856-47a6-963a-28d62d454d48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\cmd_line\include\cl_arg_opt.h">
@@ -42,9 +57,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include\cl_cmd_tok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line\include\cl_common.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include\cl_opt.h">
@@ -90,6 +102,27 @@
       <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line\include\cmd_line.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\config\cl_common.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\config\console\cl_config.h">
+      <Filter>config\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\config\console\windows\cl_console.h">
+      <Filter>config\console\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\config\console\windows\export\cl_export.h">
+      <Filter>config\console\windows\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\config\console\windows\import\cl_export.h">
+      <Filter>config\console\windows\import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_bool.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line\include\cl_err.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

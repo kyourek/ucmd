@@ -1,12 +1,10 @@
 #ifndef CL_SWITCH_OPT_P_H
 #define CL_SWITCH_OPT_P_H
 
-#include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
 #include "cl_cmd_line.h"
-#include "cl_common.h"
-#include "cl_opt.h"
 #include "cl_opt_p.h"
+#include "cl_switch_opt.h"
 
 struct cl_switch_opt {
     cl_arg_opt_owner base;

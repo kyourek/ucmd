@@ -1,10 +1,8 @@
 #ifndef CL_ARG_OPT_P_H
 #define CL_ARG_OPT_P_H
 
-#include "cl_arg_tok.h"
+#include "cl_arg_opt.h"
 #include "cl_cmd_line.h"
-#include "cl_common.h"
-#include "cl_opt.h"
 #include "cl_opt_p.h"
 
 struct cl_arg_opt {

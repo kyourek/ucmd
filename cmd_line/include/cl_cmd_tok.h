@@ -2,7 +2,6 @@
 #define CL_CMD_TOK_H
 
 #include "cl_arg_tok.h"
-#include "cl_common.h"
 #include "cl_switch_tok.h"
 
 /*

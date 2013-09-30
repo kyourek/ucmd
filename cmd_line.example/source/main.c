@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "cl_app.h"
 #include "cl_math_app.h"
 
 static void send_data(const char *data) {

@@ -1,11 +1,8 @@
 #ifndef CL_CMD_LINE_APP_P_H
 #define CL_CMD_LINE_APP_P_H
 
-#include "cl_common.h"
-#include "cl_cmd_parser.h"
 #include "cl_cmd_parser_p.h"
 #include "cl_cmd_line_app.h"
-#include "cl_cmd_line_opt.h"
 
 struct cl_cmd_line_app {
     cl_cmd_line *cmd;

@@ -2,7 +2,6 @@
 #define CL_SWITCH_OPT_H
 
 #include "cl_arg_opt.h"
-#include "cl_common.h"
 
 /*
  * A command switch option.
