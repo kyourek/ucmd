@@ -4,9 +4,13 @@
 #include "cl_opt_p.h"
 #include "cl_tok.h"
 
+#ifndef CL_ARG_OPT_COUNT
+#define CL_ARG_OPT_COUNT        50
+#endif
+
 static const char *numeric_name = "<number>";
 
-CL_MEMORY_MANAGER_INIT(cl_arg_opt, (CL_CMD_COUNT_MAX * CL_ARG_COUNT_MAX) + (CL_SWITCH_COUNT_MAX * CL_ARG_COUNT_MAX));
+CL_MEMORY_MANAGER_INIT(cl_arg_opt, CL_ARG_OPT_COUNT);
 
 static cl_arg_opt *create_arg_opt(void) {
     return cl_memory_manager_create();

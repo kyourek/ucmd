@@ -11,7 +11,11 @@
 #include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 
-CL_MEMORY_MANAGER_INIT(cl_switch_opt, CL_CMD_COUNT_MAX * CL_SWITCH_COUNT_MAX);
+#ifndef CL_SWITCH_OPT_COUNT
+#define CL_SWITCH_OPT_COUNT     50
+#endif
+
+CL_MEMORY_MANAGER_INIT(cl_switch_opt, CL_SWITCH_OPT_COUNT);
 
 static cl_switch_opt *create_switch_opt(void) {
     return cl_memory_manager_create();

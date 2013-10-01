@@ -15,7 +15,11 @@
 #include "cl_switch_opt_p.h"
 #include "cl_tok.h"
 
-CL_MEMORY_MANAGER_INIT(cl_cmd_line_opt, CL_CMD_COUNT_MAX);
+#ifndef CL_CMD_LINE_OPT_COUNT
+#define CL_CMD_LINE_OPT_COUNT       10
+#endif
+
+CL_MEMORY_MANAGER_INIT(cl_cmd_line_opt, CL_CMD_LINE_OPT_COUNT);
 
 static cl_cmd_line_opt *create_cmd_line_opt(void) {
     return cl_memory_manager_create();
