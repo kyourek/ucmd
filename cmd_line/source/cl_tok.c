@@ -4,6 +4,10 @@
 #include "cl_tok.h"
 #include "cl_tok_p.h"
 
+#ifndef CL_TOK_LENGTH_MAX
+#define CL_TOK_LENGTH_MAX       200
+#endif
+
 const char cl_tok_separator = '\0';
 const char cl_cmd_terminator = '\n';
 
@@ -136,7 +140,7 @@ cl_tok *cl_tok_get_next(cl_tok *p) {
 
     /* loop until we've hit the max length */
     i = 0;
-    while (CL_TOK_LEN_MAX > ++i) {
+    while (CL_TOK_LENGTH_MAX > ++i) {
 
         /* check if the previous character was a separator */
         if (cl_tok_separator == p[i - 1]) {
