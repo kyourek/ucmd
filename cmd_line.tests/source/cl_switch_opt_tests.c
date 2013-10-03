@@ -152,6 +152,24 @@ static CL_TESTS_ERR cl_switch_opt_format_validation_err_catches_required_arg(voi
     return CL_TESTS_NO_ERR;
 }
 
+static CL_TESTS_ERR cl_switch_opt_format_validation_err_allows_multiple_arguments(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_multiple("a", NULL, 0, 3);
+    cl_switch_opt *s = cl_switch_opt_create("-s", NULL, a, NULL);
+
+    err = cl_switch_opt_format_validation_err(s, cmd, "-s\0\n");
+    CL_TESTS_ASSERT(NULL == err);
+
+    err = cl_switch_opt_format_validation_err(s, cmd, "-s\0a1\0a2\0a3\0\n");
+    CL_TESTS_ASSERT(NULL == err);
+
+    cl_arg_opt_destroy(a);
+    cl_switch_opt_destroy(s);
+
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_switch_opt_tests(void) {
     CL_TESTS_RUN(cl_switch_opt_get_next_returns_next);
     CL_TESTS_RUN(cl_switch_opt_create_creates_switch_opt);
@@ -161,5 +179,6 @@ CL_TESTS_ERR cl_switch_opt_tests(void) {
     CL_TESTS_RUN(cl_switch_opt_destroy_chain_releases_all_instances);
     CL_TESTS_RUN(cl_switch_opt_format_validation_err_catches_required_switch);
     CL_TESTS_RUN(cl_switch_opt_format_validation_err_catches_required_arg);
+    CL_TESTS_RUN(cl_switch_opt_format_validation_err_allows_multiple_arguments);
     return CL_TESTS_NO_ERR;
 }
