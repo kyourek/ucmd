@@ -56,7 +56,7 @@ static const char *help(cl_cmd_line *cmd, void *state) {
     return 0;
 }
 
-static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
+static cl_err run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     char *command;
     const char *response;
     cl_cmd_tok *cmd_tok;
@@ -118,7 +118,7 @@ static CL_ERR run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     cl_cmd_line_opt_destroy(main_opt);
 
     /* if we got here, then the app was quit */
-    return 0;
+    return CL_ERR_NONE;
 }
 
 void cl_cmd_line_app_set_escape_response(cl_cmd_line_app *p, const char *value) {
@@ -203,7 +203,7 @@ cl_cmd_line_app *cl_cmd_line_app_get_instance(void) {
     return p;
 }
 
-CL_ERR cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
+cl_err cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt) {
     if (NULL == p) return -1;
     if (NULL == p->run) return -2;
     return p->run(p, cmd_opt);

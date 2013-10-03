@@ -54,7 +54,7 @@ CL_EXPORTED const char *cl_cmd_line_app_get_escape_response(cl_cmd_line_app *p);
  * Returns:
  *   An error code, if one occurred.
  */ 
-CL_EXPORTED CL_ERR cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt);
+CL_EXPORTED cl_err cl_cmd_line_app_run(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt);
 
 /*
  * Summary:

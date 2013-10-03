@@ -13,7 +13,7 @@ struct cl_cmd_line_app {
     cl_cmd_parser *cmd_parser;
     cl_cmd_line_app_receive_func *receive;
     void *receive_state;
-    CL_ERR (*run)(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt);
+    cl_err (*run)(cl_cmd_line_app *p, cl_cmd_line_opt *cmd_opt);
     const char *help_command;
     const char *quit_command;
     const char *escape_response;
