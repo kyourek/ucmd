@@ -11,7 +11,7 @@ struct cl_switch_opt {
     cl_switch_opt *next;
 };
 
-CL_EXPORTED cl_switch_opt *cl_switch_opt_init(cl_switch_opt *p, const char *name, const char *desc, CL_BOOL is_required, cl_arg_opt *arg_opt, cl_switch_opt *next);
+CL_EXPORTED cl_switch_opt *cl_switch_opt_init(cl_switch_opt *p, const char *name, const char *desc, cl_bool is_required, cl_arg_opt *arg_opt, cl_switch_opt *next);
 
 CL_EXPORTED const char *cl_switch_opt_format_validation_err(cl_switch_opt *p, cl_cmd_line *cmd, cl_switch_tok *switch_tok);
 

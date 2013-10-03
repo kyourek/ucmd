@@ -39,6 +39,6 @@ cl_switch_tok *cl_switch_tok_find(cl_switch_tok *p, const char *switch_value) {
     return NULL;
 }
 
-CL_BOOL cl_switch_tok_contains(cl_switch_tok* p, const char *switch_value) {
+cl_bool cl_switch_tok_contains(cl_switch_tok* p, const char *switch_value) {
     return NULL == cl_switch_tok_find(p, switch_value) ? CL_FALSE : CL_TRUE;
 }

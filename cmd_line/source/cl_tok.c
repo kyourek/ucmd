@@ -11,7 +11,7 @@
 const char cl_tok_separator = '\0';
 const char cl_cmd_terminator = '\n';
 
-static CL_BOOL is_char_digit(char c) {
+static cl_bool is_char_digit(char c) {
     /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator */
     static char *digits = "0123456789";
     char *d;
@@ -37,7 +37,7 @@ const char *cl_tok_get_value(cl_tok *p) {
     return (const char*)p;
 }
 
-CL_BOOL cl_tok_equals(cl_tok *p, const char *value) {
+cl_bool cl_tok_equals(cl_tok *p, const char *value) {
     size_t i, len;
 
     /* check if these pointers are the same */
@@ -62,9 +62,9 @@ CL_BOOL cl_tok_equals(cl_tok *p, const char *value) {
     return CL_TRUE;
 }
 
-CL_BOOL cl_tok_is_numeric(cl_tok *p) {
+cl_bool cl_tok_is_numeric(cl_tok *p) {
     size_t i, len;
-    CL_BOOL dec_found;
+    cl_bool dec_found;
 
     /* check if p is NULL */
     if (NULL == p) return CL_FALSE;
@@ -112,7 +112,7 @@ CL_BOOL cl_tok_is_numeric(cl_tok *p) {
     return CL_TRUE;
 }
 
-CL_BOOL cl_tok_is_switch(cl_tok* p) {
+cl_bool cl_tok_is_switch(cl_tok* p) {
     size_t len = 0;
 
     /* check for a null pointer */

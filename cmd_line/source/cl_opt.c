@@ -18,7 +18,7 @@ const char *cl_opt_get_desc(cl_opt *p) {
     return p->desc;
 }
 
-CL_BOOL cl_opt_is_required(cl_opt *p) {
+cl_bool cl_opt_is_required(cl_opt *p) {
     if (NULL == p) return CL_FALSE;
     return p->is_required;
 }
@@ -35,7 +35,7 @@ void cl_opt_send_help(cl_opt *p, cl_cmd_line *cmd, const char *prefix) {
     ));
 }
 
-cl_opt *cl_opt_init(cl_opt *p, const char *name, const char *desc, CL_BOOL is_required) {
+cl_opt *cl_opt_init(cl_opt *p, const char *name, const char *desc, cl_bool is_required) {
     if (NULL == p) return NULL;
     p->name = name;
     p->desc = desc;

@@ -16,7 +16,7 @@ static cl_arg_opt *create_arg_opt(void) {
     return cl_memory_manager_create();
 }
 
-CL_BOOL cl_arg_opt_is_numeric(cl_arg_opt *p) {
+cl_bool cl_arg_opt_is_numeric(cl_arg_opt *p) {
     if (NULL == p) return CL_FALSE;
     return p->is_numeric;
 }
@@ -36,7 +36,7 @@ cl_arg_opt *cl_arg_opt_get_next(cl_arg_opt* p) {
     return p->next;
 }
 
-cl_arg_opt *cl_arg_opt_init(cl_arg_opt *p, const char *name, const char *desc, CL_BOOL is_required, CL_BOOL is_numeric, double numeric_min, double numeric_max, cl_arg_opt *next) {
+cl_arg_opt *cl_arg_opt_init(cl_arg_opt *p, const char *name, const char *desc, cl_bool is_required, cl_bool is_numeric, double numeric_min, double numeric_max, cl_arg_opt *next) {
 
     if (NULL == p) return NULL;
     if (NULL == cl_opt_init((cl_opt*)p, name, desc, is_required)) return NULL;

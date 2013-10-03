@@ -30,7 +30,7 @@ CL_EXPORTED size_t cl_tok_get_length(cl_tok *p);
  * Returns:
  *   CL_TRUE if the token value equals the given value. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_tok_equals(cl_tok *p, const char *value);
+CL_EXPORTED cl_bool cl_tok_equals(cl_tok *p, const char *value);
 
 /*
  * Summary:
@@ -40,7 +40,7 @@ CL_EXPORTED CL_BOOL cl_tok_equals(cl_tok *p, const char *value);
  * Returns:
  *   CL_TRUE if the token is considered numeric. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_tok_is_numeric(cl_tok *p);
+CL_EXPORTED cl_bool cl_tok_is_numeric(cl_tok *p);
 
 /*
  * Summary:
@@ -50,7 +50,7 @@ CL_EXPORTED CL_BOOL cl_tok_is_numeric(cl_tok *p);
  * Returns:
  *   CL_TRUE if the token is a switch. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_tok_is_switch(cl_tok* p);
+CL_EXPORTED cl_bool cl_tok_is_switch(cl_tok* p);
 
 /*
  * Summary:

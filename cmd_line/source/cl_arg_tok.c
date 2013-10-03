@@ -32,6 +32,6 @@ cl_arg_tok *cl_arg_tok_find(cl_arg_tok *p, const char *arg_value) {
     return NULL;
 }
 
-CL_BOOL cl_arg_tok_contains(cl_arg_tok* p, const char *arg_value) {
+cl_bool cl_arg_tok_contains(cl_arg_tok* p, const char *arg_value) {
     return NULL == cl_arg_tok_find(p, arg_value) ? CL_FALSE : CL_TRUE;
 }

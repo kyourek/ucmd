@@ -4,7 +4,7 @@
 #include "cl_cmd_tok.h"
 #include "cl_tok_p.h"
 
-static CL_BOOL is_char_white_space(char c) {
+static cl_bool is_char_white_space(char c) {
     /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */
     return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? CL_TRUE : CL_FALSE;
 }

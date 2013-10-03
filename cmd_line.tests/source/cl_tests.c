@@ -61,12 +61,12 @@ int cl_tests_get_group_assertions_made(cl_tests *p) {
     return p->group_assertions_made;
 }
 
-CL_BOOL cl_tests_get_unattended(cl_tests *p) {
+cl_bool cl_tests_get_unattended(cl_tests *p) {
     if (NULL == p) return CL_FALSE;
     return p->unattended;
 }
 
-void cl_tests_set_unattended(cl_tests *p, CL_BOOL value) {
+void cl_tests_set_unattended(cl_tests *p, cl_bool value) {
     if (NULL == p) return;
     p->unattended = value;
 }

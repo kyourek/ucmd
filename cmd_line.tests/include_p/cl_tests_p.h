@@ -9,7 +9,7 @@ struct cl_tests {
     int assertions_made;
     int group_run_count;
     int group_assertions_made;
-    CL_BOOL unattended;
+    cl_bool unattended;
     CL_TESTS_ERR err_returned;
     cl_tests_print_func *print;
     cl_tests_exit_func *exit;

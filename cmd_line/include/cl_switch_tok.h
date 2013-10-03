@@ -50,7 +50,7 @@ CL_EXPORTED cl_switch_tok *cl_switch_tok_find(cl_switch_tok *p, const char *swit
  *   CL_TRUE if a switch with the given value was found in the list. Otherwise,
  *   CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_switch_tok_contains(cl_switch_tok* p, const char *switch_value);
+CL_EXPORTED cl_bool cl_switch_tok_contains(cl_switch_tok* p, const char *switch_value);
 
 /*
  * Summary:

@@ -17,7 +17,7 @@ static const char *to_switch_name = "-to";
 static const char *from_switch_name = "-from";
 static const char *verbose_switch_name = "-v";
 
-static CL_BOOL is_verbose(cl_cmd_line *cmd) {
+static cl_bool is_verbose(cl_cmd_line *cmd) {
     return cl_switch_tok_contains(cl_cmd_tok_get_switch(cl_cmd_line_get_cmd_tok(cmd)), verbose_switch_name);
 }
 
@@ -25,7 +25,7 @@ static const char *add(cl_cmd_line *cmd, void *state) {
     const char *c1, *c2;
     double base_number, add_number, result;
     number_state *s;
-    CL_BOOL verbose;
+    cl_bool verbose;
     cl_switch_tok *to_switch;
     cl_cmd_line_toks toks;
 
@@ -69,7 +69,7 @@ static const char *subtract(cl_cmd_line *cmd, void *state) {
     const char *c1, *c2;
     double base_number, subtract_number, result;
     number_state *s;
-    CL_BOOL verbose;
+    cl_bool verbose;
     cl_switch_tok *from_switch;
     cl_cmd_line_toks toks;
 
