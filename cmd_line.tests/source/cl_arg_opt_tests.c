@@ -273,6 +273,39 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_required_arg(void) {
     return CL_TESTS_NO_ERR;
 }
 
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_not_enough_tokens(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 4, 5);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    return CL_TESTS_NO_ERR;
+}
+
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_too_many_tokens(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 4, 5);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0arg4\0arg5\0arg6\0\n", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    return CL_TESTS_NO_ERR;
+}
+
+CL_TESTS_ERR cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 3, 3);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_is_numeric_returns_is_numeric);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_min_returns_value);
@@ -289,5 +322,8 @@ CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_required_arg);
     CL_TESTS_RUN(cl_arg_opt_create_multiple_creates_arg_opt);
     CL_TESTS_RUN(cl_arg_opt_create_multiple_numeric_creates_arg_opt);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_not_enough_tokens);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_too_many_tokens);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_allows_correct_number_of_tokens);
     return CL_TESTS_NO_ERR;
 }
