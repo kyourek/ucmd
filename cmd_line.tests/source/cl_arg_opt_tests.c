@@ -281,6 +281,8 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_not_enough_tokens(void) {
     err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
     CL_TESTS_ASSERT(NULL != err);
 
+    cl_arg_opt_destroy(a);
+
     return CL_TESTS_NO_ERR;
 }
 
@@ -292,6 +294,8 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_too_many_tokens(void) {
     err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0arg4\0arg5\0arg6\0\n", NULL);
     CL_TESTS_ASSERT(NULL != err);
 
+    cl_arg_opt_destroy(a);
+
     return CL_TESTS_NO_ERR;
 }
 
@@ -302,6 +306,8 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(vo
 
     err = cl_arg_opt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
     CL_TESTS_ASSERT(NULL == err);
+
+    cl_arg_opt_destroy(a);
 
     return CL_TESTS_NO_ERR;
 }
@@ -319,6 +325,8 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_multiple_numbers(void) {
 
     err = cl_arg_opt_format_validation_err(a, cmd, "89.1" "\0" "4.789" "\0" "987" "\0" "91.23" "\0\n", NULL);
     CL_TESTS_ASSERT(NULL != err);
+
+    cl_arg_opt_destroy(a);
 
     return CL_TESTS_NO_ERR;
 }
