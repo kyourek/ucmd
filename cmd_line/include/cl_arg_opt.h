@@ -12,6 +12,18 @@ typedef struct cl_arg_opt cl_arg_opt;
 
 /*
  * Summary:
+ *   Gets a flag that indicates whether or not the argument option
+ *   allows multiple tokens to be set.
+ * Parameters:
+ *   p: A pointer to the argument option in question.
+ * Returns:
+ *   A boolean true value if the argument option allows multiple
+ *   tokens. Otherwise, boolean false.
+ */
+CL_EXPORTED cl_bool cl_arg_opt_allow_multiple(cl_arg_opt *p);
+
+/*
+ * Summary:
  *   Gets a flag that indicates whether or not this argument option
  *   is numeric.
  * Parameters:
@@ -53,6 +65,19 @@ CL_EXPORTED double cl_arg_opt_get_numeric_max(cl_arg_opt* p);
  *   A pointer to the newly created argument option.
  */
 CL_EXPORTED cl_arg_opt *cl_arg_opt_create(const char *name, const char *desc, cl_arg_opt *next);
+
+/*
+ * Summary:
+ *   Creates a new argument option that allows multiple tokens.
+ * Parameters:
+ *   name: The name of the option.
+ *   desc: The description of the option.
+ *   next: The next option in the chain that the created option precedes,
+ *         or NULL if the created option is the last.
+ * Returns:
+ *   A pointer to the newly created argument option.
+ */
+CL_EXPORTED cl_arg_opt *cl_arg_opt_create_multiple(const char *name, const char *desc, cl_arg_opt *next);
 
 /*
  * Summary:

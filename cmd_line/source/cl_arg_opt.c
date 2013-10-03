@@ -12,8 +12,23 @@ static const char *numeric_name = "<number>";
 
 CL_MEMORY_MANAGER_INIT(cl_arg_opt, CL_ARG_OPT_COUNT);
 
-static cl_arg_opt *create_arg_opt(void) {
-    return cl_memory_manager_create();
+static cl_arg_opt *create(const char *name, const char *desc, cl_bool is_required, cl_bool allow_multiple, cl_bool is_numeric, double numeric_min, double numeric_max, cl_arg_opt *next) {
+    return cl_arg_opt_init(
+        cl_memory_manager_create(),
+        name,
+        desc,
+        is_required,
+        allow_multiple,
+        is_numeric,
+        numeric_min,
+        numeric_max,
+        next
+    );
+}
+
+cl_bool cl_arg_opt_allow_multiple(cl_arg_opt *p) {
+    if (NULL == p) return CL_FALSE;
+    return p->allow_multiple;
 }
 
 cl_bool cl_arg_opt_is_numeric(cl_arg_opt *p) {
@@ -36,11 +51,12 @@ cl_arg_opt *cl_arg_opt_get_next(cl_arg_opt* p) {
     return p->next;
 }
 
-cl_arg_opt *cl_arg_opt_init(cl_arg_opt *p, const char *name, const char *desc, cl_bool is_required, cl_bool is_numeric, double numeric_min, double numeric_max, cl_arg_opt *next) {
+cl_arg_opt *cl_arg_opt_init(cl_arg_opt *p, const char *name, const char *desc, cl_bool is_required, cl_bool allow_multiple, cl_bool is_numeric, double numeric_min, double numeric_max, cl_arg_opt *next) {
 
     if (NULL == p) return NULL;
     if (NULL == cl_opt_init((cl_opt*)p, name, desc, is_required)) return NULL;
 
+    p->allow_multiple = allow_multiple;
     p->is_numeric = is_numeric;
     p->numeric_min = numeric_min;
     p->numeric_max = numeric_max;
@@ -50,19 +66,23 @@ cl_arg_opt *cl_arg_opt_init(cl_arg_opt *p, const char *name, const char *desc, c
 }
 
 cl_arg_opt *cl_arg_opt_create(const char *name, const char *desc, cl_arg_opt *next) {
-    return cl_arg_opt_init(create_arg_opt(), name, desc, CL_FALSE, CL_FALSE, 0, 0, next);
+    return create(name, desc, CL_FALSE, CL_FALSE, CL_FALSE, 0, 0, next);
+}
+
+cl_arg_opt *cl_arg_opt_create_multiple(const char *name, const char *desc, cl_arg_opt *next) {
+    return create(name, desc, CL_FALSE, CL_TRUE, CL_FALSE, 0, 0, next);
 }
 
 cl_arg_opt *cl_arg_opt_create_required(const char *name, const char *desc, cl_arg_opt *next) {
-    return cl_arg_opt_init(create_arg_opt(), name, desc, CL_TRUE, CL_FALSE, 0, 0, next);
+    return create(name, desc, CL_TRUE, CL_FALSE, CL_FALSE, 0, 0, next);
 }
 
 cl_arg_opt *cl_arg_opt_create_numeric(const char *desc, double numeric_min, double numeric_max, cl_arg_opt *next) {
-    return cl_arg_opt_init(create_arg_opt(), numeric_name, desc, CL_FALSE, CL_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_name, desc, CL_FALSE, CL_FALSE, CL_TRUE, numeric_min, numeric_max, next);
 }
 
 cl_arg_opt *cl_arg_opt_create_required_numeric(const char *desc, double numeric_min, double numeric_max, cl_arg_opt *next) {
-    return cl_arg_opt_init(create_arg_opt(), numeric_name, desc, CL_TRUE, CL_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_name, desc, CL_TRUE, CL_FALSE, CL_TRUE, numeric_min, numeric_max, next);
 }
 
 const char *cl_arg_opt_format_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name) {
