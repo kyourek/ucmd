@@ -196,19 +196,23 @@ const char *cl_arg_opt_format_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl
     if (1 < max_tok_count) {
 
         /* loop through the argument tokens */
-        tok_count = 0;
+        tok_count = arg_tok ? 1 : 0;
         while (arg_tok) {
-
-            /* increment the number of tokens and make sure it is valid */
-            tok_count++;
-            if (tok_count > max_tok_count) return cl_cmd_line_format_response(cmd, "%stoo many arguments for %s.", prefix, cl_opt_get_name((cl_opt*)p));
-
-            /* validate this token */
-            err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
-            if (err) return err;
 
             /* get the next argument token in the list */
             arg_tok = cl_arg_tok_get_next(arg_tok);
+
+            /* check if this token exists */
+            if (arg_tok) {
+
+                /* increment the number of tokens and make sure it is valid */
+                tok_count++;
+                if (tok_count > max_tok_count) return cl_cmd_line_format_response(cmd, "%stoo many arguments for %s.", prefix, cl_opt_get_name((cl_opt*)p));
+
+                /* validate this token */
+                err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
+                if (err) return err;
+            }
         }
 
         /* make sure we have enough tokens */
