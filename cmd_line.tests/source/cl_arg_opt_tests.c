@@ -306,6 +306,23 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(vo
     return CL_TESTS_NO_ERR;
 }
 
+CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_multiple_numbers(void) {
+    const char *err;
+    cl_cmd_line *cmd = cl_cmd_line_get_instance();
+    cl_arg_opt *a = cl_arg_opt_create_multiple_numeric(NULL, 2, 8, -100, +100);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "3" "\0" "4.789" "\0" "notnum" "\0" "91.23" "\0\n", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "89.1" "\0" "4.789" "\0" "0.987" "\0" "91.23" "\0\n", NULL);
+    CL_TESTS_ASSERT(NULL == err);
+
+    err = cl_arg_opt_format_validation_err(a, cmd, "89.1" "\0" "4.789" "\0" "987" "\0" "91.23" "\0\n", NULL);
+    CL_TESTS_ASSERT(NULL != err);
+
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_is_numeric_returns_is_numeric);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_min_returns_value);
@@ -325,5 +342,6 @@ CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_not_enough_tokens);
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_too_many_tokens);
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_allows_correct_number_of_tokens);
+    CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_multiple_numbers);
     return CL_TESTS_NO_ERR;
 }
