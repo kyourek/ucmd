@@ -107,8 +107,8 @@ static CL_TESTS_ERR cl_arg_opt_create_multiple_numeric_creates_arg_opt(void) {
     CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_is_numeric(p));
     CL_TESTS_ASSERT(min_tok_count == cl_arg_opt_get_min_tok_count(p));
     CL_TESTS_ASSERT(max_tok_count == cl_arg_opt_get_max_tok_count(p));
-    CL_TESTS_ASSERT(numeric_min = cl_arg_opt_get_numeric_min(p));
-    CL_TESTS_ASSERT(numeric_max = cl_arg_opt_get_numeric_max(p));
+    CL_TESTS_ASSERT(numeric_min == cl_arg_opt_get_numeric_min(p));
+    CL_TESTS_ASSERT(numeric_max == cl_arg_opt_get_numeric_max(p));
 
     cl_arg_opt_destroy(p);
 
