@@ -27,6 +27,90 @@ static cl_arg_opt *create(const char *name, const char *desc, cl_bool is_require
     );
 }
 
+static const char *format_is_required_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+
+    /* check if this argument is required */
+    if (cl_opt_is_required((cl_opt*)p)) {
+
+        /* the argument is required, so check that the argument
+           token exists */
+        if (NULL == arg_tok) {
+
+            /* the argument is required, but the token does NOT exist,
+               so there's an error here. Return the appropriate error
+               message */
+            return NULL == switch_name
+                ? cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required.", prefix, cl_opt_get_name((cl_opt*)p))
+                : cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required for switch \"%s\".", prefix, cl_opt_get_name((cl_opt*)p), switch_name);
+        }
+    }
+
+    /* return no error */
+    return NULL;
+}
+
+static const char *format_is_numeric_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+    double arg_num;
+
+    /* check if this argument option must be numeric */
+    if (cl_arg_opt_is_numeric(p)) {
+
+        /* check if the argument token was provided */
+        if (NULL != arg_tok) {
+            
+            /* check if the argument token is not numeric */
+            if (!cl_tok_is_numeric((cl_tok*)arg_tok)) {
+
+                /* the argument option requires a number, but the
+                   provided token is not numeric, so return the
+                   appropriate error message */
+                return NULL == switch_name
+                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is not numeric.", prefix, cl_tok_get_value(arg_tok))
+                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not numeric.", prefix, switch_name, cl_tok_get_value(arg_tok));
+            }
+
+            /* the profided argument token is numeric,
+               so convert it to a number */
+            arg_num = atof(cl_tok_get_value((cl_tok*)arg_tok));
+
+            /* check that that number is above the lower bound */
+            if (cl_arg_opt_get_numeric_min(p) > arg_num) {
+
+                /* the number is below the lower bound, so return the
+                   appropriate error message */
+                return NULL == switch_name
+                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%f\" is above the minimum value of \"%f\".", prefix, arg_num, cl_arg_opt_get_numeric_min(p))
+                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is above the minimum value of \"%f\".", prefix, switch_name, arg_num, cl_arg_opt_get_numeric_min(p));
+            }
+
+            /* check that the number is below the upper bound */
+            if (cl_arg_opt_get_numeric_max(p) < arg_num) {
+
+                /* the number is above the upper bound, so return the
+                   appropriate error message */
+                return NULL == switch_name
+                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%f\" is below the maximum value of \"%f\".", prefix, arg_num, cl_arg_opt_get_numeric_max(p))
+                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is below the maximum value of \"%f\".", prefix, switch_name, arg_num, cl_arg_opt_get_numeric_max(p));
+            }
+        }
+    }
+
+    /* return no error */
+    return NULL;
+}
+
+static const char *format_arg_tok_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+    const char *err;
+
+    err = format_is_required_validation_err(p, cmd, arg_tok, switch_name, prefix);
+    if (err) return err;
+
+    err = format_is_numeric_validation_err(p, cmd, arg_tok, switch_name, prefix);
+    if (err) return err;
+
+    return NULL;
+}
+
 int cl_arg_opt_get_min_tok_count(cl_arg_opt *p) {
     if (NULL == p) return 0;
     return p->min_tok_count;
@@ -97,69 +181,38 @@ cl_arg_opt *cl_arg_opt_create_required_numeric(const char *desc, double numeric_
 }
 
 const char *cl_arg_opt_format_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name) {
-    double arg_num;
+    int tok_count, max_tok_count;
 
     /* if a switch name was given, then this argument belongs
        to a switch. Otherwise, it's a command argument. */
     const char *prefix = switch_name == NULL ? cl_opt_validation_err_invalid_argument_prefix : cl_opt_validation_err_invalid_switch_argument_prefix;
 
-    /* check if this argument is required */
-    if (cl_opt_is_required((cl_opt*)p)) {
+    /* validate the current argument token */
+    const char *err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
+    if (err) return err;
 
-        /* the argument is required, so check that the argument
-           token exists */
-        if (NULL == arg_tok) {
+    /* check if this argument option allows multiple tokens */
+    max_tok_count = cl_arg_opt_get_max_tok_count(p);
+    if (1 < max_tok_count) {
 
-            /* the argument is required, but the token does NOT exist,
-               so there's an error here. Return the appropriate error
-               message */
-            return NULL == switch_name
-                ? cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required.", prefix, cl_opt_get_name((cl_opt*)p))
-                : cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required for switch \"%s\".", prefix, cl_opt_get_name((cl_opt*)p), switch_name);
+        /* loop through the argument tokens */
+        tok_count = 0;
+        while (arg_tok) {
+
+            /* increment the number of tokens and make sure it is valid */
+            tok_count++;
+            if (tok_count > max_tok_count) return cl_cmd_line_format_response(cmd, "%stoo many arguments for %s.", prefix, cl_opt_get_name((cl_opt*)p));
+
+            /* validate this token */
+            err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
+            if (err) return err;
+
+            /* get the next argument token in the list */
+            arg_tok = cl_arg_tok_get_next(arg_tok);
         }
-    }
 
-    /* check if this argument option must be numeric */
-    if (cl_arg_opt_is_numeric(p)) {
-
-        /* check if the argument token was provided */
-        if (NULL != arg_tok) {
-            
-            /* check if the argument token is not numeric */
-            if (!cl_tok_is_numeric((cl_tok*)arg_tok)) {
-
-                /* the argument option requires a number, but the
-                   provided token is not numeric, so return the
-                   appropriate error message */
-                return NULL == switch_name
-                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%s\" is not numeric.", prefix, cl_tok_get_value(arg_tok))
-                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not numeric.", prefix, switch_name, cl_tok_get_value(arg_tok));
-            }
-
-            /* the profided argument token is numeric,
-               so convert it to a number */
-            arg_num = atof(cl_tok_get_value((cl_tok*)arg_tok));
-
-            /* check that that number is above the lower bound */
-            if (cl_arg_opt_get_numeric_min(p) > arg_num) {
-
-                /* the number is below the lower bound, so return the
-                   appropriate error message */
-                return NULL == switch_name
-                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%f\" is above the minimum value of \"%f\".", prefix, arg_num, cl_arg_opt_get_numeric_min(p))
-                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is above the minimum value of \"%f\".", prefix, switch_name, arg_num, cl_arg_opt_get_numeric_min(p));
-            }
-
-            /* check that the number is below the upper bound */
-            if (cl_arg_opt_get_numeric_max(p) < arg_num) {
-
-                /* the number is above the upper bound, so return the
-                   appropriate error message */
-                return NULL == switch_name
-                    ? cl_cmd_line_format_response(cmd, "%sthe argument \"%f\" is below the maximum value of \"%f\".", prefix, arg_num, cl_arg_opt_get_numeric_max(p))
-                    : cl_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is below the maximum value of \"%f\".", prefix, switch_name, arg_num, cl_arg_opt_get_numeric_max(p));
-            }
-        }
+        /* make sure we have enough tokens */
+        if (tok_count < cl_arg_opt_get_min_tok_count(p)) return cl_cmd_line_format_response(cmd, "%snot enough arguments for %s.", prefix, cl_opt_get_name((cl_opt*)p));
     }
 
     /* if we got here, then no error was found */
