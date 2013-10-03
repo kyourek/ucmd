@@ -25,13 +25,13 @@ static void transmit_2(const char *response, void *state) {
 }
 
 static void *is_cancelled_1_state;
-static CL_BOOL is_cancelled_1_returned_value = CL_FALSE;
-static CL_BOOL is_cancelled_1(void *state) {
+static cl_bool is_cancelled_1_returned_value = CL_FALSE;
+static cl_bool is_cancelled_1(void *state) {
     is_cancelled_1_state = state;
     return is_cancelled_1_returned_value;
 }
 
-static CL_BOOL is_cancelled_2(void *state) {
+static cl_bool is_cancelled_2(void *state) {
     return CL_TRUE;
 }
 

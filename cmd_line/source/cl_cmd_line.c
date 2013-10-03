@@ -80,7 +80,7 @@ cl_cmd_line_transmit_func *cl_cmd_line_get_transmit(cl_cmd_line *p) {
     return p->transmit;
 }
 
-CL_BOOL cl_cmd_line_is_cancelled(cl_cmd_line *p) {
+cl_bool cl_cmd_line_is_cancelled(cl_cmd_line *p) {
     if (NULL == p) return CL_FALSE;
     if (NULL == p->is_cancelled) return CL_FALSE;
     return p->is_cancelled(p->is_cancelled_state);

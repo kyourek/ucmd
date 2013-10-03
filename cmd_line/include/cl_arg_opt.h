@@ -19,7 +19,7 @@ typedef struct cl_arg_opt cl_arg_opt;
  * Returns:
  *   CL_TRUE if the argument is numeric. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_arg_opt_is_numeric(cl_arg_opt *p);
+CL_EXPORTED cl_bool cl_arg_opt_is_numeric(cl_arg_opt *p);
 
 /*
  * Summary:

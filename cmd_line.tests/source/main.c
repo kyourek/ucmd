@@ -5,7 +5,7 @@ static void tests_print(const char *str) {
     printf("%s", str);
 }
 
-static CL_BOOL tests_exit(void) {
+static cl_bool tests_exit(void) {
     getchar();
     return CL_TRUE;
 }

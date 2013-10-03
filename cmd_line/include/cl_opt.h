@@ -38,7 +38,7 @@ CL_EXPORTED const char *cl_opt_get_desc(cl_opt *p);
  * Returns:
  *   CL_TRUE if the option is required. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_opt_is_required(cl_opt *p);
+CL_EXPORTED cl_bool cl_opt_is_required(cl_opt *p);
 
 /*
  * Summary:

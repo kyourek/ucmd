@@ -40,7 +40,7 @@ cl_switch_opt *cl_switch_opt_find(cl_switch_opt *p, const char *name) {
     return NULL;
 }
 
-cl_switch_opt *cl_switch_opt_init(cl_switch_opt *p, const char *name, const char *desc, CL_BOOL is_required, cl_arg_opt *arg_opt, cl_switch_opt *next) {
+cl_switch_opt *cl_switch_opt_init(cl_switch_opt *p, const char *name, const char *desc, cl_bool is_required, cl_arg_opt *arg_opt, cl_switch_opt *next) {
     if (NULL == p) return NULL;
     if (NULL == cl_arg_opt_owner_init((cl_arg_opt_owner*)p, name, desc, is_required, arg_opt)) return NULL;
 

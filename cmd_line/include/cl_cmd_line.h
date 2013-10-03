@@ -30,7 +30,7 @@ typedef void (cl_cmd_line_transmit_func)(const char *response, void *state);
  * Returns:
  *   CL_TRUE if the command has been cancelled. Otherwise, CL_FALSE.
  */
-typedef CL_BOOL (cl_cmd_line_is_cancelled_func)(void *state);
+typedef cl_bool (cl_cmd_line_is_cancelled_func)(void *state);
 
 /*
  * Summary:
@@ -108,7 +108,7 @@ CL_EXPORTED void cl_cmd_line_set_transmit_state(cl_cmd_line *p, void *value);
  * Returns:
  *   CL_TRUE if the command has been cancelled. Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_cmd_line_is_cancelled(cl_cmd_line *p);
+CL_EXPORTED cl_bool cl_cmd_line_is_cancelled(cl_cmd_line *p);
 
 /*
  * Summary:

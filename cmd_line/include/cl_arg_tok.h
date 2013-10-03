@@ -52,6 +52,6 @@ CL_EXPORTED cl_arg_tok *cl_arg_tok_find(cl_arg_tok *p, const char *arg_value);
  *   CL_TRUE if an argument token with the given value is found.
  *   Otherwise, CL_FALSE.
  */
-CL_EXPORTED CL_BOOL cl_arg_tok_contains(cl_arg_tok* p, const char *arg_value);
+CL_EXPORTED cl_bool cl_arg_tok_contains(cl_arg_tok* p, const char *arg_value);
 
 #endif
