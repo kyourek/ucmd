@@ -40,7 +40,8 @@ static CL_TESTS_ERR cl_arg_opt_create_creates_arg_opt(void) {
     CL_TESTS_ASSERT(&a == cl_arg_opt_get_next(p));
     CL_TESTS_ASSERT(CL_FALSE == cl_opt_is_required((cl_opt*)p));
     CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_is_numeric(p));
-    CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_allow_multiple(p));
+    CL_TESTS_ASSERT(0 == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_max_tok_count(p));
 
     cl_arg_opt_destroy(p);
 
@@ -48,17 +49,25 @@ static CL_TESTS_ERR cl_arg_opt_create_creates_arg_opt(void) {
 }
 
 static CL_TESTS_ERR cl_arg_opt_create_multiple_creates_arg_opt(void) {
-    cl_arg_opt a, *p;
+    cl_arg_opt *p;
+    int min_tok_count = 4, max_tok_count = 37;
     const char *name = "a-name", *desc = "a-desc";
 
-    p = cl_arg_opt_create_multiple(name, desc, &a);
+    p = cl_arg_opt_create_multiple(name, desc, min_tok_count, max_tok_count);
     
     CL_TESTS_ASSERT(0 == strcmp(name, cl_opt_get_name((cl_opt*)p)));
     CL_TESTS_ASSERT(0 == strcmp(desc, cl_opt_get_desc((cl_opt*)p)));
-    CL_TESTS_ASSERT(&a == cl_arg_opt_get_next(p));
-    CL_TESTS_ASSERT(CL_FALSE == cl_opt_is_required((cl_opt*)p));
+    CL_TESTS_ASSERT(NULL == cl_arg_opt_get_next(p));
+    CL_TESTS_ASSERT(CL_TRUE == cl_opt_is_required((cl_opt*)p));
     CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_is_numeric(p));
-    CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_allow_multiple(p));
+    CL_TESTS_ASSERT(min_tok_count == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(max_tok_count == cl_arg_opt_get_max_tok_count(p));
+
+    cl_arg_opt_destroy(p);
+
+    p = cl_arg_opt_create_multiple(name, desc, 0, max_tok_count);
+
+    CL_TESTS_ASSERT(CL_FALSE == cl_opt_is_required((cl_opt*)p));
 
     cl_arg_opt_destroy(p);
 
@@ -76,7 +85,36 @@ static CL_TESTS_ERR cl_arg_opt_create_required_creates_arg_opt(void) {
     CL_TESTS_ASSERT(&a == cl_arg_opt_get_next(p));
     CL_TESTS_ASSERT(CL_TRUE == cl_opt_is_required((cl_opt*)p));
     CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_is_numeric(p));
-    CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_allow_multiple(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_max_tok_count(p));
+
+    cl_arg_opt_destroy(p);
+
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_arg_opt_create_multiple_numeric_creates_arg_opt(void) {
+    cl_arg_opt *p;
+    int min_tok_count = 65, max_tok_count = 107;
+    double numeric_min = -203.41, numeric_max = +419.26;
+    const char *desc = "my_desc";
+
+    p = cl_arg_opt_create_multiple_numeric(desc, min_tok_count, max_tok_count, numeric_min, numeric_max);
+    
+    CL_TESTS_ASSERT(0 == strcmp(desc, cl_opt_get_desc((cl_opt*)p)));
+    CL_TESTS_ASSERT(NULL == cl_arg_opt_get_next(p));
+    CL_TESTS_ASSERT(CL_TRUE == cl_opt_is_required((cl_opt*)p));
+    CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_is_numeric(p));
+    CL_TESTS_ASSERT(min_tok_count == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(max_tok_count == cl_arg_opt_get_max_tok_count(p));
+    CL_TESTS_ASSERT(numeric_min = cl_arg_opt_get_numeric_min(p));
+    CL_TESTS_ASSERT(numeric_max = cl_arg_opt_get_numeric_max(p));
+
+    cl_arg_opt_destroy(p);
+
+    p = cl_arg_opt_create_multiple_numeric(desc, 0, max_tok_count, numeric_min, numeric_max);
+
+    CL_TESTS_ASSERT(CL_FALSE == cl_opt_is_required((cl_opt*)p));
 
     cl_arg_opt_destroy(p);
 
@@ -96,7 +134,8 @@ static CL_TESTS_ERR cl_arg_opt_create_numeric_creates_arg_opt(void) {
     CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_is_numeric(p));
     CL_TESTS_ASSERT(-5.678 == cl_arg_opt_get_numeric_min(p));
     CL_TESTS_ASSERT(12.34 == cl_arg_opt_get_numeric_max(p));
-    CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_allow_multiple(p));
+    CL_TESTS_ASSERT(0 == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_max_tok_count(p));
 
     cl_arg_opt_destroy(p);
 
@@ -116,7 +155,8 @@ static CL_TESTS_ERR cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
     CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_is_numeric(p));
     CL_TESTS_ASSERT(100.436 == cl_arg_opt_get_numeric_min(p));
     CL_TESTS_ASSERT(567.890 == cl_arg_opt_get_numeric_max(p));
-    CL_TESTS_ASSERT(CL_FALSE == cl_arg_opt_allow_multiple(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_min_tok_count(p));
+    CL_TESTS_ASSERT(1 == cl_arg_opt_get_max_tok_count(p));
 
     cl_arg_opt_destroy(p);
 
@@ -248,5 +288,6 @@ CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_out_of_range_numeric);
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_required_arg);
     CL_TESTS_RUN(cl_arg_opt_create_multiple_creates_arg_opt);
+    CL_TESTS_RUN(cl_arg_opt_create_multiple_numeric_creates_arg_opt);
     return CL_TESTS_NO_ERR;
 }
