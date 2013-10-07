@@ -20,6 +20,7 @@ cl_cmd_line *cl_cmd_line_get_instance(void) {
         p->cmd_tok = NULL;
         p->transmit = NULL;
         p->transmit_state = NULL;
+        p->is_quiet = CL_FALSE;
         p->is_cancelled = NULL;
         p->is_cancelled_state = NULL;
     }
@@ -67,6 +68,7 @@ const char *cl_cmd_line_format_response(cl_cmd_line *p, const char *format, ...)
 void cl_cmd_line_respond(cl_cmd_line *p, const char *response) {
     if (NULL == p) return;
     if (NULL == p->transmit) return;
+    if (p->is_quiet) return;
     p->transmit(response, p->transmit_state);
 }
 
@@ -114,4 +116,14 @@ void *cl_cmd_line_get_is_cancelled_state(cl_cmd_line *p) {
 void cl_cmd_line_set_is_cancelled_state(cl_cmd_line *p, void *value) {
     if (NULL == p) return;
     p->is_cancelled_state = value;
+}
+
+void cl_cmd_line_set_is_quiet(cl_cmd_line *p, cl_bool value) {
+    if (NULL == p) return;
+    p->is_quiet = value;
+}
+
+cl_bool cl_cmd_line_get_is_quiet(cl_cmd_line *p) {
+    if (NULL == p) return CL_FALSE;
+    return p->is_quiet;
 }

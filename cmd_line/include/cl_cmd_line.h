@@ -189,4 +189,27 @@ CL_EXPORTED const char *cl_cmd_line_format_response_va(cl_cmd_line *p, const cha
  */
 CL_EXPORTED void cl_cmd_line_respond(cl_cmd_line *p, const char *response);
 
+/*
+ * Summary:
+ *   Sets whether or not the command structure is quiet, meaning no response
+ *   strings will be sent.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is set.
+ *   value: A boolean true value if the command structure should not send
+ *          any response strings. Otherwise, false.
+ */
+CL_EXPORTED void cl_cmd_line_set_is_quiet(cl_cmd_line *p, cl_bool value);
+
+/*
+ * Summary:
+ *   Gets a flag that indicates whether or not the command structure is quiet,
+ *   meaning no response strings are sent.
+ * Parameters:
+ *   p: A pointer to the command structure whose property is returned.
+ * Returns:
+ *   A boolean true value if the command structure is not sending any
+ *   response strings. Otherwise, false.
+ */
+CL_EXPORTED cl_bool cl_cmd_line_get_is_quiet(cl_cmd_line *p);
+
 #endif
