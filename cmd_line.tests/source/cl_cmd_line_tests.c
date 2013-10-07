@@ -132,6 +132,7 @@ static CL_TESTS_ERR cl_cmd_line_get_transmit_returns_transmit(void) {
 
 static CL_TESTS_ERR cl_cmd_line_respond_uses_transmit(void) {
     cl_cmd_line c;
+    c.is_quiet = CL_FALSE;
     c.transmit = transmit_1;
 
     transmit_1_response = NULL;
@@ -251,6 +252,36 @@ static CL_TESTS_ERR cl_cmd_line_is_cancelled_uses_state(void) {
     return CL_TESTS_NO_ERR;
 }
 
+static CL_TESTS_ERR cl_cmd_line_set_is_quiet_sets_value(void) {
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    
+    cl_bool prev_val = cl_cmd_line_get_is_quiet(p);
+    CL_TESTS_ASSERT(CL_FALSE == prev_val);
+
+    cl_cmd_line_set_is_quiet(p, CL_TRUE);
+    CL_TESTS_ASSERT(cl_cmd_line_get_is_quiet(p) == CL_TRUE);
+
+    cl_cmd_line_set_is_quiet(p, prev_val);
+    CL_TESTS_ASSERT(cl_cmd_line_get_is_quiet(p) == prev_val);
+
+    return CL_TESTS_NO_ERR;
+}
+
+static CL_TESTS_ERR cl_cmd_line_respond_does_nothing_if_is_quiet(void) {
+    cl_cmd_line *p = cl_cmd_line_get_instance();
+    cl_bool pre_val = cl_cmd_line_get_is_quiet(p);
+
+    cl_cmd_line_set_is_quiet(p, CL_TRUE);
+    cl_cmd_line_set_transmit(p, transmit_1);
+
+    transmit_1_response = NULL;
+    cl_cmd_line_respond(p, "expected response");
+    CL_TESTS_ASSERT(NULL == transmit_1_response);
+
+    cl_cmd_line_set_is_quiet(p, pre_val);
+    return CL_TESTS_NO_ERR;
+}
+
 CL_TESTS_ERR cl_cmd_line_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_get_cmd_toks_returns_toks);
     CL_TESTS_RUN(cl_cmd_line_get_cmd_toks_sets_null_tok_values);
@@ -271,5 +302,7 @@ CL_TESTS_ERR cl_cmd_line_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_set_is_cancelled_state_sets_value);
     CL_TESTS_RUN(cl_cmd_line_get_is_cancelled_state_returns_value);
     CL_TESTS_RUN(cl_cmd_line_is_cancelled_uses_state);
+    CL_TESTS_RUN(cl_cmd_line_set_is_quiet_sets_value);
+    CL_TESTS_RUN(cl_cmd_line_respond_does_nothing_if_is_quiet);
     return CL_TESTS_NO_ERR;
 }
