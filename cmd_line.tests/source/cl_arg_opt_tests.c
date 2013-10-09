@@ -3,7 +3,7 @@
 #include "cl_arg_opt_p.h"
 #include "cl_tests_p.h"
 
-static CL_TESTS_ERR cl_arg_opt_is_numeric_returns_is_numeric(void) {
+static cl_tests_err cl_arg_opt_is_numeric_returns_is_numeric(void) {
     cl_arg_opt o;
     
     o.is_numeric = CL_FALSE;
@@ -12,24 +12,24 @@ static CL_TESTS_ERR cl_arg_opt_is_numeric_returns_is_numeric(void) {
     o.is_numeric = CL_TRUE;
     CL_TESTS_ASSERT(CL_TRUE == cl_arg_opt_is_numeric(&o));
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_get_numeric_min_returns_value(void) {
+static cl_tests_err cl_arg_opt_get_numeric_min_returns_value(void) {
     cl_arg_opt o;
     o.numeric_min = -765.432;
     CL_TESTS_ASSERT(-765.432 == cl_arg_opt_get_numeric_min(&o));
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_get_numeric_max_returns_value(void) {
+static cl_tests_err cl_arg_opt_get_numeric_max_returns_value(void) {
     cl_arg_opt o;
     o.numeric_max = 0.123456789;
     CL_TESTS_ASSERT(0.123456789 == cl_arg_opt_get_numeric_max(&o));
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -45,10 +45,10 @@ static CL_TESTS_ERR cl_arg_opt_create_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_multiple_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_multiple_creates_arg_opt(void) {
     cl_arg_opt *p;
     int min_tok_count = 4, max_tok_count = 37;
     const char *name = "a-name", *desc = "a-desc";
@@ -71,10 +71,10 @@ static CL_TESTS_ERR cl_arg_opt_create_multiple_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_required_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_required_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
 
@@ -90,10 +90,10 @@ static CL_TESTS_ERR cl_arg_opt_create_required_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_multiple_numeric_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_multiple_numeric_creates_arg_opt(void) {
     cl_arg_opt *p;
     int min_tok_count = 65, max_tok_count = 107;
     double numeric_min = -203.41, numeric_max = +419.26;
@@ -118,10 +118,10 @@ static CL_TESTS_ERR cl_arg_opt_create_multiple_numeric_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_numeric_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_numeric_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -139,10 +139,10 @@ static CL_TESTS_ERR cl_arg_opt_create_numeric_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
+static cl_tests_err cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
     cl_arg_opt *p;
     cl_arg_opt a;
     
@@ -160,10 +160,10 @@ static CL_TESTS_ERR cl_arg_opt_create_required_numeric_creates_arg_opt(void) {
 
     cl_arg_opt_destroy(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_create_creates_different_instances(void) {
+static cl_tests_err cl_arg_opt_create_creates_different_instances(void) {
     cl_arg_opt *o1, *o2, *o3;
 
     o1 = cl_arg_opt_create("o1", "o1", NULL);
@@ -177,10 +177,10 @@ static CL_TESTS_ERR cl_arg_opt_create_creates_different_instances(void) {
     cl_arg_opt_destroy(o2);
     cl_arg_opt_destroy(o3);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_destroy_releases_instance(void) {
+static cl_tests_err cl_arg_opt_destroy_releases_instance(void) {
     cl_arg_opt *o1, *o2, *o3;
 
     o1 = cl_arg_opt_create("o1", "o1", NULL);
@@ -195,10 +195,10 @@ static CL_TESTS_ERR cl_arg_opt_destroy_releases_instance(void) {
     cl_arg_opt_destroy(o1);
     cl_arg_opt_destroy(o3);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_arg_opt_destroy_chain_releases_all_instances(void) {
+static cl_tests_err cl_arg_opt_destroy_chain_releases_all_instances(void) {
     cl_arg_opt *o1, *o2, *o3, *o1_2, *o2_2, *o3_2;
 
     o3 = cl_arg_opt_create("o3", "o3", NULL);
@@ -219,10 +219,10 @@ static CL_TESTS_ERR cl_arg_opt_destroy_chain_releases_all_instances(void) {
     cl_arg_opt_destroy(o2_2);
     cl_arg_opt_destroy(o1_2);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_numeric_err(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_numeric_err(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
@@ -234,10 +234,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_numeric_err(void) {
     CL_TESTS_ASSERT(NULL == err);
 
     cl_arg_opt_destroy(a);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_out_of_range_numeric(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_out_of_range_numeric(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_numeric(NULL, -5.4, +2.1, NULL);
@@ -255,10 +255,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_out_of_range_numeric(void)
     CL_TESTS_ASSERT(NULL == err);
 
     cl_arg_opt_destroy(a);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_required_arg(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_required_arg(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_required("arg", NULL, NULL);
@@ -270,10 +270,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_required_arg(void) {
     CL_TESTS_ASSERT(NULL == err);
 
     cl_arg_opt_destroy(a);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_not_enough_tokens(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_not_enough_tokens(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 4, 5);
@@ -283,10 +283,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_not_enough_tokens(void) {
 
     cl_arg_opt_destroy(a);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_too_many_tokens(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_too_many_tokens(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 4, 5);
@@ -296,10 +296,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_too_many_tokens(void) {
 
     cl_arg_opt_destroy(a);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(void) {
+cl_tests_err cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_multiple("arg", NULL, 3, 3);
@@ -309,10 +309,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_allows_correct_number_of_tokens(vo
 
     cl_arg_opt_destroy(a);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_multiple_numbers(void) {
+cl_tests_err cl_arg_opt_format_validation_err_catches_multiple_numbers(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_arg_opt *a = cl_arg_opt_create_multiple_numeric(NULL, 2, 8, -100, +100);
@@ -328,10 +328,10 @@ CL_TESTS_ERR cl_arg_opt_format_validation_err_catches_multiple_numbers(void) {
 
     cl_arg_opt_destroy(a);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_arg_opt_tests(void) {
+cl_tests_err cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_is_numeric_returns_is_numeric);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_min_returns_value);
     CL_TESTS_RUN(cl_arg_opt_get_numeric_max_returns_value);
@@ -351,5 +351,5 @@ CL_TESTS_ERR cl_arg_opt_tests(void) {
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_too_many_tokens);
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_allows_correct_number_of_tokens);
     CL_TESTS_RUN(cl_arg_opt_format_validation_err_catches_multiple_numbers);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }

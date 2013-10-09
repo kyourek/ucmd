@@ -65,6 +65,18 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_bool_tests.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests_err.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_group.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_state.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_arg_opt_tests.c">
@@ -113,6 +125,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_bool_tests.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test_group.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test_state.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

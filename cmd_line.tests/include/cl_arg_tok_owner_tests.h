@@ -3,6 +3,6 @@
 
 #include "cl_tests.h"
 
-CL_EXPORTED CL_TESTS_ERR cl_arg_tok_owner_tests(void);
+CL_EXPORTED cl_tests_err cl_arg_tok_owner_tests(void);
 
 #endif

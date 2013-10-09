@@ -16,6 +16,11 @@
 #include "cl_cmd_line_toks_tests.h"
 #include "cl_cmd_line_tests.h"
 
+static cl_tests_err cl_tests_group_run_callback_invoke(cl_tests_run_group_callback_func *func, void *state) {
+    if (NULL != func) return func(state);
+    return CL_TESTS_ERR_NONE;
+}
+
 cl_tests *cl_tests_running_instance = NULL;
 
 cl_tests *cl_tests_get_instance() {
@@ -23,15 +28,23 @@ cl_tests *cl_tests_get_instance() {
     static cl_tests *p = NULL;
     if (NULL == p) {
         p = &instance;
-        p->exit = NULL;
-        p->print = NULL;
         p->run_count = 0;
         p->run_group_count = 0;
         p->assertions_made = 0;
         p->group_run_count = 0;
         p->group_assertions_made = 0;
         p->unattended = CL_FALSE;
-        p->err_returned = CL_TESTS_NO_ERR;
+        p->err_returned = CL_TESTS_ERR_NONE;
+
+        p->run_test_count = 0;
+        p->run_group_count = 0;
+        p->run_group_test_count = 0;
+
+        p->print_func = NULL;
+        p->print_state = NULL;
+
+        p->exit_func = NULL;
+        p->exit_state = NULL;
     }
     return p;
 }
@@ -71,32 +84,12 @@ void cl_tests_set_unattended(cl_tests *p, cl_bool value) {
     p->unattended = value;
 }
 
-CL_TESTS_ERR cl_tests_get_err_returned(cl_tests *p) {
-    if (NULL == p) return CL_TESTS_NO_ERR;
+cl_tests_err cl_tests_get_err_returned(cl_tests *p) {
+    if (NULL == p) return CL_TESTS_ERR_NONE;
     return p->err_returned;
 }
 
-cl_tests_print_func *cl_tests_get_print(cl_tests *p) {
-    if (NULL == p) return NULL;
-    return p->print;
-}
-
-void cl_tests_set_print(cl_tests *p, cl_tests_print_func *value) {
-    if (NULL == p) return;
-    p->print = value;
-}
-
-cl_tests_exit_func *cl_tests_get_exit(cl_tests *p) {
-    if (NULL == p) return NULL;
-    return p->exit;
-}
-
-void cl_tests_set_exit(cl_tests *p, cl_tests_exit_func *value) {
-    if (NULL == p) return;
-    p->exit = value;
-}
-
-CL_TESTS_ERR cl_tests_run(cl_tests *p) {
+cl_tests_err cl_tests_run(cl_tests *p) {
     if (NULL == p) return -1;
 
     p->run_count = 0;
@@ -104,7 +97,7 @@ CL_TESTS_ERR cl_tests_run(cl_tests *p) {
     p->assertions_made = 0;
     p->group_run_count = 0;
     p->group_assertions_made = 0;
-    p->err_returned = CL_TESTS_NO_ERR;
+    p->err_returned = CL_TESTS_ERR_NONE;
 
     cl_tests_running_instance = p;
 
@@ -126,17 +119,21 @@ CL_TESTS_ERR cl_tests_run(cl_tests *p) {
     return p->err_returned;
 }
 
-CL_TESTS_ERR cl_tests_main(cl_tests *p) {
+cl_tests_err cl_tests_main(cl_tests *p) {
     char str[50];
-    cl_tests_exit_func *exit = cl_tests_get_exit(p);
-    cl_tests_print_func *print = cl_tests_get_print(p);
+    cl_tests_exit_func *exit;
+    cl_tests_print_func *print;
 
-    CL_TESTS_ERR err = cl_tests_run(p);
+    if (NULL == p) return -1;
+    exit = p->exit_func;
+    print = p->print_func;
+
+    cl_tests_err err = cl_tests_run(p);
 
     if (NULL != print) {
         if (err) {
             sprintf(str, "Test failed in group %d.\n", cl_tests_get_run_group_count(p));
-            print(str);
+            print(str, p->print_state);
         }
         else {
             sprintf(str, "%s", "All tests passed.\n");
@@ -158,4 +155,76 @@ CL_TESTS_ERR cl_tests_main(cl_tests *p) {
     }
 
     return err;
+}
+
+void cl_tests_set_print_func(cl_tests *p, cl_tests_print_func *value) {
+    if (NULL == p) return;
+    p->print_func = value;
+}
+
+void cl_tests_set_print_state(cl_tests *p, void *value) {
+    if (NULL == p) return;
+    p->print_state = value;
+}
+
+void cl_tests_set_exit_func(cl_tests *p, cl_tests_exit_func *value) {
+    if (NULL == p) return;
+    p->exit_func = value;
+}
+
+void cl_tests_set_exit_state(cl_tests *p, void *value) {
+    if (NULL == p) return;
+    p->exit_state = value;
+}
+
+void cl_tests_print(cl_tests *p, const char *str) {
+    if (NULL == p) return;
+    if (NULL == p->print_func) return;
+    p->print_func(str, p->print_state);
+}
+
+cl_bool cl_tests_exit(cl_tests *p) {
+    if (NULL == p) return CL_TRUE;
+    if (NULL == p->exit_func) return CL_TRUE;
+    return p->exit_func(p->exit_state);
+}
+
+cl_tests_err cl_tests_run_group(cl_tests *p, cl_test_group *group) {
+    cl_tests_err err, callback_err;
+    cl_test_group_test_func **tests;
+
+    if (NULL == p) return -1;
+
+    tests = cl_test_group_get_tests(group);
+    if (NULL == tests) return -2;
+
+    p->run_group_test_count = 0;
+
+    callback_err = cl_test_group_before_all_tests(group);
+    if (callback_err) return callback_err;
+
+    err = CL_TESTS_ERR_NONE;
+    for (; *tests; tests++) {
+
+        callback_err = cl_test_group_before_each_test(group);
+        if (callback_err) return callback_err;
+
+        err = (*tests)(group);
+
+        callback_err = cl_tests_group_run_callback_invoke(after_each_test, state);
+        if (callback_err) return callback_err;
+
+        if (err) break;
+
+        p->run_group_test_count++;
+    }
+
+    callback_err = cl_tests_group_run_callback_invoke(after_all_tests, state);
+    if (callback_err) return callback_err;
+
+    if (err) return err;
+
+    p->run_group_count++;
+
+    return CL_TESTS_ERR_NONE;
 }

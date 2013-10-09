@@ -87,7 +87,11 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_opt_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_tok_tests.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests_err.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_group.h" />
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_state.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tok_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include\cmd_line_tests.h" />
     <ClInclude Include="..\..\..\cmd_line.tests\include_p\cl_tests_p.h" />
@@ -106,7 +110,10 @@
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_switch_opt_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_switch_tok_tests.c" />
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_tests.c" />
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test_group.c" />
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test_state.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_tok_tests.c" />
     <ClCompile Include="..\..\..\cmd_line.tests\source\main.c" />
   </ItemGroup>

@@ -3,6 +3,6 @@
 
 #include "cl_tests.h"
 
-CL_EXPORTED CL_TESTS_ERR cl_cmd_line_app_tests(void);
+CL_EXPORTED cl_tests_err cl_cmd_line_app_tests(void);
 
 #endif
