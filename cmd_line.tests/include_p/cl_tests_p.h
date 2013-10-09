@@ -10,9 +10,17 @@ struct cl_tests {
     int group_run_count;
     int group_assertions_made;
     cl_bool unattended;
-    CL_TESTS_ERR err_returned;
-    cl_tests_print_func *print;
-    cl_tests_exit_func *exit;
+    cl_tests_err err_returned;
+    
+    int run_test_count;
+    int run_group_count;
+    int run_group_test_count;
+
+    cl_tests_print_func *print_func;
+    void *print_state;
+    
+    cl_tests_exit_func *exit_func;
+    void *exit_state;
 };
 
 extern cl_tests *cl_tests_running_instance;

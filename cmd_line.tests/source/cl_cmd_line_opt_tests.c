@@ -9,14 +9,14 @@ static void transmit_func_one(const char *response, void *state) {
 }
 
 static const char *uart_func_one(cl_cmd_line *p, void *state) {
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
 static const char *uart_func_two(cl_cmd_line *p, void *state) {
     return "The result of uart_func_two.";
 }
 
-static CL_TESTS_ERR cl_cmd_line_opt_create_creates_structure(void) {
+static cl_tests_err cl_cmd_line_opt_create_creates_structure(void) {
     int state;
     cl_arg_opt *arg_opt;
     cl_switch_opt* switch_opt;
@@ -63,10 +63,10 @@ static CL_TESTS_ERR cl_cmd_line_opt_create_creates_structure(void) {
 
     cl_cmd_line_opt_destroy_chain(p);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_cmd_line_opt_process_calls_func(void) {
+static cl_tests_err cl_cmd_line_opt_process_calls_func(void) {
     cl_cmd_line *cmd;
     cl_cmd_line_opt *cmd_opt;
 
@@ -78,10 +78,10 @@ static CL_TESTS_ERR cl_cmd_line_opt_process_calls_func(void) {
 
     cl_cmd_line_opt_destroy_chain(cmd_opt);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_cmd_line_opt_create_creates_different_instances(void) {
+static cl_tests_err cl_cmd_line_opt_create_creates_different_instances(void) {
     cl_cmd_line_opt *c1, *c2, *c3;
 
     c1 = cl_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
@@ -95,10 +95,10 @@ static CL_TESTS_ERR cl_cmd_line_opt_create_creates_different_instances(void) {
     cl_cmd_line_opt_destroy(c2);
     cl_cmd_line_opt_destroy(c3);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_cmd_line_opt_destroy_releases_instance(void) {
+static cl_tests_err cl_cmd_line_opt_destroy_releases_instance(void) {
     cl_cmd_line_opt *c1, *c2, *c3, *c4;
 
     c1 = cl_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
@@ -115,10 +115,10 @@ static CL_TESTS_ERR cl_cmd_line_opt_destroy_releases_instance(void) {
     cl_cmd_line_opt_destroy(c2);
     cl_cmd_line_opt_destroy(c4);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-static CL_TESTS_ERR cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
+static cl_tests_err cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
     cl_arg_opt *a1, *a2, *a3, *a4, *a4_2;
     cl_switch_opt *s1, *s2, *s3, *s3_2;
     cl_cmd_line_opt *c1, *c2, *c3, *c3_2;
@@ -151,10 +151,10 @@ static CL_TESTS_ERR cl_cmd_line_opt_destroy_chain_releases_all_instances(void) {
     cl_switch_opt_destroy(s3_2);
     cl_cmd_line_opt_destroy(c3_2);
 
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_cmd_line_opt_send_usage_responds_with_usage_string(void) {
+cl_tests_err cl_cmd_line_opt_send_usage_responds_with_usage_string(void) {
     const char *expected;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_cmd_line_transmit_func *prev_transmit_func = cl_cmd_line_get_transmit(cmd);
@@ -188,10 +188,10 @@ CL_TESTS_ERR cl_cmd_line_opt_send_usage_responds_with_usage_string(void) {
 
     cl_cmd_line_opt_destroy_chain(cmd_opt);
     cl_cmd_line_set_transmit(cmd, prev_transmit_func);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_arg(void) {
+cl_tests_err cl_cmd_line_opt_format_validation_err_catches_required_arg(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_cmd_line_opt *opt = cl_cmd_line_opt_create(NULL, NULL, "opt", NULL, cl_arg_opt_create_required("a", NULL, NULL), NULL, NULL);
@@ -205,10 +205,10 @@ CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_arg(void) {
     CL_TESTS_ASSERT(NULL == err);
 
     cl_cmd_line_opt_destroy_chain(opt);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_switch(void) {
+cl_tests_err cl_cmd_line_opt_format_validation_err_catches_required_switch(void) {
     const char *err;
     cl_cmd_line *cmd = cl_cmd_line_get_instance();
     cl_cmd_line_opt *opt = cl_cmd_line_opt_create(NULL, NULL, "opt", NULL, NULL, cl_switch_opt_create_required("-s", NULL, NULL, NULL), NULL);
@@ -222,10 +222,10 @@ CL_TESTS_ERR cl_cmd_line_opt_format_validation_err_catches_required_switch(void)
     CL_TESTS_ASSERT(NULL == err);
 
     cl_cmd_line_opt_destroy_chain(opt);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
 
-CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
+cl_tests_err cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_structure);
     CL_TESTS_RUN(cl_cmd_line_opt_process_calls_func);
     CL_TESTS_RUN(cl_cmd_line_opt_create_creates_different_instances);
@@ -234,5 +234,5 @@ CL_TESTS_ERR cl_cmd_line_opt_tests(void) {
     CL_TESTS_RUN(cl_cmd_line_opt_send_usage_responds_with_usage_string);
     CL_TESTS_RUN(cl_cmd_line_opt_format_validation_err_catches_required_arg);
     CL_TESTS_RUN(cl_cmd_line_opt_format_validation_err_catches_required_switch);
-    return CL_TESTS_NO_ERR;
+    return CL_TESTS_ERR_NONE;
 }
