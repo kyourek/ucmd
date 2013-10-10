@@ -1,44 +1,44 @@
 #include <stdlib.h>
 #include "cl_test_group.h"
 
-cl_tests_err cl_test_group_before_all_tests(cl_test_group *p) {
+cl_test_err cl_test_group_before_all_tests(cl_test_group *p) {
     if (NULL == p) return -1;
     if (NULL == p->before_all_tests) return -2;
     return p->before_all_tests(p);
 }
 
-cl_tests_err cl_test_group_base_before_all_tests(cl_test_group *p) {
-    return CL_TESTS_ERR_NONE;
+cl_test_err cl_test_group_base_before_all_tests(cl_test_group *p) {
+    return CL_TEST_ERR_NONE;
 }
 
-cl_tests_err cl_test_group_after_all_tests(cl_test_group *p) {
+cl_test_err cl_test_group_after_all_tests(cl_test_group *p) {
     if (NULL == p) return -1;
     if (NULL == p->after_all_tests) return -2;
     return p->after_all_tests(p);
 }
 
-cl_tests_err cl_test_group_base_after_all_tests(cl_test_group *p) {
-    return CL_TESTS_ERR_NONE;
+cl_test_err cl_test_group_base_after_all_tests(cl_test_group *p) {
+    return CL_TEST_ERR_NONE;
 }
 
-cl_tests_err cl_test_group_before_each_test(cl_test_group *p) {
+cl_test_err cl_test_group_before_each_test(cl_test_group *p) {
     if (NULL == p) return -1;
     if (NULL == p->before_each_test) return -2;
     return p->before_each_test(p);
 }
 
-cl_tests_err cl_test_group_base_before_each_test(cl_test_group *p) {
-    return CL_TESTS_ERR_NONE;
+cl_test_err cl_test_group_base_before_each_test(cl_test_group *p) {
+    return CL_TEST_ERR_NONE;
 }
 
-cl_tests_err cl_test_group_after_each_test(cl_test_group *p) {
+cl_test_err cl_test_group_after_each_test(cl_test_group *p) {
     if (NULL == p) return -1;
     if (NULL == p->after_each_test) return -2;
     return p->after_each_test(p);
 }
 
-cl_tests_err cl_test_group_base_after_each_test(cl_test_group *p) {
-    return CL_TESTS_ERR_NONE;
+cl_test_err cl_test_group_base_after_each_test(cl_test_group *p) {
+    return CL_TEST_ERR_NONE;
 }
 
 cl_test_group_test_func **cl_test_group_get_tests(cl_test_group *p) {
@@ -67,9 +67,9 @@ cl_test_group *cl_test_group_init(
     return p;
 }
 
-cl_tests_err cl_test_group_run(cl_test_group *p, cl_test_state *state) {
+cl_test_err cl_test_group_run(cl_test_group *p, cl_test_state *state) {
     
-    cl_tests_err err, callback_err;
+    cl_test_err err, callback_err;
     cl_test_group_test_func **tests;
 
     if (NULL == p) return -1;
@@ -82,7 +82,7 @@ cl_tests_err cl_test_group_run(cl_test_group *p, cl_test_state *state) {
     callback_err = cl_test_group_before_all_tests(p);
     if (callback_err) return callback_err;
 
-    err = CL_TESTS_ERR_NONE;
+    err = CL_TEST_ERR_NONE;
     for (; *tests; tests++) {
 
         callback_err = cl_test_group_before_each_test(p);
@@ -95,6 +95,7 @@ cl_tests_err cl_test_group_run(cl_test_group *p, cl_test_state *state) {
 
         if (err) break;
 
+        cl_test_state_set_run_test_count(state, cl_test_state_get_run_test_count(state) + 1);
         cl_test_state_set_run_group_test_count(state, cl_test_state_get_run_group_test_count(state) + 1);
     }
 
@@ -105,5 +106,5 @@ cl_tests_err cl_test_group_run(cl_test_group *p, cl_test_state *state) {
 
     cl_test_state_set_run_group_count(state, cl_test_state_get_run_group_count(state) + 1);
 
-    return CL_TESTS_ERR_NONE;
+    return CL_TEST_ERR_NONE;
 }

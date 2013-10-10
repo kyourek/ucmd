@@ -47,14 +47,8 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_switch_tok_tests.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tok_tests.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line.tests\include_p\cl_tests_p.h">
-      <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line.tests\include\cmd_line_tests.h">
       <Filter>include</Filter>
@@ -65,9 +59,6 @@
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_bool_tests.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests_err.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_group.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -75,6 +66,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_test_err.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cmd_line.tests\include\cl_tests.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,9 +109,6 @@
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_switch_tok_tests.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_tok_tests.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -134,6 +128,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cmd_line.tests\source\cl_test.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cmd_line.tests\source\cl_tests.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

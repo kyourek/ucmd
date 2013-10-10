@@ -2,7 +2,7 @@
 #define CL_TEST_GROUP_H
 
 #include "cl_test_state.h"
-#include "cl_tests_err.h"
+#include "cl_test_err.h"
 
 /*
  * Summary:
@@ -20,7 +20,7 @@ typedef struct cl_test_group cl_test_group;
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-typedef cl_tests_err (cl_test_group_callback_func)(cl_test_group *p);
+typedef cl_test_err (cl_test_group_callback_func)(cl_test_group *p);
 
 /*
  * Summary:
@@ -31,7 +31,7 @@ typedef cl_tests_err (cl_test_group_callback_func)(cl_test_group *p);
  *   The error number resulting from the test, or no
  *   error if an error did not occur.
  */
-typedef cl_tests_err (cl_test_group_test_func)(cl_test_group *p);
+typedef cl_test_err (cl_test_group_test_func)(cl_test_group *p);
 
 /*
  * Summary:
@@ -42,7 +42,7 @@ typedef cl_tests_err (cl_test_group_test_func)(cl_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-CL_EXPORTED cl_tests_err cl_test_group_before_all_tests(cl_test_group *p);
+CL_EXPORTED cl_test_err cl_test_group_before_all_tests(cl_test_group *p);
 
 /*
  * Summary:
@@ -53,7 +53,7 @@ CL_EXPORTED cl_tests_err cl_test_group_before_all_tests(cl_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-CL_EXPORTED cl_tests_err cl_test_group_after_all_tests(cl_test_group *p);
+CL_EXPORTED cl_test_err cl_test_group_after_all_tests(cl_test_group *p);
 
 /*
  * Summary:
@@ -64,7 +64,7 @@ CL_EXPORTED cl_tests_err cl_test_group_after_all_tests(cl_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-CL_EXPORTED cl_tests_err cl_test_group_before_each_test(cl_test_group *p);
+CL_EXPORTED cl_test_err cl_test_group_before_each_test(cl_test_group *p);
 
 /*
  * Summary:
@@ -75,7 +75,7 @@ CL_EXPORTED cl_tests_err cl_test_group_before_each_test(cl_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-CL_EXPORTED cl_tests_err cl_test_group_after_each_test(cl_test_group *p);
+CL_EXPORTED cl_test_err cl_test_group_after_each_test(cl_test_group *p);
 
 /*
  * Summary:
@@ -119,7 +119,7 @@ CL_EXPORTED cl_test_group *cl_test_group_init(
  *   The error number of the failed test, or no error if all
  *   tests passed.
  */
-CL_EXPORTED cl_tests_err cl_test_group_run(cl_test_group *p, cl_test_state *state);
+CL_EXPORTED cl_test_err cl_test_group_run(cl_test_group *p, cl_test_state *state);
 
 /*
  * Summary:

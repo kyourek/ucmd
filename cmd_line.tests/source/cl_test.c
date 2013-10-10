@@ -44,9 +44,14 @@ cl_test_state *cl_test_get_state(cl_test *p) {
     return &p->state;
 }
 
-cl_tests_err cl_test_run(cl_test *p) {
+const char *cl_test_get_label(cl_test *p) {
+    if (NULL == p) return NULL;
+    return p->label;
+}
+
+cl_test_err cl_test_run(cl_test *p) {
     char str[50];
-    cl_tests_err err;
+    cl_test_err err;
     cl_test_state *state;
 
     cl_test_group **groups = cl_test_get_groups(p);
@@ -55,7 +60,10 @@ cl_tests_err cl_test_run(cl_test *p) {
     state = cl_test_get_state(p);
     cl_test_state_reset(state);
 
-    err = CL_TESTS_ERR_NONE;
+    sprintf(str, "%s\n", cl_test_get_label(p));
+    cl_test_print(p, str);
+
+    err = CL_TEST_ERR_NONE;
     for (; *groups; groups++) {
 
         err = cl_test_group_run(*groups, state);
@@ -84,13 +92,14 @@ cl_tests_err cl_test_run(cl_test *p) {
     return err;
 }
 
-cl_test *cl_test_init(cl_test *p, cl_test_group **groups) {
+cl_test *cl_test_init(cl_test *p, const char *label, cl_test_group **groups) {
     
     static cl_test_group *base_groups[] = { NULL };
 
     if (NULL == p) return NULL;
     if (NULL == cl_test_state_init(&p->state)) return NULL;
 
+    p->label = label;
     p->exit_func = NULL;
     p->exit_state = NULL;
     p->print_func = NULL;
