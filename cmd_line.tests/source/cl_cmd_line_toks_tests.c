@@ -1,53 +1,58 @@
 #include <stdlib.h>
 #include "cl_cmd_line_toks.h"
 #include "cl_cmd_line_toks_tests.h"
-#include "cl_tests_p.h"
+#include "cl_test.h"
 
-static cl_tests_err cl_cmd_line_toks_get_cmd_tok_returns_value(void) {
+static cl_test_err cl_cmd_line_toks_get_cmd_tok_returns_value(cl_test_group *p) {
     cl_cmd_line_toks inst = { 0 };
-    cl_cmd_line_toks *p = &inst;
+    cl_cmd_line_toks *ptr = &inst;
     cl_cmd_tok *cmd_tok = "c";
 
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_cmd_tok(NULL));
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_cmd_tok(p));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_cmd_tok(NULL));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_cmd_tok(ptr));
 
-    p->cmd_tok = cmd_tok;
-    CL_TESTS_ASSERT(cmd_tok == cl_cmd_line_toks_get_cmd_tok(p));
+    ptr->cmd_tok = cmd_tok;
+    CL_TEST_ASSERT(cmd_tok == cl_cmd_line_toks_get_cmd_tok(ptr));
 
-    return CL_TESTS_ERR_NONE;
+    return CL_TEST_ERR_NONE;
 }
 
-static cl_tests_err cl_cmd_line_toks_get_arg_tok_returns_value(void) {
+static cl_test_err cl_cmd_line_toks_get_arg_tok_returns_value(cl_test_group *p) {
     cl_cmd_line_toks inst = { 0 };
-    cl_cmd_line_toks *p = &inst;
+    cl_cmd_line_toks *ptr = &inst;
     cl_arg_tok *arg_tok = "a";
 
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_arg_tok(NULL));
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_arg_tok(p));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_arg_tok(NULL));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_arg_tok(ptr));
 
-    p->arg_tok = arg_tok;
-    CL_TESTS_ASSERT(arg_tok == cl_cmd_line_toks_get_arg_tok(p));
+    ptr->arg_tok = arg_tok;
+    CL_TEST_ASSERT(arg_tok == cl_cmd_line_toks_get_arg_tok(ptr));
 
-    return CL_TESTS_ERR_NONE;
+    return CL_TEST_ERR_NONE;
 }
 
-static cl_tests_err cl_cmd_line_toks_get_switch_tok_returns_value(void) {
+static cl_test_err cl_cmd_line_toks_get_switch_tok_returns_value(cl_test_group *p) {
     cl_cmd_line_toks inst = { 0 };
-    cl_cmd_line_toks *p = &inst;
+    cl_cmd_line_toks *ptr = &inst;
     cl_arg_tok *switch_tok = "-s";
 
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_switch_tok(NULL));
-    CL_TESTS_ASSERT(NULL == cl_cmd_line_toks_get_switch_tok(p));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_switch_tok(NULL));
+    CL_TEST_ASSERT(NULL == cl_cmd_line_toks_get_switch_tok(ptr));
 
-    p->switch_tok = switch_tok;
-    CL_TESTS_ASSERT(switch_tok == cl_cmd_line_toks_get_switch_tok(p));
+    ptr->switch_tok = switch_tok;
+    CL_TEST_ASSERT(switch_tok == cl_cmd_line_toks_get_switch_tok(ptr));
 
-    return CL_TESTS_ERR_NONE;
+    return CL_TEST_ERR_NONE;
 }
 
-cl_tests_err cl_cmd_line_toks_tests(void) {
-    CL_TESTS_RUN(cl_cmd_line_toks_get_cmd_tok_returns_value);
-    CL_TESTS_RUN(cl_cmd_line_toks_get_arg_tok_returns_value);
-    CL_TESTS_RUN(cl_cmd_line_toks_get_switch_tok_returns_value);
-    return CL_TESTS_ERR_NONE;
+cl_test_group *cl_cmd_line_toks_tests_get_group(void) {
+    static cl_test_group group;
+    static cl_test_group_test_func *tests[] = {
+        cl_cmd_line_toks_get_cmd_tok_returns_value,
+        cl_cmd_line_toks_get_arg_tok_returns_value,
+        cl_cmd_line_toks_get_switch_tok_returns_value,
+        NULL
+    };
+
+    return cl_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
 }

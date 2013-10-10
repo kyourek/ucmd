@@ -1,8 +1,8 @@
 #ifndef CL_CMD_PARSER_TESTS_H
 #define CL_CMD_PARSER_TESTS_H
 
-#include "cl_tests.h"
+#include "cl_test_group.h"
 
-CL_EXPORTED cl_tests_err cl_cmd_parser_tests(void);
+CL_EXPORTED cl_test_group *cl_cmd_parser_tests_get_group(void);
 
 #endif

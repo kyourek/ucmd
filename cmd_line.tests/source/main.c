@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include "cl_tests_p.h"
+#include "cl_tests.h"
 
-static void tests_print(const char *str) {
+static void print_func(const char *str, void *state) {
     printf("%s", str);
 }
 
-static cl_bool tests_exit(void) {
+static cl_bool exit_func(void *state) {
     getchar();
     return CL_TRUE;
 }
 
 int main (int argc, const char * argv[]) {
-    cl_tests *tests = cl_tests_get_instance();
-    cl_tests_set_print(tests, tests_print);
-    cl_tests_set_exit(tests, tests_exit);
-    return cl_tests_main(tests) ? -1 : 0;
+    cl_test *test = cl_tests_get_test();
+    cl_test_set_print_func(test, print_func);
+    cl_test_set_exit_func(test, exit_func);
+    return cl_test_run(test) ? -1 : 0;
 }
