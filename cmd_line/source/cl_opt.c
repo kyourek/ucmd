@@ -1,7 +1,4 @@
 #include <stdlib.h>
-#include "cl_cmd_line.h"
-#include "cl_common.h"
-#include "cl_opt.h"
 #include "cl_opt_p.h"
 
 const char *cl_opt_validation_err_invalid_argument_prefix = "Invalid argument: ";

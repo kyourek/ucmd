@@ -1,16 +1,11 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "cl_tok.h"
 #include "cl_tok_p.h"
+#include "cl_cmd_line_p.h"
 #include "cl_cmd_parser.h"
-#include "cl_common.h"
-#include "cl_arg_tok.h"
 #include "cl_arg_tok_owner.h"
 #include "cl_switch_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_cmd_line_p.h"
-#include "cl_cmd_line_toks.h"
 
 cl_cmd_line *cl_cmd_line_get_instance(void) {
     static cl_cmd_line instance = { 0 };

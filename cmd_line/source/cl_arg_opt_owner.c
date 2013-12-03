@@ -1,11 +1,6 @@
-#include <stdlib.h>
-#include <stdarg.h>
+#include <stddef.h>
 #include "cl_arg_opt_p.h"
 #include "cl_arg_opt_owner_p.h"
-#include "cl_arg_tok.h"
-#include "cl_cmd_line.h"
-#include "cl_opt_p.h"
-#include "cl_tok.h"
 
 cl_arg_opt *cl_arg_opt_owner_get_arg_opt(cl_arg_opt_owner *p) {
     if (NULL == p) return NULL;

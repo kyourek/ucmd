@@ -1,14 +1,8 @@
-#include <stdlib.h>
 #include <string.h>
-#include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
 #include "cl_cmd_line.h"
 #include "cl_memory_manager_p.h"
-#include "cl_opt.h"
-#include "cl_opt_p.h"
-#include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
 
 #ifndef CL_SWITCH_OPT_COUNT

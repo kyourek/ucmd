@@ -1,19 +1,12 @@
-#include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
-#include "cl_arg_opt.h"
 #include "cl_arg_opt_p.h"
-#include "cl_arg_opt_owner.h"
 #include "cl_arg_opt_owner_p.h"
-#include "cl_cmd_line_opt.h"
 #include "cl_cmd_line_opt_p.h"
 #include "cl_cmd_tok.h"
-#include "cl_common.h"
 #include "cl_memory_manager_p.h"
-#include "cl_opt.h"
 #include "cl_opt_p.h"
-#include "cl_switch_opt.h"
 #include "cl_switch_opt_p.h"
-#include "cl_tok.h"
 
 #ifndef CL_CMD_LINE_OPT_COUNT
 #define CL_CMD_LINE_OPT_COUNT       10
