@@ -5,10 +5,6 @@
 #include "uc_memory_manager_p.h"
 #include "uc_switch_opt_p.h"
 
-#ifndef UC_SWITCH_OPT_COUNT
-#define UC_SWITCH_OPT_COUNT     50
-#endif
-
 UC_MEMORY_MANAGER_INIT(uc_switch_opt, UC_SWITCH_OPT_COUNT);
 
 static uc_switch_opt *create_switch_opt(void) {
