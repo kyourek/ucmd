@@ -1,6 +1,6 @@
-#include "cmd_line_example.h"
+#include "ucmd_example.h"
 
-cl_app *app;
+uc_app *app;
 
 char *receive_data(char *buf, size_t buf_size) {
   char r = 0;
@@ -29,13 +29,13 @@ void send_data(const char *response) {
 void setup() {                    
   Serial.begin(9600);
   while (!Serial);
-  app = cl_math_app_get_instance();
-  cl_app_set_send_data(app, send_data);
-  cl_app_set_receive_data(app, receive_data);
+  app = uc_math_app_get_instance();
+  uc_app_set_send_data(app, send_data);
+  uc_app_set_receive_data(app, receive_data);
 }
 
 void loop() {
-  cl_app_run(app);
+  uc_app_run(app);
   delay(1000);
 }
 

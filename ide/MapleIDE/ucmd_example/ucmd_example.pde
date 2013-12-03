@@ -1,6 +1,6 @@
-#include "cmd_line_example.h"
+#include "ucmd_example.h"
 
-static cl_app *app;
+static uc_app *app;
 
 static void send_data(const char *data) {
   SerialUSB.println(data);
@@ -26,9 +26,9 @@ static char *receive_data(char *buf, size_t buf_size) {
 }
 
 void setup() {
-  app = cl_math_app_get_instance();
-  cl_app_set_send_data(app, send_data);
-  cl_app_set_receive_data(app, receive_data);  
+  app = uc_math_app_get_instance();
+  uc_app_set_send_data(app, send_data);
+  uc_app_set_receive_data(app, receive_data);  
   while (!SerialUSB.available()) {
     SerialUSB.println("Input any key to begin."); 
     delay(500);
@@ -37,7 +37,6 @@ void setup() {
 }
 
 void loop() {
-  cl_app_run(app);
+  uc_app_run(app);
   delay(500);
 }
-
