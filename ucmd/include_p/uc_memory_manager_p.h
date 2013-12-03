@@ -4,7 +4,7 @@
 #define UC_MEMORY_MANAGER_INIT(type, count) \
     typedef struct uc_memory_manager_instance { \
         type s; \
-        int in_use; \
+        char in_use; \
     } uc_memory_manager_instance; \
 \
     static uc_memory_manager_instance uc_memory_manager_instances[count]; \
