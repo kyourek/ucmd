@@ -5,7 +5,10 @@
 
 /*
  * Summary:
- *   A switch token.
+ *   A switch token. This type is a child of the
+ *   base token type. All functions that take an 
+ *   instance of the base type can be used with an 
+ *   instance of this type.
  */
 typedef const char cl_switch_tok;
 

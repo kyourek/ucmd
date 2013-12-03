@@ -6,7 +6,9 @@
 /*
  * Summary:
  *   Type definition for tokens (i.e. switch and command tokens)
- *   that contain arguments.
+ *   that contain arguments. This type is a child of the base
+ *   token type. All functions that take an instance of the base
+ *   type can be used with an instance of this type.
  */
 typedef const char cl_arg_tok_owner;
 

@@ -8,7 +8,7 @@
 #define CL_ARG_OPT_COUNT        50
 #endif
 
-static const char *numeric_name = "<number>";
+static const char *numeric_arg_name = "<number>";
 
 CL_MEMORY_MANAGER_INIT(cl_arg_opt, CL_ARG_OPT_COUNT);
 
@@ -169,15 +169,15 @@ cl_arg_opt *cl_arg_opt_create_required(const char *name, const char *desc, cl_ar
 }
 
 cl_arg_opt *cl_arg_opt_create_numeric(const char *desc, double numeric_min, double numeric_max, cl_arg_opt *next) {
-    return create(numeric_name, desc, CL_FALSE, 0, 1, CL_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, CL_FALSE, 0, 1, CL_TRUE, numeric_min, numeric_max, next);
 }
 
 cl_arg_opt *cl_arg_opt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max) {
-    return create(numeric_name, desc, min_tok_count > 0 ? CL_TRUE : CL_FALSE, min_tok_count, max_tok_count, CL_TRUE, numeric_min, numeric_max, NULL);
+    return create(numeric_arg_name, desc, min_tok_count > 0 ? CL_TRUE : CL_FALSE, min_tok_count, max_tok_count, CL_TRUE, numeric_min, numeric_max, NULL);
 }
 
 cl_arg_opt *cl_arg_opt_create_required_numeric(const char *desc, double numeric_min, double numeric_max, cl_arg_opt *next) {
-    return create(numeric_name, desc, CL_TRUE, 1, 1, CL_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, CL_TRUE, 1, 1, CL_TRUE, numeric_min, numeric_max, next);
 }
 
 const char *cl_arg_opt_format_validation_err(cl_arg_opt *p, cl_cmd_line *cmd, cl_arg_tok *arg_tok, const char *switch_name) {

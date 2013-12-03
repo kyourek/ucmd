@@ -1,6 +1,9 @@
 #ifndef CL_COMMON_H
 #define CL_COMMON_H
 
+/* This file should be in the include path
+   of the compiler. It provides implementation-
+   specific configuration for the program. */
 #include "cl_config.h"
 
 /* Prepend extern "C" if we're in a C++

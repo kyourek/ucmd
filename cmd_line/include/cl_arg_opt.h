@@ -1,15 +1,14 @@
 #ifndef CL_ARG_OPT_H
 #define CL_ARG_OPT_H
 
-#include "cl_bool.h"
-#include "cl_common.h"
+#include "cl_opt.h"
 
 /*
  * Summary:
- *   An argument option.
+ *   An argument option. This type is a child
+ *   of the base option type.
  */
 typedef struct cl_arg_opt cl_arg_opt;
-
 
 /*
  * Summary:

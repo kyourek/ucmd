@@ -10,7 +10,7 @@ typedef int cl_err;
 
 /* 
  * Summary:
- *   The value that represents no error.
+ *   Defines the value that represents no error.
  */
 #define CL_ERR_NONE 0
 
