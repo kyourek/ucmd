@@ -1,7 +1,6 @@
 #ifndef CL_TOK_H
 #define CL_TOK_H
 
-#include <stdlib.h>
 #include "cl_bool.h"
 #include "cl_common.h"
 
@@ -19,7 +18,7 @@ typedef const char cl_tok;
  * Returns:
  *   The number of characters in the token.
  */
-CL_EXPORTED size_t cl_tok_get_length(cl_tok *p);
+CL_EXPORTED int cl_tok_get_length(cl_tok *p);
 
 /*
  * Summary:

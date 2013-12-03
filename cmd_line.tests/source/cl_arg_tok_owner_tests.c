@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "cl_arg_tok_owner.h"
 #include "cl_arg_tok_owner_tests.h"
 #include "cl_test.h"

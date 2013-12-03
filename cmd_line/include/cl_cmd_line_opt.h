@@ -1,15 +1,15 @@
 #ifndef CL_CMD_LINE_OPT_H
 #define CL_CMD_LINE_OPT_H
 
-#include "cl_arg_opt.h"
-#include "cl_cmd_tok.h"
-#include "cl_common.h"
-#include "cl_switch_opt.h"
+#include "cl_arg_opt_owner.h"
 #include "cl_cmd_line.h"
+#include "cl_cmd_tok.h"
+#include "cl_switch_opt.h"
 
 /*
  * Summary:
- *   A command option.
+ *   A command option. This type is a child of the
+ *   base option type.
  */
 typedef struct cl_cmd_line_opt cl_cmd_line_opt;
 

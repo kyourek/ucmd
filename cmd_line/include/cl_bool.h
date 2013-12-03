@@ -3,7 +3,10 @@
 
 /*
  * Summary:
- *   Boolean type definition.
+ *   Boolean type definition. This definition is used
+ *   to increase the readability of the source by replacing
+ *   integer representations of boolean values with the
+ *   more familiar "true" and "false" values.
  */
 typedef enum cl_bool {
     CL_FALSE = 0,

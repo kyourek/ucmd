@@ -1,8 +1,6 @@
 #include <stdlib.h>
-#include "cl_tok.h"
-#include "cl_tok_p.h"
-#include "cl_common.h"
 #include "cl_arg_tok.h"
+#include "cl_tok_p.h"
 
 cl_arg_tok *cl_arg_tok_get_next(cl_arg_tok* p) {
     cl_tok *tok;

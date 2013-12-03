@@ -1,14 +1,16 @@
 #ifndef CL_CMD_TOK_H
 #define CL_CMD_TOK_H
 
-#include "cl_arg_tok.h"
 #include "cl_switch_tok.h"
 
 /*
  * Summary:
  *   Type definition for a command token. This is
  *   the first token (the command part) in a list
- *   of tokens.
+ *   of tokens. This type is a child of the base
+ *   token type. All functions that take an instance
+ *   of the base type can be used with an instance
+ *   of this type.
  */
 typedef const char cl_cmd_tok;
 

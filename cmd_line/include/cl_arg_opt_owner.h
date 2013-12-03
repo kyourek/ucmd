@@ -6,7 +6,8 @@
 /*
  * Summary:
  *   Base structure for options (switches and commands)
- *   that contain argument options.
+ *   that contain argument options. This type is a child
+ *   of the base option type.
  */
 typedef struct cl_arg_opt_owner cl_arg_opt_owner;
 

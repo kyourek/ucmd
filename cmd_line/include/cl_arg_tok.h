@@ -1,12 +1,14 @@
 #ifndef CL_ARG_TOK_H
 #define CL_ARG_TOK_H
 
-#include "cl_bool.h"
-#include "cl_common.h"
+#include "cl_tok.h"
 
 /*
  * Summary:
- *   An argument token.
+ *   An argument token. This type is a child of the
+ *   base token type. All functions that take an 
+ *   instance of the base type can be used with an 
+ *   instance of this type.
  */
 typedef const char cl_arg_tok;
 

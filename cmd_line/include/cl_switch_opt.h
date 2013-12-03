@@ -1,10 +1,12 @@
 #ifndef CL_SWITCH_OPT_H
 #define CL_SWITCH_OPT_H
 
-#include "cl_arg_opt.h"
+#include "cl_arg_opt_owner.h"
 
 /*
- * A command switch option.
+ * Summary:
+ *   A command switch option. This type is a child
+ *   of the base option type.
  */
 typedef struct cl_switch_opt cl_switch_opt;
 

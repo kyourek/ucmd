@@ -3,7 +3,6 @@
 
 #include "cl_arg_opt_p.h"
 #include "cl_arg_opt_owner.h"
-#include "cl_opt_p.h"
 
 struct cl_arg_opt_owner {
     cl_opt base;
