@@ -1,6 +1,21 @@
 #ifndef UC_MEMORY_MANAGER_P_H
 #define UC_MEMORY_MANAGER_P_H
 
+/* 
+ * Summary:
+ *   Defines a macro that is used to provide a dynamic
+ *   feel to static-memory allocation. Calling it in a
+ *   source file exposes functions to create and destroy
+ *   objects of the specified type.
+ * Parameters:
+ *   TYPE: The type of the object instances that are
+ *         created and destroyed using the manager.
+ *   COUNT: The number of object instances that is
+ *          available to the program. Once this number
+ *          is exceeded, NULL is returned from the
+ *          create function until instances are released
+ *          using the destroy function.
+ */
 #define UC_MEMORY_MANAGER_INIT(TYPE, COUNT) \
     typedef struct uc_memory_manager_instance { \
         TYPE inst; \
