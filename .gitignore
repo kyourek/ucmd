@@ -1,30 +1,8 @@
+*.o
+*.opensdf
+*.sdf
+*.suo
+*.user
 .DS_Store
-cmd_line.tests/.DS_Store
-cmd_line/.DS_Store
-cmd_line/include/.DS_Store
-cmd_line/source/*.o
-cmd_line.tests/source/*.o
-ide/.DS_Store
-ide/Visual Studio 2010/Debug/
-ide/Visual Studio 2010/cmd_line.example/Debug/
-ide/Visual Studio 2010/cmd_line.example/cmd_line.example.vcxproj.user
-ide/Visual Studio 2010/cmd_line.suo
-ide/Visual Studio 2010/cmd_line.tests/Debug/
-ide/Visual Studio 2010/cmd_line.tests/cmd_line.tests.vcxproj.user
-ide/Visual Studio 2010/cmd_line/Debug/
-ide/Visual Studio 2010/cmd_line/cmd_line.vcxproj.user
-ide/Visual Studio 2010/cmd_line.sdf
-ide/Visual Studio 2010/ipch/
-ide/Visual Studio 2010/cmd_line.opensdf
-ide/Eclipse/cmd_line/Debug/
-ide/Eclipse/cmd_line/Release/
-ide/Eclipse/cmd_line.tests/Debug/
-ide/Eclipse/cmd_line.tests/Release/
-ide/Eclipse/RemoteSystemsTempFiles/
-ide/Eclipse/.metadata/
-ide/Eclipse/.DS_Store
-ide/Eclipse/cmd_line/.DS_Store
-ide/Eclipse/cmd_line.tests/.DS_Store
-ide/Xcode/cmd_line/cmd_line.xcodeproj/xcuserdata/
-ide/Xcode/cmd_line.tests/cmd_line.tests.xcodeproj/xcuserdata/
-
+Debug/
+ipch/
