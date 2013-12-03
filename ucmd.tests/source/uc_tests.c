@@ -61,5 +61,5 @@ static uc_test_group **uc_tests_get_groups(void) {
 
 uc_test *uc_tests_get_test(void) {
     static uc_test test;
-    return uc_test_init(&test, "cmd_line tests", uc_tests_get_groups());
+    return uc_test_init(&test, "ucmd tests", uc_tests_get_groups());
 }
