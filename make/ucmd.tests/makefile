@@ -1,8 +1,8 @@
 CC=gcc
 OUTDIR=../out/
+UCMDDIR=../../ucmd/
 PROJECTDIR=../../ucmd.tests/
-CMDLINEDIR=../../ucmd/
-CFLAGS=-I$(PROJECTDIR)include -I$(PROJECTDIR)include_p -I$(CMDLINEDIR)include -I$(CMDLINEDIR)include_p -Wall -c
+CFLAGS=-I$(PROJECTDIR)include -I$(PROJECTDIR)include_p -I$(UCMDDIR)include -I$(UCMDDIR)include_p -I$(UCMDDIR)config -I$(UCMDDIR)config/console -I$(UCMDDIR)config/console/unix -Wall -c
 LDFLAGS=-L$(OUTDIR) -lucmd
 SOURCES=$(wildcard $(PROJECTDIR)source/*.c)
 OBJECTS=$(SOURCES:.c=.o)
@@ -14,7 +14,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(MAKE) -C ../ucmd
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLEPATH)
+	$(CC) $(OBJECTS) -o $(EXECUTABLEPATH) $(LDFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) $< -o $@
