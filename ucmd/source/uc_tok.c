@@ -1,17 +1,13 @@
 #include <string.h>
 #include "uc_tok_p.h"
 
-#ifndef UC_TOK_LENGTH_MAX
-#define UC_TOK_LENGTH_MAX       200
-#endif
-
 const char uc_tok_separator = '\0';
 const char uc_cmd_terminator = '\n';
 
 static uc_bool is_char_digit(char c) {
     /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator */
-    static char *digits = "0123456789";
-    char *d;
+    static const char *digits = "0123456789";
+    const char *d;
     for (d = digits; *d; d++) {
         if (*d == c) {
             return UC_TRUE;

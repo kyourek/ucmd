@@ -4,10 +4,6 @@
 #include "uc_cmd_parser_p.h"
 #include "uc_cmd_line_app.h"
 
-#ifndef UC_CMD_LINE_APP_CMD_BUF_LENGTH
-#define UC_CMD_LINE_APP_CMD_BUF_LENGTH      200
-#endif
-
 struct uc_cmd_line_app {
     uc_cmd_line *cmd;
     uc_cmd_parser *cmd_parser;

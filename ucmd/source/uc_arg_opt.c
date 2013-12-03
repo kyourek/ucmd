@@ -2,10 +2,6 @@
 #include "uc_arg_opt_p.h"
 #include "uc_memory_manager_p.h"
 
-#ifndef UC_ARG_OPT_COUNT
-#define UC_ARG_OPT_COUNT        50
-#endif
-
 static const char *numeric_arg_name = "<number>";
 
 UC_MEMORY_MANAGER_INIT(uc_arg_opt, UC_ARG_OPT_COUNT);

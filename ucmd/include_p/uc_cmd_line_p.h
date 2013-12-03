@@ -3,10 +3,6 @@
 
 #include "uc_cmd_line.h"
 
-#ifndef UC_CMD_LINE_RESPONSE_LENGTH
-#define UC_CMD_LINE_RESPONSE_LENGTH     500
-#endif
-
 struct uc_cmd_line {
     uc_cmd_tok *cmd_tok;
     uc_cmd_line_transmit_func *transmit;

@@ -8,10 +8,6 @@
 #include "uc_opt_p.h"
 #include "uc_switch_opt_p.h"
 
-#ifndef UC_CMD_LINE_OPT_COUNT
-#define UC_CMD_LINE_OPT_COUNT       10
-#endif
-
 UC_MEMORY_MANAGER_INIT(uc_cmd_line_opt, UC_CMD_LINE_OPT_COUNT);
 
 static uc_cmd_line_opt *create_cmd_line_opt(void) {
