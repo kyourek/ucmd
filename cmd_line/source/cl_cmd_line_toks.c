@@ -1,8 +1,5 @@
 #include <stdlib.h>
-#include "cl_arg_tok.h"
 #include "cl_cmd_line_toks.h"
-#include "cl_cmd_tok.h"
-#include "cl_switch_tok.h"
 
 cl_cmd_tok *cl_cmd_line_toks_get_cmd_tok(cl_cmd_line_toks *p) {
     if (NULL == p) return NULL;

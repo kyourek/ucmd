@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "cl_arg_opt_p.h"
 #include "cl_memory_manager_p.h"
-#include "cl_opt_p.h"
-#include "cl_tok.h"
 
 #ifndef CL_ARG_OPT_COUNT
 #define CL_ARG_OPT_COUNT        50

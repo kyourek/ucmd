@@ -4,14 +4,10 @@
 #include "cl_arg_opt.h"
 #include "cl_arg_tok.h"
 #include "cl_cmd_line.h"
-#include "cl_cmd_line_app.h"
 #include "cl_cmd_line_app_p.h"
 #include "cl_cmd_line_opt.h"
-#include "cl_cmd_parser.h"
 #include "cl_cmd_parser_p.h"
-#include "cl_opt.h"
 #include "cl_switch_opt.h"
-#include "cl_tok.h"
 
 typedef struct help_state {
     cl_cmd_line_app *app;
