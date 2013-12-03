@@ -11,9 +11,9 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 projects_dir = os.path.join(os.pardir, os.path.dirname(current_dir))
 project_file_dirs = [ "include", "include_p", "source" ]
 projects = [
-    Project("cmd_line", [ "cmd_line" ]),
-    Project("cmd_line_tests", [ "cmd_line", "cmd_line.tests" ]),
-    Project("cmd_line_example", [ "cmd_line", "cmd_line.example" ])
+    Project("ucmd", [ "ucmd" ]),
+    Project("ucmd_tests", [ "ucmd", "ucmd.tests" ]),
+    Project("ucmd_example", [ "ucmd", "ucmd.example" ])
 ]
 
 for project in projects:
