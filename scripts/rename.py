@@ -27,7 +27,7 @@ projects = [ "cmd_line", "cmd_line.example", "cmd_line.tests" ]
 
 for project in projects:
     project_dir = os.path.join(projects_dir, project)
-    rename(project_dir, "cl_", "uc_")
-    rename(project_dir, "CL_", "UC_")
-    #rename(project_dir, "cmd_line", "uart_cmd")
-    #rename(project_dir, "CMD_LINE", "UART_CMD")
+    rename(project_dir, "uc_", "uc_")
+    rename(project_dir, "UC_", "UC_")
+    rename(project_dir, "cmd_line", "cmd_line")
+    rename(project_dir, "CMD_LINE", "CMD_LINE")
