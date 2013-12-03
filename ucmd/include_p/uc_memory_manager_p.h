@@ -3,20 +3,20 @@
 
 #define UC_MEMORY_MANAGER_INIT(TYPE, COUNT) \
     typedef struct uc_memory_manager_instance { \
-        TYPE s; \
-        char in_use; \
+        TYPE inst; \
+        char used; \
     } uc_memory_manager_instance; \
 \
-    static uc_memory_manager_instance uc_memory_manager_instances[COUNT]; \
+    static uc_memory_manager_instance uc_memory_manager_instances[COUNT] = { 0 }; \
 \
     static TYPE *uc_memory_manager_create(void) { \
         int i; \
         uc_memory_manager_instance *inst; \
         for (i = 0; i < COUNT; i++) { \
             inst = &uc_memory_manager_instances[i]; \
-            if (!inst->in_use) { \
-                inst->in_use = 1; \
-                return &inst->s; \
+            if (inst->used == 0) { \
+                inst->used = 1; \
+                return &inst->inst; \
             } \
         } \
         return NULL; \
@@ -27,8 +27,8 @@
         uc_memory_manager_instance *inst; \
         for (i = 0; i < COUNT; i++) { \
             inst = &uc_memory_manager_instances[i]; \
-            if (p == (&inst->s)) { \
-                inst->in_use = 0; \
+            if (p == (&inst->inst)) { \
+                inst->used = 0; \
             } \
         } \
     } \
