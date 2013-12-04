@@ -1,21 +1,21 @@
 #include "Arduino.h"
 #include "ucmd_tests.h"
  
-uc_tests *tests_instance;
+uc_test *test;
 
-void tests_print(const char *str) {
+void test_print(const char *str, void *state) {
   Serial.print(str);
 }
 
 void setup() {                
   Serial.begin(9600);
   while (!Serial);
-  tests_instance = uc_tests_get_instance();
-  uc_tests_set_print(tests_instance, tests_print);
+  test = uc_tests_get_test();
+  uc_test_set_print_func(test, test_print);
 }
 
 void loop() {
-  uc_tests_main(tests_instance);
+  uc_test_run(test);
   delay(1000);
 }
 
