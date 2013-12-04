@@ -21,11 +21,10 @@ def rename(path, prev, curr):
             if os.path.isdir(item_path) or os.path.isfile(item_path):
                 rename(item_path, prev, curr)
 
-current_dir = os.path.abspath(os.path.dirname(__file__))
-projects_dir = os.path.join(os.pardir, os.path.dirname(current_dir))
-projects = [ "ucmd", "ucmd.example", "ucmd.tests" ]
+script_dir = os.path.abspath(os.path.dirname(__file__))
+projects_dir = os.path.join(os.pardir, os.path.dirname(script_dir))
 
-for project in projects:
+for project in [ "ucmd", "ucmd.example", "ucmd.tests" ]:
     project_dir = os.path.join(projects_dir, project)
     rename(project_dir, "uc_", "uc_")
     rename(project_dir, "UC_", "UC_")
