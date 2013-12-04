@@ -23,7 +23,7 @@ def rename(path, prev, curr):
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 projects_dir = os.path.join(os.pardir, os.path.dirname(current_dir))
-projects = [ "cmd_line", "cmd_line.example", "cmd_line.tests" ]
+projects = [ "ucmd", "ucmd.example", "ucmd.tests" ]
 
 for project in projects:
     project_dir = os.path.join(projects_dir, project)
