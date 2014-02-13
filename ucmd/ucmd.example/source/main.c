@@ -1,19 +1,16 @@
 #include <stdio.h>
 #include <string.h>
-#include "uc_math_app.h"
+#include "uc_hello_world.h"
 
-static void send_data(const char *data) {
-    printf("%s\n", data);
+static void transmit(const char *response, void *state) {
+    printf("%s\n", response);
 }
 
-static char *receive_data(char *buf, size_t buf_size) {
+static char *receive(char *buf, size_t buf_size, void *state) {
     return fgets(buf, buf_size, stdin);
 }
 
 int main (int argc, const char *argv[]) {
-    uc_app *app = uc_math_app_get_instance();
-    uc_app_set_send_data(app, send_data);
-    uc_app_set_receive_data(app, receive_data);
-    uc_app_run(app);
+    uc_hello_world(transmit, receive);
     return 0;
 }
