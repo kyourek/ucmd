@@ -9,20 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="include_p">
-      <UniqueIdentifier>{b799a6c4-f3d1-439a-8889-202bc6c506d6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd.example\include_p\uc_app_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_app.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_math_app.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmd.example\include\ucmd_example.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -31,13 +19,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_math_app.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd.example\source\main.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_app.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c">
