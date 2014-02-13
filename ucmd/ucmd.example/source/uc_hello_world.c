@@ -123,22 +123,51 @@ static const char *say(uc_cmd_line *cmd, void *state) {
 
 void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive_func *receive) {
     
+    /* This is the program's state object that gets
+    passed to the various command functions. */
     app_state my_state = { 0 };
 
     uc_cmd_line_opt *options = 
+
+        /* Creates a command 'name' that
+        calls the function 'name'. Its
+        purpose is to set the user's name. */
         uc_cmd_line_opt_create(
             name,
+
+            /* This pointer to the object that maintains
+            the program's state is passed to the 'name'
+            function when it is called. */
             &my_state,
             "name",
             "Sets the user's name.",
+
+            /* No arguments are required (or allowed)
+            for the 'name' command, so NULL is passed
+            here. */
             NULL,
+
+            /* Creates a switch '-first' for the 'name'
+            command. This switch is optional. */
             uc_switch_opt_create(
                 "-first",
                 "Sets the user's first name.",
+
+                /* Creates an argument 'first-name' for the
+                '-first' switch. This argument is required
+                if the '-first' switch is used. */
                 uc_arg_opt_create_required(
                     "first-name",
                     "The first-name of the user.",
+                
+                /* No other arguments are required (or allowed)
+                for the '-first' switch, so NULL is passed
+                here. */    
                 NULL),
+
+            /* Another switch is created for the user's
+            last name. This switch is very similar to the
+            '-first' switch. */
             uc_switch_opt_create(
                 "-last",
                 "Sets the user's last name.",
@@ -146,24 +175,48 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
                     "last-name",
                     "The last-name of the user.",
                 NULL),
+
+            /* That was the last switch for the 'name command,
+            so we pass NULL here. */
             NULL)),
+
+        /* Creates another command called 'say'.
+        This command will say a phrase to the user. */
         uc_cmd_line_opt_create(
             say,
             &my_state,
             "say",
             "Says a phrase.",
+
+            /* There is only one argument supplied
+            to this command, and it is required. It
+            is the phrase to say to the user. */
             uc_arg_opt_create_required(
                 "phrase",
                 "The phrase to say.",
                 NULL),
             NULL,
+
+        /* NULL is passed here to signal that there
+        are no more commands. */
         NULL));
 
+    /* This uc_cmd_line_app instance is a singleton that
+    is available to run a command-line app. */
     uc_cmd_line_app *app = uc_cmd_line_app_get_instance();
+
+    /* Gets the uc_cmd_line used by the app to send
+    responses back to the user. */
     uc_cmd_line *cmd = uc_cmd_line_app_get_cmd(app);
 
+    /* Sets callback functions on the app and command
+    that allow transmission and reception of data. 
+    These callbacks will be specific to the platform
+    on which the app is running. */
     uc_cmd_line_set_transmit(cmd, transmit);
     uc_cmd_line_app_set_receive(app, receive);
 
+    /* starts the command-line app. The app will exit
+    when it receives the 'quit' command. */
     uc_cmd_line_app_run(app, options);
 }
