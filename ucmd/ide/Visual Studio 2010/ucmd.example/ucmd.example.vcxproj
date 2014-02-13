@@ -76,11 +76,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\ucmd.example\include\ucmd_example.h" />
     <ClInclude Include="..\..\..\ucmd.example\include\uc_app.h" />
+    <ClInclude Include="..\..\..\ucmd.example\include\uc_hello_world.h" />
     <ClInclude Include="..\..\..\ucmd.example\include\uc_math_app.h" />
     <ClInclude Include="..\..\..\ucmd.example\include_p\uc_app_p.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmd.example\source\uc_app.c" />
+    <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c" />
     <ClCompile Include="..\..\..\ucmd.example\source\uc_math_app.c" />
     <ClCompile Include="..\..\..\ucmd.example\source\main.c" />
   </ItemGroup>
