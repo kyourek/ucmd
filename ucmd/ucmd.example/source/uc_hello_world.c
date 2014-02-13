@@ -55,6 +55,11 @@ static void copy_name(const char *source, char *dest) {
         return;
     }
 
+    if ((0 == strcmp("''", source)) || (0 == strcmp("\"\"", source))) {
+        dest[0] = '\0';
+        return;
+    }
+
     len = NAME_LENGTH - 1;
     for (i = 0; i < len; i++) {
         if (!source[i]) break;

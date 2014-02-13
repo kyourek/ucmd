@@ -207,6 +207,35 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
     return UC_TEST_ERR_NONE;
 }
 
+static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group *p) {
+    int i = 0;
+    char cmd[50] = "cmd -s \"\"";
+    uc_arg_tok *arg = NULL;
+    uc_switch_tok *swtch = NULL;
+    
+    uc_cmd_tok *t = parse_cmd(cmd);
+
+    swtch = uc_cmd_tok_get_switch(t);
+    arg = uc_switch_tok_get_arg(swtch);
+
+    UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, "\"\""));
+
+    return UC_TEST_ERR_NONE;
+}
+
+static uc_test_err uc_cmd_parser_parse_allows_empty_single_quotes(uc_test_group *p) {
+    int i = 0;
+    char cmd[50] = "c ''";
+    uc_arg_tok *arg = NULL;
+    uc_cmd_tok *t = parse_cmd(cmd);
+
+    arg = uc_cmd_tok_get_arg(t);
+
+    UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, "''"));
+
+    return UC_TEST_ERR_NONE;
+}
+
 uc_test_group *uc_cmd_parser_tests_get_group(void) {
     static uc_test_group group;
     static uc_test_group_test_func *tests[] = {
@@ -222,6 +251,8 @@ uc_test_group *uc_cmd_parser_tests_get_group(void) {
         uc_cmd_parser_parse_parses_switch_arguments_in_correct_order,
         uc_cmd_parser_parse_parses_command,
         uc_cmd_parser_parse_parses_trailing_quotes,
+        uc_cmd_parser_parse_allows_empty_double_quotes,
+        uc_cmd_parser_parse_allows_empty_single_quotes,
         NULL
     };
 

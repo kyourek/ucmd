@@ -24,8 +24,7 @@ static void remove_cmd_char(char *cmd, int index) {
 
 static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
     int i, j, len;
-    char quote;
-    char current_quote;
+    char quote, current_quote;
 
     if (NULL == cmd) return NULL;
 
@@ -54,9 +53,14 @@ static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
             /* check if this is our current quote */
             if (quote == current_quote) {
 
-                /* it is, so the quoted item is finished */
+                /* remove the quote only if this is
+                   not an empty quote */
+                if ((0 < i) && (current_quote != cmd[i - 1])) {
+                    cmd[i] = ' ';
+                }
+
+                /* the quoted item is finished */
                 current_quote = 0;
-                cmd[i] = ' ';
             }
             else {
 
@@ -66,8 +70,12 @@ static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
                     /* we've started a quote */
                     current_quote = quote;
 
-                    /* remove the quote character */
-                    remove_cmd_char(cmd, i);
+                    /* remove the quote character 
+                       only if this is not an empty
+                       quote */
+                    if (current_quote != cmd[i + 1]) {
+                        remove_cmd_char(cmd, i);
+                    }
                 }
             }
         }
