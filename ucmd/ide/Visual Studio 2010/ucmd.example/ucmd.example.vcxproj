@@ -75,9 +75,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ucmd.example\include\ucmd_example.h" />
+    <ClInclude Include="..\..\..\ucmd.example\include\uc_example.h" />
     <ClInclude Include="..\..\..\ucmd.example\include\uc_hello_world.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\ucmd.example\source\uc_example.c" />
     <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c" />
     <ClCompile Include="..\..\..\ucmd.example\source\main.c" />
   </ItemGroup>
