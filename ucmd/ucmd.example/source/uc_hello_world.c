@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stddef.h>
 #include <string.h>
-#include "uc_cmd_line_app.h"
 #include "uc_hello_world.h"
 
 #define NAME_LENGTH 50
@@ -127,7 +124,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
     passed to the various command functions. */
     app_state my_state = { 0 };
 
-    uc_cmd_line_opt *options = 
+    uc_cmd_line_opt *commands = 
 
         /* Creates a command 'name' that
         calls the function 'name'. Its
@@ -218,5 +215,5 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
 
     /* starts the command-line app. The app will exit
     when it receives the 'quit' command. */
-    uc_cmd_line_app_run(app, options);
+    uc_cmd_line_app_run(app, commands);
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "uc_example.h"
 #include "uc_hello_world.h"
 
 static void transmit(const char *response, void *state) {
@@ -11,6 +12,6 @@ static char *receive(char *buf, size_t buf_size, void *state) {
 }
 
 int main (int argc, const char *argv[]) {
-    uc_hello_world(transmit, receive);
+    uc_example(transmit, receive);
     return 0;
 }

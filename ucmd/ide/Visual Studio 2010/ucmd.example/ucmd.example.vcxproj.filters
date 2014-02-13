@@ -17,12 +17,18 @@
     <ClInclude Include="..\..\..\ucmd.example\include\uc_hello_world.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ucmd.example\include\uc_example.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmd.example\source\main.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd.example\source\uc_example.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
