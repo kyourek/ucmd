@@ -49,7 +49,7 @@ UC_EXPORTED uc_bool uc_arg_opt_is_numeric(uc_arg_opt *p);
  * Returns:
  *   The minimum numeric value of the argument.
  */
-UC_EXPORTED double uc_arg_opt_get_numeric_min(uc_arg_opt *p);
+UC_EXPORTED UC_ARG_OPT_NUMERIC_TYPE uc_arg_opt_get_numeric_min(uc_arg_opt *p);
 
 /*
  * Summary:
@@ -59,7 +59,7 @@ UC_EXPORTED double uc_arg_opt_get_numeric_min(uc_arg_opt *p);
  * Returns:
  *   The maximum numeric value of the argument.
  */
-UC_EXPORTED double uc_arg_opt_get_numeric_max(uc_arg_opt* p);
+UC_EXPORTED UC_ARG_OPT_NUMERIC_TYPE uc_arg_opt_get_numeric_max(uc_arg_opt* p);
 
 /*
  * Summary:
@@ -113,7 +113,7 @@ UC_EXPORTED uc_arg_opt *uc_arg_opt_create_required(const char *name, const char 
  * Returns:
  *   A pointer to the newly created argument option.
  */
-UC_EXPORTED uc_arg_opt *uc_arg_opt_create_numeric(const char *desc, double numeric_min, double numeric_max, uc_arg_opt *next);
+UC_EXPORTED uc_arg_opt *uc_arg_opt_create_numeric(const char *desc, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, uc_arg_opt *next);
 
 /*
  * Summary:
@@ -127,7 +127,7 @@ UC_EXPORTED uc_arg_opt *uc_arg_opt_create_numeric(const char *desc, double numer
  * Returns:
  *   A pointer to the newly created argument option.
  */
-UC_EXPORTED uc_arg_opt *uc_arg_opt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max);
+UC_EXPORTED uc_arg_opt *uc_arg_opt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max);
 
 /*
  * Summary:
@@ -142,7 +142,7 @@ UC_EXPORTED uc_arg_opt *uc_arg_opt_create_multiple_numeric(const char *desc, int
  *   A pointer to the newly created argument option. The option will have its
  *   'required' property set to true.
  */
-UC_EXPORTED uc_arg_opt *uc_arg_opt_create_required_numeric(const char *desc, double numeric_min, double numeric_max, uc_arg_opt *next);
+UC_EXPORTED uc_arg_opt *uc_arg_opt_create_required_numeric(const char *desc, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, uc_arg_opt *next);
 
 /*
  * Summary:
