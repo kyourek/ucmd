@@ -63,4 +63,10 @@
 #define UC_TOK_LENGTH_MAX UC_CMD_LINE_APP_CMD_BUF_LENGTH
 #endif
 
+/* Sets the numeric type of numeric argument
+   options. */
+#ifndef UC_ARG_OPT_NUMERIC_TYPE
+#define UC_ARG_OPT_NUMERIC_TYPE double
+#endif
+
 #endif
