@@ -208,7 +208,6 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
 }
 
 static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group *p) {
-    int i = 0;
     char cmd[50] = "cmd -s \"\"";
     uc_arg_tok *arg = NULL;
     uc_switch_tok *swtch = NULL;
@@ -224,7 +223,6 @@ static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group 
 }
 
 static uc_test_err uc_cmd_parser_parse_allows_empty_single_quotes(uc_test_group *p) {
-    int i = 0;
     char cmd[50] = "c ''";
     uc_arg_tok *arg = NULL;
     uc_cmd_tok *t = parse_cmd(cmd);
