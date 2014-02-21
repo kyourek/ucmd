@@ -4,7 +4,7 @@ ucmd
 
 **ucmd** provides a command-line interface for microcontrollers or any system with a C compiler. It's accompanied by a unit-test framework that can run on the same systems to which it is deployed. The repository contains some simple *Hello-World* example projects.
 
-**ucmd** is designed to be portable and rely on minimal dependencies. It works on [Arduino](http://www.arduino.cc/) and [Maple](http://leaflabs.com/), and has been tested and used extensively on other ARM devices.
+**ucmd** is designed to be portable and rely on minimal dependencies. It works on [Arduino](http://www.arduino.cc/) and [Maple](http://leaflabs.com/), and has been tested and used extensively on other ARM devices. It uses no dynamic memory allocation, so it is usable on systems that don't implement or define `malloc`. Instead, it relies on configurable header files that define the number of available commands, switches, and arguments. These numbers can be reduced when working in memory restrictive environments.
 
 **ucmd** is developed in an object-oriented style with strong naming conventions. A typical function definition contains a type name, a method name, and accepts a pointer to an instance on which the method works. For example, if the struct `uc_dog` is defined, it might have a function definition that looks like this: `uc_dog_bark(uc_dog *p);`
 
