@@ -6,6 +6,8 @@ ucmd
 
 **ucmd** is designed to be portable and rely on minimal dependencies. It works on [Arduino](http://www.arduino.cc/) and [Maple](http://leaflabs.com/), and has been tested and used extensively on other ARM devices.
 
+**ucmd** is developed in an object-oriented style with strong naming conventions. A typical function definition contains a type name, a method name, and accepts a pointer to an instance on which the method works. For example, if the struct `uc_dog` is defined, it might have a function definition that looks like this: `uc_dog_bark(uc_dog *p);`
+
 Usage
 ========
 
@@ -61,3 +63,5 @@ Above, `-sw2` was created as a `required` switch. Therefore, if it is not suppli
 
     cmd -sw2
     Invalid switch argument: the argument "s2-a1" is required for switch "-sw2".
+
+The argument passed to the `cmd` function is a pointer to an object of type `uc_cmd_line` that facilitates parsing the command's switches and arguments. It also provides a means of sending string responses to the command.
