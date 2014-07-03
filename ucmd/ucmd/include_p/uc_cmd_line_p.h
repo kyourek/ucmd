@@ -10,6 +10,7 @@ struct uc_cmd_line {
     void *transmit_state;
     void *is_cancelled_state;
     char response[UC_CMD_LINE_RESPONSE_LENGTH];
+	char response_buffer[UC_CMD_LINE_RESPONSE_LENGTH];
     uc_bool is_quiet;
 };
 

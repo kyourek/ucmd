@@ -45,7 +45,11 @@ uc_cmd_line_toks *uc_cmd_line_get_cmd_toks(uc_cmd_line *p, uc_cmd_line_toks *buf
 
 const char *uc_cmd_line_format_response_va(uc_cmd_line *p, const char *format, va_list arg_list) {
     if (NULL == p) return NULL;
-    vsnprintf(p->response, sizeof(p->response) - 1, format, arg_list);
+
+	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
+	   TODO: There's probably a better-performing way to handle that, though. */
+	vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list);
+	strcpy(p->response, p->response_buffer);
     return p->response;
 }
 
