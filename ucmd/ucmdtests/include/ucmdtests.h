@@ -1,5 +1,5 @@
-#ifndef CMD_LINE_TESTS_H
-#define CMD_LINE_TESTS_H
+#ifndef UCMDTESTS_H
+#define UCMDTESTS_H
 
 #include "uc_arg_opt_tests.h"
 #include "uc_arg_tok_owner_tests.h"

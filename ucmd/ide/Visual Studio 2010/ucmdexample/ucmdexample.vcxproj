@@ -74,7 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdexample\include\ucmd_example.h" />
+    <ClInclude Include="..\..\..\ucmdexample\include\ucmdexample.h" />
     <ClInclude Include="..\..\..\ucmdexample\include\uc_example.h" />
     <ClInclude Include="..\..\..\ucmdexample\include\uc_hello_world.h" />
   </ItemGroup>

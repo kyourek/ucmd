@@ -74,7 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucmd_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_opt_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_owner_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_tests.h" />

@@ -1,5 +1,5 @@
-#ifndef CMD_LINE_H
-#define CMD_LINE_H
+#ifndef UCMD_H
+#define UCMD_H
 
 #include "uc_arg_opt.h"
 #include "uc_arg_opt_owner.h"

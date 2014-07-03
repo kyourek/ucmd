@@ -68,7 +68,7 @@
     <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_toks_tests.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucmd_tests.h">
+    <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
