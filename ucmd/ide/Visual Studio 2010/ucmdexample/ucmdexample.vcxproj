@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmd.example\include;..\..\..\ucmd.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -59,7 +59,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmd.example\include;..\..\..\ucmd.example\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -74,14 +74,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd.example\include\ucmd_example.h" />
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_example.h" />
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_hello_world.h" />
+    <ClInclude Include="..\..\..\ucmdexample\include\ucmd_example.h" />
+    <ClInclude Include="..\..\..\ucmdexample\include\uc_example.h" />
+    <ClInclude Include="..\..\..\ucmdexample\include\uc_hello_world.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_example.c" />
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c" />
-    <ClCompile Include="..\..\..\ucmd.example\source\main.c" />
+    <ClCompile Include="..\..\..\ucmdexample\source\uc_example.c" />
+    <ClCompile Include="..\..\..\ucmdexample\source\uc_hello_world.c" />
+    <ClCompile Include="..\..\..\ucmdexample\source\main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

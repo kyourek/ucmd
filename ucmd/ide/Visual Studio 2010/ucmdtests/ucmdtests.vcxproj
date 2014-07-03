@@ -45,7 +45,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmd.tests\include;..\..\..\ucmd.tests\include_p</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdtests\include;..\..\..\ucmdtests\include_p</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -63,7 +63,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmd.tests\include;..\..\..\ucmd.tests\include_p</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdtests\include;..\..\..\ucmdtests\include_p</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -74,47 +74,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd.tests\include\ucmd_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_arg_opt_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_arg_tok_owner_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_arg_tok_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_bool_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_line_app_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_line_opt_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_line_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_line_toks_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_parser_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_cmd_tok_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_opt_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_switch_opt_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_switch_tok_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_test.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_tests.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_test_err.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_test_group.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_test_state.h" />
-    <ClInclude Include="..\..\..\ucmd.tests\include\uc_tok_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\ucmd_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_opt_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_owner_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_bool_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_app_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_opt_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_toks_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_parser_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_tok_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_opt_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_switch_opt_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_switch_tok_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_test.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_test_err.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_test_group.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_test_state.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_tok_tests.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_arg_opt_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_arg_tok_owner_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_arg_tok_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_bool_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_line_app_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_line_opt_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_line_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_line_toks_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_parser_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_cmd_tok_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_opt_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_switch_opt_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_switch_tok_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_test.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_test_group.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_test_state.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\uc_tok_tests.c" />
-    <ClCompile Include="..\..\..\ucmd.tests\source\main.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_opt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_tok_owner_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_tok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_bool_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_app_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_opt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_toks_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_parser_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_tok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_opt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_switch_opt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_switch_tok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_test.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_test_group.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_test_state.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_tok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

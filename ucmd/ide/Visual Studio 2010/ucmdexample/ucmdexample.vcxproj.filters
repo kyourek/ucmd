@@ -11,24 +11,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd.example\include\ucmd_example.h">
+    <ClInclude Include="..\..\..\ucmdexample\include\ucmd_example.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_hello_world.h">
+    <ClInclude Include="..\..\..\ucmdexample\include\uc_hello_world.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmd.example\include\uc_example.h">
+    <ClInclude Include="..\..\..\ucmdexample\include\uc_example.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd.example\source\main.c">
+    <ClCompile Include="..\..\..\ucmdexample\source\main.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_hello_world.c">
+    <ClCompile Include="..\..\..\ucmdexample\source\uc_hello_world.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd.example\source\uc_example.c">
+    <ClCompile Include="..\..\..\ucmdexample\source\uc_example.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
