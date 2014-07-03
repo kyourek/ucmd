@@ -60,8 +60,8 @@ class Project(object):
 
 projects = [
     Project("ucmd", [ "ucmd" ]),
-    Project("ucmd_tests", [ "ucmd", "ucmd.tests" ]),
-    Project("ucmd_example", [ "ucmd", "ucmd.example" ])
+    Project("ucmdtests", [ "ucmd", "ucmdtests" ]),
+    Project("ucmdexample", [ "ucmd", "ucmdexample" ])
 ]
 
 for project in projects:
