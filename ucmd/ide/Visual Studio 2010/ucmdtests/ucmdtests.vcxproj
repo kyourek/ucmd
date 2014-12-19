@@ -76,7 +76,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTest.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestErr.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestGroup.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestState.h" />
@@ -96,7 +96,7 @@
     <ClCompile Include="..\..\..\ucmdtests\source\ucSwitchOpt_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucSwitchTok_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucTest.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucTestGroup.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucTestState.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucTok_tests.c" />

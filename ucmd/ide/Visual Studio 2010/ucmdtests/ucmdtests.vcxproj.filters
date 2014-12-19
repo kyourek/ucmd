@@ -26,7 +26,7 @@
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestState.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTests.h">
+    <ClInclude Include="..\..\..\ucmdtests\include\uc_tests.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,10 +82,10 @@
     <ClCompile Include="..\..\..\ucmdtests\source\ucTestState.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTests.c">
+    <ClCompile Include="..\..\..\ucmdtests\source\ucTok_tests.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTok_tests.c">
+    <ClCompile Include="..\..\..\ucmdtests\source\uc_tests.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
