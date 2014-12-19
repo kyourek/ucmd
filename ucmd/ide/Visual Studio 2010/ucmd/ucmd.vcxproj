@@ -82,7 +82,7 @@
     <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucArgTokOwner.h" />
-    <ClInclude Include="..\..\..\ucmd\include\uc_bool.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucBool.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_app.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_opt.h" />

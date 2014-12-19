@@ -1,5 +1,5 @@
-#ifndef UC_ARG_TOK_TESTS_H
-#define UC_ARG_TOK_TESTS_H
+#ifndef UCARGTOK_TESTS_H
+#define UCARGTOK_TESTS_H
 
 #include "uc_test_group.h"
 

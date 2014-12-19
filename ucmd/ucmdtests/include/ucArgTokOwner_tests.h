@@ -1,5 +1,5 @@
-#ifndef UC_ARG_TOK_OWNER_TESTS_H
-#define UC_ARG_TOK_OWNER_TESTS_H
+#ifndef UCARGTOKOWNER_TESTS_H
+#define UCARGTOKOWNER_TESTS_H
 
 #include "uc_test_group.h"
 

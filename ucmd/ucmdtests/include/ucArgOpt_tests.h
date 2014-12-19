@@ -1,5 +1,5 @@
-#ifndef UC_ARG_OPT_TESTS_H
-#define UC_ARG_OPT_TESTS_H
+#ifndef UCARGOPT_TESTS_H
+#define UCARGOPT_TESTS_H
 
 #include "uc_test_group.h"
 

@@ -78,7 +78,7 @@
     <ClInclude Include="..\..\..\ucmdtests\include\ucArgOpt_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucArgTokOwner_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucArgTok_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\uc_bool_tests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\include\ucBool_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_app_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_opt_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_line_tests.h" />
@@ -99,7 +99,7 @@
     <ClCompile Include="..\..\..\ucmdtests\source\ucArgOpt_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucArgTokOwner_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\ucArgTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\uc_bool_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\source\ucBool_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_app_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_opt_tests.c" />
     <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_tests.c" />

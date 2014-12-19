@@ -77,9 +77,6 @@
     <ClInclude Include="..\..\..\ucmd\config\console\windows\import\uc_export.h">
       <Filter>config\console\windows\import</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_bool.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\uc_err.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -123,6 +120,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucBool.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
-#ifndef UC_BOOL_TESTS_H
-#define UC_BOOL_TESTS_H
+#ifndef UCBOOL_TESTS_H
+#define UCBOOL_TESTS_H
 
 #include "uc_test_group.h"
 

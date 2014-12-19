@@ -1,5 +1,5 @@
-#ifndef UC_BOOL_H
-#define UC_BOOL_H
+#ifndef UCBOOL_H
+#define UCBOOL_H
 
 /*
  * Summary:
