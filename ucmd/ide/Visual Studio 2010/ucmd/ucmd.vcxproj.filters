@@ -29,39 +29,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_parser.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_tok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_opt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_switch_opt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_switch_tok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_tok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_parser_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_memory_manager_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_opt_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_switch_opt_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_tok_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmd\config\uc_common.h">
       <Filter>config</Filter>
     </ClInclude>
@@ -76,30 +43,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ucmd\config\console\windows\import\uc_export.h">
       <Filter>config\console\windows\import</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_err.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_app.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_opt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_toks.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_app_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_opt_p.h">
-      <Filter>include_p</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_p.h">
-      <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\ucmd.h">
       <Filter>include</Filter>
@@ -125,38 +68,65 @@
     <ClInclude Include="..\..\..\ucmd\include\ucBool.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineApp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineToks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdParser.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucErr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucSwitchOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucSwitchTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineApp_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLine_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdParser_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucMemoryManager_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucSwitchOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucTok_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_parser.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_tok.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_opt.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_switch_opt.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_switch_tok.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_tok.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line_app.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line_opt.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line_toks.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -167,6 +137,36 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLine.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineApp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineToks.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdParser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucSwitchOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucSwitchTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucTok.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
