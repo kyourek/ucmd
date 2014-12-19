@@ -1,6 +1,7 @@
 #ifndef UCMD_H
 #define UCMD_H
 
+#include "uc.h"
 #include "ucArgOpt.h"
 #include "ucArgOptOwner.h"
 #include "ucArgTok.h"
@@ -11,7 +12,6 @@
 #include "ucCmdLineToks.h"
 #include "ucCmdParser.h"
 #include "ucCmdTok.h"
-#include "uc_common.h"
 #include "ucOpt.h"
 #include "ucSwitchOpt.h"
 #include "ucSwitchTok.h"

@@ -40,7 +40,7 @@ typedef ucBool (ucTest_exit_func)(void* state);
  *   p: A pointer to the tests structure.
  *   value: The print function used to print information.
  */
-UC_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_print_func *value);
+uc_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_print_func *value);
 
 /* Summary:
  *   Sets the state object that is given as a parameter to the print function.
@@ -48,7 +48,7 @@ UC_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_print_func *value);
  *   p: A pointer to the tests structure.
  *   value: The state object that is given as a parameter to the structure's print function.
  */
-UC_EXPORTED void ucTest_set_print_state(ucTest *p, void *value);
+uc_EXPORTED void ucTest_set_print_state(ucTest *p, void *value);
 
 /*
  * Summary:
@@ -57,7 +57,7 @@ UC_EXPORTED void ucTest_set_print_state(ucTest *p, void *value);
  *   p: A pointer to the tests structure.
  *   value: The function that is called before the test procedure exits.
  */
-UC_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value);
+uc_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value);
 
 /*
  * Summary:
@@ -66,17 +66,17 @@ UC_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value);
  *   p: A pointer to the tests structure.
  *   value: The state object that is given as a parameter to the exit function.
  */
-UC_EXPORTED void ucTest_set_exit_state(ucTest *p, void *value);
+uc_EXPORTED void ucTest_set_exit_state(ucTest *p, void *value);
 
-UC_EXPORTED ucTestGroup **ucTest_get_groups(ucTest *p);
+uc_EXPORTED ucTestGroup **ucTest_get_groups(ucTest *p);
 
-UC_EXPORTED ucTestState *ucTest_get_state(ucTest *p);
+uc_EXPORTED ucTestState *ucTest_get_state(ucTest *p);
 
-UC_EXPORTED const char *ucTest_get_label(ucTest *p);
+uc_EXPORTED const char *ucTest_get_label(ucTest *p);
 
-UC_EXPORTED ucTest *ucTest_init(ucTest *p, const char *label, ucTestGroup **groups);
+uc_EXPORTED ucTest *ucTest_init(ucTest *p, const char *label, ucTestGroup **groups);
 
-UC_EXPORTED ucTestErr ucTest_run(ucTest *p);
+uc_EXPORTED ucTestErr ucTest_run(ucTest *p);
 
 struct ucTest {
     const char *label;

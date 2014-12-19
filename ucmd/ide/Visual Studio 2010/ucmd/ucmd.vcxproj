@@ -46,7 +46,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;uc_DECLSPEC_DLLEXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,7 +63,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;uc_DECLSPEC_DLLEXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -72,11 +72,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd\config\uc_common.h" />
-    <ClInclude Include="..\..\..\ucmd\config\console\uc_config.h" />
-    <ClInclude Include="..\..\..\ucmd\config\console\windows\uc_console.h" />
-    <ClInclude Include="..\..\..\ucmd\config\console\windows\export\uc_export.h" />
-    <ClInclude Include="..\..\..\ucmd\config\console\windows\import\uc_export.h" />
+    <ClInclude Include="..\..\..\ucmd\include\uc.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucmd.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucArgOpt.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h" />

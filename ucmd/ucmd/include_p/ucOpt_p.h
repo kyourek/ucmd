@@ -13,6 +13,6 @@ extern const char *ucOpt_validation_err_invalid_argument_prefix;
 extern const char *ucOpt_validation_err_invalid_switch_prefix;
 extern const char *ucOpt_validation_err_invalid_switch_argument_prefix;
 
-UC_EXPORTED ucOpt *ucOpt_init(ucOpt *p, const char *name, const char *desc, ucBool is_required);
+uc_EXPORTED ucOpt *ucOpt_init(ucOpt *p, const char *name, const char *desc, ucBool is_required);
 
 #endif

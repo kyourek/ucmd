@@ -20,7 +20,7 @@ typedef const char ucSwitchTok;
  * Returns:
  *   The next switch token after the given token.
  */
-UC_EXPORTED ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok *p);
+uc_EXPORTED ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok *p);
 
 /*
  * Summary:
@@ -30,7 +30,7 @@ UC_EXPORTED ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok *p);
  * Returns:
  *   The number of switches in the list.
  */
-UC_EXPORTED int ucSwitchTok_count(ucSwitchTok* p);
+uc_EXPORTED int ucSwitchTok_count(ucSwitchTok* p);
 
 /*
  * Summary:
@@ -41,7 +41,7 @@ UC_EXPORTED int ucSwitchTok_count(ucSwitchTok* p);
  * Returns:
  *   The switch with the specified value, or NULL if none exist.
  */
-UC_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value);
+uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value);
 
 /*
  * Summary:
@@ -53,7 +53,7 @@ UC_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_val
  *   ucBool_true if a switch with the given value was found in the list. Otherwise,
  *   ucBool_false.
  */
-UC_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value);
+uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value);
 
 /*
  * Summary:
@@ -64,6 +64,6 @@ UC_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value
  *   A pointer to the first argument of the switch, or NULL
  *   if no arguments exist.
  */
-UC_EXPORTED ucArgTok *ucSwitchTok_get_arg(ucSwitchTok *p);
+uc_EXPORTED ucArgTok *ucSwitchTok_get_arg(ucSwitchTok *p);
 
 #endif

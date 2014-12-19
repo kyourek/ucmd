@@ -133,7 +133,7 @@ ucTok *ucTok_get_next(ucTok *p) {
 
     /* loop until we've hit the max length */
     i = 0;
-    while (UC_TOK_LENGTH_MAX > ++i) {
+    while (ucTok_LENGTH_MAX > ++i) {
 
         /* check if the previous character was a separator */
         if (ucTok_separator == p[i - 1]) {

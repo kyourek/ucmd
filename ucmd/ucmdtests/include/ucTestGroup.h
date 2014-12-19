@@ -42,7 +42,7 @@ typedef ucTestErr (ucTestGroup_test_func)(ucTestGroup *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p);
+uc_EXPORTED ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -53,7 +53,7 @@ UC_EXPORTED ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p);
+uc_EXPORTED ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -64,7 +64,7 @@ UC_EXPORTED ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED ucTestErr ucTestGroup_before_each_test(ucTestGroup *p);
+uc_EXPORTED ucTestErr ucTestGroup_before_each_test(ucTestGroup *p);
 
 /*
  * Summary:
@@ -75,7 +75,7 @@ UC_EXPORTED ucTestErr ucTestGroup_before_each_test(ucTestGroup *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED ucTestErr ucTestGroup_after_each_test(ucTestGroup *p);
+uc_EXPORTED ucTestErr ucTestGroup_after_each_test(ucTestGroup *p);
 
 /*
  * Summary:
@@ -85,7 +85,7 @@ UC_EXPORTED ucTestErr ucTestGroup_after_each_test(ucTestGroup *p);
  * Returns:
  *   The lists of tests to run for the group.
  */
-UC_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
+uc_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -100,7 +100,7 @@ UC_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
  * Returns:
  *   A pointer to the initialized test group.
  */
-UC_EXPORTED ucTestGroup *ucTestGroup_init(
+uc_EXPORTED ucTestGroup *ucTestGroup_init(
     ucTestGroup *p, 
     ucTestGroup_callback_func *before_all_tests, 
     ucTestGroup_callback_func *after_all_tests, 
@@ -119,7 +119,7 @@ UC_EXPORTED ucTestGroup *ucTestGroup_init(
  *   The error number of the failed test, or no error if all
  *   tests passed.
  */
-UC_EXPORTED ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state);
+uc_EXPORTED ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state);
 
 /*
  * Summary:

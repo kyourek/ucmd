@@ -102,7 +102,7 @@ void *ucCmdLine_get_transmit_state(ucCmdLine *p) {
     return p->transmit_state;
 }
 
-UC_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
+uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
     if (NULL == p) return;
     p->transmit_state = value;
 }

@@ -38,7 +38,7 @@ typedef const char *(ucCmdLineOpt_func)(ucCmdLine *cmd, void *state);
  * Returns:
  *   A pointer to the newly created command option.
  */
-UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_func *func, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next);
+uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_func *func, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next);
 
 /*
  * Summary:
@@ -48,7 +48,7 @@ UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_func *func, void *sta
  * Returns:
  *   A pointer to the next command option.
  */
-UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt *p);
+uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -59,7 +59,7 @@ UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt *p);
  *   A pointer to the first argument option of the command,
  *   or NULL if no argument options exist.
  */
-UC_EXPORTED ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt *p);
+uc_EXPORTED ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -70,7 +70,7 @@ UC_EXPORTED ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt *p);
  *   A pointer to the first switch option of the command option,
  *   or NULL if no switch options exist.
  */
-UC_EXPORTED ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p);
+uc_EXPORTED ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -82,7 +82,7 @@ UC_EXPORTED ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p);
  *   A pointer to the command option that matches the given name, or NULL
  *   if no option is found.
  */
-UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt *p, const char *name);
+uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt *p, const char *name);
 
 /*
  * Summary:
@@ -93,7 +93,7 @@ UC_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt *p, const char 
  * Returns:
  *   A pointer to the function invoked when the command option is processed.
  */
-UC_EXPORTED ucCmdLineOpt_func *ucCmdLineOpt_get_func(ucCmdLineOpt *p);
+uc_EXPORTED ucCmdLineOpt_func *ucCmdLineOpt_get_func(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -104,7 +104,7 @@ UC_EXPORTED ucCmdLineOpt_func *ucCmdLineOpt_get_func(ucCmdLineOpt *p);
  * Returns:
  *   A pointer to the command option's state.
  */
-UC_EXPORTED void *ucCmdLineOpt_get_state(ucCmdLineOpt *p);
+uc_EXPORTED void *ucCmdLineOpt_get_state(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -112,7 +112,7 @@ UC_EXPORTED void *ucCmdLineOpt_get_state(ucCmdLineOpt *p);
  * Parameters:
  *   p: A pointer to the command option whose memory is released.
  */
-UC_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt *p);
+uc_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -122,7 +122,7 @@ UC_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt *p);
  * Parameters:
  *   p: A pointer to the first command option in the list to be released.
  */
-UC_EXPORTED void ucCmdLineOpt_destroy_chain(ucCmdLineOpt *p);
+uc_EXPORTED void ucCmdLineOpt_destroy_chain(ucCmdLineOpt *p);
 
 /*
  * Summary:
@@ -135,7 +135,7 @@ UC_EXPORTED void ucCmdLineOpt_destroy_chain(ucCmdLineOpt *p);
  * Returns:
  *   The response to the command.
  */
-UC_EXPORTED const char *ucCmdLineOpt_process(ucCmdLineOpt *p, ucCmdLine *cmd);
+uc_EXPORTED const char *ucCmdLineOpt_process(ucCmdLineOpt *p, ucCmdLine *cmd);
 
 /*
  * Summary:
@@ -145,7 +145,7 @@ UC_EXPORTED const char *ucCmdLineOpt_process(ucCmdLineOpt *p, ucCmdLine *cmd);
  *   p: A pointer to the option whose usage string will be sent.
  *   cmd: The command structure used to respond with the usage string.
  */
-UC_EXPORTED void ucCmdLineOpt_send_usage(ucCmdLineOpt *p, ucCmdLine *cmd);
+uc_EXPORTED void ucCmdLineOpt_send_usage(ucCmdLineOpt *p, ucCmdLine *cmd);
 
 /*
  * Summary:
@@ -155,6 +155,6 @@ UC_EXPORTED void ucCmdLineOpt_send_usage(ucCmdLineOpt *p, ucCmdLine *cmd);
  *   p: A pointer to the command option for which help is sent.
  *   cmd: The command structure used to respond with the help information.
  */
-UC_EXPORTED void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd);
+uc_EXPORTED void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd);
 
 #endif

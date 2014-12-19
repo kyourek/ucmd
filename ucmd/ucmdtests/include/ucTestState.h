@@ -1,25 +1,25 @@
 #ifndef UC_TEST_STATE_H
 #define UC_TEST_STATE_H
 
-#include "uc_common.h"
+#include "uc.h"
 
 typedef struct ucTestState ucTestState;
 
-UC_EXPORTED int ucTestState_get_run_test_count(ucTestState *p);
+uc_EXPORTED int ucTestState_get_run_test_count(ucTestState *p);
 
-UC_EXPORTED int ucTestState_get_run_group_count(ucTestState *p);
+uc_EXPORTED int ucTestState_get_run_group_count(ucTestState *p);
 
-UC_EXPORTED int ucTestState_get_run_group_test_count(ucTestState *p);
+uc_EXPORTED int ucTestState_get_run_group_test_count(ucTestState *p);
 
-UC_EXPORTED void ucTestState_set_run_test_count(ucTestState *p, int value);
+uc_EXPORTED void ucTestState_set_run_test_count(ucTestState *p, int value);
 
-UC_EXPORTED void ucTestState_set_run_group_count(ucTestState *p, int value);
+uc_EXPORTED void ucTestState_set_run_group_count(ucTestState *p, int value);
 
-UC_EXPORTED void ucTestState_set_run_group_test_count(ucTestState *p, int value);
+uc_EXPORTED void ucTestState_set_run_group_test_count(ucTestState *p, int value);
 
-UC_EXPORTED void ucTestState_reset(ucTestState *p);
+uc_EXPORTED void ucTestState_reset(ucTestState *p);
 
-UC_EXPORTED ucTestState *ucTestState_init(ucTestState *p);
+uc_EXPORTED ucTestState *ucTestState_init(ucTestState *p);
 
 struct ucTestState {
     int run_test_count;

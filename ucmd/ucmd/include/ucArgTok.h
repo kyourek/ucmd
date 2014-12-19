@@ -20,7 +20,7 @@ typedef const char ucArgTok;
  * Returns:
  *   The next argument in the list.
  */
-UC_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok* p);
+uc_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok* p);
 
 /*
  * Summary:
@@ -30,7 +30,7 @@ UC_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok* p);
  * Returns:
  *   The number of arguments in the list.
  */
-UC_EXPORTED int ucArgTok_count(ucArgTok* p);
+uc_EXPORTED int ucArgTok_count(ucArgTok* p);
 
 /*
  * Summary:
@@ -41,7 +41,7 @@ UC_EXPORTED int ucArgTok_count(ucArgTok* p);
  * Returns:
  *   The argument with the specified value, or NULL if none exists.
  */
-UC_EXPORTED ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value);
+uc_EXPORTED ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value);
 
 /*
  * Summary:
@@ -54,6 +54,6 @@ UC_EXPORTED ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value);
  *   ucBool_true if an argument token with the given value is found.
  *   Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool ucArgTok_contains(ucArgTok* p, const char *arg_value);
+uc_EXPORTED ucBool ucArgTok_contains(ucArgTok* p, const char *arg_value);
 
 #endif

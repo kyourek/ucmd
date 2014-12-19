@@ -5,7 +5,7 @@
 #include "ucMemoryManager_p.h"
 #include "ucSwitchOpt_p.h"
 
-ucMemoryManager_INIT(ucSwitchOpt, UC_SWITCH_OPT_COUNT);
+ucMemoryManager_INIT(ucSwitchOpt, ucSwitchOpt_COUNT);
 
 static ucSwitchOpt *create_switch_opt(void) {
     return ucMemoryManager_create();

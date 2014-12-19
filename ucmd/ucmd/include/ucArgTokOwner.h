@@ -21,6 +21,6 @@ typedef const char ucArgTokOwner;
  *   The first argument that belongs to the owner, or NULL if
  *   no arguments exist.
  */
-UC_EXPORTED ucArgTok *ucArgTokOwner_get_arg(ucArgTokOwner *p);
+uc_EXPORTED ucArgTok *ucArgTokOwner_get_arg(ucArgTokOwner *p);
 
 #endif

@@ -24,7 +24,7 @@ typedef const char ucCmdTok;
  *   A pointer to the first argument token, or NULL if no arguments
  *   exist for the command.
  */
-UC_EXPORTED ucArgTok *ucCmdTok_get_arg(ucCmdTok *p);
+uc_EXPORTED ucArgTok *ucCmdTok_get_arg(ucCmdTok *p);
 
 /*
  * Summary:
@@ -35,6 +35,6 @@ UC_EXPORTED ucArgTok *ucCmdTok_get_arg(ucCmdTok *p);
  *   A pointer to the first switch token of the command, or NULL
  *   if no switches exist.
  */
-UC_EXPORTED ucSwitchTok *ucCmdTok_get_switch(ucCmdTok *p);
+uc_EXPORTED ucSwitchTok *ucCmdTok_get_switch(ucCmdTok *p);
 
 #endif

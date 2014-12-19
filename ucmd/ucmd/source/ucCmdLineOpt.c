@@ -8,7 +8,7 @@
 #include "ucOpt_p.h"
 #include "ucSwitchOpt_p.h"
 
-ucMemoryManager_INIT(ucCmdLineOpt, UC_CMD_LINE_OPT_COUNT);
+ucMemoryManager_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
 
 static ucCmdLineOpt *create_cmd_line_opt(void) {
     return ucMemoryManager_create();

@@ -17,7 +17,7 @@ typedef struct ucOpt ucOpt;
  * Returns:
  *   The name of the option.
  */
-UC_EXPORTED const char* ucOpt_get_name(ucOpt *p);
+uc_EXPORTED const char* ucOpt_get_name(ucOpt *p);
 
 /*
  * Summary:
@@ -27,7 +27,7 @@ UC_EXPORTED const char* ucOpt_get_name(ucOpt *p);
  * Returns:
  *   The description of the option.
  */
-UC_EXPORTED const char *ucOpt_get_desc(ucOpt *p);
+uc_EXPORTED const char *ucOpt_get_desc(ucOpt *p);
 
 /*
  * Summary:
@@ -38,7 +38,7 @@ UC_EXPORTED const char *ucOpt_get_desc(ucOpt *p);
  * Returns:
  *   ucBool_true if the option is required. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool ucOpt_is_required(ucOpt *p);
+uc_EXPORTED ucBool ucOpt_is_required(ucOpt *p);
 
 /*
  * Summary:
@@ -50,6 +50,6 @@ UC_EXPORTED ucBool ucOpt_is_required(ucOpt *p);
  *        with the help information.
  *   prefix: A string used to prefix the help information.
  */
-UC_EXPORTED void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix);
+uc_EXPORTED void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix);
 
 #endif

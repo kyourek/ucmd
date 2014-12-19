@@ -18,7 +18,7 @@ typedef struct ucCmdParser ucCmdParser;
  *   The static, default instance of the parser, or NULL
  *   if an error occurred.
  */
-UC_EXPORTED ucCmdParser *ucCmdParser_get_instance(void);
+uc_EXPORTED ucCmdParser *ucCmdParser_get_instance(void);
 
 /*
  * Summary:
@@ -30,6 +30,6 @@ UC_EXPORTED ucCmdParser *ucCmdParser_get_instance(void);
  *   A pointer to the command token that was parsed, or NULL if an
  *   error occurred.
  */
-UC_EXPORTED ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd);
+uc_EXPORTED ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd);
 
 #endif

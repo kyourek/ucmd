@@ -42,7 +42,7 @@ typedef struct ucCmdLineToks {
  * Returns:
  *   A pointer to the command token.
  */
-UC_EXPORTED ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p);
+uc_EXPORTED ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p);
 
 /*
  * Summary:
@@ -54,7 +54,7 @@ UC_EXPORTED ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p);
  *   A pointer to the argument token, or NULL if no argument
  *   tokens exist.
  */
-UC_EXPORTED ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks *p);
+uc_EXPORTED ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks *p);
 
 /*
  * Summary:
@@ -65,6 +65,6 @@ UC_EXPORTED ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks *p);
  * Returns:
  *   A pointer to the switch token, or NULL if no switch tokens exist.
  */
-UC_EXPORTED ucSwitchTok *ucCmdLineToks_get_switch_tok(ucCmdLineToks *p);
+uc_EXPORTED ucSwitchTok *ucCmdLineToks_get_switch_tok(ucCmdLineToks *p);
 
 #endif

@@ -1,24 +1,5 @@
-#ifndef UC_COMMON_H
-#define UC_COMMON_H
-
-/* This file should be in the include path
-   of the compiler. It provides implementation-
-   specific configuration for the program. */
-#include "uc_config.h"
-
-/* Prepend extern "C" if we're in a C++
-   compiler. */
-#ifdef __cplusplus
-#define uc_EXTERN_C extern "C"
-#else
-#define uc_EXTERN_C
-#endif
-
-/* Default to setting uc_EXPORTED to the result
-   of our extern "C" check. */
-#ifndef uc_EXPORTED
-#define uc_EXPORTED uc_EXTERN_C
-#endif
+#ifndef UC_H
+#define UC_H
 
 /* Sets the size of the command buffer when using
    the command-line application framework. All
@@ -67,6 +48,36 @@
    options. */
 #ifndef ucArgOpt_NUMERIC_TYPE
 #define ucArgOpt_NUMERIC_TYPE double
+#endif
+
+/* Include this def when using the library with another
+   program on Windows.
+   Exported functions will be decorated with dllimport
+   to make them available to external programs. */
+#ifdef uc_DECLSPEC_DLLIMPORT
+#define uc_EXPORTED uc_EXTERN_C __declspec(dllimport)
+#endif
+
+/* Include this def when compiling this program on
+   Windows.
+   Exported functions will be decorated with dllexport
+   to make them available to external programs. */
+#ifdef uc_DECLSPEC_DLLEXPORT
+#define uc_EXPORTED uc_EXTERN_C __declspec(dllexport)
+#endif
+
+/* Prepend extern "C" if we're in a C++
+   compiler. */
+#ifdef __cplusplus
+#define uc_EXTERN_C extern "C"
+#else
+#define uc_EXTERN_C
+#endif
+
+/* Default to setting uc_EXPORTED to the result
+   of our extern "C" check. */
+#ifndef uc_EXPORTED
+#define uc_EXPORTED uc_EXTERN_C
 #endif
 
 #endif

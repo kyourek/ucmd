@@ -13,9 +13,9 @@ struct ucCmdLineApp {
     const char *help_command;
     const char *quit_command;
     const char *escape_response;
-    char cmd_buf[UC_CMD_LINE_APP_CMD_BUF_LENGTH + 1];
+    char cmd_buf[ucCmdLineApp_CMD_BUF_LENGTH + 1];
 };
 
-UC_EXPORTED char *ucCmdLineApp_receive(ucCmdLineApp *p);
+uc_EXPORTED char *ucCmdLineApp_receive(ucCmdLineApp *p);
 
 #endif
