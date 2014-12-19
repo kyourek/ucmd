@@ -235,7 +235,7 @@ static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
 
 ucTestGroup *ucCmdParser_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucCmdParser_parse_parses_command_value,
         ucCmdParser_parse_parses_short_argument,
         ucCmdParser_parse_parses_long_argument,

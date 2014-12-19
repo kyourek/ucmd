@@ -46,7 +46,7 @@ static ucTestErr ucCmdLineToks_get_switch_tok_returns_value(ucTestGroup *p) {
 
 ucTestGroup *ucCmdLineToks_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucCmdLineToks_get_cmd_tok_returns_value,
         ucCmdLineToks_get_arg_tok_returns_value,
         ucCmdLineToks_get_switch_tok_returns_value,

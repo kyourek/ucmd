@@ -17,7 +17,7 @@ static ucTestErr ucArgTokOwner_get_arg_returns_null(ucTestGroup *p) {
 
 ucTestGroup *ucArgTokOwner_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucArgTokOwner_get_arg_returns_first_arg,
         ucArgTokOwner_get_arg_returns_null,
         NULL

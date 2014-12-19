@@ -19,7 +19,7 @@ typedef struct ucCmdLine ucCmdLine;
  *   response: The string to be transmitted.
  *   state: A stateful object.
  */
-typedef void (ucCmdLine_transmit_func)(const char *response, void *state);
+typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
 
 /*
  * Summary:
@@ -30,7 +30,7 @@ typedef void (ucCmdLine_transmit_func)(const char *response, void *state);
  * Returns:
  *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
  */
-typedef ucBool (ucCmdLine_is_cancelled_func)(void *state);
+typedef ucBool (ucCmdLine_IsCancelledFunc)(void *state);
 
 /*
  * Summary:
@@ -69,7 +69,7 @@ uc_EXPORTED ucCmdLineToks *ucCmdLine_get_cmd_toks(ucCmdLine *p, ucCmdLineToks *b
  *   p: A pointer to the structure whose property is set.
  *   value: A pointer to the function used to transmit responses.
  */
-uc_EXPORTED void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_transmit_func *value);
+uc_EXPORTED void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_TransmitFunc *value);
 
 /*
  * Summary:
@@ -79,7 +79,7 @@ uc_EXPORTED void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_transmit_func *v
  * Returns:
  *   A pointer to the function used by the structure to transmit responses.
  */
-uc_EXPORTED ucCmdLine_transmit_func *ucCmdLine_get_transmit(ucCmdLine *p);
+uc_EXPORTED ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p);
 
 /*
  * Summary:
@@ -117,7 +117,7 @@ uc_EXPORTED ucBool ucCmdLine_is_cancelled(ucCmdLine *p);
  *   p: A pointer to the structure whose property is set.
  *   value: A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_is_cancelled_func *value);
+uc_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_IsCancelledFunc *value);
 
 /*
  * Summary:
@@ -127,7 +127,7 @@ uc_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_is_cancelled
  * Returns:
  *   A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED ucCmdLine_is_cancelled_func *ucCmdLine_get_is_cancelled(ucCmdLine *p);
+uc_EXPORTED ucCmdLine_IsCancelledFunc *ucCmdLine_get_is_cancelled(ucCmdLine *p);
 
 /*
  * Summary:

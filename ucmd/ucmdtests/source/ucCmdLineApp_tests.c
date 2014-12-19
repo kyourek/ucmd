@@ -129,7 +129,7 @@ static ucTestErr ucCmdLineApp_get_receive_state_gets_value(ucTestGroup *p) {
 static ucTestErr ucCmdLineApp_receive_uses_state(ucTestGroup *p) {
     double state;
     ucCmdLineApp *ptr = ucCmdLineApp_get_instance();
-    ucCmdLineApp_receive_func *prev_func = ptr->receive;
+    ucCmdLineApp_ReceiveFunc *prev_func = ptr->receive;
     void *prev_state = ptr->receive_state;
 
     ucCmdLineApp_set_receive(ptr, receive_1);
@@ -144,7 +144,7 @@ static ucTestErr ucCmdLineApp_receive_uses_state(ucTestGroup *p) {
 
 ucTestGroup *ucCmdLineApp_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucCmdLineApp_get_instance_is_not_null,
         ucCmdLineApp_set_receive_sets_receive,
         ucCmdLineApp_get_receive_returns_receive,

@@ -156,7 +156,7 @@ static ucTestErr ucCmdLineOpt_destroy_chain_releases_all_instances(ucTestGroup *
 static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup *p) {
     const char *expected;
     ucCmdLine *cmd = ucCmdLine_get_instance();
-    ucCmdLine_transmit_func *prev_transmit_func = ucCmdLine_get_transmit(cmd);
+    ucCmdLine_TransmitFunc *prev_transmit_func = ucCmdLine_get_transmit(cmd);
 
     ucCmdLineOpt *cmd_opt = 
         ucCmdLineOpt_create(NULL, NULL, "dothis", NULL,
@@ -226,7 +226,7 @@ static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_switch(ucTe
 
 ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucCmdLineOpt_create_creates_structure,
         ucCmdLineOpt_process_calls_func,
         ucCmdLineOpt_create_creates_different_instances,

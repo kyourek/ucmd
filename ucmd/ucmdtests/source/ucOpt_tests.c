@@ -47,7 +47,7 @@ static ucTestErr ucOpt_is_required_returns_is_required(ucTestGroup *p) {
 
 ucTestGroup *ucOpt_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucOpt_get_name_returns_name,
         ucOpt_get_desc_returns_description,
         ucOpt_init_initializes_structure,

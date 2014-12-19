@@ -171,7 +171,7 @@ static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucT
 
 ucTestGroup *ucSwitchOpt_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucSwitchOpt_get_next_returns_next,
         ucSwitchOpt_create_creates_switch_opt,
         ucSwitchOpt_create_required_creates_switch_opt,

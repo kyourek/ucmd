@@ -33,7 +33,7 @@ static const char *cmd(ucCmdLine *cmd, void *state) {
     return NULL;
 }
 
-void uc_example(ucCmdLine_transmit_func *transmit, ucCmdLineApp_receive_func *receive) {
+void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *receive) {
 
     ucCmdLineOpt *commands = 
         ucCmdLineOpt_create(

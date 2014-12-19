@@ -41,20 +41,20 @@ ucTestErr ucTestGroup_base_after_each_test(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p) {
+ucTestGroup_TestFunc **ucTestGroup_get_tests(ucTestGroup *p) {
     if (NULL == p) return NULL;
     return p->tests;
 }
 
 ucTestGroup *ucTestGroup_init(
     ucTestGroup *p, 
-    ucTestGroup_callback_func *before_all_tests, 
-    ucTestGroup_callback_func *after_all_tests, 
-    ucTestGroup_callback_func *before_each_test, 
-    ucTestGroup_callback_func *after_each_test,
-    ucTestGroup_test_func **tests
+    ucTestGroup_CallbackFunc *before_all_tests, 
+    ucTestGroup_CallbackFunc *after_all_tests, 
+    ucTestGroup_CallbackFunc *before_each_test, 
+    ucTestGroup_CallbackFunc *after_each_test,
+    ucTestGroup_TestFunc **tests
 ) {
-    static ucTestGroup_test_func *base_tests[] = { NULL };
+    static ucTestGroup_TestFunc *base_tests[] = { NULL };
 
     if (NULL == p) return NULL;
 
@@ -70,7 +70,7 @@ ucTestGroup *ucTestGroup_init(
 ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
     
     ucTestErr err, callback_err;
-    ucTestGroup_test_func **tests;
+    ucTestGroup_TestFunc **tests;
 
     if (NULL == p) return -1;
 

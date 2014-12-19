@@ -55,7 +55,7 @@ static ucTestErr ucArgTok_contains_returns_false_when_not_contained(ucTestGroup 
 
 ucTestGroup *ucArgTok_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucArgTok_get_next_returns_next,
         ucArgTok_count_counts_arguments,
         ucArgTok_find_finds_argument,

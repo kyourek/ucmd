@@ -17,18 +17,18 @@
  *          using the destroy function.
  */
 #define ucMemoryManager_INIT(TYPE, COUNT) \
-    typedef struct ucMemoryManager_instance { \
+    typedef struct ucMemoryManager_Instance { \
         TYPE inst; \
         char used; \
-    } ucMemoryManager_instance; \
+    } ucMemoryManager_Instance; \
 \
-    static ucMemoryManager_instance ucMemoryManager_instances[COUNT] = { 0 }; \
+    static ucMemoryManager_Instance ucMemoryManager_Instances[COUNT] = { 0 }; \
 \
     static TYPE *ucMemoryManager_create(void) { \
         int i; \
-        ucMemoryManager_instance *inst; \
+        ucMemoryManager_Instance *inst; \
         for (i = 0; i < COUNT; i++) { \
-            inst = &ucMemoryManager_instances[i]; \
+            inst = &ucMemoryManager_Instances[i]; \
             if (inst->used == 0) { \
                 inst->used = 1; \
                 return &inst->inst; \
@@ -39,9 +39,9 @@
 \
     static void ucMemoryManager_destroy(TYPE *p) { \
         int i; \
-        ucMemoryManager_instance *inst; \
+        ucMemoryManager_Instance *inst; \
         for (i = 0; i < COUNT; i++) { \
-            inst = &ucMemoryManager_instances[i]; \
+            inst = &ucMemoryManager_Instances[i]; \
             if (p == (&inst->inst)) { \
                 inst->used = 0; \
             } \

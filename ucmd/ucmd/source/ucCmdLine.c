@@ -71,12 +71,12 @@ void ucCmdLine_respond(ucCmdLine *p, const char *response) {
     p->transmit(response, p->transmit_state);
 }
 
-void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_transmit_func *value) {
+void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_TransmitFunc *value) {
     if (NULL == p) return;
     p->transmit = value;
 }
 
-ucCmdLine_transmit_func *ucCmdLine_get_transmit(ucCmdLine *p) {
+ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
     if (NULL == p) return NULL;
     return p->transmit;
 }
@@ -87,12 +87,12 @@ ucBool ucCmdLine_is_cancelled(ucCmdLine *p) {
     return p->is_cancelled(p->is_cancelled_state);
 }
 
-void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_is_cancelled_func *value) {
+void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_IsCancelledFunc *value) {
     if (NULL == p) return;
     p->is_cancelled = value;
 }
 
-ucCmdLine_is_cancelled_func *ucCmdLine_get_is_cancelled(ucCmdLine *p) {
+ucCmdLine_IsCancelledFunc *ucCmdLine_get_is_cancelled(ucCmdLine *p) {
     if (NULL == p) return NULL;
     return p->is_cancelled;
 }

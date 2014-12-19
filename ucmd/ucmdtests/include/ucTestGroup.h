@@ -20,7 +20,7 @@ typedef struct ucTestGroup ucTestGroup;
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-typedef ucTestErr (ucTestGroup_callback_func)(ucTestGroup *p);
+typedef ucTestErr (ucTestGroup_CallbackFunc)(ucTestGroup *p);
 
 /*
  * Summary:
@@ -31,7 +31,7 @@ typedef ucTestErr (ucTestGroup_callback_func)(ucTestGroup *p);
  *   The error number resulting from the test, or no
  *   error if an error did not occur.
  */
-typedef ucTestErr (ucTestGroup_test_func)(ucTestGroup *p);
+typedef ucTestErr (ucTestGroup_TestFunc)(ucTestGroup *p);
 
 /*
  * Summary:
@@ -85,7 +85,7 @@ uc_EXPORTED ucTestErr ucTestGroup_after_each_test(ucTestGroup *p);
  * Returns:
  *   The lists of tests to run for the group.
  */
-uc_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
+uc_EXPORTED ucTestGroup_TestFunc **ucTestGroup_get_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -102,11 +102,11 @@ uc_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
  */
 uc_EXPORTED ucTestGroup *ucTestGroup_init(
     ucTestGroup *p, 
-    ucTestGroup_callback_func *before_all_tests, 
-    ucTestGroup_callback_func *after_all_tests, 
-    ucTestGroup_callback_func *before_each_test, 
-    ucTestGroup_callback_func *after_each_test,
-    ucTestGroup_test_func **tests
+    ucTestGroup_CallbackFunc *before_all_tests, 
+    ucTestGroup_CallbackFunc *after_all_tests, 
+    ucTestGroup_CallbackFunc *before_each_test, 
+    ucTestGroup_CallbackFunc *after_each_test,
+    ucTestGroup_TestFunc **tests
 );
 
 /*
@@ -127,11 +127,11 @@ uc_EXPORTED ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state);
  *   of unit tests.
  */
 struct ucTestGroup {
-    ucTestGroup_callback_func *before_all_tests;
-    ucTestGroup_callback_func *after_all_tests;
-    ucTestGroup_callback_func *before_each_test;
-    ucTestGroup_callback_func *after_each_test;
-    ucTestGroup_test_func **tests;
+    ucTestGroup_CallbackFunc *before_all_tests;
+    ucTestGroup_CallbackFunc *after_all_tests;
+    ucTestGroup_CallbackFunc *before_each_test;
+    ucTestGroup_CallbackFunc *after_each_test;
+    ucTestGroup_TestFunc **tests;
 };
 
 #endif

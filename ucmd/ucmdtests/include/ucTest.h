@@ -18,7 +18,7 @@ typedef struct ucTest ucTest;
  *   str: The information string to be printed.
  *   state: The tests structure's print state.
  */
-typedef void (ucTest_print_func)(const char *str, void *state);
+typedef void (ucTest_PrintFunc)(const char *str, void *state);
 
 /*
  * Summary:
@@ -31,7 +31,7 @@ typedef void (ucTest_print_func)(const char *str, void *state);
  *   A boolean true value if the test procedure should exit.
  *   Otherwise, a false value.
  */
-typedef ucBool (ucTest_exit_func)(void* state);
+typedef ucBool (ucTest_ExitFunc)(void* state);
 
 /*
  * Summary:
@@ -40,7 +40,7 @@ typedef ucBool (ucTest_exit_func)(void* state);
  *   p: A pointer to the tests structure.
  *   value: The print function used to print information.
  */
-uc_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_print_func *value);
+uc_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_PrintFunc *value);
 
 /* Summary:
  *   Sets the state object that is given as a parameter to the print function.
@@ -57,7 +57,7 @@ uc_EXPORTED void ucTest_set_print_state(ucTest *p, void *value);
  *   p: A pointer to the tests structure.
  *   value: The function that is called before the test procedure exits.
  */
-uc_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value);
+uc_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_ExitFunc *value);
 
 /*
  * Summary:
@@ -82,10 +82,10 @@ struct ucTest {
     const char *label;
     ucTestState state;
 
-    ucTest_print_func *print_func;
+    ucTest_PrintFunc *print_func;
     void *print_state;
     
-    ucTest_exit_func *exit_func;
+    ucTest_ExitFunc *exit_func;
     void *exit_state;
 
     ucTestGroup **groups;

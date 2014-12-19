@@ -14,7 +14,7 @@ static ucBool ucTest_exit(ucTest *p) {
     return p->exit_func(p->exit_state);
 }
 
-void ucTest_set_print_func(ucTest *p, ucTest_print_func *value) {
+void ucTest_set_print_func(ucTest *p, ucTest_PrintFunc *value) {
     if (NULL == p) return;
     p->print_func = value;
 }
@@ -24,7 +24,7 @@ void ucTest_set_print_state(ucTest *p, void *value) {
     p->print_state = value;
 }
 
-void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value) {
+void ucTest_set_exit_func(ucTest *p, ucTest_ExitFunc *value) {
     if (NULL == p) return;
     p->exit_func = value;
 }

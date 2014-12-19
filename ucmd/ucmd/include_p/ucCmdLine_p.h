@@ -5,8 +5,8 @@
 
 struct ucCmdLine {
     ucCmdTok *cmd_tok;
-    ucCmdLine_transmit_func *transmit;
-    ucCmdLine_is_cancelled_func *is_cancelled;
+    ucCmdLine_TransmitFunc *transmit;
+    ucCmdLine_IsCancelledFunc *is_cancelled;
     void *transmit_state;
     void *is_cancelled_state;
     char response[ucCmdLine_RESPONSE_LENGTH];

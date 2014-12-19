@@ -41,7 +41,7 @@ static ucTestErr uc_false_is_opposite_of_uc_true(ucTestGroup *p) {
 
 ucTestGroup *ucBool_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         uc_true_causes_if_statement,
         uc_false_avoids_if_statement,
         uc_true_is_opposite_of_uc_false,

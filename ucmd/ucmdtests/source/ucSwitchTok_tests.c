@@ -68,7 +68,7 @@ static ucTestErr ucSwitchTok_get_arg_returns_null(ucTestGroup *p) {
 
 ucTestGroup *ucSwitchTok_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucSwitchTok_get_next_returns_next_switch,
         ucSwitchTok_get_next_returns_null,
         ucSwitchTok_get_arg_is_initially_null,

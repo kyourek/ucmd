@@ -9,26 +9,26 @@
 #include "ucCmdParser_p.h"
 #include "ucSwitchOpt.h"
 
-typedef struct helpState {
+typedef struct HelpState {
     ucCmdLineApp *app;
     ucCmdLineOpt *cmd_opt;
-} helpState;
+} HelpState;
 
-typedef struct quitState {
+typedef struct QuitState {
     ucCmdLineApp *app;
-} quitState;
+} QuitState;
 
 static const char *quit(ucCmdLine *cmd, void *state) {
-    quitState *s = (quitState*)state;
+    QuitState *s = (QuitState*)state;
     return ucCmdLineApp_get_escape_response(s->app);
 }
 
 static const char *help(ucCmdLine *cmd, void *state) {
-    helpState *s;
+    HelpState *s;
     ucArgTok *arg_tok;
     ucCmdLineOpt *cmd_opt;
 
-    s = (helpState*)state;
+    s = (HelpState*)state;
     cmd_opt = s->cmd_opt;
 
     arg_tok = ucCmdTok_get_arg(ucCmdLine_get_cmd_tok(cmd));
@@ -58,19 +58,19 @@ static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     ucCmdTok *cmd_tok;
     ucCmdLine *cmd;
     ucCmdLineOpt *quit_opt, *main_opt;
-    helpState helpState_s;
-    quitState quitState_s;
+    HelpState HelpState_s;
+    QuitState QuitState_s;
 
     if (NULL == p) return -1;
 
     /* create options for help and quit */
-    quit_opt = ucCmdLineOpt_create(quit, &quitState_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    main_opt = ucCmdLineOpt_create(help, &helpState_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    quit_opt = ucCmdLineOpt_create(quit, &QuitState_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
+    main_opt = ucCmdLineOpt_create(help, &HelpState_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* set the state used for the help and quit commands */
-    quitState_s.app = p;
-    helpState_s.app = p;
-    helpState_s.cmd_opt = main_opt;
+    QuitState_s.app = p;
+    HelpState_s.app = p;
+    HelpState_s.cmd_opt = main_opt;
 
     /* get this app's command object */
     cmd = ucCmdLineApp_get_cmd(p);
@@ -127,12 +127,12 @@ const char *ucCmdLineApp_get_escape_response(ucCmdLineApp *p) {
     return p->escape_response;
 }
 
-void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_receive_func *value) {
+void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_ReceiveFunc *value) {
     if (NULL == p) return;
     p->receive = value;
 }
 
-ucCmdLineApp_receive_func *ucCmdLineApp_get_receive(ucCmdLineApp *p) {
+ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->receive;
 }

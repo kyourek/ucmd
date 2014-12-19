@@ -196,7 +196,7 @@ static ucTestErr ucCmdLine_get_transmit_state_gets_value(ucTestGroup *p) {
 static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
     double state;
     ucCmdLine *ptr = ucCmdLine_get_instance();
-    ucCmdLine_transmit_func *prev_func = ptr->transmit;
+    ucCmdLine_TransmitFunc *prev_func = ptr->transmit;
     void *prev_state = ptr->transmit_state;
 
     ucCmdLine_set_transmit(ptr, transmit_1);
@@ -283,7 +283,7 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
 
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucCmdLine_get_cmd_toks_returns_toks,
         ucCmdLine_get_cmd_toks_sets_null_tok_values,
         ucCmdLine_set_cmd_tok_sets_cmd_tok,

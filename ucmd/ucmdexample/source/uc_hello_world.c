@@ -3,15 +3,15 @@
 
 #define NAME_LENGTH 50
 
-struct app_state {
+struct AppState {
     char first_name[NAME_LENGTH];
     char last_name[NAME_LENGTH];
     char full_name[NAME_LENGTH * 2 + 1];
 };
 
-typedef struct app_state app_state;
+typedef struct AppState AppState;
 
-static const char *format_name(app_state *state) {
+static const char *format_name(AppState *state) {
     int i, j, len_first, len_last;
     const char *last, *first;
     static const char *def = "World";
@@ -68,12 +68,12 @@ static void copy_name(const char *source, char *dest) {
 
 static const char *name(ucCmdLine *cmd, void *state) {
 
-    app_state *my_state;
+    AppState *my_state;
     ucCmdTok *cmd_tok;
     ucArgTok *name_arg;
     ucSwitchTok *root_switch, *first_name_switch, *last_name_switch;
 
-    my_state = (app_state*)state;
+    my_state = (AppState*)state;
     if (!my_state) return "Oops... NULL pointer!";
 
     cmd_tok = ucCmdLine_get_cmd_tok(cmd);
@@ -101,7 +101,7 @@ static const char *name(ucCmdLine *cmd, void *state) {
 }
 
 static const char *say(ucCmdLine *cmd, void *state) {
-    app_state *my_state = (struct app_state*)state;
+    AppState *my_state = (struct AppState*)state;
 
     ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(cmd);
     ucArgTok *arg_tok = ucCmdTok_get_arg(cmd_tok);
@@ -118,11 +118,11 @@ static const char *say(ucCmdLine *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(ucCmdLine_transmit_func *transmit, ucCmdLineApp_receive_func *receive) {
+void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *receive) {
     
     /* This is the program's state object that gets
     passed to the various command functions. */
-    app_state my_state = { 0 };
+    AppState my_state = { 0 };
 
     ucCmdLineOpt *commands = 
 

@@ -135,7 +135,7 @@ static ucTestErr ucTok_count_counts_tokens(ucTestGroup *p) {
 
 ucTestGroup *ucTok_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucTok_get_length_returns_string_length,
         ucTok_get_length_returns_zero_for_empty_token,
         ucTok_get_length_ignores_chars_trailing_separator,

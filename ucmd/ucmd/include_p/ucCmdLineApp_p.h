@@ -7,7 +7,7 @@
 struct ucCmdLineApp {
     ucCmdLine *cmd;
     ucCmdParser *cmd_parser;
-    ucCmdLineApp_receive_func *receive;
+    ucCmdLineApp_ReceiveFunc *receive;
     void *receive_state;
     ucErr (*run)(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt);
     const char *help_command;

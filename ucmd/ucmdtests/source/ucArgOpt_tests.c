@@ -333,7 +333,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_multiple_numbers(ucTestG
 
 ucTestGroup *ucArgOpt_tests_get_group(void) {
     static ucTestGroup group;
-    static ucTestGroup_test_func *tests[] = {
+    static ucTestGroup_TestFunc *tests[] = {
         ucArgOpt_is_numeric_returns_is_numeric,
         ucArgOpt_get_numeric_min_returns_value,
         ucArgOpt_get_numeric_max_returns_value,

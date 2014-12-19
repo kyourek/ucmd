@@ -22,7 +22,7 @@ typedef struct ucCmdLineApp ucCmdLineApp;
  * Returns:
  *   The data that was received.
  */
-typedef char *(ucCmdLineApp_receive_func)(char *buf, size_t buf_size, void *state);
+typedef char *(ucCmdLineApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
 
 /*
  * Summary:
@@ -71,7 +71,7 @@ uc_EXPORTED ucCmdLineApp *ucCmdLineApp_get_instance(void);
  *   p: A pointer to the app whose property is set.
  *   value: A pointer to the function used to receive data.
  */
-uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_receive_func *value);
+uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_ReceiveFunc *value);
 
 /*
  * Summary:
@@ -81,7 +81,7 @@ uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_receive_
  * Returns:
  *   A pointer to the function used to receive data.
  */ 
-uc_EXPORTED ucCmdLineApp_receive_func *ucCmdLineApp_get_receive(ucCmdLineApp *p);
+uc_EXPORTED ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp *p);
 
 /*
  * Summary:
