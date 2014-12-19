@@ -1,5 +1,5 @@
-#ifndef UC_CMD_PARSER_P_H
-#define UC_CMD_PARSER_P_H
+#ifndef UCCMDPARSER_P_H
+#define UCCMDPARSER_P_H
 
 #include "ucCmdParser.h"
 

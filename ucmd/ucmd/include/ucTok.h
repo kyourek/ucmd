@@ -1,5 +1,5 @@
-#ifndef UC_TOK_H
-#define UC_TOK_H
+#ifndef UCTOK_H
+#define UCTOK_H
 
 #include "ucBool.h"
 #include "uc_common.h"

@@ -1,5 +1,5 @@
-#ifndef UC_MEMORY_MANAGER_P_H
-#define UC_MEMORY_MANAGER_P_H
+#ifndef UCMEMORYMANAGER_P_H
+#define UCMEMORYMANAGER_P_H
 
 /* 
  * Summary:
@@ -16,7 +16,7 @@
  *          create function until instances are released
  *          using the destroy function.
  */
-#define UC_MEMORY_MANAGER_INIT(TYPE, COUNT) \
+#define ucMemoryManager_INIT(TYPE, COUNT) \
     typedef struct ucMemoryManager_instance { \
         TYPE inst; \
         char used; \

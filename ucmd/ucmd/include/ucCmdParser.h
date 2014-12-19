@@ -1,5 +1,5 @@
-#ifndef UC_CMD_PARSER_H
-#define UC_CMD_PARSER_H
+#ifndef UCCMDPARSER_H
+#define UCCMDPARSER_H
 
 #include "ucCmdTok.h"
 

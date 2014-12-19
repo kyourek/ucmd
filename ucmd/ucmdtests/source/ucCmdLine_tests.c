@@ -39,7 +39,7 @@ static ucTestErr ucCmdLine_get_cmd_tok_returns_cmd_tok(ucTestGroup *p) {
     ucCmdLine c;
     ucCmdTok *t = "token";
     c.cmd_tok = t;
-    UC_TEST_ASSERT(t == ucCmdLine_get_cmd_tok(&c));
+    ucTest_ASSERT(t == ucCmdLine_get_cmd_tok(&c));
     return ucTestErr_NONE;
 }
 
@@ -47,7 +47,7 @@ static ucTestErr ucCmdLine_set_cmd_tok_sets_cmd_tok(ucTestGroup *p) {
     ucCmdLine c;
     ucCmdTok *t = "cmd_tok";
     ucCmdLine_set_cmd_tok(&c, t);
-    UC_TEST_ASSERT(t == c.cmd_tok);
+    ucTest_ASSERT(t == c.cmd_tok);
     return ucTestErr_NONE;
 }
 
@@ -59,9 +59,9 @@ static ucTestErr ucCmdLine_get_cmd_toks_returns_toks(ucTestGroup *p) {
     ucCmdLine_set_cmd_tok(cmd, parse_cmd(c));
     ucCmdLine_get_cmd_toks(cmd, &toks);
 
-    UC_TEST_ASSERT(ucTok_equals(toks.cmd_tok, "cmd"));
-    UC_TEST_ASSERT(ucTok_equals(toks.arg_tok, "arg"));
-    UC_TEST_ASSERT(ucTok_equals(toks.switch_tok, "-s"));
+    ucTest_ASSERT(ucTok_equals(toks.cmd_tok, "cmd"));
+    ucTest_ASSERT(ucTok_equals(toks.arg_tok, "arg"));
+    ucTest_ASSERT(ucTok_equals(toks.switch_tok, "-s"));
 
     return ucTestErr_NONE;
 }
@@ -74,15 +74,15 @@ static ucTestErr ucCmdLine_get_cmd_toks_sets_null_tok_values(ucTestGroup *p) {
     ucCmdLine_set_cmd_tok(cmd, parse_cmd(c));
     ucCmdLine_get_cmd_toks(cmd, &toks);
 
-    UC_TEST_ASSERT(ucTok_equals(toks.cmd_tok, "command"));
-    UC_TEST_ASSERT(NULL == toks.arg_tok);
-    UC_TEST_ASSERT(NULL == toks.switch_tok);
+    ucTest_ASSERT(ucTok_equals(toks.cmd_tok, "command"));
+    ucTest_ASSERT(NULL == toks.arg_tok);
+    ucTest_ASSERT(NULL == toks.switch_tok);
 
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucCmdLine_get_instance_is_not_null(ucTestGroup *p) {
-    UC_TEST_ASSERT(NULL != ucCmdLine_get_instance());
+    ucTest_ASSERT(NULL != ucCmdLine_get_instance());
     return ucTestErr_NONE;
 }
 
@@ -91,7 +91,7 @@ static ucTestErr ucCmdLine_format_response_sets_response_string(ucTestGroup *p) 
     ucCmdLine *ptr = ucCmdLine_get_instance();
     ucCmdLine_format_response(ptr, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     sprintf(expected, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
-    UC_TEST_ASSERT(0 == strcmp(ptr->response, expected));
+    ucTest_ASSERT(0 == strcmp(ptr->response, expected));
     return ucTestErr_NONE;
 }
 
@@ -111,22 +111,22 @@ static ucTestErr ucCmdLine_format_response_va_sets_response_string(ucTestGroup *
     
     actual = ucCmdLine_format_response_va_sets_response_string_helper(ptr, "This %d is %s formatted.", 1, "well");
     sprintf(expected, "This %d is %s formatted.", 1, "well");
-    UC_TEST_ASSERT(0 == strcmp(actual, expected));
-    UC_TEST_ASSERT(0 == strcmp(ptr->response, expected));
+    ucTest_ASSERT(0 == strcmp(actual, expected));
+    ucTest_ASSERT(0 == strcmp(ptr->response, expected));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucCmdLine_set_transmit_sets_transmit(ucTestGroup *p) {
     ucCmdLine c;
     ucCmdLine_set_transmit(&c, transmit_1);
-    UC_TEST_ASSERT(transmit_1 == c.transmit);
+    ucTest_ASSERT(transmit_1 == c.transmit);
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucCmdLine_get_transmit_returns_transmit(ucTestGroup *p) {
     ucCmdLine c;
     c.transmit = transmit_2;
-    UC_TEST_ASSERT(transmit_2 == ucCmdLine_get_transmit(&c));
+    ucTest_ASSERT(transmit_2 == ucCmdLine_get_transmit(&c));
     return ucTestErr_NONE;
 }
 
@@ -138,7 +138,7 @@ static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
     transmit_1_response = NULL;
     c.transmit = transmit_1;
     ucCmdLine_respond(&c, "expected response");
-    UC_TEST_ASSERT(0 == strcmp(transmit_1_response, "expected response"));
+    ucTest_ASSERT(0 == strcmp(transmit_1_response, "expected response"));
 
     return ucTestErr_NONE;
 }
@@ -146,14 +146,14 @@ static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
 static ucTestErr ucCmdLine_get_is_cancelled_returns_value(ucTestGroup *p) {
     ucCmdLine c;
     c.is_cancelled = is_cancelled_1;
-    UC_TEST_ASSERT(is_cancelled_1 == ucCmdLine_get_is_cancelled(&c));
+    ucTest_ASSERT(is_cancelled_1 == ucCmdLine_get_is_cancelled(&c));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucCmdLine_set_is_cancelled_sets_value(ucTestGroup *p) {
     ucCmdLine c;
     ucCmdLine_set_is_cancelled(&c, is_cancelled_2);
-    UC_TEST_ASSERT(is_cancelled_2 == c.is_cancelled);
+    ucTest_ASSERT(is_cancelled_2 == c.is_cancelled);
     return ucTestErr_NONE;
 }
 
@@ -162,10 +162,10 @@ static ucTestErr ucCmdLine_is_cancelled_calls_is_cancelled(ucTestGroup *p) {
     c.is_cancelled = is_cancelled_1;
 
     is_cancelled_1_returned_value = ucBool_true;
-    UC_TEST_ASSERT(ucBool_true == ucCmdLine_is_cancelled(&c));
+    ucTest_ASSERT(ucBool_true == ucCmdLine_is_cancelled(&c));
 
     is_cancelled_1_returned_value = ucBool_false;
-    UC_TEST_ASSERT(ucBool_false == ucCmdLine_is_cancelled(&c));
+    ucTest_ASSERT(ucBool_false == ucCmdLine_is_cancelled(&c));
 
     return ucTestErr_NONE;
 }
@@ -176,7 +176,7 @@ static ucTestErr ucCmdLine_set_transmit_state_sets_value(ucTestGroup *p) {
     void *prev_value = ptr->transmit_state;
 
     ucCmdLine_set_transmit_state(ptr, &state);
-    UC_TEST_ASSERT(&state == ptr->transmit_state);
+    ucTest_ASSERT(&state == ptr->transmit_state);
 
     ptr->transmit_state = prev_value;
     return ucTestErr_NONE;
@@ -188,7 +188,7 @@ static ucTestErr ucCmdLine_get_transmit_state_gets_value(ucTestGroup *p) {
     void *prev_value = ptr->transmit_state;
 
     ptr->transmit_state = &state;
-    UC_TEST_ASSERT(&state == ucCmdLine_get_transmit_state(ptr));
+    ucTest_ASSERT(&state == ucCmdLine_get_transmit_state(ptr));
 
     ptr->transmit_state = prev_value;
     return ucTestErr_NONE;
@@ -205,7 +205,7 @@ static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
 
     ucCmdLine_respond(ptr, "resp");
 
-    UC_TEST_ASSERT(&state == transmit_1_state);
+    ucTest_ASSERT(&state == transmit_1_state);
 
     ptr->transmit = prev_func;
     ptr->transmit_state = prev_state;
@@ -218,7 +218,7 @@ static ucTestErr ucCmdLine_set_is_cancelled_state_sets_value(ucTestGroup *p) {
     void *prev_value = ptr->is_cancelled_state;
 
     ucCmdLine_set_is_cancelled_state(ptr, &state);
-    UC_TEST_ASSERT(&state == ptr->is_cancelled_state);
+    ucTest_ASSERT(&state == ptr->is_cancelled_state);
 
     ptr->is_cancelled_state = prev_value;
     return ucTestErr_NONE;
@@ -230,7 +230,7 @@ static ucTestErr ucCmdLine_get_is_cancelled_state_returns_value(ucTestGroup *p) 
     void *prev_value = ptr->is_cancelled_state;
 
     ptr->is_cancelled_state = &state;
-    UC_TEST_ASSERT(&state == ucCmdLine_get_is_cancelled_state(ptr));
+    ucTest_ASSERT(&state == ucCmdLine_get_is_cancelled_state(ptr));
 
     ptr->is_cancelled_state = prev_value;
     return ucTestErr_NONE;
@@ -246,7 +246,7 @@ static ucTestErr ucCmdLine_is_cancelled_uses_state(ucTestGroup *p) {
 
     ucCmdLine_is_cancelled(ptr);
 
-    UC_TEST_ASSERT(&state == is_cancelled_1_state);
+    ucTest_ASSERT(&state == is_cancelled_1_state);
 
     ptr->is_cancelled_state = prev_value;
     return ucTestErr_NONE;
@@ -256,13 +256,13 @@ static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_get_instance();
     
     ucBool prev_val = ucCmdLine_get_is_quiet(ptr);
-    UC_TEST_ASSERT(ucBool_false == prev_val);
+    ucTest_ASSERT(ucBool_false == prev_val);
 
     ucCmdLine_set_is_quiet(ptr, ucBool_true);
-    UC_TEST_ASSERT(ucCmdLine_get_is_quiet(ptr) == ucBool_true);
+    ucTest_ASSERT(ucCmdLine_get_is_quiet(ptr) == ucBool_true);
 
     ucCmdLine_set_is_quiet(ptr, prev_val);
-    UC_TEST_ASSERT(ucCmdLine_get_is_quiet(ptr) == prev_val);
+    ucTest_ASSERT(ucCmdLine_get_is_quiet(ptr) == prev_val);
 
     return ucTestErr_NONE;
 }
@@ -276,7 +276,7 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
 
     transmit_1_response = NULL;
     ucCmdLine_respond(ptr, "expected response");
-    UC_TEST_ASSERT(NULL == transmit_1_response);
+    ucTest_ASSERT(NULL == transmit_1_response);
 
     ucCmdLine_set_is_quiet(ptr, pre_val);
     return ucTestErr_NONE;

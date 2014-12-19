@@ -1,5 +1,5 @@
-#ifndef UC_SWITCH_TOK_H
-#define UC_SWITCH_TOK_H
+#ifndef UCSWITCHTOK_H
+#define UCSWITCHTOK_H
 
 #include "ucArgTokOwner.h"
 

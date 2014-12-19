@@ -1,5 +1,5 @@
-#ifndef UC_CMD_LINE_APP_H
-#define UC_CMD_LINE_APP_H
+#ifndef UCCMDLINEAPP_H
+#define UCCMDLINEAPP_H
 
 #include "ucCmdParser.h"
 #include "ucCmdLineOpt.h"

@@ -1,5 +1,5 @@
-#ifndef UC_CMD_LINE_H
-#define UC_CMD_LINE_H
+#ifndef UCCMDLINE_H
+#define UCCMDLINE_H
 
 #include <stdarg.h>
 #include "ucCmdLineToks.h"

@@ -9,7 +9,7 @@ static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {
     ucSwitchOpt o1;
     ucSwitchOpt o2;
     o1.next = &o2;
-    UC_TEST_ASSERT(ucSwitchOpt_get_next(&o1) == &o2);
+    ucTest_ASSERT(ucSwitchOpt_get_next(&o1) == &o2);
     return ucTestErr_NONE;
 }
 
@@ -22,11 +22,11 @@ static ucTestErr ucSwitchOpt_create_creates_switch_opt(ucTestGroup *p) {
     s2 = ucSwitchOpt_create("s2", "d", NULL, NULL);
     s1 = ucSwitchOpt_create("-sw-name", "{-sw-name description}", a, s2);
 
-    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)s1));
-    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)s1));
-    UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)s1));
-    UC_TEST_ASSERT(s2 == ucSwitchOpt_get_next(s1));
+    ucTest_ASSERT(ucOpt_get_name((ucOpt*)s1));
+    ucTest_ASSERT(ucOpt_get_desc((ucOpt*)s1));
+    ucTest_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
+    ucTest_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)s1));
+    ucTest_ASSERT(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);
     ucSwitchOpt_destroy(s2);
@@ -44,11 +44,11 @@ static ucTestErr ucSwitchOpt_create_required_creates_switch_opt(ucTestGroup *p) 
     s2 = ucSwitchOpt_create("-sw", "desc", NULL, NULL);
     s1 = ucSwitchOpt_create_required("-switch", "switch desc", a, s2);
 
-    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)s1));
-    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)s1));
-    UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)s1));
-    UC_TEST_ASSERT(s2 == ucSwitchOpt_get_next(s1));
+    ucTest_ASSERT(ucOpt_get_name((ucOpt*)s1));
+    ucTest_ASSERT(ucOpt_get_desc((ucOpt*)s1));
+    ucTest_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
+    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)s1));
+    ucTest_ASSERT(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);
     ucSwitchOpt_destroy(s2);
@@ -64,8 +64,8 @@ static ucTestErr ucSwitchOpt_create_creates_different_instances(ucTestGroup *p) 
     s2 = ucSwitchOpt_create("s2", "s2", NULL, NULL);
     s3 = ucSwitchOpt_create("s3", "s3", NULL, NULL);
 
-    UC_TEST_ASSERT(s1 != s2);
-    UC_TEST_ASSERT(s2 != s3);
+    ucTest_ASSERT(s1 != s2);
+    ucTest_ASSERT(s2 != s3);
 
     ucSwitchOpt_destroy(s1);
     ucSwitchOpt_destroy(s2);
@@ -84,7 +84,7 @@ static ucTestErr ucSwitchOpt_destroy_releases_instance(ucTestGroup *p) {
 
     s3 = ucSwitchOpt_create("s3", "s3", NULL, NULL);
 
-    UC_TEST_ASSERT(s3 == s2);
+    ucTest_ASSERT(s3 == s2);
 
     ucSwitchOpt_destroy(s1);
     ucSwitchOpt_destroy(s3);
@@ -109,10 +109,10 @@ static ucTestErr ucSwitchOpt_destroy_chain_releases_all_instances(ucTestGroup *p
     ucSwitchOpt_destroy_chain(s1);
 
     a4_2 = ucArgOpt_create("a4_2", "a4_2", NULL);
-    UC_TEST_ASSERT(a4_2 == a4);
+    ucTest_ASSERT(a4_2 == a4);
 
     s3_2 = ucSwitchOpt_create("s3_2", "s3_2", NULL, NULL);
-    UC_TEST_ASSERT(s3_2 == s3);
+    ucTest_ASSERT(s3_2 == s3);
 
     ucArgOpt_destroy(a4_2);
     ucSwitchOpt_destroy(s3_2);
@@ -126,10 +126,10 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTes
     ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
-    UC_TEST_ASSERT(NULL != err);
+    ucTest_ASSERT(NULL != err);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
-    UC_TEST_ASSERT(NULL == err);
+    ucTest_ASSERT(NULL == err);
 
     ucSwitchOpt_destroy(s);
     return ucTestErr_NONE;
@@ -142,10 +142,10 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGr
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
-    UC_TEST_ASSERT(NULL != err);
+    ucTest_ASSERT(NULL != err);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0a\0\n");
-    UC_TEST_ASSERT(NULL == err);
+    ucTest_ASSERT(NULL == err);
 
     ucArgOpt_destroy(a);
     ucSwitchOpt_destroy(s);
@@ -159,10 +159,10 @@ static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucT
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
-    UC_TEST_ASSERT(NULL == err);
+    ucTest_ASSERT(NULL == err);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0a1\0a2\0a3\0\n");
-    UC_TEST_ASSERT(NULL == err);
+    ucTest_ASSERT(NULL == err);
 
     ucArgOpt_destroy(a);
     ucSwitchOpt_destroy(s);

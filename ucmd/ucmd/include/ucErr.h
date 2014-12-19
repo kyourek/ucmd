@@ -1,5 +1,5 @@
-#ifndef UC_ERR_H
-#define UC_ERR_H
+#ifndef UCERR_H
+#define UCERR_H
 
 /* 
  * Summary:

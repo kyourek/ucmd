@@ -1,5 +1,5 @@
-#ifndef UC_CMD_TOK_H
-#define UC_CMD_TOK_H
+#ifndef UCCMDTOK_H
+#define UCCMDTOK_H
 
 #include "ucSwitchTok.h"
 

@@ -9,26 +9,26 @@
 #include "ucCmdParser_p.h"
 #include "ucSwitchOpt.h"
 
-typedef struct help_state {
+typedef struct helpState {
     ucCmdLineApp *app;
     ucCmdLineOpt *cmd_opt;
-} help_state;
+} helpState;
 
-typedef struct quit_state {
+typedef struct quitState {
     ucCmdLineApp *app;
-} quit_state;
+} quitState;
 
 static const char *quit(ucCmdLine *cmd, void *state) {
-    quit_state *s = (quit_state*)state;
+    quitState *s = (quitState*)state;
     return ucCmdLineApp_get_escape_response(s->app);
 }
 
 static const char *help(ucCmdLine *cmd, void *state) {
-    help_state *s;
+    helpState *s;
     ucArgTok *arg_tok;
     ucCmdLineOpt *cmd_opt;
 
-    s = (help_state*)state;
+    s = (helpState*)state;
     cmd_opt = s->cmd_opt;
 
     arg_tok = ucCmdTok_get_arg(ucCmdLine_get_cmd_tok(cmd));
@@ -58,19 +58,19 @@ static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     ucCmdTok *cmd_tok;
     ucCmdLine *cmd;
     ucCmdLineOpt *quit_opt, *main_opt;
-    help_state help_state_s;
-    quit_state quit_state_s;
+    helpState helpState_s;
+    quitState quitState_s;
 
     if (NULL == p) return -1;
 
     /* create options for help and quit */
-    quit_opt = ucCmdLineOpt_create(quit, &quit_state_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    main_opt = ucCmdLineOpt_create(help, &help_state_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    quit_opt = ucCmdLineOpt_create(quit, &quitState_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
+    main_opt = ucCmdLineOpt_create(help, &helpState_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* set the state used for the help and quit commands */
-    quit_state_s.app = p;
-    help_state_s.app = p;
-    help_state_s.cmd_opt = main_opt;
+    quitState_s.app = p;
+    helpState_s.app = p;
+    helpState_s.cmd_opt = main_opt;
 
     /* get this app's command object */
     cmd = ucCmdLineApp_get_cmd(p);

@@ -1,5 +1,5 @@
-#ifndef UC_SWITCH_OPT_P_H
-#define UC_SWITCH_OPT_P_H
+#ifndef UCSWITCHOPT_P_H
+#define UCSWITCHOPT_P_H
 
 #include "ucArgOptOwner_p.h"
 #include "ucCmdLine.h"

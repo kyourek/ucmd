@@ -1,5 +1,5 @@
-#ifndef UC_CMD_LINE_TOKS_H
-#define UC_CMD_LINE_TOKS_H
+#ifndef UCCMDLINETOKS_H
+#define UCCMDLINETOKS_H
 
 #include "ucCmdTok.h"
 

@@ -6,9 +6,9 @@
 
 typedef struct ucTest ucTest;
 
-#define UC_TEST_FAIL() do { return -1; } while (0)
+#define ucTest_FAIL() do { return -1; } while (0)
 
-#define UC_TEST_ASSERT(TRUE) do { if (!(TRUE)) return -1; } while (0)
+#define ucTest_ASSERT(TRUE) do { if (!(TRUE)) return -1; } while (0)
 
 /*
  * Summary:

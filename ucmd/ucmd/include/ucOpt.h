@@ -1,5 +1,5 @@
-#ifndef UC_OPT_H
-#define UC_OPT_H
+#ifndef UCOPT_H
+#define UCOPT_H
 
 #include "ucCmdLine.h"
 

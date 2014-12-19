@@ -1,5 +1,5 @@
-#ifndef UC_TOK_P_H
-#define UC_TOK_P_H
+#ifndef UCTOK_P_H
+#define UCTOK_P_H
 
 #include "ucTok.h"
 

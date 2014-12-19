@@ -4,7 +4,7 @@
 
 static const char *numeric_arg_name = "<number>";
 
-UC_MEMORY_MANAGER_INIT(ucArgOpt, UC_ARG_OPT_COUNT);
+ucMemoryManager_INIT(ucArgOpt, UC_ARG_OPT_COUNT);
 
 static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_numeric, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
     return ucArgOpt_init(
