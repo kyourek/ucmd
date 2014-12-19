@@ -4,14 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucmd", "ucmd\ucmd.vcxproj", "{EDA5AB74-9BFE-4963-B20F-F2776706917F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucmdtests", "ucmdtests\ucmdtests.vcxproj", "{54A75F65-D04B-4FF1-9A7D-767D19C065B2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EDA5AB74-9BFE-4963-B20F-F2776706917F} = {EDA5AB74-9BFE-4963-B20F-F2776706917F}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucmdexample", "ucmdexample\ucmdexample.vcxproj", "{EAB08456-DA02-4CF0-BAE4-B3B0720BD07F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EDA5AB74-9BFE-4963-B20F-F2776706917F} = {EDA5AB74-9BFE-4963-B20F-F2776706917F}
-	EndProjectSection
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "scripts", "scripts\scripts.pyproj", "{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}"
 EndProject

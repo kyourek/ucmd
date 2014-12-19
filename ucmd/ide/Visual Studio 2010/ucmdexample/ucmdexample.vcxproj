@@ -83,6 +83,12 @@
     <ClCompile Include="..\..\..\ucmdexample\source\uc_hello_world.c" />
     <ClCompile Include="..\..\..\ucmdexample\source\main.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ucmd\ucmd.vcxproj">
+      <Project>{eda5ab74-9bfe-4963-b20f-f2776706917f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
