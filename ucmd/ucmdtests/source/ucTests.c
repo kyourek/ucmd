@@ -1,20 +1,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
-#include "ucArgOpt_tests.h"
-#include "ucArgTokOwner_tests.h"
-#include "ucArgTok_tests.h"
-#include "ucBool_tests.h"
-#include "ucCmdParser_tests.h"
-#include "ucCmdTok_tests.h"
-#include "ucOpt_tests.h"
-#include "ucSwitchOpt_tests.h"
-#include "ucSwitchTok_tests.h"
 #include "ucTest.h"
-#include "ucTok_tests.h"
-#include "ucCmdLineApp_tests.h"
-#include "ucCmdLineOpt_tests.h"
-#include "ucCmdLineToks_tests.h"
-#include "ucCmdLine_tests.h"
+#include "ucTests.h"
 
 static ucTestGroup **ucTests_get_groups_va(ucTestGroup *group, ...) {
     static ucTestGroup *groups[20];

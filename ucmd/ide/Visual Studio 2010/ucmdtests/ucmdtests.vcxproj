@@ -75,25 +75,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgOpt_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTokOwner_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTok_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucBool_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineApp_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineOpt_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLine_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineToks_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdParser_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdTok_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucOpt_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucSwitchOpt_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucSwitchTok_tests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTest.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTests.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestErr.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestGroup.h" />
     <ClInclude Include="..\..\..\ucmdtests\include\ucTestState.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTok_tests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmdtests\source\ucArgOpt_tests.c" />

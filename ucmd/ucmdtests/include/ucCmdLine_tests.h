@@ -3,6 +3,5 @@
 
 #include "ucTestGroup.h"
 
-UC_EXPORTED ucTestGroup *ucCmdLine_tests_get_group(void);
 
 #endif

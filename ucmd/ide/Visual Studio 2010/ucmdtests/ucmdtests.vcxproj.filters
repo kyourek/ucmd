@@ -14,45 +14,6 @@
     <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgOpt_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTokOwner_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTok_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucBool_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineApp_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineOpt_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLine_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdLineToks_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdParser_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucCmdTok_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucOpt_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucSwitchOpt_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucSwitchTok_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmdtests\include\ucTest.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -66,9 +27,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ucmdtests\include\ucTests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTok_tests.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
