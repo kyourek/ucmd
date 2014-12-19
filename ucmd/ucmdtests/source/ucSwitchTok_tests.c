@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include "ucSwitchTok.h"
-#include "ucSwitchTok_tests.h"
 #include "ucTest.h"
 #include "ucTok.h"
 

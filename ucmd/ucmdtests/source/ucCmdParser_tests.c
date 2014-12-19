@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "ucArgTok.h"
 #include "ucCmdParser_p.h"
-#include "ucCmdParser_tests.h"
 #include "ucCmdTok.h"
 #include "ucSwitchTok.h"
 #include "ucTest.h"

@@ -2,7 +2,6 @@
 #include <string.h>
 #include "ucArgOptOwner.h"
 #include "ucSwitchOpt_p.h"
-#include "ucSwitchOpt_tests.h"
 #include "ucTest.h"
 
 static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {

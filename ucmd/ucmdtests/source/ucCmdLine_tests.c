@@ -2,7 +2,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include "ucCmdLine_p.h"
-#include "ucCmdLine_tests.h"
 #include "ucCmdLineToks.h"
 #include "ucCmdParser_p.h"
 #include "ucCmdTok.h"

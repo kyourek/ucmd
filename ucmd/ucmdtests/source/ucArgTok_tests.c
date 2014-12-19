@@ -1,6 +1,5 @@
 #include <string.h>
 #include "ucArgTok.h"
-#include "ucArgTok_tests.h"
 #include "ucTest.h"
 #include "ucTok.h"
 

@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include "ucArgTokOwner.h"
-#include "ucArgTokOwner_tests.h"
 #include "ucTest.h"
 #include "ucTok.h"
 

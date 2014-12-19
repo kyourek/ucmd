@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "ucBool_tests.h"
 #include "ucTest.h"
 
 static ucTestErr uc_true_causes_if_statement(ucTestGroup *p) {

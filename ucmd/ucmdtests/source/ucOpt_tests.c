@@ -1,6 +1,5 @@
 #include <string.h>
 #include "ucOpt_p.h"
-#include "ucOpt_tests.h"
 #include "ucTest.h"
 
 static ucTestErr ucOpt_get_name_returns_name(ucTestGroup *p) {
