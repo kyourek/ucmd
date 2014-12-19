@@ -1,21 +1,21 @@
 #ifndef UC_CMD_LINE_TOKS_H
 #define UC_CMD_LINE_TOKS_H
 
-#include "uc_cmd_tok.h"
+#include "ucCmdTok.h"
 
 /*
  * Summary:
  *   A group of tokens that represent the first
  *   of each token type in a command.
  */
-typedef struct uc_cmd_line_toks {
+typedef struct ucCmdLineToks {
 
     /*
      * Summary:
      *   The command token of the command. This token's
      *   value is the invoked command.
      */
-    uc_cmd_tok *cmd_tok;
+    ucCmdTok *cmd_tok;
 
     /*
      * Summary:
@@ -29,9 +29,9 @@ typedef struct uc_cmd_line_toks {
      *   The command's first switch token, or
      *   NULL if no switches exist.
      */
-    uc_switch_tok *switch_tok;
+    ucSwitchTok *switch_tok;
 
-} uc_cmd_line_toks;
+} ucCmdLineToks;
 
 /*
  * Summary:
@@ -42,7 +42,7 @@ typedef struct uc_cmd_line_toks {
  * Returns:
  *   A pointer to the command token.
  */
-UC_EXPORTED uc_cmd_tok *uc_cmd_line_toks_get_cmd_tok(uc_cmd_line_toks *p);
+UC_EXPORTED ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p);
 
 /*
  * Summary:
@@ -54,7 +54,7 @@ UC_EXPORTED uc_cmd_tok *uc_cmd_line_toks_get_cmd_tok(uc_cmd_line_toks *p);
  *   A pointer to the argument token, or NULL if no argument
  *   tokens exist.
  */
-UC_EXPORTED ucArgTok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p);
+UC_EXPORTED ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks *p);
 
 /*
  * Summary:
@@ -65,6 +65,6 @@ UC_EXPORTED ucArgTok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p);
  * Returns:
  *   A pointer to the switch token, or NULL if no switch tokens exist.
  */
-UC_EXPORTED uc_switch_tok *uc_cmd_line_toks_get_switch_tok(uc_cmd_line_toks *p);
+UC_EXPORTED ucSwitchTok *ucCmdLineToks_get_switch_tok(ucCmdLineToks *p);
 
 #endif

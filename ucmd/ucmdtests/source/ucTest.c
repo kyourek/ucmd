@@ -1,103 +1,103 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "uc_test.h"
+#include "ucTest.h"
 
-static void uc_test_print(uc_test *p, const char *str) {
+static void ucTest_print(ucTest *p, const char *str) {
     if (NULL == p) return;
     if (NULL == p->print_func) return;
     p->print_func(str, p->print_state);
 }
 
-static ucBool uc_test_exit(uc_test *p) {
+static ucBool ucTest_exit(ucTest *p) {
     if (NULL == p) return ucBool_true;
     if (NULL == p->exit_func) return ucBool_true;
     return p->exit_func(p->exit_state);
 }
 
-void uc_test_set_print_func(uc_test *p, uc_test_print_func *value) {
+void ucTest_set_print_func(ucTest *p, ucTest_print_func *value) {
     if (NULL == p) return;
     p->print_func = value;
 }
 
-void uc_test_set_print_state(uc_test *p, void *value) {
+void ucTest_set_print_state(ucTest *p, void *value) {
     if (NULL == p) return;
     p->print_state = value;
 }
 
-void uc_test_set_exit_func(uc_test *p, uc_test_exit_func *value) {
+void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value) {
     if (NULL == p) return;
     p->exit_func = value;
 }
 
-void uc_test_set_exit_state(uc_test *p, void *value) {
+void ucTest_set_exit_state(ucTest *p, void *value) {
     if (NULL == p) return;
     p->exit_state = value;
 }
 
-uc_test_group **uc_test_get_groups(uc_test *p) {
+ucTestGroup **ucTest_get_groups(ucTest *p) {
     if (NULL == p) return NULL;
     return p->groups;
 }
 
-uc_test_state *uc_test_get_state(uc_test *p) {
+ucTestState *ucTest_get_state(ucTest *p) {
     if (NULL == p) return NULL;
     return &p->state;
 }
 
-const char *uc_test_get_label(uc_test *p) {
+const char *ucTest_get_label(ucTest *p) {
     if (NULL == p) return NULL;
     return p->label;
 }
 
-uc_test_err uc_test_run(uc_test *p) {
+ucTestErr ucTest_run(ucTest *p) {
     char str[50];
-    uc_test_err err;
-    uc_test_state *state;
+    ucTestErr err;
+    ucTestState *state;
 
-    uc_test_group **groups = uc_test_get_groups(p);
+    ucTestGroup **groups = ucTest_get_groups(p);
     if (NULL == groups) return -1;
 
-    state = uc_test_get_state(p);
-    uc_test_state_reset(state);
+    state = ucTest_get_state(p);
+    ucTestState_reset(state);
 
-    sprintf(str, "%s\n", uc_test_get_label(p));
-    uc_test_print(p, str);
+    sprintf(str, "%s\n", ucTest_get_label(p));
+    ucTest_print(p, str);
 
-    err = UC_TEST_ERR_NONE;
+    err = ucTestErr_NONE;
     for (; *groups; groups++) {
 
-        err = uc_test_group_run(*groups, state);
+        err = ucTestGroup_run(*groups, state);
         if (err) {
 
-            sprintf(str, "Group %d failed.\n", uc_test_state_get_run_group_count(state));
-            uc_test_print(p, str);
+            sprintf(str, "Group %d failed.\n", ucTestState_get_run_group_count(state));
+            ucTest_print(p, str);
 
-            sprintf(str, "%d group tests run.\n", uc_test_state_get_run_group_test_count(state));
-            uc_test_print(p, str);
+            sprintf(str, "%d group tests run.\n", ucTestState_get_run_group_test_count(state));
+            ucTest_print(p, str);
 
             break;
         }
     }
 
     if (!err) {
-        uc_test_print(p, "All tests passed.\n");
+        ucTest_print(p, "All tests passed.\n");
     }
 
-    sprintf(str, "%d total tests run.\n", uc_test_state_get_run_test_count(state));
-    uc_test_print(p, str);
+    sprintf(str, "%d total tests run.\n", ucTestState_get_run_test_count(state));
+    ucTest_print(p, str);
 
-    uc_test_print(p, "Exit?\n");
-    while (!uc_test_exit(p));
+    ucTest_print(p, "Exit?\n");
+    while (!ucTest_exit(p));
 
     return err;
 }
 
-uc_test *uc_test_init(uc_test *p, const char *label, uc_test_group **groups) {
+ucTest *ucTest_init(ucTest *p, const char *label, ucTestGroup **groups) {
     
-    static uc_test_group *base_groups[] = { NULL };
+    static ucTestGroup *base_groups[] = { NULL };
 
     if (NULL == p) return NULL;
-    if (NULL == uc_test_state_init(&p->state)) return NULL;
+    if (NULL == ucTestState_init(&p->state)) return NULL;
 
     p->label = label;
     p->exit_func = NULL;

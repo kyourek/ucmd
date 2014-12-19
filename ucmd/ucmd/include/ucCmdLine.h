@@ -2,14 +2,14 @@
 #define UC_CMD_LINE_H
 
 #include <stdarg.h>
-#include "uc_cmd_line_toks.h"
+#include "ucCmdLineToks.h"
 
 /*
  * Summary:
  *   A command structure. This structure consists
  *   of the parsed command and the ability to respond.
  */
-typedef struct uc_cmd_line uc_cmd_line;
+typedef struct ucCmdLine ucCmdLine;
 
 /*
  * Summary:
@@ -19,7 +19,7 @@ typedef struct uc_cmd_line uc_cmd_line;
  *   response: The string to be transmitted.
  *   state: A stateful object.
  */
-typedef void (uc_cmd_line_transmit_func)(const char *response, void *state);
+typedef void (ucCmdLine_transmit_func)(const char *response, void *state);
 
 /*
  * Summary:
@@ -30,7 +30,7 @@ typedef void (uc_cmd_line_transmit_func)(const char *response, void *state);
  * Returns:
  *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
  */
-typedef ucBool (uc_cmd_line_is_cancelled_func)(void *state);
+typedef ucBool (ucCmdLine_is_cancelled_func)(void *state);
 
 /*
  * Summary:
@@ -40,7 +40,7 @@ typedef ucBool (uc_cmd_line_is_cancelled_func)(void *state);
  * Returns:
  *   A pointer to the command token of the structure.
  */
-UC_EXPORTED uc_cmd_tok *uc_cmd_line_get_cmd_tok(uc_cmd_line *p);
+UC_EXPORTED ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine *p);
 
 /*
  * Summary:
@@ -49,7 +49,7 @@ UC_EXPORTED uc_cmd_tok *uc_cmd_line_get_cmd_tok(uc_cmd_line *p);
  *   p: A pointer to the structure whose property is set.
  *   value: The command token.
  */
-UC_EXPORTED void uc_cmd_line_set_cmd_tok(uc_cmd_line *p, uc_cmd_tok *value);
+UC_EXPORTED void ucCmdLine_set_cmd_tok(ucCmdLine *p, ucCmdTok *value);
 
 /*
  * Summary:
@@ -60,7 +60,7 @@ UC_EXPORTED void uc_cmd_line_set_cmd_tok(uc_cmd_line *p, uc_cmd_tok *value);
  * Returns:
  *   A pointer to the buffer.
  */
-UC_EXPORTED uc_cmd_line_toks *uc_cmd_line_get_cmd_toks(uc_cmd_line *p, uc_cmd_line_toks *buffer);
+UC_EXPORTED ucCmdLineToks *ucCmdLine_get_cmd_toks(ucCmdLine *p, ucCmdLineToks *buffer);
 
 /*
  * Summary:
@@ -69,7 +69,7 @@ UC_EXPORTED uc_cmd_line_toks *uc_cmd_line_get_cmd_toks(uc_cmd_line *p, uc_cmd_li
  *   p: A pointer to the structure whose property is set.
  *   value: A pointer to the function used to transmit responses.
  */
-UC_EXPORTED void uc_cmd_line_set_transmit(uc_cmd_line *p, uc_cmd_line_transmit_func *value);
+UC_EXPORTED void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_transmit_func *value);
 
 /*
  * Summary:
@@ -79,7 +79,7 @@ UC_EXPORTED void uc_cmd_line_set_transmit(uc_cmd_line *p, uc_cmd_line_transmit_f
  * Returns:
  *   A pointer to the function used by the structure to transmit responses.
  */
-UC_EXPORTED uc_cmd_line_transmit_func *uc_cmd_line_get_transmit(uc_cmd_line *p);
+UC_EXPORTED ucCmdLine_transmit_func *ucCmdLine_get_transmit(ucCmdLine *p);
 
 /*
  * Summary:
@@ -89,7 +89,7 @@ UC_EXPORTED uc_cmd_line_transmit_func *uc_cmd_line_get_transmit(uc_cmd_line *p);
  * Returns:
  *   A pointer to the stateful object passed to the command's transmit function.
  */
-UC_EXPORTED void *uc_cmd_line_get_transmit_state(uc_cmd_line *p);
+UC_EXPORTED void *ucCmdLine_get_transmit_state(ucCmdLine *p);
 
 /*
  * Summary:
@@ -98,7 +98,7 @@ UC_EXPORTED void *uc_cmd_line_get_transmit_state(uc_cmd_line *p);
  *   p: A pointer to the command structure whose property is to be set.
  *   value: A pointer to the stateful object that is passed to the command's transmit function.
  */
-UC_EXPORTED void uc_cmd_line_set_transmit_state(uc_cmd_line *p, void *value);
+UC_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value);
 
 /*
  * Summary:
@@ -108,7 +108,7 @@ UC_EXPORTED void uc_cmd_line_set_transmit_state(uc_cmd_line *p, void *value);
  * Returns:
  *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool uc_cmd_line_is_cancelled(uc_cmd_line *p);
+UC_EXPORTED ucBool ucCmdLine_is_cancelled(ucCmdLine *p);
 
 /*
  * Summary:
@@ -117,7 +117,7 @@ UC_EXPORTED ucBool uc_cmd_line_is_cancelled(uc_cmd_line *p);
  *   p: A pointer to the structure whose property is set.
  *   value: A pointer to the function used to check for cancellation.
  */
-UC_EXPORTED void uc_cmd_line_set_is_cancelled(uc_cmd_line *p, uc_cmd_line_is_cancelled_func *value);
+UC_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_is_cancelled_func *value);
 
 /*
  * Summary:
@@ -127,7 +127,7 @@ UC_EXPORTED void uc_cmd_line_set_is_cancelled(uc_cmd_line *p, uc_cmd_line_is_can
  * Returns:
  *   A pointer to the function used to check for cancellation.
  */
-UC_EXPORTED uc_cmd_line_is_cancelled_func *uc_cmd_line_get_is_cancelled(uc_cmd_line *p);
+UC_EXPORTED ucCmdLine_is_cancelled_func *ucCmdLine_get_is_cancelled(ucCmdLine *p);
 
 /*
  * Summary:
@@ -137,7 +137,7 @@ UC_EXPORTED uc_cmd_line_is_cancelled_func *uc_cmd_line_get_is_cancelled(uc_cmd_l
  * Returns:
  *   A pointer to the stateful object passed to the command's cancellation function.
  */
-UC_EXPORTED void *uc_cmd_line_get_is_cancelled_state(uc_cmd_line *p);
+UC_EXPORTED void *ucCmdLine_get_is_cancelled_state(ucCmdLine *p);
 
 /*
  * Summary:
@@ -146,7 +146,7 @@ UC_EXPORTED void *uc_cmd_line_get_is_cancelled_state(uc_cmd_line *p);
  *   p: A pointer to the command structure whose property is to be set.
  *   value: The stateful object passed to the command's cancellation function.
  */
-UC_EXPORTED void uc_cmd_line_set_is_cancelled_state(uc_cmd_line *p, void *value);
+UC_EXPORTED void ucCmdLine_set_is_cancelled_state(ucCmdLine *p, void *value);
 
 /*
  * Summary:
@@ -154,7 +154,7 @@ UC_EXPORTED void uc_cmd_line_set_is_cancelled_state(uc_cmd_line *p, void *value)
  * Returns:
  *   The static, default instance of the command structure.
  */
-UC_EXPORTED uc_cmd_line *uc_cmd_line_get_instance(void);
+UC_EXPORTED ucCmdLine *ucCmdLine_get_instance(void);
 
 /*
  * Summary:
@@ -166,7 +166,7 @@ UC_EXPORTED uc_cmd_line *uc_cmd_line_get_instance(void);
  * Returns:
  *   The formatted string.
  */
-UC_EXPORTED const char *uc_cmd_line_format_response(uc_cmd_line *p, const char *format, ...);
+UC_EXPORTED const char *ucCmdLine_format_response(ucCmdLine *p, const char *format, ...);
 
 /*
  * Summary:
@@ -178,7 +178,7 @@ UC_EXPORTED const char *uc_cmd_line_format_response(uc_cmd_line *p, const char *
  * Returns:
  *   The formatted string.
  */
-UC_EXPORTED const char *uc_cmd_line_format_response_va(uc_cmd_line *p, const char *format, va_list arg_list);
+UC_EXPORTED const char *ucCmdLine_format_response_va(ucCmdLine *p, const char *format, va_list arg_list);
 
 /*
  * Summary
@@ -187,7 +187,7 @@ UC_EXPORTED const char *uc_cmd_line_format_response_va(uc_cmd_line *p, const cha
  *   p: A pointer to the command structure that is responding.
  *   response: The response string.
  */
-UC_EXPORTED void uc_cmd_line_respond(uc_cmd_line *p, const char *response);
+UC_EXPORTED void ucCmdLine_respond(ucCmdLine *p, const char *response);
 
 /*
  * Summary:
@@ -198,7 +198,7 @@ UC_EXPORTED void uc_cmd_line_respond(uc_cmd_line *p, const char *response);
  *   value: A boolean true value if the command structure should not send
  *          any response strings. Otherwise, false.
  */
-UC_EXPORTED void uc_cmd_line_set_is_quiet(uc_cmd_line *p, ucBool value);
+UC_EXPORTED void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value);
 
 /*
  * Summary:
@@ -210,6 +210,6 @@ UC_EXPORTED void uc_cmd_line_set_is_quiet(uc_cmd_line *p, ucBool value);
  *   A boolean true value if the command structure is not sending any
  *   response strings. Otherwise, false.
  */
-UC_EXPORTED ucBool uc_cmd_line_get_is_quiet(uc_cmd_line *p);
+UC_EXPORTED ucBool ucCmdLine_get_is_quiet(ucCmdLine *p);
 
 #endif

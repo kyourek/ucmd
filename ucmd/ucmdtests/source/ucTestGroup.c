@@ -1,110 +1,110 @@
 #include <stdlib.h>
-#include "uc_test_group.h"
+#include "ucTestGroup.h"
 
-uc_test_err uc_test_group_before_all_tests(uc_test_group *p) {
+ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p) {
     if (NULL == p) return -1;
     if (NULL == p->before_all_tests) return -2;
     return p->before_all_tests(p);
 }
 
-uc_test_err uc_test_group_base_before_all_tests(uc_test_group *p) {
-    return UC_TEST_ERR_NONE;
+ucTestErr ucTestGroup_base_before_all_tests(ucTestGroup *p) {
+    return ucTestErr_NONE;
 }
 
-uc_test_err uc_test_group_after_all_tests(uc_test_group *p) {
+ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p) {
     if (NULL == p) return -1;
     if (NULL == p->after_all_tests) return -2;
     return p->after_all_tests(p);
 }
 
-uc_test_err uc_test_group_base_after_all_tests(uc_test_group *p) {
-    return UC_TEST_ERR_NONE;
+ucTestErr ucTestGroup_base_after_all_tests(ucTestGroup *p) {
+    return ucTestErr_NONE;
 }
 
-uc_test_err uc_test_group_before_each_test(uc_test_group *p) {
+ucTestErr ucTestGroup_before_each_test(ucTestGroup *p) {
     if (NULL == p) return -1;
     if (NULL == p->before_each_test) return -2;
     return p->before_each_test(p);
 }
 
-uc_test_err uc_test_group_base_before_each_test(uc_test_group *p) {
-    return UC_TEST_ERR_NONE;
+ucTestErr ucTestGroup_base_before_each_test(ucTestGroup *p) {
+    return ucTestErr_NONE;
 }
 
-uc_test_err uc_test_group_after_each_test(uc_test_group *p) {
+ucTestErr ucTestGroup_after_each_test(ucTestGroup *p) {
     if (NULL == p) return -1;
     if (NULL == p->after_each_test) return -2;
     return p->after_each_test(p);
 }
 
-uc_test_err uc_test_group_base_after_each_test(uc_test_group *p) {
-    return UC_TEST_ERR_NONE;
+ucTestErr ucTestGroup_base_after_each_test(ucTestGroup *p) {
+    return ucTestErr_NONE;
 }
 
-uc_test_group_test_func **uc_test_group_get_tests(uc_test_group *p) {
+ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p) {
     if (NULL == p) return NULL;
     return p->tests;
 }
 
-uc_test_group *uc_test_group_init(
-    uc_test_group *p, 
-    uc_test_group_callback_func *before_all_tests, 
-    uc_test_group_callback_func *after_all_tests, 
-    uc_test_group_callback_func *before_each_test, 
-    uc_test_group_callback_func *after_each_test,
-    uc_test_group_test_func **tests
+ucTestGroup *ucTestGroup_init(
+    ucTestGroup *p, 
+    ucTestGroup_callback_func *before_all_tests, 
+    ucTestGroup_callback_func *after_all_tests, 
+    ucTestGroup_callback_func *before_each_test, 
+    ucTestGroup_callback_func *after_each_test,
+    ucTestGroup_test_func **tests
 ) {
-    static uc_test_group_test_func *base_tests[] = { NULL };
+    static ucTestGroup_test_func *base_tests[] = { NULL };
 
     if (NULL == p) return NULL;
 
     p->tests = NULL == tests ? base_tests : tests;
-    p->before_all_tests = NULL == before_all_tests ? uc_test_group_base_before_all_tests : before_all_tests;
-    p->after_all_tests = NULL == after_all_tests ? uc_test_group_base_after_all_tests : after_all_tests;
-    p->before_each_test = NULL == before_each_test ? uc_test_group_base_before_each_test : before_each_test;
-    p->after_each_test = NULL == after_each_test ? uc_test_group_base_after_each_test : after_each_test;
+    p->before_all_tests = NULL == before_all_tests ? ucTestGroup_base_before_all_tests : before_all_tests;
+    p->after_all_tests = NULL == after_all_tests ? ucTestGroup_base_after_all_tests : after_all_tests;
+    p->before_each_test = NULL == before_each_test ? ucTestGroup_base_before_each_test : before_each_test;
+    p->after_each_test = NULL == after_each_test ? ucTestGroup_base_after_each_test : after_each_test;
 
     return p;
 }
 
-uc_test_err uc_test_group_run(uc_test_group *p, uc_test_state *state) {
+ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
     
-    uc_test_err err, callback_err;
-    uc_test_group_test_func **tests;
+    ucTestErr err, callback_err;
+    ucTestGroup_test_func **tests;
 
     if (NULL == p) return -1;
 
-    tests = uc_test_group_get_tests(p);
+    tests = ucTestGroup_get_tests(p);
     if (NULL == tests) return -2;
 
-    uc_test_state_set_run_group_test_count(state, 0);
+    ucTestState_set_run_group_test_count(state, 0);
 
-    callback_err = uc_test_group_before_all_tests(p);
+    callback_err = ucTestGroup_before_all_tests(p);
     if (callback_err) return callback_err;
 
-    err = UC_TEST_ERR_NONE;
+    err = ucTestErr_NONE;
     for (; *tests; tests++) {
 
-        callback_err = uc_test_group_before_each_test(p);
+        callback_err = ucTestGroup_before_each_test(p);
         if (callback_err) return callback_err;
 
         err = (*tests)(p);
 
-        callback_err = uc_test_group_after_each_test(p);
+        callback_err = ucTestGroup_after_each_test(p);
         if (callback_err) return callback_err;
 
         if (err) break;
 
-        uc_test_state_set_run_test_count(state, uc_test_state_get_run_test_count(state) + 1);
-        uc_test_state_set_run_group_test_count(state, uc_test_state_get_run_group_test_count(state) + 1);
+        ucTestState_set_run_test_count(state, ucTestState_get_run_test_count(state) + 1);
+        ucTestState_set_run_group_test_count(state, ucTestState_get_run_group_test_count(state) + 1);
     }
 
-    callback_err = uc_test_group_after_all_tests(p);
+    callback_err = ucTestGroup_after_all_tests(p);
     if (callback_err) return callback_err;
 
     if (err) return err;
 
-    uc_test_state_set_run_group_count(state, uc_test_state_get_run_group_count(state) + 1);
+    ucTestState_set_run_group_count(state, ucTestState_get_run_group_count(state) + 1);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }

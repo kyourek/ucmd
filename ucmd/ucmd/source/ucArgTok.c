@@ -1,13 +1,13 @@
 #include <stddef.h>
 #include "ucArgTok.h"
-#include "uc_tok_p.h"
+#include "ucTok_p.h"
 
 ucArgTok *ucArgTok_get_next(ucArgTok* p) {
-    uc_tok *tok;
+    ucTok *tok;
     if (NULL == p) return NULL;
-    tok = uc_tok_get_next((uc_tok*)p);
+    tok = ucTok_get_next((ucTok*)p);
     if (NULL == tok) return NULL;
-    if (uc_tok_is_switch(tok)) return NULL;
+    if (ucTok_is_switch(tok)) return NULL;
     return (ucArgTok*)tok;
 }
 
@@ -22,7 +22,7 @@ int ucArgTok_count(ucArgTok* p) {
 
 ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value) {
     while (NULL != p) {
-        if (uc_tok_equals((uc_tok*)p, arg_value)) {
+        if (ucTok_equals((ucTok*)p, arg_value)) {
             return p;
         }
         p = ucArgTok_get_next(p);

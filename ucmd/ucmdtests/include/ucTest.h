@@ -2,9 +2,9 @@
 #define UC_TEST_H
 
 #include "ucBool.h"
-#include "uc_test_group.h"
+#include "ucTestGroup.h"
 
-typedef struct uc_test uc_test;
+typedef struct ucTest ucTest;
 
 #define UC_TEST_FAIL() do { return -1; } while (0)
 
@@ -18,7 +18,7 @@ typedef struct uc_test uc_test;
  *   str: The information string to be printed.
  *   state: The tests structure's print state.
  */
-typedef void (uc_test_print_func)(const char *str, void *state);
+typedef void (ucTest_print_func)(const char *str, void *state);
 
 /*
  * Summary:
@@ -31,7 +31,7 @@ typedef void (uc_test_print_func)(const char *str, void *state);
  *   A boolean true value if the test procedure should exit.
  *   Otherwise, a false value.
  */
-typedef ucBool (uc_test_exit_func)(void* state);
+typedef ucBool (ucTest_exit_func)(void* state);
 
 /*
  * Summary:
@@ -40,7 +40,7 @@ typedef ucBool (uc_test_exit_func)(void* state);
  *   p: A pointer to the tests structure.
  *   value: The print function used to print information.
  */
-UC_EXPORTED void uc_test_set_print_func(uc_test *p, uc_test_print_func *value);
+UC_EXPORTED void ucTest_set_print_func(ucTest *p, ucTest_print_func *value);
 
 /* Summary:
  *   Sets the state object that is given as a parameter to the print function.
@@ -48,7 +48,7 @@ UC_EXPORTED void uc_test_set_print_func(uc_test *p, uc_test_print_func *value);
  *   p: A pointer to the tests structure.
  *   value: The state object that is given as a parameter to the structure's print function.
  */
-UC_EXPORTED void uc_test_set_print_state(uc_test *p, void *value);
+UC_EXPORTED void ucTest_set_print_state(ucTest *p, void *value);
 
 /*
  * Summary:
@@ -57,7 +57,7 @@ UC_EXPORTED void uc_test_set_print_state(uc_test *p, void *value);
  *   p: A pointer to the tests structure.
  *   value: The function that is called before the test procedure exits.
  */
-UC_EXPORTED void uc_test_set_exit_func(uc_test *p, uc_test_exit_func *value);
+UC_EXPORTED void ucTest_set_exit_func(ucTest *p, ucTest_exit_func *value);
 
 /*
  * Summary:
@@ -66,29 +66,29 @@ UC_EXPORTED void uc_test_set_exit_func(uc_test *p, uc_test_exit_func *value);
  *   p: A pointer to the tests structure.
  *   value: The state object that is given as a parameter to the exit function.
  */
-UC_EXPORTED void uc_test_set_exit_state(uc_test *p, void *value);
+UC_EXPORTED void ucTest_set_exit_state(ucTest *p, void *value);
 
-UC_EXPORTED uc_test_group **uc_test_get_groups(uc_test *p);
+UC_EXPORTED ucTestGroup **ucTest_get_groups(ucTest *p);
 
-UC_EXPORTED uc_test_state *uc_test_get_state(uc_test *p);
+UC_EXPORTED ucTestState *ucTest_get_state(ucTest *p);
 
-UC_EXPORTED const char *uc_test_get_label(uc_test *p);
+UC_EXPORTED const char *ucTest_get_label(ucTest *p);
 
-UC_EXPORTED uc_test *uc_test_init(uc_test *p, const char *label, uc_test_group **groups);
+UC_EXPORTED ucTest *ucTest_init(ucTest *p, const char *label, ucTestGroup **groups);
 
-UC_EXPORTED uc_test_err uc_test_run(uc_test *p);
+UC_EXPORTED ucTestErr ucTest_run(ucTest *p);
 
-struct uc_test {
+struct ucTest {
     const char *label;
-    uc_test_state state;
+    ucTestState state;
 
-    uc_test_print_func *print_func;
+    ucTest_print_func *print_func;
     void *print_state;
     
-    uc_test_exit_func *exit_func;
+    ucTest_exit_func *exit_func;
     void *exit_state;
 
-    uc_test_group **groups;
+    ucTestGroup **groups;
 };
 
 #endif

@@ -1,100 +1,100 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ucArgOptOwner.h"
-#include "uc_switch_opt_p.h"
-#include "uc_switch_opt_tests.h"
-#include "uc_test.h"
+#include "ucSwitchOpt_p.h"
+#include "ucSwitchOpt_tests.h"
+#include "ucTest.h"
 
-static uc_test_err uc_switch_opt_get_next_returns_next(uc_test_group *p) {
-    uc_switch_opt o1;
-    uc_switch_opt o2;
+static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {
+    ucSwitchOpt o1;
+    ucSwitchOpt o2;
     o1.next = &o2;
-    UC_TEST_ASSERT(uc_switch_opt_get_next(&o1) == &o2);
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(ucSwitchOpt_get_next(&o1) == &o2);
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_create_creates_switch_opt(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_create_creates_switch_opt(ucTestGroup *p) {
     ucArgOpt *a;
-    uc_switch_opt *s1;
-    uc_switch_opt *s2;
+    ucSwitchOpt *s1;
+    ucSwitchOpt *s2;
     
     a = ucArgOpt_create("n", "d", NULL);
-    s2 = uc_switch_opt_create("s2", "d", NULL, NULL);
-    s1 = uc_switch_opt_create("-sw-name", "{-sw-name description}", a, s2);
+    s2 = ucSwitchOpt_create("s2", "d", NULL, NULL);
+    s1 = ucSwitchOpt_create("-sw-name", "{-sw-name description}", a, s2);
 
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)s1));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)s1));
     UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(ucBool_false == uc_opt_is_required((uc_opt*)s1));
-    UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
+    UC_TEST_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)s1));
+    UC_TEST_ASSERT(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);
-    uc_switch_opt_destroy(s2);
-    uc_switch_opt_destroy(s1);
+    ucSwitchOpt_destroy(s2);
+    ucSwitchOpt_destroy(s1);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_create_required_creates_switch_opt(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_create_required_creates_switch_opt(ucTestGroup *p) {
     ucArgOpt *a;
-    uc_switch_opt *s1;
-    uc_switch_opt *s2;
+    ucSwitchOpt *s1;
+    ucSwitchOpt *s2;
     
     a = ucArgOpt_create("a", "description", NULL);
-    s2 = uc_switch_opt_create("-sw", "desc", NULL, NULL);
-    s1 = uc_switch_opt_create_required("-switch", "switch desc", a, s2);
+    s2 = ucSwitchOpt_create("-sw", "desc", NULL, NULL);
+    s1 = ucSwitchOpt_create_required("-switch", "switch desc", a, s2);
 
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)s1));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)s1));
     UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required((uc_opt*)s1));
-    UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
+    UC_TEST_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)s1));
+    UC_TEST_ASSERT(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);
-    uc_switch_opt_destroy(s2);
-    uc_switch_opt_destroy(s1);
+    ucSwitchOpt_destroy(s2);
+    ucSwitchOpt_destroy(s1);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_create_creates_different_instances(uc_test_group *p) {
-    uc_switch_opt *s1, *s2, *s3;
+static ucTestErr ucSwitchOpt_create_creates_different_instances(ucTestGroup *p) {
+    ucSwitchOpt *s1, *s2, *s3;
 
-    s1 = uc_switch_opt_create("s1", "s1", NULL, NULL);
-    s2 = uc_switch_opt_create("s2", "s2", NULL, NULL);
-    s3 = uc_switch_opt_create("s3", "s3", NULL, NULL);
+    s1 = ucSwitchOpt_create("s1", "s1", NULL, NULL);
+    s2 = ucSwitchOpt_create("s2", "s2", NULL, NULL);
+    s3 = ucSwitchOpt_create("s3", "s3", NULL, NULL);
 
     UC_TEST_ASSERT(s1 != s2);
     UC_TEST_ASSERT(s2 != s3);
 
-    uc_switch_opt_destroy(s1);
-    uc_switch_opt_destroy(s2);
-    uc_switch_opt_destroy(s3);
+    ucSwitchOpt_destroy(s1);
+    ucSwitchOpt_destroy(s2);
+    ucSwitchOpt_destroy(s3);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_destroy_releases_instance(uc_test_group *p) {
-    uc_switch_opt *s1, *s2, *s3;
+static ucTestErr ucSwitchOpt_destroy_releases_instance(ucTestGroup *p) {
+    ucSwitchOpt *s1, *s2, *s3;
 
-    s1 = uc_switch_opt_create("s1", "s1", NULL, NULL);
-    s2 = uc_switch_opt_create("s2", "s2", NULL, NULL);
+    s1 = ucSwitchOpt_create("s1", "s1", NULL, NULL);
+    s2 = ucSwitchOpt_create("s2", "s2", NULL, NULL);
 
-    uc_switch_opt_destroy(s2);
+    ucSwitchOpt_destroy(s2);
 
-    s3 = uc_switch_opt_create("s3", "s3", NULL, NULL);
+    s3 = ucSwitchOpt_create("s3", "s3", NULL, NULL);
 
     UC_TEST_ASSERT(s3 == s2);
 
-    uc_switch_opt_destroy(s1);
-    uc_switch_opt_destroy(s3);
+    ucSwitchOpt_destroy(s1);
+    ucSwitchOpt_destroy(s3);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_destroy_chain_releases_all_instances(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_destroy_chain_releases_all_instances(ucTestGroup *p) {
     ucArgOpt *a1, *a2, *a3, *a4, *a4_2;
-    uc_switch_opt *s1, *s2, *s3, *s3_2;
+    ucSwitchOpt *s1, *s2, *s3, *s3_2;
 
     a4 = ucArgOpt_create("a4", "a4", NULL);
     a3 = ucArgOpt_create("a3", "a3", a4);
@@ -102,88 +102,88 @@ static uc_test_err uc_switch_opt_destroy_chain_releases_all_instances(uc_test_gr
 
     a1 = ucArgOpt_create("a1", "a1", NULL);
 
-    s3 = uc_switch_opt_create("s3", "s3", a2, NULL);
-    s2 = uc_switch_opt_create("s2", "s2", a1, s3);
-    s1 = uc_switch_opt_create("s1", "s1", NULL, s2);
+    s3 = ucSwitchOpt_create("s3", "s3", a2, NULL);
+    s2 = ucSwitchOpt_create("s2", "s2", a1, s3);
+    s1 = ucSwitchOpt_create("s1", "s1", NULL, s2);
 
-    uc_switch_opt_destroy_chain(s1);
+    ucSwitchOpt_destroy_chain(s1);
 
     a4_2 = ucArgOpt_create("a4_2", "a4_2", NULL);
     UC_TEST_ASSERT(a4_2 == a4);
 
-    s3_2 = uc_switch_opt_create("s3_2", "s3_2", NULL, NULL);
+    s3_2 = ucSwitchOpt_create("s3_2", "s3_2", NULL, NULL);
     UC_TEST_ASSERT(s3_2 == s3);
 
     ucArgOpt_destroy(a4_2);
-    uc_switch_opt_destroy(s3_2);
+    ucSwitchOpt_destroy(s3_2);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_format_validation_err_catches_required_switch(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTestGroup *p) {
     const char *err;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
-    uc_switch_opt *s = uc_switch_opt_create_required("-s\0\n", NULL, NULL, NULL);
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, NULL);
+    err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
     UC_TEST_ASSERT(NULL != err);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, "-s\0\n");
+    err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
     UC_TEST_ASSERT(NULL == err);
 
-    uc_switch_opt_destroy(s);
-    return UC_TEST_ERR_NONE;
+    ucSwitchOpt_destroy(s);
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_format_validation_err_catches_required_arg(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
+    ucCmdLine *cmd = ucCmdLine_get_instance();
     ucArgOpt *a = ucArgOpt_create_required("a", NULL, NULL);
-    uc_switch_opt *s = uc_switch_opt_create("-s", NULL, a, NULL);
+    ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, "-s\0\n");
+    err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
     UC_TEST_ASSERT(NULL != err);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, "-s\0a\0\n");
+    err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0a\0\n");
     UC_TEST_ASSERT(NULL == err);
 
     ucArgOpt_destroy(a);
-    uc_switch_opt_destroy(s);
-    return UC_TEST_ERR_NONE;
+    ucSwitchOpt_destroy(s);
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_switch_opt_format_validation_err_allows_multiple_arguments(uc_test_group *p) {
+static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucTestGroup *p) {
     const char *err;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
+    ucCmdLine *cmd = ucCmdLine_get_instance();
     ucArgOpt *a = ucArgOpt_create_multiple("a", NULL, 0, 3);
-    uc_switch_opt *s = uc_switch_opt_create("-s", NULL, a, NULL);
+    ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, "-s\0\n");
+    err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0\n");
     UC_TEST_ASSERT(NULL == err);
 
-    err = uc_switch_opt_format_validation_err(s, cmd, "-s\0a1\0a2\0a3\0\n");
+    err = ucSwitchOpt_format_validation_err(s, cmd, "-s\0a1\0a2\0a3\0\n");
     UC_TEST_ASSERT(NULL == err);
 
     ucArgOpt_destroy(a);
-    uc_switch_opt_destroy(s);
+    ucSwitchOpt_destroy(s);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-uc_test_group *uc_switch_opt_tests_get_group(void) {
-    static uc_test_group group;
-    static uc_test_group_test_func *tests[] = {
-        uc_switch_opt_get_next_returns_next,
-        uc_switch_opt_create_creates_switch_opt,
-        uc_switch_opt_create_required_creates_switch_opt,
-        uc_switch_opt_create_creates_different_instances,
-        uc_switch_opt_destroy_releases_instance,
-        uc_switch_opt_destroy_chain_releases_all_instances,
-        uc_switch_opt_format_validation_err_catches_required_switch,
-        uc_switch_opt_format_validation_err_catches_required_arg,
-        uc_switch_opt_format_validation_err_allows_multiple_arguments,
+ucTestGroup *ucSwitchOpt_tests_get_group(void) {
+    static ucTestGroup group;
+    static ucTestGroup_test_func *tests[] = {
+        ucSwitchOpt_get_next_returns_next,
+        ucSwitchOpt_create_creates_switch_opt,
+        ucSwitchOpt_create_required_creates_switch_opt,
+        ucSwitchOpt_create_creates_different_instances,
+        ucSwitchOpt_destroy_releases_instance,
+        ucSwitchOpt_destroy_chain_releases_all_instances,
+        ucSwitchOpt_format_validation_err_catches_required_switch,
+        ucSwitchOpt_format_validation_err_catches_required_arg,
+        ucSwitchOpt_format_validation_err_allows_multiple_arguments,
         NULL
     };
 
-    return uc_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
 }

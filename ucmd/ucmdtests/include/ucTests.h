@@ -1,8 +1,8 @@
 #ifndef UC_TESTS_H
 #define UC_TESTS_H
 
-#include "uc_test.h"
+#include "ucTest.h"
 
-UC_EXPORTED uc_test *uc_tests_get_test(void);
+UC_EXPORTED ucTest *ucTests_get_test(void);
 
 #endif

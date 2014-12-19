@@ -2,16 +2,16 @@
 #define UC_SWITCH_OPT_P_H
 
 #include "ucArgOptOwner_p.h"
-#include "uc_cmd_line.h"
-#include "uc_switch_opt.h"
+#include "ucCmdLine.h"
+#include "ucSwitchOpt.h"
 
-struct uc_switch_opt {
+struct ucSwitchOpt {
     ucArgOptOwner base;
-    uc_switch_opt *next;
+    ucSwitchOpt *next;
 };
 
-UC_EXPORTED uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, uc_switch_opt *next);
+UC_EXPORTED ucSwitchOpt *ucSwitchOpt_init(ucSwitchOpt *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, ucSwitchOpt *next);
 
-UC_EXPORTED const char *uc_switch_opt_format_validation_err(uc_switch_opt *p, uc_cmd_line *cmd, uc_switch_tok *switch_tok);
+UC_EXPORTED const char *ucSwitchOpt_format_validation_err(ucSwitchOpt *p, ucCmdLine *cmd, ucSwitchTok *switch_tok);
 
 #endif

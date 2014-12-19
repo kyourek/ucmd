@@ -8,7 +8,7 @@
  * Summary:
  *   Base structure for tokenized values in a command.
  */
-typedef const char uc_tok;
+typedef const char ucTok;
 
 /*
  * Summary:
@@ -18,7 +18,7 @@ typedef const char uc_tok;
  * Returns:
  *   The number of characters in the token.
  */
-UC_EXPORTED int uc_tok_get_length(uc_tok *p);
+UC_EXPORTED int ucTok_get_length(ucTok *p);
 
 /*
  * Summary:
@@ -29,7 +29,7 @@ UC_EXPORTED int uc_tok_get_length(uc_tok *p);
  * Returns:
  *   ucBool_true if the token value equals the given value. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool uc_tok_equals(uc_tok *p, const char *value);
+UC_EXPORTED ucBool ucTok_equals(ucTok *p, const char *value);
 
 /*
  * Summary:
@@ -39,7 +39,7 @@ UC_EXPORTED ucBool uc_tok_equals(uc_tok *p, const char *value);
  * Returns:
  *   ucBool_true if the token is considered numeric. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool uc_tok_is_numeric(uc_tok *p);
+UC_EXPORTED ucBool ucTok_is_numeric(ucTok *p);
 
 /*
  * Summary:
@@ -49,7 +49,7 @@ UC_EXPORTED ucBool uc_tok_is_numeric(uc_tok *p);
  * Returns:
  *   ucBool_true if the token is a switch. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool uc_tok_is_switch(uc_tok* p);
+UC_EXPORTED ucBool ucTok_is_switch(ucTok* p);
 
 /*
  * Summary:
@@ -60,7 +60,7 @@ UC_EXPORTED ucBool uc_tok_is_switch(uc_tok* p);
  *   A pointer to the token that comes next in the list, or NULL
  *   if no further tokens exist.
  */
-UC_EXPORTED uc_tok *uc_tok_get_next(uc_tok *p);
+UC_EXPORTED ucTok *ucTok_get_next(ucTok *p);
 
 /*
  * Summary:
@@ -70,7 +70,7 @@ UC_EXPORTED uc_tok *uc_tok_get_next(uc_tok *p);
  * Returns:
  *   The number of tokens in the list.
  */
-UC_EXPORTED int uc_tok_count(uc_tok *p);
+UC_EXPORTED int ucTok_count(ucTok *p);
 
 /*
  * Summary:
@@ -80,6 +80,6 @@ UC_EXPORTED int uc_tok_count(uc_tok *p);
  * Returns:
  *   The string value of the token.
  */
-UC_EXPORTED const char *uc_tok_get_value(uc_tok* p);
+UC_EXPORTED const char *ucTok_get_value(ucTok* p);
 
 #endif

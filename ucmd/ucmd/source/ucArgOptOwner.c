@@ -9,16 +9,16 @@ ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p) {
 
 ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt) {
     if (NULL == p) return NULL;
-    if (NULL == uc_opt_init((uc_opt*)p, name, desc, is_required)) return NULL;
+    if (NULL == ucOpt_init((ucOpt*)p, name, desc, is_required)) return NULL;
     p->arg_opt = arg_opt;
     return p;
 }
 
-const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name) {
+const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int max_arg_tok_count;
 
     /* set the prefix for error messages */
-    const char *validation, *prefix = switch_name == NULL ? uc_opt_validation_err_invalid_argument_prefix : uc_opt_validation_err_invalid_switch_argument_prefix;
+    const char *validation, *prefix = switch_name == NULL ? ucOpt_validation_err_invalid_argument_prefix : ucOpt_validation_err_invalid_switch_argument_prefix;
 
     /* get the first argument option */
     ucArgOpt *arg_opt = ucArgOptOwner_get_arg_opt(p);
@@ -31,8 +31,8 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, uc_cmd_line *c
 
             /* the option does NOT exist, but the token DOES, so there's an error */
             return NULL == switch_name
-                ? uc_cmd_line_format_response(cmd, "%sno argument options exist for command \"%s\".", prefix, uc_tok_get_value(uc_cmd_line_get_cmd_tok(cmd)))
-                : uc_cmd_line_format_response(cmd, "%sno argument options exist for switch \"%s\".", prefix, switch_name);
+                ? ucCmdLine_format_response(cmd, "%sno argument options exist for command \"%s\".", prefix, ucTok_get_value(ucCmdLine_get_cmd_tok(cmd)))
+                : ucCmdLine_format_response(cmd, "%sno argument options exist for switch \"%s\".", prefix, switch_name);
         }
 
         /* neither the option nor the token exist, so no error here */
@@ -63,8 +63,8 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, uc_cmd_line *c
 
             /* we have remaining tokens but no arguments for them, so there's an error */
             return NULL == switch_name
-                ? uc_cmd_line_format_response(cmd, "%sno option exists for argument \"%s\".", prefix, uc_tok_get_value(arg_tok))
-                : uc_cmd_line_format_response(cmd, "%sno option exists for \"%s\" argument \"%s\".", prefix, switch_name, uc_tok_get_value(arg_tok));
+                ? ucCmdLine_format_response(cmd, "%sno option exists for argument \"%s\".", prefix, ucTok_get_value(arg_tok))
+                : ucCmdLine_format_response(cmd, "%sno option exists for \"%s\" argument \"%s\".", prefix, switch_name, ucTok_get_value(arg_tok));
         }
     }
 

@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "uc_cmd_line_p.h"
-#include "uc_cmd_line_tests.h"
-#include "uc_cmd_line_toks.h"
-#include "uc_cmd_parser_p.h"
-#include "uc_cmd_tok.h"
-#include "uc_switch_tok.h"
-#include "uc_test.h"
-#include "uc_tok.h"
+#include "ucCmdLine_p.h"
+#include "ucCmdLine_tests.h"
+#include "ucCmdLineToks.h"
+#include "ucCmdParser_p.h"
+#include "ucCmdTok.h"
+#include "ucSwitchTok.h"
+#include "ucTest.h"
+#include "ucTok.h"
 
-static uc_cmd_tok *parse_cmd(char *cmd) {
-    return uc_cmd_parser_parse(uc_cmd_parser_get_instance(), cmd);
+static ucCmdTok *parse_cmd(char *cmd) {
+    return ucCmdParser_parse(ucCmdParser_get_instance(), cmd);
 }
 
 static void *transmit_1_state;
@@ -35,279 +35,279 @@ static ucBool is_cancelled_2(void *state) {
     return ucBool_true;
 }
 
-static uc_test_err uc_cmd_line_get_cmd_tok_returns_cmd_tok(uc_test_group *p) {
-    uc_cmd_line c;
-    uc_cmd_tok *t = "token";
+static ucTestErr ucCmdLine_get_cmd_tok_returns_cmd_tok(ucTestGroup *p) {
+    ucCmdLine c;
+    ucCmdTok *t = "token";
     c.cmd_tok = t;
-    UC_TEST_ASSERT(t == uc_cmd_line_get_cmd_tok(&c));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(t == ucCmdLine_get_cmd_tok(&c));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_cmd_tok_sets_cmd_tok(uc_test_group *p) {
-    uc_cmd_line c;
-    uc_cmd_tok *t = "cmd_tok";
-    uc_cmd_line_set_cmd_tok(&c, t);
+static ucTestErr ucCmdLine_set_cmd_tok_sets_cmd_tok(ucTestGroup *p) {
+    ucCmdLine c;
+    ucCmdTok *t = "cmd_tok";
+    ucCmdLine_set_cmd_tok(&c, t);
     UC_TEST_ASSERT(t == c.cmd_tok);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_cmd_toks_returns_toks(uc_test_group *p) {
-    uc_cmd_line_toks toks = { 0 };
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
+static ucTestErr ucCmdLine_get_cmd_toks_returns_toks(ucTestGroup *p) {
+    ucCmdLineToks toks = { 0 };
+    ucCmdLine *cmd = ucCmdLine_get_instance();
     char c[30] = "cmd arg -s";
 
-    uc_cmd_line_set_cmd_tok(cmd, parse_cmd(c));
-    uc_cmd_line_get_cmd_toks(cmd, &toks);
+    ucCmdLine_set_cmd_tok(cmd, parse_cmd(c));
+    ucCmdLine_get_cmd_toks(cmd, &toks);
 
-    UC_TEST_ASSERT(uc_tok_equals(toks.cmd_tok, "cmd"));
-    UC_TEST_ASSERT(uc_tok_equals(toks.arg_tok, "arg"));
-    UC_TEST_ASSERT(uc_tok_equals(toks.switch_tok, "-s"));
+    UC_TEST_ASSERT(ucTok_equals(toks.cmd_tok, "cmd"));
+    UC_TEST_ASSERT(ucTok_equals(toks.arg_tok, "arg"));
+    UC_TEST_ASSERT(ucTok_equals(toks.switch_tok, "-s"));
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_cmd_toks_sets_null_tok_values(uc_test_group *p) {
-    uc_cmd_line_toks toks = { 0 };
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
+static ucTestErr ucCmdLine_get_cmd_toks_sets_null_tok_values(ucTestGroup *p) {
+    ucCmdLineToks toks = { 0 };
+    ucCmdLine *cmd = ucCmdLine_get_instance();
     char c[12] = "command";
 
-    uc_cmd_line_set_cmd_tok(cmd, parse_cmd(c));
-    uc_cmd_line_get_cmd_toks(cmd, &toks);
+    ucCmdLine_set_cmd_tok(cmd, parse_cmd(c));
+    ucCmdLine_get_cmd_toks(cmd, &toks);
 
-    UC_TEST_ASSERT(uc_tok_equals(toks.cmd_tok, "command"));
+    UC_TEST_ASSERT(ucTok_equals(toks.cmd_tok, "command"));
     UC_TEST_ASSERT(NULL == toks.arg_tok);
     UC_TEST_ASSERT(NULL == toks.switch_tok);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_instance_is_not_null(uc_test_group *p) {
-    UC_TEST_ASSERT(NULL != uc_cmd_line_get_instance());
-    return UC_TEST_ERR_NONE;
+static ucTestErr ucCmdLine_get_instance_is_not_null(ucTestGroup *p) {
+    UC_TEST_ASSERT(NULL != ucCmdLine_get_instance());
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_format_response_sets_response_string(uc_test_group *p) {
+static ucTestErr ucCmdLine_format_response_sets_response_string(ucTestGroup *p) {
     char expected[50];
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
-    uc_cmd_line_format_response(ptr, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
+    ucCmdLine *ptr = ucCmdLine_get_instance();
+    ucCmdLine_format_response(ptr, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     sprintf(expected, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     UC_TEST_ASSERT(0 == strcmp(ptr->response, expected));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static const char *uc_cmd_line_format_response_va_sets_response_string_helper(uc_cmd_line *p, const char *format, ...) {
+static const char *ucCmdLine_format_response_va_sets_response_string_helper(ucCmdLine *p, const char *format, ...) {
     va_list arg_list;
     const char *response;
     va_start(arg_list, format);
-    response = uc_cmd_line_format_response_va(p, format, arg_list);
+    response = ucCmdLine_format_response_va(p, format, arg_list);
     va_end(arg_list);
     return response;
 }
 
-static uc_test_err uc_cmd_line_format_response_va_sets_response_string(uc_test_group *p) {
+static ucTestErr ucCmdLine_format_response_va_sets_response_string(ucTestGroup *p) {
     char expected[50];
     const char *actual;
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     
-    actual = uc_cmd_line_format_response_va_sets_response_string_helper(ptr, "This %d is %s formatted.", 1, "well");
+    actual = ucCmdLine_format_response_va_sets_response_string_helper(ptr, "This %d is %s formatted.", 1, "well");
     sprintf(expected, "This %d is %s formatted.", 1, "well");
     UC_TEST_ASSERT(0 == strcmp(actual, expected));
     UC_TEST_ASSERT(0 == strcmp(ptr->response, expected));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_transmit_sets_transmit(uc_test_group *p) {
-    uc_cmd_line c;
-    uc_cmd_line_set_transmit(&c, transmit_1);
+static ucTestErr ucCmdLine_set_transmit_sets_transmit(ucTestGroup *p) {
+    ucCmdLine c;
+    ucCmdLine_set_transmit(&c, transmit_1);
     UC_TEST_ASSERT(transmit_1 == c.transmit);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_transmit_returns_transmit(uc_test_group *p) {
-    uc_cmd_line c;
+static ucTestErr ucCmdLine_get_transmit_returns_transmit(ucTestGroup *p) {
+    ucCmdLine c;
     c.transmit = transmit_2;
-    UC_TEST_ASSERT(transmit_2 == uc_cmd_line_get_transmit(&c));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(transmit_2 == ucCmdLine_get_transmit(&c));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_respond_uses_transmit(uc_test_group *p) {
-    uc_cmd_line c;
+static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
+    ucCmdLine c;
     c.is_quiet = ucBool_false;
     c.transmit = transmit_1;
 
     transmit_1_response = NULL;
     c.transmit = transmit_1;
-    uc_cmd_line_respond(&c, "expected response");
+    ucCmdLine_respond(&c, "expected response");
     UC_TEST_ASSERT(0 == strcmp(transmit_1_response, "expected response"));
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_is_cancelled_returns_value(uc_test_group *p) {
-    uc_cmd_line c;
+static ucTestErr ucCmdLine_get_is_cancelled_returns_value(ucTestGroup *p) {
+    ucCmdLine c;
     c.is_cancelled = is_cancelled_1;
-    UC_TEST_ASSERT(is_cancelled_1 == uc_cmd_line_get_is_cancelled(&c));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(is_cancelled_1 == ucCmdLine_get_is_cancelled(&c));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_is_cancelled_sets_value(uc_test_group *p) {
-    uc_cmd_line c;
-    uc_cmd_line_set_is_cancelled(&c, is_cancelled_2);
+static ucTestErr ucCmdLine_set_is_cancelled_sets_value(ucTestGroup *p) {
+    ucCmdLine c;
+    ucCmdLine_set_is_cancelled(&c, is_cancelled_2);
     UC_TEST_ASSERT(is_cancelled_2 == c.is_cancelled);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_is_cancelled_calls_is_cancelled(uc_test_group *p) {
-    uc_cmd_line c;
+static ucTestErr ucCmdLine_is_cancelled_calls_is_cancelled(ucTestGroup *p) {
+    ucCmdLine c;
     c.is_cancelled = is_cancelled_1;
 
     is_cancelled_1_returned_value = ucBool_true;
-    UC_TEST_ASSERT(ucBool_true == uc_cmd_line_is_cancelled(&c));
+    UC_TEST_ASSERT(ucBool_true == ucCmdLine_is_cancelled(&c));
 
     is_cancelled_1_returned_value = ucBool_false;
-    UC_TEST_ASSERT(ucBool_false == uc_cmd_line_is_cancelled(&c));
+    UC_TEST_ASSERT(ucBool_false == ucCmdLine_is_cancelled(&c));
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_transmit_state_sets_value(uc_test_group *p) {
+static ucTestErr ucCmdLine_set_transmit_state_sets_value(ucTestGroup *p) {
     int state;
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     void *prev_value = ptr->transmit_state;
 
-    uc_cmd_line_set_transmit_state(ptr, &state);
+    ucCmdLine_set_transmit_state(ptr, &state);
     UC_TEST_ASSERT(&state == ptr->transmit_state);
 
     ptr->transmit_state = prev_value;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_transmit_state_gets_value(uc_test_group *p) {
+static ucTestErr ucCmdLine_get_transmit_state_gets_value(ucTestGroup *p) {
     char *state = "state";
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     void *prev_value = ptr->transmit_state;
 
     ptr->transmit_state = &state;
-    UC_TEST_ASSERT(&state == uc_cmd_line_get_transmit_state(ptr));
+    UC_TEST_ASSERT(&state == ucCmdLine_get_transmit_state(ptr));
 
     ptr->transmit_state = prev_value;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_transmit_uses_state(uc_test_group *p) {
+static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
     double state;
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
-    uc_cmd_line_transmit_func *prev_func = ptr->transmit;
+    ucCmdLine *ptr = ucCmdLine_get_instance();
+    ucCmdLine_transmit_func *prev_func = ptr->transmit;
     void *prev_state = ptr->transmit_state;
 
-    uc_cmd_line_set_transmit(ptr, transmit_1);
-    uc_cmd_line_set_transmit_state(ptr, &state);
+    ucCmdLine_set_transmit(ptr, transmit_1);
+    ucCmdLine_set_transmit_state(ptr, &state);
 
-    uc_cmd_line_respond(ptr, "resp");
+    ucCmdLine_respond(ptr, "resp");
 
     UC_TEST_ASSERT(&state == transmit_1_state);
 
     ptr->transmit = prev_func;
     ptr->transmit_state = prev_state;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_is_cancelled_state_sets_value(uc_test_group *p) {
+static ucTestErr ucCmdLine_set_is_cancelled_state_sets_value(ucTestGroup *p) {
     int state;
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     void *prev_value = ptr->is_cancelled_state;
 
-    uc_cmd_line_set_is_cancelled_state(ptr, &state);
+    ucCmdLine_set_is_cancelled_state(ptr, &state);
     UC_TEST_ASSERT(&state == ptr->is_cancelled_state);
 
     ptr->is_cancelled_state = prev_value;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_get_is_cancelled_state_returns_value(uc_test_group *p) {
+static ucTestErr ucCmdLine_get_is_cancelled_state_returns_value(ucTestGroup *p) {
     char *state = "st";
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     void *prev_value = ptr->is_cancelled_state;
 
     ptr->is_cancelled_state = &state;
-    UC_TEST_ASSERT(&state == uc_cmd_line_get_is_cancelled_state(ptr));
+    UC_TEST_ASSERT(&state == ucCmdLine_get_is_cancelled_state(ptr));
 
     ptr->is_cancelled_state = prev_value;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_is_cancelled_uses_state(uc_test_group *p) {
+static ucTestErr ucCmdLine_is_cancelled_uses_state(ucTestGroup *p) {
     double state;
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     void *prev_value = ptr->is_cancelled_state;
 
-    uc_cmd_line_set_is_cancelled(ptr, is_cancelled_1);
-    uc_cmd_line_set_is_cancelled_state(ptr, &state);
+    ucCmdLine_set_is_cancelled(ptr, is_cancelled_1);
+    ucCmdLine_set_is_cancelled_state(ptr, &state);
 
-    uc_cmd_line_is_cancelled(ptr);
+    ucCmdLine_is_cancelled(ptr);
 
     UC_TEST_ASSERT(&state == is_cancelled_1_state);
 
     ptr->is_cancelled_state = prev_value;
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_set_is_quiet_sets_value(uc_test_group *p) {
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
+static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
+    ucCmdLine *ptr = ucCmdLine_get_instance();
     
-    ucBool prev_val = uc_cmd_line_get_is_quiet(ptr);
+    ucBool prev_val = ucCmdLine_get_is_quiet(ptr);
     UC_TEST_ASSERT(ucBool_false == prev_val);
 
-    uc_cmd_line_set_is_quiet(ptr, ucBool_true);
-    UC_TEST_ASSERT(uc_cmd_line_get_is_quiet(ptr) == ucBool_true);
+    ucCmdLine_set_is_quiet(ptr, ucBool_true);
+    UC_TEST_ASSERT(ucCmdLine_get_is_quiet(ptr) == ucBool_true);
 
-    uc_cmd_line_set_is_quiet(ptr, prev_val);
-    UC_TEST_ASSERT(uc_cmd_line_get_is_quiet(ptr) == prev_val);
+    ucCmdLine_set_is_quiet(ptr, prev_val);
+    UC_TEST_ASSERT(ucCmdLine_get_is_quiet(ptr) == prev_val);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_respond_does_nothing_if_is_quiet(uc_test_group *p) {
-    uc_cmd_line *ptr = uc_cmd_line_get_instance();
-    ucBool pre_val = uc_cmd_line_get_is_quiet(ptr);
+static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
+    ucCmdLine *ptr = ucCmdLine_get_instance();
+    ucBool pre_val = ucCmdLine_get_is_quiet(ptr);
 
-    uc_cmd_line_set_is_quiet(ptr, ucBool_true);
-    uc_cmd_line_set_transmit(ptr, transmit_1);
+    ucCmdLine_set_is_quiet(ptr, ucBool_true);
+    ucCmdLine_set_transmit(ptr, transmit_1);
 
     transmit_1_response = NULL;
-    uc_cmd_line_respond(ptr, "expected response");
+    ucCmdLine_respond(ptr, "expected response");
     UC_TEST_ASSERT(NULL == transmit_1_response);
 
-    uc_cmd_line_set_is_quiet(ptr, pre_val);
-    return UC_TEST_ERR_NONE;
+    ucCmdLine_set_is_quiet(ptr, pre_val);
+    return ucTestErr_NONE;
 }
 
-uc_test_group *uc_cmd_line_tests_get_group(void) {
-    static uc_test_group group;
-    static uc_test_group_test_func *tests[] = {
-        uc_cmd_line_get_cmd_toks_returns_toks,
-        uc_cmd_line_get_cmd_toks_sets_null_tok_values,
-        uc_cmd_line_set_cmd_tok_sets_cmd_tok,
-        uc_cmd_line_get_cmd_tok_returns_cmd_tok,
-        uc_cmd_line_get_instance_is_not_null,
-        uc_cmd_line_format_response_sets_response_string,
-        uc_cmd_line_format_response_va_sets_response_string,
-        uc_cmd_line_set_transmit_sets_transmit,
-        uc_cmd_line_get_transmit_returns_transmit,
-        uc_cmd_line_respond_uses_transmit,
-        uc_cmd_line_get_is_cancelled_returns_value,
-        uc_cmd_line_set_is_cancelled_sets_value,
-        uc_cmd_line_is_cancelled_calls_is_cancelled,
-        uc_cmd_line_set_transmit_state_sets_value,
-        uc_cmd_line_get_transmit_state_gets_value,
-        uc_cmd_line_transmit_uses_state,
-        uc_cmd_line_set_is_cancelled_state_sets_value,
-        uc_cmd_line_get_is_cancelled_state_returns_value,
-        uc_cmd_line_is_cancelled_uses_state,
-        uc_cmd_line_set_is_quiet_sets_value,
-        uc_cmd_line_respond_does_nothing_if_is_quiet,
+ucTestGroup *ucCmdLine_tests_get_group(void) {
+    static ucTestGroup group;
+    static ucTestGroup_test_func *tests[] = {
+        ucCmdLine_get_cmd_toks_returns_toks,
+        ucCmdLine_get_cmd_toks_sets_null_tok_values,
+        ucCmdLine_set_cmd_tok_sets_cmd_tok,
+        ucCmdLine_get_cmd_tok_returns_cmd_tok,
+        ucCmdLine_get_instance_is_not_null,
+        ucCmdLine_format_response_sets_response_string,
+        ucCmdLine_format_response_va_sets_response_string,
+        ucCmdLine_set_transmit_sets_transmit,
+        ucCmdLine_get_transmit_returns_transmit,
+        ucCmdLine_respond_uses_transmit,
+        ucCmdLine_get_is_cancelled_returns_value,
+        ucCmdLine_set_is_cancelled_sets_value,
+        ucCmdLine_is_cancelled_calls_is_cancelled,
+        ucCmdLine_set_transmit_state_sets_value,
+        ucCmdLine_get_transmit_state_gets_value,
+        ucCmdLine_transmit_uses_state,
+        ucCmdLine_set_is_cancelled_state_sets_value,
+        ucCmdLine_get_is_cancelled_state_returns_value,
+        ucCmdLine_is_cancelled_uses_state,
+        ucCmdLine_set_is_quiet_sets_value,
+        ucCmdLine_respond_does_nothing_if_is_quiet,
         NULL
     };
 
-    return uc_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
 }

@@ -1,258 +1,258 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ucArgTok.h"
-#include "uc_cmd_parser_p.h"
-#include "uc_cmd_parser_tests.h"
-#include "uc_cmd_tok.h"
-#include "uc_switch_tok.h"
-#include "uc_test.h"
-#include "uc_tok.h"
+#include "ucCmdParser_p.h"
+#include "ucCmdParser_tests.h"
+#include "ucCmdTok.h"
+#include "ucSwitchTok.h"
+#include "ucTest.h"
+#include "ucTok.h"
 
-static uc_cmd_parser *get_cmd_parser(void) {
-    return uc_cmd_parser_get_instance();
+static ucCmdParser *get_cmd_parser(void) {
+    return ucCmdParser_get_instance();
 }
 
-static uc_cmd_tok *parse_cmd(char *cmd) {
-    return uc_cmd_parser_parse(get_cmd_parser(), cmd);
+static ucCmdTok *parse_cmd(char *cmd) {
+    return ucCmdParser_parse(get_cmd_parser(), cmd);
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_command_value(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_command_value(ucTestGroup *p) {
     char cmd[20] = "command_name";
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
     UC_TEST_ASSERT(NULL != t);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)t, cmd));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)t, cmd));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_short_argument(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_short_argument(ucTestGroup *p) {
     char cmd[24] = "command short_arg";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_arg(t), "short_arg"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "short_arg"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_long_argument(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_long_argument(ucTestGroup *p) {
     char cmd[31] = "command \"long argument\"";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_arg(t), "long argument"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_single_quotes(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_single_quotes(ucTestGroup *p) {
     char cmd[47] = "command 'long argument'";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_arg(t), "long argument"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_switch(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_switch(ucTestGroup *p) {
     char cmd[19] = "command -switch";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_switch(t), "-switch"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-switch"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_numeric_argument(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_numeric_argument(ucTestGroup *p) {
     char cmd[38] = "command -12.34";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(NULL == uc_cmd_tok_get_switch(t));
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_arg(t), "-12.34"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(NULL == ucCmdTok_get_switch(t));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "-12.34"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parses_non_numeric_switch(uc_test_group *p) {
+static ucTestErr ucCmdParser_parses_non_numeric_switch(ucTestGroup *p) {
     char cmd[23] = "command -32.4.0";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(NULL == uc_cmd_tok_get_arg(t));
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)uc_cmd_tok_get_switch(t), "-32.4.0"));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(NULL == ucCmdTok_get_arg(t));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-32.4.0"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_arguments_parsed_in_correct_order(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_arguments_parsed_in_correct_order(ucTestGroup *p) {
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[81] = "command arg1 arg2 arg3 arg4 arg5 arg6 -s1 arg arg1 -s2 arg1 arg2 arg3";
     ucArgTok *arg;
 
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
     i = 1;
-    arg = uc_cmd_tok_get_arg(t); 
+    arg = ucCmdTok_get_arg(t); 
     while (arg) {
         sprintf(buf, "arg%d", i);
-        UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, buf));
+        UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, buf));
         arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
     UC_TEST_ASSERT(6 == i);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_switches_parsed_in_correct_order(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_switches_parsed_in_correct_order(ucTestGroup *p) {
     int i = 0;
     char buf[10];
     char cmd[76] = "command arg1 arg2 -sw1 arg1 arg2 -sw2 -sw3 arg1 arg2 -sw4";
-    uc_switch_tok *swtch;
+    ucSwitchTok *swtch;
     
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
-    swtch = uc_cmd_tok_get_switch(t);
+    swtch = ucCmdTok_get_switch(t);
     i = 1;
     while (swtch) {
         sprintf(buf, "-sw%d", i);
-        UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)swtch, buf));
-        swtch = uc_switch_tok_get_next(swtch);
+        UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)swtch, buf));
+        swtch = ucSwitchTok_get_next(swtch);
         if (swtch) i++;
     }
     UC_TEST_ASSERT(4 == i);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_switch_arguments_in_correct_order(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_switch_arguments_in_correct_order(ucTestGroup *p) {
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[94] = "command arg1 arg2 -sw1 arg1 arg2 arg3 arg4 arg5 -sw2 arg1 arg2";
     ucArgTok *arg;
-    uc_switch_tok *swtch;
+    ucSwitchTok *swtch;
 
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
-    swtch = uc_cmd_tok_get_switch(t);
-    arg = uc_switch_tok_get_arg(swtch);
+    swtch = ucCmdTok_get_switch(t);
+    arg = ucSwitchTok_get_arg(swtch);
 
     i = 1;
     while (arg) {
         sprintf(buf, "arg%d", i);
-        UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, buf));
+        UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, buf));
         arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
     UC_TEST_ASSERT(i == 5);
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_trailing_quotes(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_trailing_quotes(ucTestGroup *p) {
     char cmd[38] = "cmd-name -s 'quoted \"arg\"'";
-    uc_cmd_tok *t = parse_cmd(cmd);
-    UC_TEST_ASSERT(uc_tok_equals((uc_tok*)t, "cmd-name"));
-    UC_TEST_ASSERT(uc_tok_equals((uc_tok*)uc_cmd_tok_get_switch(t), "-s"));
-    UC_TEST_ASSERT(uc_tok_equals((uc_tok*)uc_switch_tok_get_arg(uc_cmd_tok_get_switch(t)), "quoted \"arg\""));
-    return UC_TEST_ERR_NONE;
+    ucCmdTok *t = parse_cmd(cmd);
+    UC_TEST_ASSERT(ucTok_equals((ucTok*)t, "cmd-name"));
+    UC_TEST_ASSERT(ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-s"));
+    UC_TEST_ASSERT(ucTok_equals((ucTok*)ucSwitchTok_get_arg(ucCmdTok_get_switch(t)), "quoted \"arg\""));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_parses_command(ucTestGroup *p) {
     int i = 0;
     char cmd[139] = "somecmd 'this is a long argument' shortarg -73.452 -s1 sarg1 sarg2 sarg3 -s2 sarg3 'long switch argument' -12.43";
     ucArgTok *arg = NULL;
-    uc_switch_tok *swtch = NULL;
+    ucSwitchTok *swtch = NULL;
     
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
     UC_TEST_ASSERT(NULL != t);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)t, "somecmd"));
-    UC_TEST_ASSERT(3 == ucArgTok_count(uc_cmd_tok_get_arg(t)));
-    UC_TEST_ASSERT(2 == uc_switch_tok_count(uc_cmd_tok_get_switch(t)));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)t, "somecmd"));
+    UC_TEST_ASSERT(3 == ucArgTok_count(ucCmdTok_get_arg(t)));
+    UC_TEST_ASSERT(2 == ucSwitchTok_count(ucCmdTok_get_switch(t)));
 
-    arg = uc_cmd_tok_get_arg(t);
+    arg = ucCmdTok_get_arg(t);
     UC_TEST_ASSERT(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "this is a long argument"));
-        if (i == 1) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "shortarg"));
-        if (i == 2) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "-73.452"));
+        if (i == 0) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "this is a long argument"));
+        if (i == 1) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "shortarg"));
+        if (i == 2) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "-73.452"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
     }
 
-    swtch = uc_cmd_tok_get_switch(t);
+    swtch = ucCmdTok_get_switch(t);
     UC_TEST_ASSERT(swtch != NULL);
     i = 0; 
     while(swtch) {
-        if (i == 0) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)swtch, "-s1"));
-        if (i == 1) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)swtch, "-s2"));
+        if (i == 0) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)swtch, "-s1"));
+        if (i == 1) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)swtch, "-s2"));
         if (i == 2) UC_TEST_FAIL();
         i++; 
-        swtch = uc_switch_tok_get_next(swtch);
+        swtch = ucSwitchTok_get_next(swtch);
     }
 
-    swtch = uc_cmd_tok_get_switch(t);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)swtch, "-s1"));
+    swtch = ucCmdTok_get_switch(t);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)swtch, "-s1"));
     arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     UC_TEST_ASSERT(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "sarg1"));
-        if (i == 1) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "sarg2"));
-        if (i == 2) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "sarg3"));
+        if (i == 0) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "sarg1"));
+        if (i == 1) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "sarg2"));
+        if (i == 2) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "sarg3"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
     }
 
-    swtch = uc_switch_tok_get_next(swtch);
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)swtch, "-s2"));
+    swtch = ucSwitchTok_get_next(swtch);
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)swtch, "-s2"));
     arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     UC_TEST_ASSERT(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "sarg3"));
-        if (i == 1) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "long switch argument"));
-        if (i == 2) UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "-12.43"));
+        if (i == 0) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "sarg3"));
+        if (i == 1) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "long switch argument"));
+        if (i == 2) UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "-12.43"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
     }
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_allows_empty_double_quotes(ucTestGroup *p) {
     char cmd[50] = "cmd -s \"\"";
     ucArgTok *arg = NULL;
-    uc_switch_tok *swtch = NULL;
+    ucSwitchTok *swtch = NULL;
     
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
-    swtch = uc_cmd_tok_get_switch(t);
-    arg = uc_switch_tok_get_arg(swtch);
+    swtch = ucCmdTok_get_switch(t);
+    arg = ucSwitchTok_get_arg(swtch);
 
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "\"\""));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "\"\""));
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_parser_parse_allows_empty_single_quotes(uc_test_group *p) {
+static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
     char cmd[50] = "c ''";
     ucArgTok *arg = NULL;
-    uc_cmd_tok *t = parse_cmd(cmd);
+    ucCmdTok *t = parse_cmd(cmd);
 
-    arg = uc_cmd_tok_get_arg(t);
+    arg = ucCmdTok_get_arg(t);
 
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)arg, "''"));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)arg, "''"));
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-uc_test_group *uc_cmd_parser_tests_get_group(void) {
-    static uc_test_group group;
-    static uc_test_group_test_func *tests[] = {
-        uc_cmd_parser_parse_parses_command_value,
-        uc_cmd_parser_parse_parses_short_argument,
-        uc_cmd_parser_parse_parses_long_argument,
-        uc_cmd_parser_parse_parses_single_quotes,
-        uc_cmd_parser_parse_parses_switch,
-        uc_cmd_parser_parse_parses_numeric_argument,
-        uc_cmd_parser_parses_non_numeric_switch,
-        uc_cmd_parser_parse_arguments_parsed_in_correct_order,
-        uc_cmd_parser_parse_switches_parsed_in_correct_order,
-        uc_cmd_parser_parse_parses_switch_arguments_in_correct_order,
-        uc_cmd_parser_parse_parses_command,
-        uc_cmd_parser_parse_parses_trailing_quotes,
-        uc_cmd_parser_parse_allows_empty_double_quotes,
-        uc_cmd_parser_parse_allows_empty_single_quotes,
+ucTestGroup *ucCmdParser_tests_get_group(void) {
+    static ucTestGroup group;
+    static ucTestGroup_test_func *tests[] = {
+        ucCmdParser_parse_parses_command_value,
+        ucCmdParser_parse_parses_short_argument,
+        ucCmdParser_parse_parses_long_argument,
+        ucCmdParser_parse_parses_single_quotes,
+        ucCmdParser_parse_parses_switch,
+        ucCmdParser_parse_parses_numeric_argument,
+        ucCmdParser_parses_non_numeric_switch,
+        ucCmdParser_parse_arguments_parsed_in_correct_order,
+        ucCmdParser_parse_switches_parsed_in_correct_order,
+        ucCmdParser_parse_parses_switch_arguments_in_correct_order,
+        ucCmdParser_parse_parses_command,
+        ucCmdParser_parse_parses_trailing_quotes,
+        ucCmdParser_parse_allows_empty_double_quotes,
+        ucCmdParser_parse_allows_empty_single_quotes,
         NULL
     };
 
-    return uc_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
 }

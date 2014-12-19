@@ -1,8 +1,8 @@
 #ifndef UCARGOPT_TESTS_H
 #define UCARGOPT_TESTS_H
 
-#include "uc_test_group.h"
+#include "ucTestGroup.h"
 
-UC_EXPORTED uc_test_group *ucArgOpt_tests_get_group(void);
+UC_EXPORTED ucTestGroup *ucArgOpt_tests_get_group(void);
 
 #endif

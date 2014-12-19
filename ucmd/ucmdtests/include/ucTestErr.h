@@ -5,12 +5,12 @@
  * Summary:
  *   Defines the type returned by test functions.
  */
-typedef int uc_test_err;
+typedef int ucTestErr;
 
 /*
  * Summary:
  *   Defines the value that indicates no test error.
  */
-#define UC_TEST_ERR_NONE   0
+#define ucTestErr_NONE   0
 
 #endif

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "ucArgOpt_p.h"
-#include "uc_memory_manager_p.h"
+#include "ucMemoryManager_p.h"
 
 static const char *numeric_arg_name = "<number>";
 
@@ -8,7 +8,7 @@ UC_MEMORY_MANAGER_INIT(ucArgOpt, UC_ARG_OPT_COUNT);
 
 static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_numeric, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
     return ucArgOpt_init(
-        uc_memory_manager_create(),
+        ucMemoryManager_create(),
         name,
         desc,
         is_required,
@@ -21,10 +21,10 @@ static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, 
     );
 }
 
-static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
 
     /* check if this argument is required */
-    if (uc_opt_is_required((uc_opt*)p)) {
+    if (ucOpt_is_required((ucOpt*)p)) {
 
         /* the argument is required, so check that the argument
            token exists */
@@ -34,8 +34,8 @@ static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *c
                so there's an error here. Return the appropriate error
                message */
             return NULL == switch_name
-                ? uc_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required.", prefix, uc_opt_get_name((uc_opt*)p))
-                : uc_cmd_line_format_response(cmd, "%sthe argument \"%s\" is required for switch \"%s\".", prefix, uc_opt_get_name((uc_opt*)p), switch_name);
+                ? ucCmdLine_format_response(cmd, "%sthe argument \"%s\" is required.", prefix, ucOpt_get_name((ucOpt*)p))
+                : ucCmdLine_format_response(cmd, "%sthe argument \"%s\" is required for switch \"%s\".", prefix, ucOpt_get_name((ucOpt*)p), switch_name);
         }
     }
 
@@ -43,7 +43,7 @@ static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *c
     return NULL;
 }
 
-static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
     double arg_num;
 
     /* check if this argument option must be numeric */
@@ -53,19 +53,19 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cm
         if (NULL != arg_tok) {
             
             /* check if the argument token is not numeric */
-            if (!uc_tok_is_numeric((uc_tok*)arg_tok)) {
+            if (!ucTok_is_numeric((ucTok*)arg_tok)) {
 
                 /* the argument option requires a number, but the
                    provided token is not numeric, so return the
                    appropriate error message */
                 return NULL == switch_name
-                    ? uc_cmd_line_format_response(cmd, "%sthe argument \"%s\" is not numeric.", prefix, uc_tok_get_value(arg_tok))
-                    : uc_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not numeric.", prefix, switch_name, uc_tok_get_value(arg_tok));
+                    ? ucCmdLine_format_response(cmd, "%sthe argument \"%s\" is not numeric.", prefix, ucTok_get_value(arg_tok))
+                    : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not numeric.", prefix, switch_name, ucTok_get_value(arg_tok));
             }
 
             /* the profided argument token is numeric,
                so convert it to a number */
-            arg_num = atof(uc_tok_get_value((uc_tok*)arg_tok));
+            arg_num = atof(ucTok_get_value((ucTok*)arg_tok));
 
             /* check that that number is above the lower bound */
             if (ucArgOpt_get_numeric_min(p) > arg_num) {
@@ -73,8 +73,8 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cm
                 /* the number is below the lower bound, so return the
                    appropriate error message */
                 return NULL == switch_name
-                    ? uc_cmd_line_format_response(cmd, "%sthe argument \"%f\" is above the minimum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_min(p))
-                    : uc_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is above the minimum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_min(p));
+                    ? ucCmdLine_format_response(cmd, "%sthe argument \"%f\" is above the minimum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_min(p))
+                    : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%f\" is above the minimum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_min(p));
             }
 
             /* check that the number is below the upper bound */
@@ -83,8 +83,8 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cm
                 /* the number is above the upper bound, so return the
                    appropriate error message */
                 return NULL == switch_name
-                    ? uc_cmd_line_format_response(cmd, "%sthe argument \"%f\" is below the maximum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_max(p))
-                    : uc_cmd_line_format_response(cmd, "%sthe \"%s\" argument \"%f\" is below the maximum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_max(p));
+                    ? ucCmdLine_format_response(cmd, "%sthe argument \"%f\" is below the maximum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_max(p))
+                    : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%f\" is below the maximum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_max(p));
             }
         }
     }
@@ -93,7 +93,7 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cm
     return NULL;
 }
 
-static const char *format_arg_tok_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_arg_tok_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
     const char *err;
 
     err = format_is_required_validation_err(p, cmd, arg_tok, switch_name, prefix);
@@ -138,7 +138,7 @@ ucArgOpt *ucArgOpt_get_next(ucArgOpt* p) {
 ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_numeric, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
 
     if (NULL == p) return NULL;
-    if (NULL == uc_opt_init((uc_opt*)p, name, desc, is_required)) return NULL;
+    if (NULL == ucOpt_init((ucOpt*)p, name, desc, is_required)) return NULL;
 
     p->min_tok_count = min_tok_count;
     p->max_tok_count = max_tok_count;
@@ -174,12 +174,12 @@ ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, UC_ARG_OPT_NUMERIC_
     return create(numeric_arg_name, desc, ucBool_true, 1, 1, ucBool_true, numeric_min, numeric_max, next);
 }
 
-const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name) {
+const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int tok_count, max_tok_count;
 
     /* if a switch name was given, then this argument belongs
        to a switch. Otherwise, it's a command argument. */
-    const char *prefix = switch_name == NULL ? uc_opt_validation_err_invalid_argument_prefix : uc_opt_validation_err_invalid_switch_argument_prefix;
+    const char *prefix = switch_name == NULL ? ucOpt_validation_err_invalid_argument_prefix : ucOpt_validation_err_invalid_switch_argument_prefix;
 
     /* validate the current argument token */
     const char *err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
@@ -201,7 +201,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgT
 
                 /* increment the number of tokens and make sure it is valid */
                 tok_count++;
-                if (tok_count > max_tok_count) return uc_cmd_line_format_response(cmd, "%stoo many arguments for %s.", prefix, uc_opt_get_name((uc_opt*)p));
+                if (tok_count > max_tok_count) return ucCmdLine_format_response(cmd, "%stoo many arguments for %s.", prefix, ucOpt_get_name((ucOpt*)p));
 
                 /* validate this token */
                 err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name, prefix);
@@ -210,7 +210,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgT
         }
 
         /* make sure we have enough tokens */
-        if (tok_count < ucArgOpt_get_min_tok_count(p)) return uc_cmd_line_format_response(cmd, "%snot enough arguments for %s.", prefix, uc_opt_get_name((uc_opt*)p));
+        if (tok_count < ucArgOpt_get_min_tok_count(p)) return ucCmdLine_format_response(cmd, "%snot enough arguments for %s.", prefix, ucOpt_get_name((ucOpt*)p));
     }
 
     /* if we got here, then no error was found */
@@ -218,7 +218,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgT
 }
 
 void ucArgOpt_destroy(ucArgOpt *p) {
-    uc_memory_manager_destroy(p);
+    ucMemoryManager_destroy(p);
 }
 
 void ucArgOpt_destroy_chain(ucArgOpt *p) {

@@ -3,69 +3,69 @@
 #include <string.h>
 #include "ucArgOpt.h"
 #include "ucArgTok.h"
-#include "uc_cmd_line.h"
-#include "uc_cmd_line_app_p.h"
-#include "uc_cmd_line_opt.h"
-#include "uc_cmd_parser_p.h"
-#include "uc_switch_opt.h"
+#include "ucCmdLine.h"
+#include "ucCmdLineApp_p.h"
+#include "ucCmdLineOpt.h"
+#include "ucCmdParser_p.h"
+#include "ucSwitchOpt.h"
 
 typedef struct help_state {
-    uc_cmd_line_app *app;
-    uc_cmd_line_opt *cmd_opt;
+    ucCmdLineApp *app;
+    ucCmdLineOpt *cmd_opt;
 } help_state;
 
 typedef struct quit_state {
-    uc_cmd_line_app *app;
+    ucCmdLineApp *app;
 } quit_state;
 
-static const char *quit(uc_cmd_line *cmd, void *state) {
+static const char *quit(ucCmdLine *cmd, void *state) {
     quit_state *s = (quit_state*)state;
-    return uc_cmd_line_app_get_escape_response(s->app);
+    return ucCmdLineApp_get_escape_response(s->app);
 }
 
-static const char *help(uc_cmd_line *cmd, void *state) {
+static const char *help(ucCmdLine *cmd, void *state) {
     help_state *s;
     ucArgTok *arg_tok;
-    uc_cmd_line_opt *cmd_opt;
+    ucCmdLineOpt *cmd_opt;
 
     s = (help_state*)state;
     cmd_opt = s->cmd_opt;
 
-    arg_tok = uc_cmd_tok_get_arg(uc_cmd_line_get_cmd_tok(cmd));
+    arg_tok = ucCmdTok_get_arg(ucCmdLine_get_cmd_tok(cmd));
     if (NULL != arg_tok) {
-        cmd_opt = uc_cmd_line_opt_find_by_name(cmd_opt, uc_tok_get_value(arg_tok));
+        cmd_opt = ucCmdLineOpt_find_by_name(cmd_opt, ucTok_get_value(arg_tok));
         if (NULL != cmd_opt) {
-            uc_cmd_line_opt_send_help(cmd_opt, cmd);
+            ucCmdLineOpt_send_help(cmd_opt, cmd);
             return 0;
         }
-        uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Invalid command: no option found for \"%s\".", uc_tok_get_value(arg_tok)));
+        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\".", ucTok_get_value(arg_tok)));
         return 0;
     }
 
-    uc_cmd_line_respond(cmd, "Commands");
+    ucCmdLine_respond(cmd, "Commands");
     while (NULL != cmd_opt) {
-        uc_opt_send_help((uc_opt*)cmd_opt, cmd, "\t");
-        cmd_opt = uc_cmd_line_opt_get_next(cmd_opt);
+        ucOpt_send_help((ucOpt*)cmd_opt, cmd, "\t");
+        cmd_opt = ucCmdLineOpt_get_next(cmd_opt);
     }
-    uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Type \"%s\" followed by a command name for additional help with that command.", uc_cmd_line_app_get_help_command(s->app)));
+    ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Type \"%s\" followed by a command name for additional help with that command.", ucCmdLineApp_get_help_command(s->app)));
 
     return 0;
 }
 
-static uc_err run(uc_cmd_line_app *p, uc_cmd_line_opt *cmd_opt) {
+static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     char *command;
     const char *response;
-    uc_cmd_tok *cmd_tok;
-    uc_cmd_line *cmd;
-    uc_cmd_line_opt *quit_opt, *main_opt;
+    ucCmdTok *cmd_tok;
+    ucCmdLine *cmd;
+    ucCmdLineOpt *quit_opt, *main_opt;
     help_state help_state_s;
     quit_state quit_state_s;
 
     if (NULL == p) return -1;
 
     /* create options for help and quit */
-    quit_opt = uc_cmd_line_opt_create(quit, &quit_state_s, uc_cmd_line_app_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    main_opt = uc_cmd_line_opt_create(help, &help_state_s, uc_cmd_line_app_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    quit_opt = ucCmdLineOpt_create(quit, &quit_state_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
+    main_opt = ucCmdLineOpt_create(help, &help_state_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* set the state used for the help and quit commands */
     quit_state_s.app = p;
@@ -73,122 +73,122 @@ static uc_err run(uc_cmd_line_app *p, uc_cmd_line_opt *cmd_opt) {
     help_state_s.cmd_opt = main_opt;
 
     /* get this app's command object */
-    cmd = uc_cmd_line_app_get_cmd(p);
+    cmd = ucCmdLineApp_get_cmd(p);
 
     /* show the banner */
-    uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Type %s to quit.", uc_cmd_line_app_get_quit_command(p)));
-    uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Type %s for help.", uc_cmd_line_app_get_help_command(p)));
+    ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Type %s to quit.", ucCmdLineApp_get_quit_command(p)));
+    ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Type %s for help.", ucCmdLineApp_get_help_command(p)));
 
     /* loop until we quit */
     for (;;) {
                 
         /* read the command */
-        command = uc_cmd_line_app_receive(p);
+        command = ucCmdLineApp_receive(p);
 
         /* parse the input into a command token */
-        cmd_tok = uc_cmd_parser_parse(uc_cmd_line_app_get_cmd_parser(p), command);
+        cmd_tok = ucCmdParser_parse(ucCmdLineApp_get_cmd_parser(p), command);
 
         /* set the command's parsed command token */
-        uc_cmd_line_set_cmd_tok(cmd, cmd_tok);
+        ucCmdLine_set_cmd_tok(cmd, cmd_tok);
 
         /* process the command */
-        response = uc_cmd_line_opt_process(main_opt, cmd);
+        response = ucCmdLineOpt_process(main_opt, cmd);
 
         /* check if we got a response */
         if (NULL != response) {
 
             /* check if the response is the escape response */
-            if (0 == strcmp(response, uc_cmd_line_app_get_escape_response(p))) {
+            if (0 == strcmp(response, ucCmdLineApp_get_escape_response(p))) {
 
                 /* we've been signaled to quit the app */
                 break;
             }
 
             /* send the response */
-            uc_cmd_line_respond(cmd, response);
+            ucCmdLine_respond(cmd, response);
         }
     }
 
     /* clear the options we created */
-    uc_cmd_line_opt_destroy(quit_opt);
-    uc_cmd_line_opt_destroy(main_opt);
+    ucCmdLineOpt_destroy(quit_opt);
+    ucCmdLineOpt_destroy(main_opt);
 
     /* if we got here, then the app was quit */
-    return UC_ERR_NONE;
+    return ucErr_NONE;
 }
 
-void uc_cmd_line_app_set_escape_response(uc_cmd_line_app *p, const char *value) {
+void ucCmdLineApp_set_escape_response(ucCmdLineApp *p, const char *value) {
     if (NULL == p) return;
     p->escape_response = value;
 }
 
-const char *uc_cmd_line_app_get_escape_response(uc_cmd_line_app *p) {
+const char *ucCmdLineApp_get_escape_response(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->escape_response;
 }
 
-void uc_cmd_line_app_set_receive(uc_cmd_line_app *p, uc_cmd_line_app_receive_func *value) {
+void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_receive_func *value) {
     if (NULL == p) return;
     p->receive = value;
 }
 
-uc_cmd_line_app_receive_func *uc_cmd_line_app_get_receive(uc_cmd_line_app *p) {
+ucCmdLineApp_receive_func *ucCmdLineApp_get_receive(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->receive;
 }
 
-void *uc_cmd_line_app_get_receive_state(uc_cmd_line_app *p) {
+void *ucCmdLineApp_get_receive_state(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->receive_state;
 }
 
-void uc_cmd_line_app_set_receive_state(uc_cmd_line_app *p, void *value) {
+void ucCmdLineApp_set_receive_state(ucCmdLineApp *p, void *value) {
     if (NULL == p) return;
     p->receive_state = value;
 }
 
-void uc_cmd_line_app_set_quit_command(uc_cmd_line_app *p, const char *value) {
+void ucCmdLineApp_set_quit_command(ucCmdLineApp *p, const char *value) {
     if (NULL == p) return;
     p->quit_command = value;
 }
 
-const char *uc_cmd_line_app_get_quit_command(uc_cmd_line_app *p) {
+const char *ucCmdLineApp_get_quit_command(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->quit_command;
 }
 
-void uc_cmd_line_app_set_help_command(uc_cmd_line_app *p, const char *value) {
+void ucCmdLineApp_set_help_command(ucCmdLineApp *p, const char *value) {
     if (NULL == p) return;
     p->help_command = value;
 }
 
-const char *uc_cmd_line_app_get_help_command(uc_cmd_line_app *p) {
+const char *ucCmdLineApp_get_help_command(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->help_command;
 }
 
-void uc_cmd_line_app_set_cmd(uc_cmd_line_app *p, uc_cmd_line *value) {
+void ucCmdLineApp_set_cmd(ucCmdLineApp *p, ucCmdLine *value) {
     if (NULL == p) return;
     p->cmd = value;
 }
 
-uc_cmd_line *uc_cmd_line_app_get_cmd(uc_cmd_line_app *p) {
+ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->cmd;
 }
 
-uc_cmd_parser *uc_cmd_line_app_get_cmd_parser(uc_cmd_line_app *p) {
+ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     return p->cmd_parser;
 }
 
-uc_cmd_line_app *uc_cmd_line_app_get_instance(void) {
-    static uc_cmd_line_app instance = { 0 };
-    static uc_cmd_line_app *p = NULL;
+ucCmdLineApp *ucCmdLineApp_get_instance(void) {
+    static ucCmdLineApp instance = { 0 };
+    static ucCmdLineApp *p = NULL;
     if (NULL == p) {
         p = &instance;
-        p->cmd = uc_cmd_line_get_instance();
-        p->cmd_parser = uc_cmd_parser_get_instance();
+        p->cmd = ucCmdLine_get_instance();
+        p->cmd_parser = ucCmdParser_get_instance();
         p->run = run;
         p->receive = NULL;
         p->receive_state = NULL;
@@ -199,13 +199,13 @@ uc_cmd_line_app *uc_cmd_line_app_get_instance(void) {
     return p;
 }
 
-uc_err uc_cmd_line_app_run(uc_cmd_line_app *p, uc_cmd_line_opt *cmd_opt) {
+ucErr ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     if (NULL == p) return -1;
     if (NULL == p->run) return -2;
     return p->run(p, cmd_opt);
 }
 
-char *uc_cmd_line_app_receive(uc_cmd_line_app *p) {
+char *ucCmdLineApp_receive(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     if (NULL == p->receive) return NULL;
     return p->receive(p->cmd_buf, sizeof(p->cmd_buf), p->receive_state);

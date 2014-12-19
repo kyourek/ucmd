@@ -1,7 +1,7 @@
 #include <string.h>
-#include "uc_cmd_parser_p.h"
-#include "uc_cmd_tok.h"
-#include "uc_tok_p.h"
+#include "ucCmdParser_p.h"
+#include "ucCmdTok.h"
+#include "ucTok_p.h"
 
 static ucBool is_char_white_space(char c) {
     /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */
@@ -22,7 +22,7 @@ static void remove_cmd_char(char *cmd, int index) {
     }
 }
 
-static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
+static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
     int i, j, len;
     char quote, current_quote;
 
@@ -87,7 +87,7 @@ static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
             if (is_char_white_space(cmd[i])) {
 
                 /* separate this token */
-                cmd[i] = uc_tok_separator;
+                cmd[i] = ucTok_separator;
 
                 /* remove any remaining white space */
                 j = i + 1;
@@ -102,18 +102,18 @@ static uc_cmd_tok *parse(uc_cmd_parser *p, char *cmd) {
     }
 
     /* we're done parsing */
-    return (uc_cmd_tok*)cmd;
+    return (ucCmdTok*)cmd;
 }
 
-uc_cmd_tok *uc_cmd_parser_parse(uc_cmd_parser *p, char *cmd) {
+ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd) {
     if (NULL == p) return NULL;
     if (NULL == p->parse) return NULL;
     return p->parse(p, cmd);
 }
 
-uc_cmd_parser *uc_cmd_parser_get_instance(void) {
-    static uc_cmd_parser instance;
-    static uc_cmd_parser *p = NULL;
+ucCmdParser *ucCmdParser_get_instance(void) {
+    static ucCmdParser instance;
+    static ucCmdParser *p = NULL;
     if (NULL == p) {
         p = &instance;
         p->parse = parse;

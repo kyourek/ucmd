@@ -4,20 +4,20 @@
 #include "ucArgTokOwner_tests.h"
 #include "ucArgTok_tests.h"
 #include "ucBool_tests.h"
-#include "uc_cmd_parser_tests.h"
-#include "uc_cmd_tok_tests.h"
-#include "uc_opt_tests.h"
-#include "uc_switch_opt_tests.h"
-#include "uc_switch_tok_tests.h"
-#include "uc_test.h"
-#include "uc_tok_tests.h"
-#include "uc_cmd_line_app_tests.h"
-#include "uc_cmd_line_opt_tests.h"
-#include "uc_cmd_line_toks_tests.h"
-#include "uc_cmd_line_tests.h"
+#include "ucCmdParser_tests.h"
+#include "ucCmdTok_tests.h"
+#include "ucOpt_tests.h"
+#include "ucSwitchOpt_tests.h"
+#include "ucSwitchTok_tests.h"
+#include "ucTest.h"
+#include "ucTok_tests.h"
+#include "ucCmdLineApp_tests.h"
+#include "ucCmdLineOpt_tests.h"
+#include "ucCmdLineToks_tests.h"
+#include "ucCmdLine_tests.h"
 
-static uc_test_group **uc_tests_get_groups_va(uc_test_group *group, ...) {
-    static uc_test_group *groups[20];
+static ucTestGroup **ucTests_get_groups_va(ucTestGroup *group, ...) {
+    static ucTestGroup *groups[20];
     int i, len;
     va_list arg_list;
 
@@ -25,11 +25,11 @@ static uc_test_group **uc_tests_get_groups_va(uc_test_group *group, ...) {
     va_start(arg_list, group);
 
     len = sizeof(groups) / sizeof(groups[0]);
-    group = va_arg(arg_list, uc_test_group*);
+    group = va_arg(arg_list, ucTestGroup*);
     for (i = 1; ((len - 1) > i); i++) {
         if (NULL == group) break;
         groups[i] = group;
-        group = va_arg(arg_list, uc_test_group*);
+        group = va_arg(arg_list, ucTestGroup*);
     }
 
     groups[i] = NULL;
@@ -39,27 +39,27 @@ static uc_test_group **uc_tests_get_groups_va(uc_test_group *group, ...) {
     return groups;
 }
 
-static uc_test_group **uc_tests_get_groups(void) {
-    return uc_tests_get_groups_va(
+static ucTestGroup **ucTests_get_groups(void) {
+    return ucTests_get_groups_va(
         ucArgOpt_tests_get_group(),
         ucArgTokOwner_tests_get_group(),
         ucArgTok_tests_get_group(),
         ucBool_tests_get_group(),
-        uc_cmd_parser_tests_get_group(),
-        uc_cmd_tok_tests_get_group(),
-        uc_opt_tests_get_group(),
-        uc_switch_opt_tests_get_group(),
-        uc_switch_tok_tests_get_group(),
-        uc_tok_tests_get_group(),
-        uc_cmd_line_app_tests_get_group(),
-        uc_cmd_line_opt_tests_get_group(),
-        uc_cmd_line_tests_get_group(),
-        uc_cmd_line_toks_tests_get_group(),
+        ucCmdParser_tests_get_group(),
+        ucCmdTok_tests_get_group(),
+        ucOpt_tests_get_group(),
+        ucSwitchOpt_tests_get_group(),
+        ucSwitchTok_tests_get_group(),
+        ucTok_tests_get_group(),
+        ucCmdLineApp_tests_get_group(),
+        ucCmdLineOpt_tests_get_group(),
+        ucCmdLine_tests_get_group(),
+        ucCmdLineToks_tests_get_group(),
         NULL
     );
 }
 
-uc_test *uc_tests_get_test(void) {
-    static uc_test test;
-    return uc_test_init(&test, "ucmd tests", uc_tests_get_groups());
+ucTest *ucTests_get_test(void) {
+    static ucTest test;
+    return ucTest_init(&test, "ucmd tests", ucTests_get_groups());
 }

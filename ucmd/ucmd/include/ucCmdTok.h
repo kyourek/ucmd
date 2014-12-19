@@ -1,7 +1,7 @@
 #ifndef UC_CMD_TOK_H
 #define UC_CMD_TOK_H
 
-#include "uc_switch_tok.h"
+#include "ucSwitchTok.h"
 
 /*
  * Summary:
@@ -12,7 +12,7 @@
  *   of the base type can be used with an instance
  *   of this type.
  */
-typedef const char uc_cmd_tok;
+typedef const char ucCmdTok;
 
 /*
  * Summary:
@@ -24,7 +24,7 @@ typedef const char uc_cmd_tok;
  *   A pointer to the first argument token, or NULL if no arguments
  *   exist for the command.
  */
-UC_EXPORTED ucArgTok *uc_cmd_tok_get_arg(uc_cmd_tok *p);
+UC_EXPORTED ucArgTok *ucCmdTok_get_arg(ucCmdTok *p);
 
 /*
  * Summary:
@@ -35,6 +35,6 @@ UC_EXPORTED ucArgTok *uc_cmd_tok_get_arg(uc_cmd_tok *p);
  *   A pointer to the first switch token of the command, or NULL
  *   if no switches exist.
  */
-UC_EXPORTED uc_switch_tok *uc_cmd_tok_get_switch(uc_cmd_tok *p);
+UC_EXPORTED ucSwitchTok *ucCmdTok_get_switch(ucCmdTok *p);
 
 #endif

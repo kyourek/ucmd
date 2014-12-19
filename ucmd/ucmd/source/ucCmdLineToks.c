@@ -1,17 +1,17 @@
 #include <stdlib.h>
-#include "uc_cmd_line_toks.h"
+#include "ucCmdLineToks.h"
 
-uc_cmd_tok *uc_cmd_line_toks_get_cmd_tok(uc_cmd_line_toks *p) {
+ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p) {
     if (NULL == p) return NULL;
     return p->cmd_tok;
 }
 
-ucArgTok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p) {
+ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks *p) {
     if (NULL == p) return NULL;
     return p->arg_tok;
 }
 
-uc_switch_tok *uc_cmd_line_toks_get_switch_tok(uc_cmd_line_toks *p) {
+ucSwitchTok *ucCmdLineToks_get_switch_tok(ucCmdLineToks *p) {
     if (NULL == p) return NULL;
     return p->switch_tok;
 }

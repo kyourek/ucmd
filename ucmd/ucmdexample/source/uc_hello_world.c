@@ -66,49 +66,49 @@ static void copy_name(const char *source, char *dest) {
     dest[i] = '\0';
 }
 
-static const char *name(uc_cmd_line *cmd, void *state) {
+static const char *name(ucCmdLine *cmd, void *state) {
 
     app_state *my_state;
-    uc_cmd_tok *cmd_tok;
+    ucCmdTok *cmd_tok;
     ucArgTok *name_arg;
-    uc_switch_tok *root_switch, *first_name_switch, *last_name_switch;
+    ucSwitchTok *root_switch, *first_name_switch, *last_name_switch;
 
     my_state = (app_state*)state;
     if (!my_state) return "Oops... NULL pointer!";
 
-    cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
-    root_switch = uc_cmd_tok_get_switch(cmd_tok);
+    cmd_tok = ucCmdLine_get_cmd_tok(cmd);
+    root_switch = ucCmdTok_get_switch(cmd_tok);
 
-    first_name_switch = uc_switch_tok_find(root_switch, "-first");
+    first_name_switch = ucSwitchTok_find(root_switch, "-first");
     if (first_name_switch) {
 
-        name_arg = uc_switch_tok_get_arg(first_name_switch);
-        copy_name(uc_tok_get_value(name_arg), my_state->first_name);
+        name_arg = ucSwitchTok_get_arg(first_name_switch);
+        copy_name(ucTok_get_value(name_arg), my_state->first_name);
     }
 
-    last_name_switch = uc_switch_tok_find(root_switch, "-last");
+    last_name_switch = ucSwitchTok_find(root_switch, "-last");
     if (last_name_switch) {
 
-        name_arg = uc_switch_tok_get_arg(last_name_switch);
-        copy_name(uc_tok_get_value(name_arg), my_state->last_name);
+        name_arg = ucSwitchTok_get_arg(last_name_switch);
+        copy_name(ucTok_get_value(name_arg), my_state->last_name);
     }
 
-    return uc_cmd_line_format_response(
+    return ucCmdLine_format_response(
         cmd, 
         "Name: %s",
         format_name(my_state)
     );
 }
 
-static const char *say(uc_cmd_line *cmd, void *state) {
+static const char *say(ucCmdLine *cmd, void *state) {
     app_state *my_state = (struct app_state*)state;
 
-    uc_cmd_tok *cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
-    ucArgTok *arg_tok = uc_cmd_tok_get_arg(cmd_tok);
+    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(cmd);
+    ucArgTok *arg_tok = ucCmdTok_get_arg(cmd_tok);
 
-    const char *phrase = uc_tok_get_value(arg_tok);
+    const char *phrase = ucTok_get_value(arg_tok);
 
-    uc_cmd_line_respond(cmd, uc_cmd_line_format_response(
+    ucCmdLine_respond(cmd, ucCmdLine_format_response(
         cmd,
         "%s, %s!",
         phrase,
@@ -118,18 +118,18 @@ static const char *say(uc_cmd_line *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive_func *receive) {
+void uc_hello_world(ucCmdLine_transmit_func *transmit, ucCmdLineApp_receive_func *receive) {
     
     /* This is the program's state object that gets
     passed to the various command functions. */
     app_state my_state = { 0 };
 
-    uc_cmd_line_opt *commands = 
+    ucCmdLineOpt *commands = 
 
         /* Creates a command 'name' that
         calls the function 'name'. Its
         purpose is to set the user's name. */
-        uc_cmd_line_opt_create(
+        ucCmdLineOpt_create(
             name,
 
             /* This pointer to the object that maintains
@@ -146,7 +146,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
 
             /* Creates a switch '-first' for the 'name'
             command. This switch is optional. */
-            uc_switch_opt_create(
+            ucSwitchOpt_create(
                 "-first",
                 "Sets the user's first name.",
 
@@ -165,7 +165,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
             /* Another switch is created for the user's
             last name. This switch is very similar to the
             '-first' switch. */
-            uc_switch_opt_create(
+            ucSwitchOpt_create(
                 "-last",
                 "Sets the user's last name.",
                 ucArgOpt_create_required(
@@ -179,7 +179,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
 
         /* Creates another command called 'say'.
         This command will say a phrase to the user. */
-        uc_cmd_line_opt_create(
+        ucCmdLineOpt_create(
             say,
             &my_state,
             "say",
@@ -198,22 +198,22 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
         are no more commands. */
         NULL));
 
-    /* This uc_cmd_line_app instance is a singleton that
+    /* This ucCmdLineApp instance is a singleton that
     is available to run a command-line app. */
-    uc_cmd_line_app *app = uc_cmd_line_app_get_instance();
+    ucCmdLineApp *app = ucCmdLineApp_get_instance();
 
-    /* Gets the uc_cmd_line used by the app to send
+    /* Gets the ucCmdLine used by the app to send
     responses back to the user. */
-    uc_cmd_line *cmd = uc_cmd_line_app_get_cmd(app);
+    ucCmdLine *cmd = ucCmdLineApp_get_cmd(app);
 
     /* Sets callback functions on the app and command
     that allow transmission and reception of data. 
     These callbacks will be specific to the platform
     on which the app is running. */
-    uc_cmd_line_set_transmit(cmd, transmit);
-    uc_cmd_line_app_set_receive(app, receive);
+    ucCmdLine_set_transmit(cmd, transmit);
+    ucCmdLineApp_set_receive(app, receive);
 
     /* starts the command-line app. The app will exit
     when it receives the 'quit' command. */
-    uc_cmd_line_app_run(app, commands);
+    ucCmdLineApp_run(app, commands);
 }

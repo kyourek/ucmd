@@ -1,8 +1,8 @@
 #ifndef UC_SWITCH_TOK_TESTS_H
 #define UC_SWITCH_TOK_TESTS_H
 
-#include "uc_test_group.h"
+#include "ucTestGroup.h"
 
-UC_EXPORTED uc_test_group *uc_switch_tok_tests_get_group(void);
+UC_EXPORTED ucTestGroup *ucSwitchTok_tests_get_group(void);
 
 #endif

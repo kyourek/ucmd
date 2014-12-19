@@ -1,13 +1,13 @@
 #ifndef UC_OPT_H
 #define UC_OPT_H
 
-#include "uc_cmd_line.h"
+#include "ucCmdLine.h"
 
 /*
  * Summary:
  *   Base type for command, argument, and switch options.
  */
-typedef struct uc_opt uc_opt;
+typedef struct ucOpt ucOpt;
 
 /*
  * Summary:
@@ -17,7 +17,7 @@ typedef struct uc_opt uc_opt;
  * Returns:
  *   The name of the option.
  */
-UC_EXPORTED const char* uc_opt_get_name(uc_opt *p);
+UC_EXPORTED const char* ucOpt_get_name(ucOpt *p);
 
 /*
  * Summary:
@@ -27,7 +27,7 @@ UC_EXPORTED const char* uc_opt_get_name(uc_opt *p);
  * Returns:
  *   The description of the option.
  */
-UC_EXPORTED const char *uc_opt_get_desc(uc_opt *p);
+UC_EXPORTED const char *ucOpt_get_desc(ucOpt *p);
 
 /*
  * Summary:
@@ -38,7 +38,7 @@ UC_EXPORTED const char *uc_opt_get_desc(uc_opt *p);
  * Returns:
  *   ucBool_true if the option is required. Otherwise, ucBool_false.
  */
-UC_EXPORTED ucBool uc_opt_is_required(uc_opt *p);
+UC_EXPORTED ucBool ucOpt_is_required(ucOpt *p);
 
 /*
  * Summary:
@@ -50,6 +50,6 @@ UC_EXPORTED ucBool uc_opt_is_required(uc_opt *p);
  *        with the help information.
  *   prefix: A string used to prefix the help information.
  */
-UC_EXPORTED void uc_opt_send_help(uc_opt *p, uc_cmd_line *cmd, const char *prefix);
+UC_EXPORTED void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix);
 
 #endif

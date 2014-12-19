@@ -1,10 +1,10 @@
 #ifndef UC_CMD_PARSER_P_H
 #define UC_CMD_PARSER_P_H
 
-#include "uc_cmd_parser.h"
+#include "ucCmdParser.h"
 
-struct uc_cmd_parser {
-    uc_cmd_tok *(*parse)(uc_cmd_parser *p, char *cmd);
+struct ucCmdParser {
+    ucCmdTok *(*parse)(ucCmdParser *p, char *cmd);
 };
 
 #endif

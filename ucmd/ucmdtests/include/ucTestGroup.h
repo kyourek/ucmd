@@ -1,15 +1,15 @@
 #ifndef UC_TEST_GROUP_H
 #define UC_TEST_GROUP_H
 
-#include "uc_test_state.h"
-#include "uc_test_err.h"
+#include "ucTestState.h"
+#include "ucTestErr.h"
 
 /*
  * Summary:
  *   Structure for holding information about a group
  *   of unit tests.
  */
-typedef struct uc_test_group uc_test_group;
+typedef struct ucTestGroup ucTestGroup;
 
 /*
  * Summary:
@@ -20,7 +20,7 @@ typedef struct uc_test_group uc_test_group;
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-typedef uc_test_err (uc_test_group_callback_func)(uc_test_group *p);
+typedef ucTestErr (ucTestGroup_callback_func)(ucTestGroup *p);
 
 /*
  * Summary:
@@ -31,7 +31,7 @@ typedef uc_test_err (uc_test_group_callback_func)(uc_test_group *p);
  *   The error number resulting from the test, or no
  *   error if an error did not occur.
  */
-typedef uc_test_err (uc_test_group_test_func)(uc_test_group *p);
+typedef ucTestErr (ucTestGroup_test_func)(ucTestGroup *p);
 
 /*
  * Summary:
@@ -42,7 +42,7 @@ typedef uc_test_err (uc_test_group_test_func)(uc_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED uc_test_err uc_test_group_before_all_tests(uc_test_group *p);
+UC_EXPORTED ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -53,7 +53,7 @@ UC_EXPORTED uc_test_err uc_test_group_before_all_tests(uc_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED uc_test_err uc_test_group_after_all_tests(uc_test_group *p);
+UC_EXPORTED ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -64,7 +64,7 @@ UC_EXPORTED uc_test_err uc_test_group_after_all_tests(uc_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED uc_test_err uc_test_group_before_each_test(uc_test_group *p);
+UC_EXPORTED ucTestErr ucTestGroup_before_each_test(ucTestGroup *p);
 
 /*
  * Summary:
@@ -75,7 +75,7 @@ UC_EXPORTED uc_test_err uc_test_group_before_each_test(uc_test_group *p);
  * Returns:
  *   An error number to cancel pending tests, or no error to continue.
  */
-UC_EXPORTED uc_test_err uc_test_group_after_each_test(uc_test_group *p);
+UC_EXPORTED ucTestErr ucTestGroup_after_each_test(ucTestGroup *p);
 
 /*
  * Summary:
@@ -85,7 +85,7 @@ UC_EXPORTED uc_test_err uc_test_group_after_each_test(uc_test_group *p);
  * Returns:
  *   The lists of tests to run for the group.
  */
-UC_EXPORTED uc_test_group_test_func **uc_test_group_get_tests(uc_test_group *p);
+UC_EXPORTED ucTestGroup_test_func **ucTestGroup_get_tests(ucTestGroup *p);
 
 /*
  * Summary:
@@ -100,13 +100,13 @@ UC_EXPORTED uc_test_group_test_func **uc_test_group_get_tests(uc_test_group *p);
  * Returns:
  *   A pointer to the initialized test group.
  */
-UC_EXPORTED uc_test_group *uc_test_group_init(
-    uc_test_group *p, 
-    uc_test_group_callback_func *before_all_tests, 
-    uc_test_group_callback_func *after_all_tests, 
-    uc_test_group_callback_func *before_each_test, 
-    uc_test_group_callback_func *after_each_test,
-    uc_test_group_test_func **tests
+UC_EXPORTED ucTestGroup *ucTestGroup_init(
+    ucTestGroup *p, 
+    ucTestGroup_callback_func *before_all_tests, 
+    ucTestGroup_callback_func *after_all_tests, 
+    ucTestGroup_callback_func *before_each_test, 
+    ucTestGroup_callback_func *after_each_test,
+    ucTestGroup_test_func **tests
 );
 
 /*
@@ -119,19 +119,19 @@ UC_EXPORTED uc_test_group *uc_test_group_init(
  *   The error number of the failed test, or no error if all
  *   tests passed.
  */
-UC_EXPORTED uc_test_err uc_test_group_run(uc_test_group *p, uc_test_state *state);
+UC_EXPORTED ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state);
 
 /*
  * Summary:
  *   Structure for holding information about a group
  *   of unit tests.
  */
-struct uc_test_group {
-    uc_test_group_callback_func *before_all_tests;
-    uc_test_group_callback_func *after_all_tests;
-    uc_test_group_callback_func *before_each_test;
-    uc_test_group_callback_func *after_each_test;
-    uc_test_group_test_func **tests;
+struct ucTestGroup {
+    ucTestGroup_callback_func *before_all_tests;
+    ucTestGroup_callback_func *after_all_tests;
+    ucTestGroup_callback_func *before_each_test;
+    ucTestGroup_callback_func *after_each_test;
+    ucTestGroup_test_func **tests;
 };
 
 #endif

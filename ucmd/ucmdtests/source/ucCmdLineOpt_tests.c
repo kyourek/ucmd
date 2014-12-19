@@ -1,35 +1,35 @@
 #include <string.h>
-#include "uc_cmd_line_opt_p.h"
-#include "uc_cmd_line_opt_tests.h"
-#include "uc_test.h"
+#include "ucCmdLineOpt_p.h"
+#include "ucCmdLineOpt_tests.h"
+#include "ucTest.h"
 
 static const char *transmit_func_one_response = NULL;
 static void transmit_func_one(const char *response, void *state) {
     transmit_func_one_response = response;
 }
 
-static const char *uart_func_one(uc_cmd_line *p, void *state) {
-    return UC_TEST_ERR_NONE;
+static const char *uart_func_one(ucCmdLine *p, void *state) {
+    return ucTestErr_NONE;
 }
 
-static const char *uart_func_two(uc_cmd_line *p, void *state) {
+static const char *uart_func_two(ucCmdLine *p, void *state) {
     return "The result of uart_func_two.";
 }
 
-static uc_test_err uc_cmd_line_opt_create_creates_structure(uc_test_group *p) {
+static ucTestErr ucCmdLineOpt_create_creates_structure(ucTestGroup *p) {
     int state;
     ucArgOpt *arg_opt;
-    uc_switch_opt* switch_opt;
-    uc_cmd_line_opt *ptr;
+    ucSwitchOpt* switch_opt;
+    ucCmdLineOpt *ptr;
 
-    ptr = uc_cmd_line_opt_create(
+    ptr = ucCmdLineOpt_create(
         uart_func_one, &state, "uart_func_one", "The first function.",
             ucArgOpt_create("arg1", "The first arg.",
             ucArgOpt_create("arg2", "The second arg.", NULL)),
-            uc_switch_opt_create("sw1", "The first switch.",
+            ucSwitchOpt_create("sw1", "The first switch.",
                 ucArgOpt_create("sw1arg1", "The first arg of sw1.",
                 ucArgOpt_create("sw1arg2", "The second arg of sw1.", NULL)),
-            uc_switch_opt_create("sw2", "The second switch.",
+            ucSwitchOpt_create("sw2", "The second switch.",
                 ucArgOpt_create("sw2arg1", "The first arg of sw2.",
                 ucArgOpt_create("sw2arg2", "The second arg of sw2.", NULL)),
             NULL)),
@@ -37,207 +37,207 @@ static uc_test_err uc_cmd_line_opt_create_creates_structure(uc_test_group *p) {
     );
 
     UC_TEST_ASSERT(NULL != ptr);
-    UC_TEST_ASSERT(uart_func_one == uc_cmd_line_opt_get_func(ptr));
-    UC_TEST_ASSERT(&state == uc_cmd_line_opt_get_state(ptr));
-    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required((uc_opt*)ptr));
+    UC_TEST_ASSERT(uart_func_one == ucCmdLineOpt_get_func(ptr));
+    UC_TEST_ASSERT(&state == ucCmdLineOpt_get_state(ptr));
+    UC_TEST_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
 
     arg_opt = ucArgOptOwner_get_arg_opt((ucArgOptOwner*)ptr);
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)arg_opt));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)arg_opt));
 
     arg_opt = ucArgOpt_get_next(arg_opt);
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)arg_opt));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)arg_opt));
 
     UC_TEST_ASSERT(NULL == ucArgOpt_get_next(arg_opt));
 
-    switch_opt = uc_cmd_line_opt_get_switch_opt(ptr);
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)switch_opt));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)switch_opt));
+    switch_opt = ucCmdLineOpt_get_switch_opt(ptr);
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)switch_opt));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)switch_opt));
 
     arg_opt = ucArgOptOwner_get_arg_opt((ucArgOptOwner*)switch_opt);
-    UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)arg_opt));
-    UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_name((ucOpt*)arg_opt));
+    UC_TEST_ASSERT(ucOpt_get_desc((ucOpt*)arg_opt));
 
     // TODO: Finish making assertions here.
 
-    uc_cmd_line_opt_destroy_chain(ptr);
+    ucCmdLineOpt_destroy_chain(ptr);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_process_calls_func(uc_test_group *p) {
-    uc_cmd_line *cmd;
-    uc_cmd_line_opt *cmd_opt;
+static ucTestErr ucCmdLineOpt_process_calls_func(ucTestGroup *p) {
+    ucCmdLine *cmd;
+    ucCmdLineOpt *cmd_opt;
 
-    cmd = uc_cmd_line_get_instance();
-    cmd_opt = uc_cmd_line_opt_create(uart_func_two, NULL, "uart_func", "The UART function.", NULL, NULL, NULL);
-    uc_cmd_line_set_cmd_tok(cmd, "uart_func\0\n");
+    cmd = ucCmdLine_get_instance();
+    cmd_opt = ucCmdLineOpt_create(uart_func_two, NULL, "uart_func", "The UART function.", NULL, NULL, NULL);
+    ucCmdLine_set_cmd_tok(cmd, "uart_func\0\n");
      
-    UC_TEST_ASSERT(uc_cmd_line_opt_process(cmd_opt, cmd));
+    UC_TEST_ASSERT(ucCmdLineOpt_process(cmd_opt, cmd));
 
-    uc_cmd_line_opt_destroy_chain(cmd_opt);
+    ucCmdLineOpt_destroy_chain(cmd_opt);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_create_creates_different_instances(uc_test_group *p) {
-    uc_cmd_line_opt *c1, *c2, *c3;
+static ucTestErr ucCmdLineOpt_create_creates_different_instances(ucTestGroup *p) {
+    ucCmdLineOpt *c1, *c2, *c3;
 
-    c1 = uc_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
-    c2 = uc_cmd_line_opt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
-    c3 = uc_cmd_line_opt_create(NULL, NULL, "c3", "c3", NULL, NULL, NULL);
+    c1 = ucCmdLineOpt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
+    c2 = ucCmdLineOpt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
+    c3 = ucCmdLineOpt_create(NULL, NULL, "c3", "c3", NULL, NULL, NULL);
 
     UC_TEST_ASSERT(c1 != c2);
     UC_TEST_ASSERT(c2 != c3);
 
-    uc_cmd_line_opt_destroy(c1);
-    uc_cmd_line_opt_destroy(c2);
-    uc_cmd_line_opt_destroy(c3);
+    ucCmdLineOpt_destroy(c1);
+    ucCmdLineOpt_destroy(c2);
+    ucCmdLineOpt_destroy(c3);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_destroy_releases_instance(uc_test_group *p) {
-    uc_cmd_line_opt *c1, *c2, *c3, *c4;
+static ucTestErr ucCmdLineOpt_destroy_releases_instance(ucTestGroup *p) {
+    ucCmdLineOpt *c1, *c2, *c3, *c4;
 
-    c1 = uc_cmd_line_opt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
-    c2 = uc_cmd_line_opt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
-    c3 = uc_cmd_line_opt_create(NULL, NULL, "c3", "c3", NULL, NULL, NULL);
+    c1 = ucCmdLineOpt_create(NULL, NULL, "c1", "c1", NULL, NULL, NULL);
+    c2 = ucCmdLineOpt_create(NULL, NULL, "c2", "c2", NULL, NULL, NULL);
+    c3 = ucCmdLineOpt_create(NULL, NULL, "c3", "c3", NULL, NULL, NULL);
 
-    uc_cmd_line_opt_destroy(c3);
+    ucCmdLineOpt_destroy(c3);
 
-    c4 = uc_cmd_line_opt_create(NULL, NULL, "c4", "c4", NULL, NULL, NULL);
+    c4 = ucCmdLineOpt_create(NULL, NULL, "c4", "c4", NULL, NULL, NULL);
 
     UC_TEST_ASSERT(c4 == c3);
     
-    uc_cmd_line_opt_destroy(c1);
-    uc_cmd_line_opt_destroy(c2);
-    uc_cmd_line_opt_destroy(c4);
+    ucCmdLineOpt_destroy(c1);
+    ucCmdLineOpt_destroy(c2);
+    ucCmdLineOpt_destroy(c4);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_destroy_chain_releases_all_instances(uc_test_group *p) {
+static ucTestErr ucCmdLineOpt_destroy_chain_releases_all_instances(ucTestGroup *p) {
     ucArgOpt *a1, *a2, *a3, *a4, *a4_2;
-    uc_switch_opt *s1, *s2, *s3, *s3_2;
-    uc_cmd_line_opt *c1, *c2, *c3, *c3_2;
+    ucSwitchOpt *s1, *s2, *s3, *s3_2;
+    ucCmdLineOpt *c1, *c2, *c3, *c3_2;
 
     a4 = ucArgOpt_create("a4", "a4", NULL);
     a3 = ucArgOpt_create("a3", "a3", a4);
-    s3 = uc_switch_opt_create("-s3", "-s3", a3, NULL);
-    c3 = uc_cmd_line_opt_create(NULL, NULL, "c3", "c3", NULL, s3, NULL);
+    s3 = ucSwitchOpt_create("-s3", "-s3", a3, NULL);
+    c3 = ucCmdLineOpt_create(NULL, NULL, "c3", "c3", NULL, s3, NULL);
 
     a2 = ucArgOpt_create("a2", "a2", NULL);
-    s2 = uc_switch_opt_create("-s2", "-s2", a2, NULL);
-    s1 = uc_switch_opt_create("-s1", "-s1", NULL, s2);
-    c2 = uc_cmd_line_opt_create(NULL, NULL, "c2", "c2", NULL, s1, c3);
+    s2 = ucSwitchOpt_create("-s2", "-s2", a2, NULL);
+    s1 = ucSwitchOpt_create("-s1", "-s1", NULL, s2);
+    c2 = ucCmdLineOpt_create(NULL, NULL, "c2", "c2", NULL, s1, c3);
 
     a1 = ucArgOpt_create("a1", "a1", NULL);
-    c1 = uc_cmd_line_opt_create(NULL, NULL, "c1", "c1", a1, NULL, c2);
+    c1 = ucCmdLineOpt_create(NULL, NULL, "c1", "c1", a1, NULL, c2);
 
-    uc_cmd_line_opt_destroy_chain(c1);
+    ucCmdLineOpt_destroy_chain(c1);
 
     a4_2 = ucArgOpt_create("a4_2", "a4_2", NULL);
     UC_TEST_ASSERT(a4_2 == a4);
 
-    s3_2 = uc_switch_opt_create("-s3_2", "-s3_2", NULL, NULL);
+    s3_2 = ucSwitchOpt_create("-s3_2", "-s3_2", NULL, NULL);
     UC_TEST_ASSERT(s3_2 == s3);
 
-    c3_2 = uc_cmd_line_opt_create(NULL, NULL, "c3_2", "c3_2", NULL, NULL, NULL);
+    c3_2 = ucCmdLineOpt_create(NULL, NULL, "c3_2", "c3_2", NULL, NULL, NULL);
     UC_TEST_ASSERT(c3_2 == c3);
 
     ucArgOpt_destroy(a4_2);
-    uc_switch_opt_destroy(s3_2);
-    uc_cmd_line_opt_destroy(c3_2);
+    ucSwitchOpt_destroy(s3_2);
+    ucCmdLineOpt_destroy(c3_2);
 
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_send_usage_responds_with_usage_string(uc_test_group *p) {
+static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup *p) {
     const char *expected;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
-    uc_cmd_line_transmit_func *prev_transmit_func = uc_cmd_line_get_transmit(cmd);
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine_transmit_func *prev_transmit_func = ucCmdLine_get_transmit(cmd);
 
-    uc_cmd_line_opt *cmd_opt = 
-        uc_cmd_line_opt_create(NULL, NULL, "dothis", NULL,
+    ucCmdLineOpt *cmd_opt = 
+        ucCmdLineOpt_create(NULL, NULL, "dothis", NULL,
             ucArgOpt_create("firstarg", NULL,
             ucArgOpt_create_required("secondarg", NULL,
             ucArgOpt_create_numeric(NULL, 0, 5,
             NULL))),
-            uc_switch_opt_create("-s1", NULL, 
+            ucSwitchOpt_create("-s1", NULL, 
                 ucArgOpt_create_required_numeric(NULL, 0, 10,
                 NULL),
-            uc_switch_opt_create("-s2", NULL,
+            ucSwitchOpt_create("-s2", NULL,
                 NULL,
-            uc_switch_opt_create_required("-sthree", NULL,
+            ucSwitchOpt_create_required("-sthree", NULL,
                 ucArgOpt_create("s3arg", NULL,
                 NULL),
             NULL))),
-        uc_cmd_line_opt_create(NULL, NULL, "boringcmd", NULL, NULL, NULL, NULL));
+        ucCmdLineOpt_create(NULL, NULL, "boringcmd", NULL, NULL, NULL, NULL));
 
-    uc_cmd_line_set_transmit(cmd, transmit_func_one);
+    ucCmdLine_set_transmit(cmd, transmit_func_one);
     
-    uc_cmd_line_opt_send_usage(cmd_opt, cmd);
+    ucCmdLineOpt_send_usage(cmd_opt, cmd);
     expected = "dothis [firstarg] secondarg [<number>] [-s1] <number> [-s2] -sthree [s3arg]";
     UC_TEST_ASSERT(0 == strcmp(expected, transmit_func_one_response));
 
-    uc_cmd_line_opt_send_usage(uc_cmd_line_opt_get_next(cmd_opt), cmd);
+    ucCmdLineOpt_send_usage(ucCmdLineOpt_get_next(cmd_opt), cmd);
     expected = "boringcmd";
     UC_TEST_ASSERT(0 == strcmp(expected, transmit_func_one_response));
 
-    uc_cmd_line_opt_destroy_chain(cmd_opt);
-    uc_cmd_line_set_transmit(cmd, prev_transmit_func);
-    return UC_TEST_ERR_NONE;
+    ucCmdLineOpt_destroy_chain(cmd_opt);
+    ucCmdLine_set_transmit(cmd, prev_transmit_func);
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_format_validation_err_catches_required_arg(uc_test_group *p) {
+static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
-    uc_cmd_line_opt *opt = uc_cmd_line_opt_create(NULL, NULL, "opt", NULL, ucArgOpt_create_required("a", NULL, NULL), NULL, NULL);
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, ucArgOpt_create_required("a", NULL, NULL), NULL, NULL);
 
-    uc_cmd_line_set_cmd_tok(cmd, "opt\0\n");
-    err = uc_cmd_line_opt_format_validation_err(opt, cmd);
+    ucCmdLine_set_cmd_tok(cmd, "opt\0\n");
+    err = ucCmdLineOpt_format_validation_err(opt, cmd);
     UC_TEST_ASSERT(NULL != err);
 
-    uc_cmd_line_set_cmd_tok(cmd, "opt\0arg\0\n");
-    err = uc_cmd_line_opt_format_validation_err(opt, cmd);
+    ucCmdLine_set_cmd_tok(cmd, "opt\0arg\0\n");
+    err = ucCmdLineOpt_format_validation_err(opt, cmd);
     UC_TEST_ASSERT(NULL == err);
 
-    uc_cmd_line_opt_destroy_chain(opt);
-    return UC_TEST_ERR_NONE;
+    ucCmdLineOpt_destroy_chain(opt);
+    return ucTestErr_NONE;
 }
 
-static uc_test_err uc_cmd_line_opt_format_validation_err_catches_required_switch(uc_test_group *p) {
+static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_switch(ucTestGroup *p) {
     const char *err;
-    uc_cmd_line *cmd = uc_cmd_line_get_instance();
-    uc_cmd_line_opt *opt = uc_cmd_line_opt_create(NULL, NULL, "opt", NULL, NULL, uc_switch_opt_create_required("-s", NULL, NULL, NULL), NULL);
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, ucSwitchOpt_create_required("-s", NULL, NULL, NULL), NULL);
 
-    uc_cmd_line_set_cmd_tok(cmd, "opt\0-z\0\n");
-    err = uc_cmd_line_opt_format_validation_err(opt, cmd);
+    ucCmdLine_set_cmd_tok(cmd, "opt\0-z\0\n");
+    err = ucCmdLineOpt_format_validation_err(opt, cmd);
     UC_TEST_ASSERT(NULL != err);
 
-    uc_cmd_line_set_cmd_tok(cmd, "opt\0-s\0\n");
-    err = uc_cmd_line_opt_format_validation_err(opt, cmd);
+    ucCmdLine_set_cmd_tok(cmd, "opt\0-s\0\n");
+    err = ucCmdLineOpt_format_validation_err(opt, cmd);
     UC_TEST_ASSERT(NULL == err);
 
-    uc_cmd_line_opt_destroy_chain(opt);
-    return UC_TEST_ERR_NONE;
+    ucCmdLineOpt_destroy_chain(opt);
+    return ucTestErr_NONE;
 }
 
-uc_test_group *uc_cmd_line_opt_tests_get_group(void) {
-    static uc_test_group group;
-    static uc_test_group_test_func *tests[] = {
-        uc_cmd_line_opt_create_creates_structure,
-        uc_cmd_line_opt_process_calls_func,
-        uc_cmd_line_opt_create_creates_different_instances,
-        uc_cmd_line_opt_destroy_releases_instance,
-        uc_cmd_line_opt_destroy_chain_releases_all_instances,
-        uc_cmd_line_opt_send_usage_responds_with_usage_string,
-        uc_cmd_line_opt_format_validation_err_catches_required_arg,
-        uc_cmd_line_opt_format_validation_err_catches_required_switch,
+ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
+    static ucTestGroup group;
+    static ucTestGroup_test_func *tests[] = {
+        ucCmdLineOpt_create_creates_structure,
+        ucCmdLineOpt_process_calls_func,
+        ucCmdLineOpt_create_creates_different_instances,
+        ucCmdLineOpt_destroy_releases_instance,
+        ucCmdLineOpt_destroy_chain_releases_all_instances,
+        ucCmdLineOpt_send_usage_responds_with_usage_string,
+        ucCmdLineOpt_format_validation_err_catches_required_arg,
+        ucCmdLineOpt_format_validation_err_catches_required_switch,
         NULL
     };
 
-    return uc_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
 }

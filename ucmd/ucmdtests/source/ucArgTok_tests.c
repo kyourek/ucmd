@@ -1,62 +1,62 @@
 #include <string.h>
 #include "ucArgTok.h"
 #include "ucArgTok_tests.h"
-#include "uc_test.h"
-#include "uc_tok.h"
+#include "ucTest.h"
+#include "ucTok.h"
 
-static uc_test_err ucArgTok_get_next_returns_next(uc_test_group *p) {
+static ucTestErr ucArgTok_get_next_returns_next(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0\n";
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)ucArgTok_get_next(a1), "a2"));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucArgTok_get_next(a1), "a2"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_get_next_returns_null_when_followed_by_switch(uc_test_group *p) {
+static ucTestErr ucArgTok_get_next_returns_null_when_followed_by_switch(ucTestGroup *p) {
     ucArgTok *a = "a\0-s";
     UC_TEST_ASSERT(NULL == ucArgTok_get_next(a));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_get_next_returns_null_when_followed_by_terminator(uc_test_group *p) {
+static ucTestErr ucArgTok_get_next_returns_null_when_followed_by_terminator(ucTestGroup *p) {
     ucArgTok *a = "arg\0\n";
     UC_TEST_ASSERT(NULL == ucArgTok_get_next(a));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_count_counts_arguments(uc_test_group *p) {
+static ucTestErr ucArgTok_count_counts_arguments(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0a3\0\n";
     UC_TEST_ASSERT(3 == ucArgTok_count(a1));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_find_finds_argument(uc_test_group *p) {
+static ucTestErr ucArgTok_find_finds_argument(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0a3\0\n";
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)ucArgTok_find(a1, "a2"), "a2"));
-    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)ucArgTok_find(a1, "a3"), "a3"));
-    return UC_TEST_ERR_NONE;
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucArgTok_find(a1, "a2"), "a2"));
+    UC_TEST_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucArgTok_find(a1, "a3"), "a3"));
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_find_returns_null_if_no_argument_match(uc_test_group *p) {
+static ucTestErr ucArgTok_find_returns_null_if_no_argument_match(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0a3\0\n";
     UC_TEST_ASSERT(NULL == ucArgTok_find(a1, "a4"));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_contains_returns_true_when_contained(uc_test_group *p) {
+static ucTestErr ucArgTok_contains_returns_true_when_contained(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0a3\0\n";
     UC_TEST_ASSERT(ucBool_true == ucArgTok_contains(a1, "a2"));
     UC_TEST_ASSERT(ucBool_true == ucArgTok_contains(a1, "a3"));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-static uc_test_err ucArgTok_contains_returns_false_when_not_contained(uc_test_group *p) {
+static ucTestErr ucArgTok_contains_returns_false_when_not_contained(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0a3\0\n";
     UC_TEST_ASSERT(ucBool_false == ucArgTok_contains(a1, "a4"));
-    return UC_TEST_ERR_NONE;
+    return ucTestErr_NONE;
 }
 
-uc_test_group *ucArgTok_tests_get_group(void) {
-    static uc_test_group group;
-    static uc_test_group_test_func *tests[] = {
+ucTestGroup *ucArgTok_tests_get_group(void) {
+    static ucTestGroup group;
+    static ucTestGroup_test_func *tests[] = {
         ucArgTok_get_next_returns_next,
         ucArgTok_count_counts_arguments,
         ucArgTok_find_finds_argument,
@@ -68,5 +68,5 @@ uc_test_group *ucArgTok_tests_get_group(void) {
         NULL
     };
 
-    return uc_test_group_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
 }

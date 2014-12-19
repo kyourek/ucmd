@@ -8,7 +8,7 @@
  *   A command switch option. This type is a child
  *   of the base option type.
  */
-typedef struct uc_switch_opt uc_switch_opt;
+typedef struct ucSwitchOpt ucSwitchOpt;
 
 /*
  * Summary:
@@ -22,7 +22,7 @@ typedef struct uc_switch_opt uc_switch_opt;
  * Returns:
  *   A pointer to the newly created switch option.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next);
+UC_EXPORTED ucSwitchOpt *ucSwitchOpt_create(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next);
 
 /*
  * Summary:
@@ -37,7 +37,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_create(const char *name, const char *de
  *   A pointer to the newly created switch option. The option's
  *   'required' property will be set to true.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next);
+UC_EXPORTED ucSwitchOpt *ucSwitchOpt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next);
 
 /*
  * Summary:
@@ -48,7 +48,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_create_required(const char *name, const
  *   A pointer to the first argument option of the switch, or NULL
  *   if no argument options exist.
  */
-UC_EXPORTED ucArgOpt *uc_switch_opt_get_arg_opt(uc_switch_opt *p);
+UC_EXPORTED ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt *p);
 
 /*
  * Summary:
@@ -60,7 +60,7 @@ UC_EXPORTED ucArgOpt *uc_switch_opt_get_arg_opt(uc_switch_opt *p);
  *   The switch option with the given name, or NULL if
  *   no switch option is found.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_find(uc_switch_opt *p, const char *name);
+UC_EXPORTED ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt *p, const char *name);
 
 /*
  * Summary:
@@ -71,7 +71,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_find(uc_switch_opt *p, const char *name
  *   A pointer to the next switch option in the list, or NULL
  *   if no further options exist.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_get_next(uc_switch_opt *p);
+UC_EXPORTED ucSwitchOpt *ucSwitchOpt_get_next(ucSwitchOpt *p);
 
 /*
  * Summary:
@@ -79,7 +79,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_get_next(uc_switch_opt *p);
  * Parameters:
  *   p: A pointer to the switch option whose memory is released.
  */
-UC_EXPORTED void uc_switch_opt_destroy(uc_switch_opt *p);
+UC_EXPORTED void ucSwitchOpt_destroy(ucSwitchOpt *p);
 
 /*
  * Summary:
@@ -90,6 +90,6 @@ UC_EXPORTED void uc_switch_opt_destroy(uc_switch_opt *p);
  * Parameters:
  *   p: A pointer to the first switch option in the list.
  */
-UC_EXPORTED void uc_switch_opt_destroy_chain(uc_switch_opt *p);
+UC_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt *p);
 
 #endif

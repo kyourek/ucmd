@@ -1,7 +1,7 @@
 #ifndef UCARGOPT_H
 #define UCARGOPT_H
 
-#include "uc_opt.h"
+#include "ucOpt.h"
 
 /*
  * Summary:

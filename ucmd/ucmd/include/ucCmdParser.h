@@ -1,7 +1,7 @@
 #ifndef UC_CMD_PARSER_H
 #define UC_CMD_PARSER_H
 
-#include "uc_cmd_tok.h"
+#include "ucCmdTok.h"
 
 /*
  * Summary:
@@ -9,7 +9,7 @@
  *   The result of the parse can be used as the command
  *   token for a command structure.
  */
-typedef struct uc_cmd_parser uc_cmd_parser;
+typedef struct ucCmdParser ucCmdParser;
 
 /*
  * Summary:
@@ -18,7 +18,7 @@ typedef struct uc_cmd_parser uc_cmd_parser;
  *   The static, default instance of the parser, or NULL
  *   if an error occurred.
  */
-UC_EXPORTED uc_cmd_parser *uc_cmd_parser_get_instance(void);
+UC_EXPORTED ucCmdParser *ucCmdParser_get_instance(void);
 
 /*
  * Summary:
@@ -30,6 +30,6 @@ UC_EXPORTED uc_cmd_parser *uc_cmd_parser_get_instance(void);
  *   A pointer to the command token that was parsed, or NULL if an
  *   error occurred.
  */
-UC_EXPORTED uc_cmd_tok *uc_cmd_parser_parse(uc_cmd_parser *p, char *cmd);
+UC_EXPORTED ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd);
 
 #endif

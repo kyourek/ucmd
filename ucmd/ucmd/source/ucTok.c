@@ -1,7 +1,7 @@
 #include <string.h>
-#include "uc_tok_p.h"
+#include "ucTok_p.h"
 
-const char uc_tok_separator = '\0';
+const char ucTok_separator = '\0';
 const char uc_cmd_terminator = '\n';
 
 static ucBool is_char_digit(char c) {
@@ -16,21 +16,21 @@ static ucBool is_char_digit(char c) {
     return ucBool_false;
 }
 
-int uc_tok_get_length(uc_tok *p) {
+int ucTok_get_length(ucTok *p) {
     int length;
     if (NULL == p) return 0;
 
-    for (length = 0; *p != uc_tok_separator; length++, p++);
+    for (length = 0; *p != ucTok_separator; length++, p++);
 
     return length;
 }
 
-const char *uc_tok_get_value(uc_tok *p) {
+const char *ucTok_get_value(ucTok *p) {
     if (NULL == p) return NULL;
     return (const char*)p;
 }
 
-ucBool uc_tok_equals(uc_tok *p, const char *value) {
+ucBool ucTok_equals(ucTok *p, const char *value) {
     int i, len;
 
     /* check if these pointers are the same */
@@ -41,7 +41,7 @@ ucBool uc_tok_equals(uc_tok *p, const char *value) {
     if (NULL == value) return ucBool_false;
 
     /* check if the string lengths are the same */
-    len = uc_tok_get_length(p);
+    len = ucTok_get_length(p);
     if (strlen(value) != len) return ucBool_false;
 
     /* check for character equality */
@@ -55,7 +55,7 @@ ucBool uc_tok_equals(uc_tok *p, const char *value) {
     return ucBool_true;
 }
 
-ucBool uc_tok_is_numeric(uc_tok *p) {
+ucBool ucTok_is_numeric(ucTok *p) {
     int i, len;
     ucBool dec_found;
 
@@ -63,7 +63,7 @@ ucBool uc_tok_is_numeric(uc_tok *p) {
     if (NULL == p) return ucBool_false;
     
     /* get the length of the string */
-    len = uc_tok_get_length(p);
+    len = ucTok_get_length(p);
     
     /* numbers need to have at least 1 character */
     if (len < 1) return ucBool_false;
@@ -105,14 +105,14 @@ ucBool uc_tok_is_numeric(uc_tok *p) {
     return ucBool_true;
 }
 
-ucBool uc_tok_is_switch(uc_tok* p) {
+ucBool ucTok_is_switch(ucTok* p) {
     int len = 0;
 
     /* check for a null pointer */
     if (NULL == p) return ucBool_false;
     
     /* get the length so we can use it */
-    len = uc_tok_get_length(p);
+    len = ucTok_get_length(p);
     
     /* check for at least 2 characters (one '-' and at least another char) */
     if (len < 2) return ucBool_false;
@@ -121,13 +121,13 @@ ucBool uc_tok_is_switch(uc_tok* p) {
     if (p[0] != '-') return ucBool_false;
     
     /* check if this is a numeric argument (negative numbers aren't switches) */
-    if (uc_tok_is_numeric(p)) return ucBool_false;
+    if (ucTok_is_numeric(p)) return ucBool_false;
 
     /* ok, it's a switch */
     return ucBool_true;
 }
 
-uc_tok *uc_tok_get_next(uc_tok *p) {
+ucTok *ucTok_get_next(ucTok *p) {
     int i;
     if (NULL == p) return NULL;
 
@@ -136,7 +136,7 @@ uc_tok *uc_tok_get_next(uc_tok *p) {
     while (UC_TOK_LENGTH_MAX > ++i) {
 
         /* check if the previous character was a separator */
-        if (uc_tok_separator == p[i - 1]) {
+        if (ucTok_separator == p[i - 1]) {
 
             /* check if this character is the terminator */
             if (uc_cmd_terminator == p[i]) {
@@ -146,7 +146,7 @@ uc_tok *uc_tok_get_next(uc_tok *p) {
             }
 
             /* make sure this character isn't another separator */
-            if (uc_tok_separator == p[i]) {
+            if (ucTok_separator == p[i]) {
                 continue;
             }
 
@@ -154,7 +154,7 @@ uc_tok *uc_tok_get_next(uc_tok *p) {
                and this character is NOT the terminator,
                OR another separator, so this character is 
                the start of a new token */
-            return (uc_tok*)&p[i];
+            return (ucTok*)&p[i];
         }
     }
 
@@ -164,7 +164,7 @@ uc_tok *uc_tok_get_next(uc_tok *p) {
     return NULL;
 }
 
-int uc_tok_count(uc_tok *p) {
+int ucTok_count(ucTok *p) {
     int count;
 
     /* make sure we have a pointer */
@@ -175,12 +175,12 @@ int uc_tok_count(uc_tok *p) {
 
     /* start off the count according to whether or not
        we're starting at a token */
-    count = uc_tok_separator == p[0] ? -1 : 0;
+    count = ucTok_separator == p[0] ? -1 : 0;
 
     /* count the tokens in the chain */
     while (NULL != p) {
         count++;
-        p = uc_tok_get_next(p);
+        p = ucTok_get_next(p);
     }
     return count;
 }
