@@ -6,7 +6,7 @@ uc_cmd_tok *uc_cmd_line_toks_get_cmd_tok(uc_cmd_line_toks *p) {
     return p->cmd_tok;
 }
 
-uc_arg_tok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p) {
+ucArgTok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p) {
     if (NULL == p) return NULL;
     return p->arg_tok;
 }

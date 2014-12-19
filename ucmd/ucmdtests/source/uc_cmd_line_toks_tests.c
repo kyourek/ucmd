@@ -20,7 +20,7 @@ static uc_test_err uc_cmd_line_toks_get_cmd_tok_returns_value(uc_test_group *p) 
 static uc_test_err uc_cmd_line_toks_get_arg_tok_returns_value(uc_test_group *p) {
     uc_cmd_line_toks inst = { 0 };
     uc_cmd_line_toks *ptr = &inst;
-    uc_arg_tok *arg_tok = "a";
+    ucArgTok *arg_tok = "a";
 
     UC_TEST_ASSERT(NULL == uc_cmd_line_toks_get_arg_tok(NULL));
     UC_TEST_ASSERT(NULL == uc_cmd_line_toks_get_arg_tok(ptr));
@@ -34,7 +34,7 @@ static uc_test_err uc_cmd_line_toks_get_arg_tok_returns_value(uc_test_group *p) 
 static uc_test_err uc_cmd_line_toks_get_switch_tok_returns_value(uc_test_group *p) {
     uc_cmd_line_toks inst = { 0 };
     uc_cmd_line_toks *ptr = &inst;
-    uc_arg_tok *switch_tok = "-s";
+    ucArgTok *switch_tok = "-s";
 
     UC_TEST_ASSERT(NULL == uc_cmd_line_toks_get_switch_tok(NULL));
     UC_TEST_ASSERT(NULL == uc_cmd_line_toks_get_switch_tok(ptr));

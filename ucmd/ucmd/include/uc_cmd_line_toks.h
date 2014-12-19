@@ -22,7 +22,7 @@ typedef struct uc_cmd_line_toks {
      *   The command's first argument token, or
      *   NULL if no arguments exist.
      */
-    uc_arg_tok *arg_tok;
+    ucArgTok *arg_tok;
 
     /*
      * Summary:
@@ -54,7 +54,7 @@ UC_EXPORTED uc_cmd_tok *uc_cmd_line_toks_get_cmd_tok(uc_cmd_line_toks *p);
  *   A pointer to the argument token, or NULL if no argument
  *   tokens exist.
  */
-UC_EXPORTED uc_arg_tok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p);
+UC_EXPORTED ucArgTok *uc_cmd_line_toks_get_arg_tok(uc_cmd_line_toks *p);
 
 /*
  * Summary:

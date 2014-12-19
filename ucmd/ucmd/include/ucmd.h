@@ -2,9 +2,9 @@
 #define UCMD_H
 
 #include "ucArgOpt.h"
-#include "ucArgOpt_owner.h"
-#include "uc_arg_tok.h"
-#include "uc_arg_tok_owner.h"
+#include "ucArgOptOwner.h"
+#include "ucArgTok.h"
+#include "ucArgTokOwner.h"
 #include "uc_cmd_line.h"
 #include "uc_cmd_line_app.h"
 #include "uc_cmd_line_opt.h"

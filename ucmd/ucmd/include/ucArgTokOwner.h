@@ -1,7 +1,7 @@
-#ifndef UC_ARG_TOK_OWNER_H
-#define UC_ARG_TOK_OWNER_H
+#ifndef UCARGTOKOWNER_H
+#define UCARGTOKOWNER_H
 
-#include "uc_arg_tok.h"
+#include "ucArgTok.h"
 
 /*
  * Summary:
@@ -10,7 +10,7 @@
  *   token type. All functions that take an instance of the base
  *   type can be used with an instance of this type.
  */
-typedef const char uc_arg_tok_owner;
+typedef const char ucArgTokOwner;
 
 /*
  * Summary
@@ -21,6 +21,6 @@ typedef const char uc_arg_tok_owner;
  *   The first argument that belongs to the owner, or NULL if
  *   no arguments exist.
  */
-UC_EXPORTED uc_arg_tok *uc_arg_tok_owner_get_arg(uc_arg_tok_owner *p);
+UC_EXPORTED ucArgTok *ucArgTokOwner_get_arg(ucArgTokOwner *p);
 
 #endif

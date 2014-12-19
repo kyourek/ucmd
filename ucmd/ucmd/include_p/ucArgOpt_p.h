@@ -20,6 +20,6 @@ struct ucArgOpt {
 
 UC_EXPORTED ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, uc_bool is_required, int min_tok_count, int max_tok_count, uc_bool is_numeric, UC_ARG_OPT_NUMERIC_TYPE numeric_min, UC_ARG_OPT_NUMERIC_TYPE numeric_max, ucArgOpt *next);
 
-UC_EXPORTED const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name);
+UC_EXPORTED const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name);
 
 #endif

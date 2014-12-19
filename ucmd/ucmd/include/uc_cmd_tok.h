@@ -24,7 +24,7 @@ typedef const char uc_cmd_tok;
  *   A pointer to the first argument token, or NULL if no arguments
  *   exist for the command.
  */
-UC_EXPORTED uc_arg_tok *uc_cmd_tok_get_arg(uc_cmd_tok *p);
+UC_EXPORTED ucArgTok *uc_cmd_tok_get_arg(uc_cmd_tok *p);
 
 /*
  * Summary:

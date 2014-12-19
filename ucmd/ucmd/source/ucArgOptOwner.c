@@ -1,27 +1,27 @@
 #include <stddef.h>
 #include "ucArgOpt_p.h"
-#include "ucArgOpt_owner_p.h"
+#include "ucArgOptOwner_p.h"
 
-ucArgOpt *ucArgOpt_owner_get_arg_opt(ucArgOpt_owner *p) {
+ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p) {
     if (NULL == p) return NULL;
     return p->arg_opt;
 }
 
-ucArgOpt_owner *ucArgOpt_owner_init(ucArgOpt_owner *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt) {
+ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt) {
     if (NULL == p) return NULL;
     if (NULL == uc_opt_init((uc_opt*)p, name, desc, is_required)) return NULL;
     p->arg_opt = arg_opt;
     return p;
 }
 
-const char *ucArgOpt_owner_format_validation_err(ucArgOpt_owner *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name) {
+const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int max_arg_tok_count;
 
     /* set the prefix for error messages */
     const char *validation, *prefix = switch_name == NULL ? uc_opt_validation_err_invalid_argument_prefix : uc_opt_validation_err_invalid_switch_argument_prefix;
 
     /* get the first argument option */
-    ucArgOpt *arg_opt = ucArgOpt_owner_get_arg_opt(p);
+    ucArgOpt *arg_opt = ucArgOptOwner_get_arg_opt(p);
 
     /* check if an argument option does NOT exist */
     if (NULL == arg_opt) {
@@ -52,7 +52,7 @@ const char *ucArgOpt_owner_format_validation_err(ucArgOpt_owner *p, uc_cmd_line 
 
         /* move to the next option and the next token */
         arg_opt = ucArgOpt_get_next(arg_opt);
-        arg_tok = uc_arg_tok_get_next(arg_tok);
+        arg_tok = ucArgTok_get_next(arg_tok);
     }
 
     /* check if we have any remaining tokens */

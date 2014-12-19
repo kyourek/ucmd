@@ -70,7 +70,7 @@ static const char *name(uc_cmd_line *cmd, void *state) {
 
     app_state *my_state;
     uc_cmd_tok *cmd_tok;
-    uc_arg_tok *name_arg;
+    ucArgTok *name_arg;
     uc_switch_tok *root_switch, *first_name_switch, *last_name_switch;
 
     my_state = (app_state*)state;
@@ -104,7 +104,7 @@ static const char *say(uc_cmd_line *cmd, void *state) {
     app_state *my_state = (struct app_state*)state;
 
     uc_cmd_tok *cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
-    uc_arg_tok *arg_tok = uc_cmd_tok_get_arg(cmd_tok);
+    ucArgTok *arg_tok = uc_cmd_tok_get_arg(cmd_tok);
 
     const char *phrase = uc_tok_get_value(arg_tok);
 

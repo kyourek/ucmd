@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "uc_cmd_tok.h"
 
-uc_arg_tok *uc_cmd_tok_get_arg(uc_cmd_tok *p) {
-    return uc_arg_tok_owner_get_arg((uc_arg_tok_owner*)p);
+ucArgTok *uc_cmd_tok_get_arg(uc_cmd_tok *p) {
+    return ucArgTokOwner_get_arg((ucArgTokOwner*)p);
 }
 
 uc_switch_tok *uc_cmd_tok_get_switch(uc_cmd_tok *p) {

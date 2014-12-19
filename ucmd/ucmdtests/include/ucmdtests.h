@@ -2,8 +2,8 @@
 #define UCMDTESTS_H
 
 #include "ucArgOpt_tests.h"
-#include "uc_arg_tok_owner_tests.h"
-#include "uc_arg_tok_tests.h"
+#include "ucArgTokOwner_tests.h"
+#include "ucArgTok_tests.h"
 #include "uc_cmd_line_app_tests.h"
 #include "uc_cmd_line_opt_tests.h"
 #include "uc_cmd_line_tests.h"

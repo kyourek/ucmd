@@ -1,7 +1,7 @@
 #ifndef UC_SWITCH_OPT_H
 #define UC_SWITCH_OPT_H
 
-#include "ucArgOpt_owner.h"
+#include "ucArgOptOwner.h"
 
 /*
  * Summary:

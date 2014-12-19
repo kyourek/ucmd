@@ -3,7 +3,7 @@
 
 static const char *cmd(uc_cmd_line *cmd, void *state) {
     uc_cmd_tok *cmd_tok;
-    uc_arg_tok *arg_tok;
+    ucArgTok *arg_tok;
     uc_switch_tok *switch_tok;
 
     cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
@@ -12,7 +12,7 @@ static const char *cmd(uc_cmd_line *cmd, void *state) {
     while (arg_tok) {
 
         uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Found argument: %s", uc_tok_get_value((uc_tok*)arg_tok)));
-        arg_tok = uc_arg_tok_get_next(arg_tok);
+        arg_tok = ucArgTok_get_next(arg_tok);
     }
 
     switch_tok = uc_cmd_tok_get_switch(cmd_tok);
@@ -24,7 +24,7 @@ static const char *cmd(uc_cmd_line *cmd, void *state) {
         while (arg_tok) {
 
             uc_cmd_line_respond(cmd, uc_cmd_line_format_response(cmd, "Found argument: %s", uc_tok_get_value((uc_tok*)arg_tok)));
-            arg_tok = uc_arg_tok_get_next(arg_tok);
+            arg_tok = ucArgTok_get_next(arg_tok);
         }
 
         switch_tok = uc_switch_tok_get_next(switch_tok);

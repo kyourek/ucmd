@@ -79,9 +79,9 @@
     <ClInclude Include="..\..\..\ucmd\config\console\windows\import\uc_export.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucmd.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucArgOpt.h" />
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_opt_owner.h" />
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok.h" />
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok_owner.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTokOwner.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_bool.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_line_app.h" />
@@ -94,7 +94,7 @@
     <ClInclude Include="..\..\..\ucmd\include\uc_switch_opt.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_switch_tok.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_tok.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_arg_opt_owner_p.h" />
+    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOptOwner_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\ucArgOpt_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_app_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_opt_p.h" />
@@ -107,9 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_opt_owner.c" />
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok.c" />
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok_owner.c" />
+    <ClCompile Include="..\..\..\ucmd\source\ucArgOptOwner.c" />
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c" />
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTokOwner.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line_app.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_cmd_line_opt.c" />

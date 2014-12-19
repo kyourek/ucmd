@@ -3,6 +3,6 @@
 
 #include "uc_test_group.h"
 
-UC_EXPORTED uc_test_group *uc_arg_tok_tests_get_group(void);
+UC_EXPORTED uc_test_group *ucArgTok_tests_get_group(void);
 
 #endif

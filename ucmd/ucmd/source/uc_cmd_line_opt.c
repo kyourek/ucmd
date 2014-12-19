@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "ucArgOpt_p.h"
-#include "ucArgOpt_owner_p.h"
+#include "ucArgOptOwner_p.h"
 #include "uc_cmd_line_opt_p.h"
 #include "uc_cmd_tok.h"
 #include "uc_memory_manager_p.h"
@@ -49,7 +49,7 @@ uc_cmd_line_opt *uc_cmd_line_opt_get_next(uc_cmd_line_opt *p) {
 
 ucArgOpt *uc_cmd_line_opt_get_arg_opt(uc_cmd_line_opt *p) {
     if (NULL == p) return NULL;
-    return ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)p);
+    return ucArgOptOwner_get_arg_opt((ucArgOptOwner*)p);
 }
 
 uc_switch_opt *uc_cmd_line_opt_get_switch_opt(uc_cmd_line_opt *p) {
@@ -59,7 +59,7 @@ uc_switch_opt *uc_cmd_line_opt_get_switch_opt(uc_cmd_line_opt *p) {
 
 uc_cmd_line_opt *uc_cmd_line_opt_init(uc_cmd_line_opt *p, uc_cmd_line_opt_func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next) {
     if (NULL == p) return NULL;
-    if (NULL == ucArgOpt_owner_init((ucArgOpt_owner*)p, name, desc, UC_TRUE, arg_opt)) return NULL;
+    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, UC_TRUE, arg_opt)) return NULL;
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;
@@ -149,7 +149,7 @@ const char *uc_cmd_line_opt_format_validation_err(uc_cmd_line_opt *p, uc_cmd_lin
 
     cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
     
-    validation = ucArgOpt_owner_format_validation_err((ucArgOpt_owner*)p, cmd, uc_cmd_tok_get_arg(cmd_tok), NULL);
+    validation = ucArgOptOwner_format_validation_err((ucArgOptOwner*)p, cmd, uc_cmd_tok_get_arg(cmd_tok), NULL);
     if (NULL != validation) return validation;
 
     switch_tok = uc_cmd_tok_get_switch(cmd_tok);

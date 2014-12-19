@@ -21,7 +21,7 @@ static ucArgOpt *create(const char *name, const char *desc, uc_bool is_required,
     );
 }
 
-static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
 
     /* check if this argument is required */
     if (uc_opt_is_required((uc_opt*)p)) {
@@ -43,7 +43,7 @@ static const char *format_is_required_validation_err(ucArgOpt *p, uc_cmd_line *c
     return NULL;
 }
 
-static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
     double arg_num;
 
     /* check if this argument option must be numeric */
@@ -93,7 +93,7 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, uc_cmd_line *cm
     return NULL;
 }
 
-static const char *format_arg_tok_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name, const char *prefix) {
+static const char *format_arg_tok_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
     const char *err;
 
     err = format_is_required_validation_err(p, cmd, arg_tok, switch_name, prefix);
@@ -174,7 +174,7 @@ ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, UC_ARG_OPT_NUMERIC_
     return create(numeric_arg_name, desc, UC_TRUE, 1, 1, UC_TRUE, numeric_min, numeric_max, next);
 }
 
-const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name) {
+const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int tok_count, max_tok_count;
 
     /* if a switch name was given, then this argument belongs
@@ -194,7 +194,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, uc_cmd_line *cmd, uc_arg
         while (arg_tok) {
 
             /* get the next argument token in the list */
-            arg_tok = uc_arg_tok_get_next(arg_tok);
+            arg_tok = ucArgTok_get_next(arg_tok);
 
             /* check if this token exists */
             if (arg_tok) {

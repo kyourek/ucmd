@@ -29,15 +29,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_opt_owner.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok_owner.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\uc_cmd_parser.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -55,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\uc_tok.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_arg_opt_owner_p.h">
-      <Filter>include_p</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_parser_p.h">
       <Filter>include_p</Filter>
@@ -125,17 +113,20 @@
     <ClInclude Include="..\..\..\ucmd\include_p\ucArgOpt_p.h">
       <Filter>include_p</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOptOwner_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTokOwner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_opt_owner.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok_owner.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\source\uc_cmd_parser.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -167,6 +158,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgOptOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTokOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

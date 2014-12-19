@@ -4,7 +4,7 @@
 #include "uc_tok_p.h"
 #include "uc_cmd_line_p.h"
 #include "uc_cmd_parser.h"
-#include "uc_arg_tok_owner.h"
+#include "ucArgTokOwner.h"
 #include "uc_switch_tok.h"
 
 uc_cmd_line *uc_cmd_line_get_instance(void) {

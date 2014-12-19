@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include "uc_switch_tok.h"
 
-uc_arg_tok *uc_switch_tok_get_arg(uc_switch_tok *p) {
-    return uc_arg_tok_owner_get_arg((uc_arg_tok_owner*)p);
+ucArgTok *uc_switch_tok_get_arg(uc_switch_tok *p) {
+    return ucArgTokOwner_get_arg((ucArgTokOwner*)p);
 }
 
 uc_switch_tok *uc_switch_tok_get_next(uc_switch_tok *p) {

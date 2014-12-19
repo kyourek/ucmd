@@ -11,15 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_opt_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_owner_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdtests\include\uc_arg_tok_tests.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmdtests\include\uc_cmd_parser_tests.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -71,17 +62,17 @@
     <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ucmdtests\include\ucArgOpt_tests.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTokOwner_tests.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmdtests\include\ucArgTok_tests.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_opt_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_tok_owner_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\source\uc_arg_tok_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_parser_tests.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -128,6 +119,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\source\uc_cmd_line_toks_tests.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\source\ucArgOpt_tests.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\source\ucArgTokOwner_tests.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\source\ucArgTok_tests.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

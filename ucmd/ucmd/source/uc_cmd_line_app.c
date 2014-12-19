@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ucArgOpt.h"
-#include "uc_arg_tok.h"
+#include "ucArgTok.h"
 #include "uc_cmd_line.h"
 #include "uc_cmd_line_app_p.h"
 #include "uc_cmd_line_opt.h"
@@ -25,7 +25,7 @@ static const char *quit(uc_cmd_line *cmd, void *state) {
 
 static const char *help(uc_cmd_line *cmd, void *state) {
     help_state *s;
-    uc_arg_tok *arg_tok;
+    ucArgTok *arg_tok;
     uc_cmd_line_opt *cmd_opt;
 
     s = (help_state*)state;

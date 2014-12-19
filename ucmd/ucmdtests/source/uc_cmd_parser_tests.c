@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "uc_arg_tok.h"
+#include "ucArgTok.h"
 #include "uc_cmd_parser_p.h"
 #include "uc_cmd_parser_tests.h"
 #include "uc_cmd_tok.h"
@@ -72,7 +72,7 @@ static uc_test_err uc_cmd_parser_parse_arguments_parsed_in_correct_order(uc_test
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[81] = "command arg1 arg2 arg3 arg4 arg5 arg6 -s1 arg arg1 -s2 arg1 arg2 arg3";
-    uc_arg_tok *arg;
+    ucArgTok *arg;
 
     uc_cmd_tok *t = parse_cmd(cmd);
 
@@ -81,7 +81,7 @@ static uc_test_err uc_cmd_parser_parse_arguments_parsed_in_correct_order(uc_test
     while (arg) {
         sprintf(buf, "arg%d", i);
         UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, buf));
-        arg = uc_arg_tok_get_next(arg);
+        arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
     UC_TEST_ASSERT(6 == i);
@@ -112,7 +112,7 @@ static uc_test_err uc_cmd_parser_parse_parses_switch_arguments_in_correct_order(
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[94] = "command arg1 arg2 -sw1 arg1 arg2 arg3 arg4 arg5 -sw2 arg1 arg2";
-    uc_arg_tok *arg;
+    ucArgTok *arg;
     uc_switch_tok *swtch;
 
     uc_cmd_tok *t = parse_cmd(cmd);
@@ -124,7 +124,7 @@ static uc_test_err uc_cmd_parser_parse_parses_switch_arguments_in_correct_order(
     while (arg) {
         sprintf(buf, "arg%d", i);
         UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, buf));
-        arg = uc_arg_tok_get_next(arg);
+        arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
     UC_TEST_ASSERT(i == 5);
@@ -143,14 +143,14 @@ static uc_test_err uc_cmd_parser_parse_parses_trailing_quotes(uc_test_group *p) 
 static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
     int i = 0;
     char cmd[139] = "somecmd 'this is a long argument' shortarg -73.452 -s1 sarg1 sarg2 sarg3 -s2 sarg3 'long switch argument' -12.43";
-    uc_arg_tok *arg = NULL;
+    ucArgTok *arg = NULL;
     uc_switch_tok *swtch = NULL;
     
     uc_cmd_tok *t = parse_cmd(cmd);
 
     UC_TEST_ASSERT(NULL != t);
     UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)t, "somecmd"));
-    UC_TEST_ASSERT(3 == uc_arg_tok_count(uc_cmd_tok_get_arg(t)));
+    UC_TEST_ASSERT(3 == ucArgTok_count(uc_cmd_tok_get_arg(t)));
     UC_TEST_ASSERT(2 == uc_switch_tok_count(uc_cmd_tok_get_switch(t)));
 
     arg = uc_cmd_tok_get_arg(t);
@@ -162,7 +162,7 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
         if (i == 2) UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, "-73.452"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
-        arg = uc_arg_tok_get_next(arg);
+        arg = ucArgTok_get_next(arg);
     }
 
     swtch = uc_cmd_tok_get_switch(t);
@@ -178,7 +178,7 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
 
     swtch = uc_cmd_tok_get_switch(t);
     UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)swtch, "-s1"));
-    arg = uc_arg_tok_owner_get_arg((uc_arg_tok_owner*)swtch);
+    arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     UC_TEST_ASSERT(arg != NULL);
     i = 0; 
     while(arg) {
@@ -187,12 +187,12 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
         if (i == 2) UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, "sarg3"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
-        arg = uc_arg_tok_get_next(arg);
+        arg = ucArgTok_get_next(arg);
     }
 
     swtch = uc_switch_tok_get_next(swtch);
     UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)swtch, "-s2"));
-    arg = uc_arg_tok_owner_get_arg((uc_arg_tok_owner*)swtch);
+    arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     UC_TEST_ASSERT(arg != NULL);
     i = 0; 
     while(arg) {
@@ -201,7 +201,7 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
         if (i == 2) UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)arg, "-12.43"));
         if (i == 3) UC_TEST_FAIL();
         i++; 
-        arg = uc_arg_tok_get_next(arg);
+        arg = ucArgTok_get_next(arg);
     }
 
     return UC_TEST_ERR_NONE;
@@ -209,7 +209,7 @@ static uc_test_err uc_cmd_parser_parse_parses_command(uc_test_group *p) {
 
 static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group *p) {
     char cmd[50] = "cmd -s \"\"";
-    uc_arg_tok *arg = NULL;
+    ucArgTok *arg = NULL;
     uc_switch_tok *swtch = NULL;
     
     uc_cmd_tok *t = parse_cmd(cmd);
@@ -224,7 +224,7 @@ static uc_test_err uc_cmd_parser_parse_allows_empty_double_quotes(uc_test_group 
 
 static uc_test_err uc_cmd_parser_parse_allows_empty_single_quotes(uc_test_group *p) {
     char cmd[50] = "c ''";
-    uc_arg_tok *arg = NULL;
+    ucArgTok *arg = NULL;
     uc_cmd_tok *t = parse_cmd(cmd);
 
     arg = uc_cmd_tok_get_arg(t);

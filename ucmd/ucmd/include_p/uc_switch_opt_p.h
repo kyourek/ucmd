@@ -1,12 +1,12 @@
 #ifndef UC_SWITCH_OPT_P_H
 #define UC_SWITCH_OPT_P_H
 
-#include "ucArgOpt_owner_p.h"
+#include "ucArgOptOwner_p.h"
 #include "uc_cmd_line.h"
 #include "uc_switch_opt.h"
 
 struct uc_switch_opt {
-    ucArgOpt_owner base;
+    ucArgOptOwner base;
     uc_switch_opt *next;
 };
 

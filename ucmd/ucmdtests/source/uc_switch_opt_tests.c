@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "ucArgOpt_owner.h"
+#include "ucArgOptOwner.h"
 #include "uc_switch_opt_p.h"
 #include "uc_switch_opt_tests.h"
 #include "uc_test.h"
@@ -24,7 +24,7 @@ static uc_test_err uc_switch_opt_create_creates_switch_opt(uc_test_group *p) {
 
     UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
     UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
-    UC_TEST_ASSERT(a == ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)s1));
+    UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
     UC_TEST_ASSERT(UC_FALSE == uc_opt_is_required((uc_opt*)s1));
     UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
 
@@ -46,7 +46,7 @@ static uc_test_err uc_switch_opt_create_required_creates_switch_opt(uc_test_grou
 
     UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
     UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
-    UC_TEST_ASSERT(a == ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)s1));
+    UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
     UC_TEST_ASSERT(UC_TRUE == uc_opt_is_required((uc_opt*)s1));
     UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
 

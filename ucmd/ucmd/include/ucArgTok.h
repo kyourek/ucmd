@@ -1,5 +1,5 @@
-#ifndef UC_ARG_TOK_H
-#define UC_ARG_TOK_H
+#ifndef UCARGTOK_H
+#define UCARGTOK_H
 
 #include "uc_tok.h"
 
@@ -10,7 +10,7 @@
  *   instance of the base type can be used with an 
  *   instance of this type.
  */
-typedef const char uc_arg_tok;
+typedef const char ucArgTok;
 
 /*
  * Summary:
@@ -20,7 +20,7 @@ typedef const char uc_arg_tok;
  * Returns:
  *   The next argument in the list.
  */
-UC_EXPORTED uc_arg_tok *uc_arg_tok_get_next(uc_arg_tok* p);
+UC_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok* p);
 
 /*
  * Summary:
@@ -30,7 +30,7 @@ UC_EXPORTED uc_arg_tok *uc_arg_tok_get_next(uc_arg_tok* p);
  * Returns:
  *   The number of arguments in the list.
  */
-UC_EXPORTED int uc_arg_tok_count(uc_arg_tok* p);
+UC_EXPORTED int ucArgTok_count(ucArgTok* p);
 
 /*
  * Summary:
@@ -41,7 +41,7 @@ UC_EXPORTED int uc_arg_tok_count(uc_arg_tok* p);
  * Returns:
  *   The argument with the specified value, or NULL if none exists.
  */
-UC_EXPORTED uc_arg_tok *uc_arg_tok_find(uc_arg_tok *p, const char *arg_value);
+UC_EXPORTED ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value);
 
 /*
  * Summary:
@@ -54,6 +54,6 @@ UC_EXPORTED uc_arg_tok *uc_arg_tok_find(uc_arg_tok *p, const char *arg_value);
  *   UC_TRUE if an argument token with the given value is found.
  *   Otherwise, UC_FALSE.
  */
-UC_EXPORTED uc_bool uc_arg_tok_contains(uc_arg_tok* p, const char *arg_value);
+UC_EXPORTED uc_bool ucArgTok_contains(ucArgTok* p, const char *arg_value);
 
 #endif

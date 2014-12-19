@@ -1,7 +1,7 @@
 #ifndef UC_SWITCH_TOK_H
 #define UC_SWITCH_TOK_H
 
-#include "uc_arg_tok_owner.h"
+#include "ucArgTokOwner.h"
 
 /*
  * Summary:
@@ -64,6 +64,6 @@ UC_EXPORTED uc_bool uc_switch_tok_contains(uc_switch_tok* p, const char *switch_
  *   A pointer to the first argument of the switch, or NULL
  *   if no arguments exist.
  */
-UC_EXPORTED uc_arg_tok *uc_switch_tok_get_arg(uc_switch_tok *p);
+UC_EXPORTED ucArgTok *uc_switch_tok_get_arg(uc_switch_tok *p);
 
 #endif

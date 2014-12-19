@@ -1,6 +1,6 @@
 #include <string.h>
 #include "ucArgOpt_p.h"
-#include "ucArgOpt_owner_p.h"
+#include "ucArgOptOwner_p.h"
 #include "uc_cmd_line.h"
 #include "uc_memory_manager_p.h"
 #include "uc_switch_opt_p.h"
@@ -12,7 +12,7 @@ static uc_switch_opt *create_switch_opt(void) {
 }
 
 ucArgOpt *uc_switch_opt_get_arg_opt(uc_switch_opt *p) {
-    return ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)p);
+    return ucArgOptOwner_get_arg_opt((ucArgOptOwner*)p);
 }
 
 uc_switch_opt *uc_switch_opt_get_next(uc_switch_opt *p) {
@@ -32,7 +32,7 @@ uc_switch_opt *uc_switch_opt_find(uc_switch_opt *p, const char *name) {
 
 uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt, uc_switch_opt *next) {
     if (NULL == p) return NULL;
-    if (NULL == ucArgOpt_owner_init((ucArgOpt_owner*)p, name, desc, is_required, arg_opt)) return NULL;
+    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, is_required, arg_opt)) return NULL;
 
     p->next = next;
     return p;
@@ -75,8 +75,8 @@ const char *uc_switch_opt_format_validation_err(uc_switch_opt *p, uc_cmd_line *c
     }
 
     /* return the result of the argument validation */
-    return ucArgOpt_owner_format_validation_err(
-        (ucArgOpt_owner*)p, 
+    return ucArgOptOwner_format_validation_err(
+        (ucArgOptOwner*)p, 
         cmd, 
         uc_switch_tok_get_arg(switch_tok), 
         uc_opt_get_name((uc_opt*)p)
