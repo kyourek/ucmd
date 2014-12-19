@@ -78,7 +78,7 @@
     <ClInclude Include="..\..\..\ucmd\config\console\windows\export\uc_export.h" />
     <ClInclude Include="..\..\..\ucmd\config\console\windows\import\uc_export.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucmd.h" />
-    <ClInclude Include="..\..\..\ucmd\include\uc_arg_opt.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucArgOpt.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_arg_opt_owner.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_arg_tok_owner.h" />
@@ -95,7 +95,7 @@
     <ClInclude Include="..\..\..\ucmd\include\uc_switch_tok.h" />
     <ClInclude Include="..\..\..\ucmd\include\uc_tok.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_arg_opt_owner_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\uc_arg_opt_p.h" />
+    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOpt_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_app_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_opt_p.h" />
     <ClInclude Include="..\..\..\ucmd\include_p\uc_cmd_line_p.h" />
@@ -106,7 +106,7 @@
     <ClInclude Include="..\..\..\ucmd\include_p\uc_tok_p.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd\source\uc_arg_opt.c" />
+    <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_arg_opt_owner.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok.c" />
     <ClCompile Include="..\..\..\ucmd\source\uc_arg_tok_owner.c" />
