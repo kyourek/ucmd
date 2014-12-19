@@ -25,7 +25,7 @@ static uc_test_err uc_switch_opt_create_creates_switch_opt(uc_test_group *p) {
     UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
     UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
     UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(UC_FALSE == uc_opt_is_required((uc_opt*)s1));
+    UC_TEST_ASSERT(ucBool_false == uc_opt_is_required((uc_opt*)s1));
     UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
 
     ucArgOpt_destroy(a);
@@ -47,7 +47,7 @@ static uc_test_err uc_switch_opt_create_required_creates_switch_opt(uc_test_grou
     UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)s1));
     UC_TEST_ASSERT(uc_opt_get_desc((uc_opt*)s1));
     UC_TEST_ASSERT(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    UC_TEST_ASSERT(UC_TRUE == uc_opt_is_required((uc_opt*)s1));
+    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required((uc_opt*)s1));
     UC_TEST_ASSERT(s2 == uc_switch_opt_get_next(s1));
 
     ucArgOpt_destroy(a);

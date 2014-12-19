@@ -28,9 +28,9 @@ typedef void (uc_cmd_line_transmit_func)(const char *response, void *state);
  * Parameters:
  *   state: A stateful object.
  * Returns:
- *   UC_TRUE if the command has been cancelled. Otherwise, UC_FALSE.
+ *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
  */
-typedef uc_bool (uc_cmd_line_is_cancelled_func)(void *state);
+typedef ucBool (uc_cmd_line_is_cancelled_func)(void *state);
 
 /*
  * Summary:
@@ -106,9 +106,9 @@ UC_EXPORTED void uc_cmd_line_set_transmit_state(uc_cmd_line *p, void *value);
  * Parameters:
  *   p: The structure to check for cancellation.
  * Returns:
- *   UC_TRUE if the command has been cancelled. Otherwise, UC_FALSE.
+ *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool uc_cmd_line_is_cancelled(uc_cmd_line *p);
+UC_EXPORTED ucBool uc_cmd_line_is_cancelled(uc_cmd_line *p);
 
 /*
  * Summary:
@@ -198,7 +198,7 @@ UC_EXPORTED void uc_cmd_line_respond(uc_cmd_line *p, const char *response);
  *   value: A boolean true value if the command structure should not send
  *          any response strings. Otherwise, false.
  */
-UC_EXPORTED void uc_cmd_line_set_is_quiet(uc_cmd_line *p, uc_bool value);
+UC_EXPORTED void uc_cmd_line_set_is_quiet(uc_cmd_line *p, ucBool value);
 
 /*
  * Summary:
@@ -210,6 +210,6 @@ UC_EXPORTED void uc_cmd_line_set_is_quiet(uc_cmd_line *p, uc_bool value);
  *   A boolean true value if the command structure is not sending any
  *   response strings. Otherwise, false.
  */
-UC_EXPORTED uc_bool uc_cmd_line_get_is_quiet(uc_cmd_line *p);
+UC_EXPORTED ucBool uc_cmd_line_get_is_quiet(uc_cmd_line *p);
 
 #endif

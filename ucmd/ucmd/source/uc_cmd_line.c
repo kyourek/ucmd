@@ -15,7 +15,7 @@ uc_cmd_line *uc_cmd_line_get_instance(void) {
         p->cmd_tok = NULL;
         p->transmit = NULL;
         p->transmit_state = NULL;
-        p->is_quiet = UC_FALSE;
+        p->is_quiet = ucBool_false;
         p->is_cancelled = NULL;
         p->is_cancelled_state = NULL;
     }
@@ -81,9 +81,9 @@ uc_cmd_line_transmit_func *uc_cmd_line_get_transmit(uc_cmd_line *p) {
     return p->transmit;
 }
 
-uc_bool uc_cmd_line_is_cancelled(uc_cmd_line *p) {
-    if (NULL == p) return UC_FALSE;
-    if (NULL == p->is_cancelled) return UC_FALSE;
+ucBool uc_cmd_line_is_cancelled(uc_cmd_line *p) {
+    if (NULL == p) return ucBool_false;
+    if (NULL == p->is_cancelled) return ucBool_false;
     return p->is_cancelled(p->is_cancelled_state);
 }
 
@@ -117,12 +117,12 @@ void uc_cmd_line_set_is_cancelled_state(uc_cmd_line *p, void *value) {
     p->is_cancelled_state = value;
 }
 
-void uc_cmd_line_set_is_quiet(uc_cmd_line *p, uc_bool value) {
+void uc_cmd_line_set_is_quiet(uc_cmd_line *p, ucBool value) {
     if (NULL == p) return;
     p->is_quiet = value;
 }
 
-uc_bool uc_cmd_line_get_is_quiet(uc_cmd_line *p) {
-    if (NULL == p) return UC_FALSE;
+ucBool uc_cmd_line_get_is_quiet(uc_cmd_line *p) {
+    if (NULL == p) return ucBool_false;
     return p->is_quiet;
 }

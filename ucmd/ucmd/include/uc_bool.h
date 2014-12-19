@@ -8,9 +8,9 @@
  *   integer representations of boolean values with the
  *   more familiar "true" and "false" values.
  */
-typedef enum uc_bool {
-    UC_FALSE = 0,
-    UC_TRUE = !UC_FALSE
-} uc_bool;
+typedef enum ucBool {
+    ucBool_false = 0,
+    ucBool_true = !ucBool_false
+} ucBool;
 
 #endif

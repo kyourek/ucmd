@@ -7,7 +7,7 @@ ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p) {
     return p->arg_opt;
 }
 
-ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt) {
+ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt) {
     if (NULL == p) return NULL;
     if (NULL == uc_opt_init((uc_opt*)p, name, desc, is_required)) return NULL;
     p->arg_opt = arg_opt;

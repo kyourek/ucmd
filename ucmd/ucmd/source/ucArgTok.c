@@ -30,6 +30,6 @@ ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value) {
     return NULL;
 }
 
-uc_bool ucArgTok_contains(ucArgTok* p, const char *arg_value) {
-    return NULL == ucArgTok_find(p, arg_value) ? UC_FALSE : UC_TRUE;
+ucBool ucArgTok_contains(ucArgTok* p, const char *arg_value) {
+    return NULL == ucArgTok_find(p, arg_value) ? ucBool_false : ucBool_true;
 }

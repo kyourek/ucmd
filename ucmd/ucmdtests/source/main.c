@@ -5,9 +5,9 @@ static void print_func(const char *str, void *state) {
     printf("%s", str);
 }
 
-static uc_bool exit_func(void *state) {
+static ucBool exit_func(void *state) {
     getchar();
-    return UC_TRUE;
+    return ucBool_true;
 }
 
 int main (int argc, const char * argv[]) {

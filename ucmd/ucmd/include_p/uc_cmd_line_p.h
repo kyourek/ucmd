@@ -11,7 +11,7 @@ struct uc_cmd_line {
     void *is_cancelled_state;
     char response[UC_CMD_LINE_RESPONSE_LENGTH];
 	char response_buffer[UC_CMD_LINE_RESPONSE_LENGTH];
-    uc_bool is_quiet;
+    ucBool is_quiet;
 };
 
 #endif

@@ -30,7 +30,7 @@ uc_switch_opt *uc_switch_opt_find(uc_switch_opt *p, const char *name) {
     return NULL;
 }
 
-uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt, uc_switch_opt *next) {
+uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, uc_switch_opt *next) {
     if (NULL == p) return NULL;
     if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, is_required, arg_opt)) return NULL;
 
@@ -39,11 +39,11 @@ uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char
 }
 
 uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next) {
-    return uc_switch_opt_init(create_switch_opt(), name, desc, UC_FALSE, arg_opt, next);
+    return uc_switch_opt_init(create_switch_opt(), name, desc, ucBool_false, arg_opt, next);
 }
 
 uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next) {
-    return uc_switch_opt_init(create_switch_opt(), name, desc, UC_TRUE, arg_opt, next);
+    return uc_switch_opt_init(create_switch_opt(), name, desc, ucBool_true, arg_opt, next);
 }
 
 void uc_switch_opt_destroy(uc_switch_opt *p) {

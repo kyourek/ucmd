@@ -15,8 +15,8 @@ const char *uc_opt_get_desc(uc_opt *p) {
     return p->desc;
 }
 
-uc_bool uc_opt_is_required(uc_opt *p) {
-    if (NULL == p) return UC_FALSE;
+ucBool uc_opt_is_required(uc_opt *p) {
+    if (NULL == p) return ucBool_false;
     return p->is_required;
 }
 
@@ -32,7 +32,7 @@ void uc_opt_send_help(uc_opt *p, uc_cmd_line *cmd, const char *prefix) {
     ));
 }
 
-uc_opt *uc_opt_init(uc_opt *p, const char *name, const char *desc, uc_bool is_required) {
+uc_opt *uc_opt_init(uc_opt *p, const char *name, const char *desc, ucBool is_required) {
     if (NULL == p) return NULL;
     p->name = name;
     p->desc = desc;

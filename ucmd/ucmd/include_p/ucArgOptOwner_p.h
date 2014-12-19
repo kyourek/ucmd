@@ -9,7 +9,7 @@ struct ucArgOptOwner {
     ucArgOpt *arg_opt;
 };
 
-UC_EXPORTED ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt);
+UC_EXPORTED ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt);
 
 UC_EXPORTED const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, uc_cmd_line *cmd, ucArgTok *arg_tok, const char *switch_name);
 

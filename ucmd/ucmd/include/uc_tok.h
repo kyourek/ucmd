@@ -1,7 +1,7 @@
 #ifndef UC_TOK_H
 #define UC_TOK_H
 
-#include "uc_bool.h"
+#include "ucBool.h"
 #include "uc_common.h"
 
 /*
@@ -27,9 +27,9 @@ UC_EXPORTED int uc_tok_get_length(uc_tok *p);
  *   p: A pointer to the token.
  *   value: The value against which the token is checked for equality.
  * Returns:
- *   UC_TRUE if the token value equals the given value. Otherwise, UC_FALSE.
+ *   ucBool_true if the token value equals the given value. Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool uc_tok_equals(uc_tok *p, const char *value);
+UC_EXPORTED ucBool uc_tok_equals(uc_tok *p, const char *value);
 
 /*
  * Summary:
@@ -37,9 +37,9 @@ UC_EXPORTED uc_bool uc_tok_equals(uc_tok *p, const char *value);
  * Parameters:
  *   p: A pointer to the token.
  * Returns:
- *   UC_TRUE if the token is considered numeric. Otherwise, UC_FALSE.
+ *   ucBool_true if the token is considered numeric. Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool uc_tok_is_numeric(uc_tok *p);
+UC_EXPORTED ucBool uc_tok_is_numeric(uc_tok *p);
 
 /*
  * Summary:
@@ -47,9 +47,9 @@ UC_EXPORTED uc_bool uc_tok_is_numeric(uc_tok *p);
  * Parameters:
  *   p: A pointer to the token.
  * Returns:
- *   UC_TRUE if the token is a switch. Otherwise, UC_FALSE.
+ *   ucBool_true if the token is a switch. Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool uc_tok_is_switch(uc_tok* p);
+UC_EXPORTED ucBool uc_tok_is_switch(uc_tok* p);
 
 /*
  * Summary:

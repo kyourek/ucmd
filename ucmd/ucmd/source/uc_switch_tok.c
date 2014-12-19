@@ -35,6 +35,6 @@ uc_switch_tok *uc_switch_tok_find(uc_switch_tok *p, const char *switch_value) {
     return NULL;
 }
 
-uc_bool uc_switch_tok_contains(uc_switch_tok* p, const char *switch_value) {
-    return NULL == uc_switch_tok_find(p, switch_value) ? UC_FALSE : UC_TRUE;
+ucBool uc_switch_tok_contains(uc_switch_tok* p, const char *switch_value) {
+    return NULL == uc_switch_tok_find(p, switch_value) ? ucBool_false : ucBool_true;
 }

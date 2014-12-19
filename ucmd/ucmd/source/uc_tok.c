@@ -4,16 +4,16 @@
 const char uc_tok_separator = '\0';
 const char uc_cmd_terminator = '\n';
 
-static uc_bool is_char_digit(char c) {
+static ucBool is_char_digit(char c) {
     /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator */
     static const char *digits = "0123456789";
     const char *d;
     for (d = digits; *d; d++) {
         if (*d == c) {
-            return UC_TRUE;
+            return ucBool_true;
         }
     }
-    return UC_FALSE;
+    return ucBool_false;
 }
 
 int uc_tok_get_length(uc_tok *p) {
@@ -30,53 +30,53 @@ const char *uc_tok_get_value(uc_tok *p) {
     return (const char*)p;
 }
 
-uc_bool uc_tok_equals(uc_tok *p, const char *value) {
+ucBool uc_tok_equals(uc_tok *p, const char *value) {
     int i, len;
 
     /* check if these pointers are the same */
-    if (value == p) return UC_TRUE;
+    if (value == p) return ucBool_true;
 
     /* make sure neither arg is null */
-    if (NULL == p) return UC_FALSE;
-    if (NULL == value) return UC_FALSE;
+    if (NULL == p) return ucBool_false;
+    if (NULL == value) return ucBool_false;
 
     /* check if the string lengths are the same */
     len = uc_tok_get_length(p);
-    if (strlen(value) != len) return UC_FALSE;
+    if (strlen(value) != len) return ucBool_false;
 
     /* check for character equality */
     for (i = 0; i < len; i++) {
         if (p[i] != value[i]) {
-            return UC_FALSE;
+            return ucBool_false;
         }
     }
 
     /* if we got here, then the strings are equal */
-    return UC_TRUE;
+    return ucBool_true;
 }
 
-uc_bool uc_tok_is_numeric(uc_tok *p) {
+ucBool uc_tok_is_numeric(uc_tok *p) {
     int i, len;
-    uc_bool dec_found;
+    ucBool dec_found;
 
     /* check if p is NULL */
-    if (NULL == p) return UC_FALSE;
+    if (NULL == p) return ucBool_false;
     
     /* get the length of the string */
     len = uc_tok_get_length(p);
     
     /* numbers need to have at least 1 character */
-    if (len < 1) return UC_FALSE;
+    if (len < 1) return ucBool_false;
     
     /* we are allowed to start with a '-' or '.' for negative numbers and decimals */
     if ((p[0] == '-') || (p[0] == '.')) {
         
         /* but we need more than 1 char if we do */
-        if (len < 2) return UC_FALSE;
+        if (len < 2) return ucBool_false;
     }
 
     // initialize vars
-    dec_found = UC_FALSE;
+    dec_found = ucBool_false;
 
     /* loop through the chars */
     for (i = 0; i < len; i++) {
@@ -85,46 +85,46 @@ uc_bool uc_tok_is_numeric(uc_tok *p) {
         
             /* allow a dash only at the beginning */
             case '-':
-                if (i != 0) return UC_FALSE;
+                if (i != 0) return ucBool_false;
                 break;
                 
             /* allow only 1 dot */
             case '.':
-                if (dec_found) return UC_FALSE;
-                dec_found = UC_TRUE;
+                if (dec_found) return ucBool_false;
+                dec_found = ucBool_true;
                 break;
                 
             /* everything else has to be a number */
             default:
-                if (is_char_digit(p[i]) == UC_FALSE) return UC_FALSE;
+                if (is_char_digit(p[i]) == ucBool_false) return ucBool_false;
                 break;
         }
     }
     
     /* if we got here, it's a number */
-    return UC_TRUE;
+    return ucBool_true;
 }
 
-uc_bool uc_tok_is_switch(uc_tok* p) {
+ucBool uc_tok_is_switch(uc_tok* p) {
     int len = 0;
 
     /* check for a null pointer */
-    if (NULL == p) return UC_FALSE;
+    if (NULL == p) return ucBool_false;
     
     /* get the length so we can use it */
     len = uc_tok_get_length(p);
     
     /* check for at least 2 characters (one '-' and at least another char) */
-    if (len < 2) return UC_FALSE;
+    if (len < 2) return ucBool_false;
     
     /* check if it starts with a '-' */
-    if (p[0] != '-') return UC_FALSE;
+    if (p[0] != '-') return ucBool_false;
     
     /* check if this is a numeric argument (negative numbers aren't switches) */
-    if (uc_tok_is_numeric(p)) return UC_FALSE;
+    if (uc_tok_is_numeric(p)) return ucBool_false;
 
     /* ok, it's a switch */
-    return UC_TRUE;
+    return ucBool_true;
 }
 
 uc_tok *uc_tok_get_next(uc_tok *p) {

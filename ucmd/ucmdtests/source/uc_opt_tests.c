@@ -29,20 +29,20 @@ static uc_test_err uc_opt_get_desc_returns_description(uc_test_group *p) {
 
 static uc_test_err uc_opt_init_initializes_structure(uc_test_group *p) {
     uc_opt o;
-    uc_opt *ptr = uc_opt_init(&o, "my_command_name", "Description of command.", UC_TRUE);
+    uc_opt *ptr = uc_opt_init(&o, "my_command_name", "Description of command.", ucBool_true);
     UC_TEST_ASSERT(ptr == (&o));
     UC_TEST_ASSERT(uc_opt_get_name(ptr));
     UC_TEST_ASSERT(uc_opt_get_desc(ptr));
-    UC_TEST_ASSERT(UC_TRUE == uc_opt_is_required(ptr));
+    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required(ptr));
     return UC_TEST_ERR_NONE;
 }
 
 static uc_test_err uc_opt_is_required_returns_is_required(uc_test_group *p) {
     uc_opt o;
-    o.is_required = UC_TRUE;
-    UC_TEST_ASSERT(UC_TRUE == uc_opt_is_required(&o));
-    o.is_required = UC_FALSE;
-    UC_TEST_ASSERT(UC_FALSE == uc_opt_is_required(&o));
+    o.is_required = ucBool_true;
+    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required(&o));
+    o.is_required = ucBool_false;
+    UC_TEST_ASSERT(ucBool_false == uc_opt_is_required(&o));
     return UC_TEST_ERR_NONE;
 }
 

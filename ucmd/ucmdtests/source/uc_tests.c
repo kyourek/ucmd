@@ -3,7 +3,7 @@
 #include "ucArgOpt_tests.h"
 #include "ucArgTokOwner_tests.h"
 #include "ucArgTok_tests.h"
-#include "uc_bool_tests.h"
+#include "ucBool_tests.h"
 #include "uc_cmd_parser_tests.h"
 #include "uc_cmd_tok_tests.h"
 #include "uc_opt_tests.h"
@@ -44,7 +44,7 @@ static uc_test_group **uc_tests_get_groups(void) {
         ucArgOpt_tests_get_group(),
         ucArgTokOwner_tests_get_group(),
         ucArgTok_tests_get_group(),
-        uc_bool_tests_get_group(),
+        ucBool_tests_get_group(),
         uc_cmd_parser_tests_get_group(),
         uc_cmd_tok_tests_get_group(),
         uc_opt_tests_get_group(),

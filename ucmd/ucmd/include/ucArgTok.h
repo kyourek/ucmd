@@ -51,9 +51,9 @@ UC_EXPORTED ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value);
  *   p: A pointer to the argument token where the search begins.
  *   arg_value: The value of the argument to be found.
  * Returns:
- *   UC_TRUE if an argument token with the given value is found.
- *   Otherwise, UC_FALSE.
+ *   ucBool_true if an argument token with the given value is found.
+ *   Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool ucArgTok_contains(ucArgTok* p, const char *arg_value);
+UC_EXPORTED ucBool ucArgTok_contains(ucArgTok* p, const char *arg_value);
 
 #endif

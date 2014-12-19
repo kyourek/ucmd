@@ -1,7 +1,7 @@
 #ifndef UC_TEST_H
 #define UC_TEST_H
 
-#include "uc_bool.h"
+#include "ucBool.h"
 #include "uc_test_group.h"
 
 typedef struct uc_test uc_test;
@@ -31,7 +31,7 @@ typedef void (uc_test_print_func)(const char *str, void *state);
  *   A boolean true value if the test procedure should exit.
  *   Otherwise, a false value.
  */
-typedef uc_bool (uc_test_exit_func)(void* state);
+typedef ucBool (uc_test_exit_func)(void* state);
 
 /*
  * Summary:

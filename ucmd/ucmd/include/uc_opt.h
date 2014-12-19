@@ -36,9 +36,9 @@ UC_EXPORTED const char *uc_opt_get_desc(uc_opt *p);
  * Parameters:
  *   p: A pointer to the option in question.
  * Returns:
- *   UC_TRUE if the option is required. Otherwise, UC_FALSE.
+ *   ucBool_true if the option is required. Otherwise, ucBool_false.
  */
-UC_EXPORTED uc_bool uc_opt_is_required(uc_opt *p);
+UC_EXPORTED ucBool uc_opt_is_required(uc_opt *p);
 
 /*
  * Summary:

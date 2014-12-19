@@ -39,7 +39,7 @@ static uc_test_err uc_cmd_line_opt_create_creates_structure(uc_test_group *p) {
     UC_TEST_ASSERT(NULL != ptr);
     UC_TEST_ASSERT(uart_func_one == uc_cmd_line_opt_get_func(ptr));
     UC_TEST_ASSERT(&state == uc_cmd_line_opt_get_state(ptr));
-    UC_TEST_ASSERT(UC_TRUE == uc_opt_is_required((uc_opt*)ptr));
+    UC_TEST_ASSERT(ucBool_true == uc_opt_is_required((uc_opt*)ptr));
 
     arg_opt = ucArgOptOwner_get_arg_opt((ucArgOptOwner*)ptr);
     UC_TEST_ASSERT(uc_opt_get_name((uc_opt*)arg_opt));

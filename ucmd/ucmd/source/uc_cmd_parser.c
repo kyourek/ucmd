@@ -3,9 +3,9 @@
 #include "uc_cmd_tok.h"
 #include "uc_tok_p.h"
 
-static uc_bool is_char_white_space(char c) {
+static ucBool is_char_white_space(char c) {
     /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */
-    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? UC_TRUE : UC_FALSE;
+    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_true : ucBool_false;
 }
 
 static char is_char_a_quote(char c) {

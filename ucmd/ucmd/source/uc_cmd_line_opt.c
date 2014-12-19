@@ -59,7 +59,7 @@ uc_switch_opt *uc_cmd_line_opt_get_switch_opt(uc_cmd_line_opt *p) {
 
 uc_cmd_line_opt *uc_cmd_line_opt_init(uc_cmd_line_opt *p, uc_cmd_line_opt_func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next) {
     if (NULL == p) return NULL;
-    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, UC_TRUE, arg_opt)) return NULL;
+    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_true, arg_opt)) return NULL;
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;

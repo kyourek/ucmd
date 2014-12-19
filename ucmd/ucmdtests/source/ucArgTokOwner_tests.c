@@ -6,7 +6,7 @@
 
 static uc_test_err ucArgTokOwner_get_arg_returns_first_arg(uc_test_group *p) {
     char cmd[] = "c\0a1\0a2\0\n";
-    UC_TEST_ASSERT(UC_TRUE == uc_tok_equals((uc_tok*)ucArgTokOwner_get_arg(cmd), "a1"));
+    UC_TEST_ASSERT(ucBool_true == uc_tok_equals((uc_tok*)ucArgTokOwner_get_arg(cmd), "a1"));
     return UC_TEST_ERR_NONE;
 }
 
