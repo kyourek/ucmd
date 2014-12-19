@@ -1,7 +1,7 @@
 #ifndef UC_ARG_OPT_OWNER_H
 #define UC_ARG_OPT_OWNER_H
 
-#include "uc_arg_opt.h"
+#include "ucArgOpt.h"
 
 /*
  * Summary:
@@ -9,7 +9,7 @@
  *   that contain argument options. This type is a child
  *   of the base option type.
  */
-typedef struct uc_arg_opt_owner uc_arg_opt_owner;
+typedef struct ucArgOpt_owner ucArgOpt_owner;
 
 /*
  * Summary:
@@ -19,6 +19,6 @@ typedef struct uc_arg_opt_owner uc_arg_opt_owner;
  * Returns:
  *   A pointer to the first argument option of the given option owner.
  */
-UC_EXPORTED uc_arg_opt *uc_arg_opt_owner_get_arg_opt(uc_arg_opt_owner *p);
+UC_EXPORTED ucArgOpt *ucArgOpt_owner_get_arg_opt(ucArgOpt_owner *p);
 
 #endif

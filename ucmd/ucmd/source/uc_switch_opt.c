@@ -1,6 +1,6 @@
 #include <string.h>
-#include "uc_arg_opt_p.h"
-#include "uc_arg_opt_owner_p.h"
+#include "ucArgOpt_p.h"
+#include "ucArgOpt_owner_p.h"
 #include "uc_cmd_line.h"
 #include "uc_memory_manager_p.h"
 #include "uc_switch_opt_p.h"
@@ -11,8 +11,8 @@ static uc_switch_opt *create_switch_opt(void) {
     return uc_memory_manager_create();
 }
 
-uc_arg_opt *uc_switch_opt_get_arg_opt(uc_switch_opt *p) {
-    return uc_arg_opt_owner_get_arg_opt((uc_arg_opt_owner*)p);
+ucArgOpt *uc_switch_opt_get_arg_opt(uc_switch_opt *p) {
+    return ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)p);
 }
 
 uc_switch_opt *uc_switch_opt_get_next(uc_switch_opt *p) {
@@ -30,19 +30,19 @@ uc_switch_opt *uc_switch_opt_find(uc_switch_opt *p, const char *name) {
     return NULL;
 }
 
-uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, uc_bool is_required, uc_arg_opt *arg_opt, uc_switch_opt *next) {
+uc_switch_opt *uc_switch_opt_init(uc_switch_opt *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt, uc_switch_opt *next) {
     if (NULL == p) return NULL;
-    if (NULL == uc_arg_opt_owner_init((uc_arg_opt_owner*)p, name, desc, is_required, arg_opt)) return NULL;
+    if (NULL == ucArgOpt_owner_init((ucArgOpt_owner*)p, name, desc, is_required, arg_opt)) return NULL;
 
     p->next = next;
     return p;
 }
 
-uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *next) {
+uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next) {
     return uc_switch_opt_init(create_switch_opt(), name, desc, UC_FALSE, arg_opt, next);
 }
 
-uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *next) {
+uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next) {
     return uc_switch_opt_init(create_switch_opt(), name, desc, UC_TRUE, arg_opt, next);
 }
 
@@ -55,7 +55,7 @@ void uc_switch_opt_destroy_chain(uc_switch_opt *p) {
     while (NULL != next) {
         p = next;
         next = uc_switch_opt_get_next(p);
-        uc_arg_opt_destroy_chain(uc_switch_opt_get_arg_opt(p));
+        ucArgOpt_destroy_chain(uc_switch_opt_get_arg_opt(p));
         uc_switch_opt_destroy(p);
     }
 }
@@ -75,8 +75,8 @@ const char *uc_switch_opt_format_validation_err(uc_switch_opt *p, uc_cmd_line *c
     }
 
     /* return the result of the argument validation */
-    return uc_arg_opt_owner_format_validation_err(
-        (uc_arg_opt_owner*)p, 
+    return ucArgOpt_owner_format_validation_err(
+        (ucArgOpt_owner*)p, 
         cmd, 
         uc_switch_tok_get_arg(switch_tok), 
         uc_opt_get_name((uc_opt*)p)

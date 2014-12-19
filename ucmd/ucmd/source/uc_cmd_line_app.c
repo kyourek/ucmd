@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "uc_arg_opt.h"
+#include "ucArgOpt.h"
 #include "uc_arg_tok.h"
 #include "uc_cmd_line.h"
 #include "uc_cmd_line_app_p.h"
@@ -65,7 +65,7 @@ static uc_err run(uc_cmd_line_app *p, uc_cmd_line_opt *cmd_opt) {
 
     /* create options for help and quit */
     quit_opt = uc_cmd_line_opt_create(quit, &quit_state_s, uc_cmd_line_app_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    main_opt = uc_cmd_line_opt_create(help, &help_state_s, uc_cmd_line_app_get_help_command(p), "Shows command information.", uc_arg_opt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    main_opt = uc_cmd_line_opt_create(help, &help_state_s, uc_cmd_line_app_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* set the state used for the help and quit commands */
     quit_state_s.app = p;

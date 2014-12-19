@@ -41,24 +41,24 @@ void uc_example(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive_fun
             NULL,
             "cmd",
             "A simple example command.",
-            uc_arg_opt_create(
+            ucArgOpt_create(
                 "arg",
                 "Help text for the command argument.",
             NULL),
             uc_switch_opt_create(
                 "-sw1",
                 "This is Switch 1.",
-                uc_arg_opt_create(
+                ucArgOpt_create(
                     "s1-a1",
                     "Info about switch 1, arg 1.",
-                uc_arg_opt_create(
+                ucArgOpt_create(
                     "s1-a2",
                     "Some help for switch 1, arg 2.",
                 NULL)),
             uc_switch_opt_create_required(
                 "-sw2",
                 "And this is the second switch, which is required.",
-                uc_arg_opt_create_required(
+                ucArgOpt_create_required(
                     "s2-a1",
                     "It has a required argument.",
                 NULL),

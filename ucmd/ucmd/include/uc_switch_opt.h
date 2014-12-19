@@ -1,7 +1,7 @@
 #ifndef UC_SWITCH_OPT_H
 #define UC_SWITCH_OPT_H
 
-#include "uc_arg_opt_owner.h"
+#include "ucArgOpt_owner.h"
 
 /*
  * Summary:
@@ -22,7 +22,7 @@ typedef struct uc_switch_opt uc_switch_opt;
  * Returns:
  *   A pointer to the newly created switch option.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *next);
+UC_EXPORTED uc_switch_opt *uc_switch_opt_create(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next);
 
 /*
  * Summary:
@@ -37,7 +37,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_create(const char *name, const char *de
  *   A pointer to the newly created switch option. The option's
  *   'required' property will be set to true.
  */
-UC_EXPORTED uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *next);
+UC_EXPORTED uc_switch_opt *uc_switch_opt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *next);
 
 /*
  * Summary:
@@ -48,7 +48,7 @@ UC_EXPORTED uc_switch_opt *uc_switch_opt_create_required(const char *name, const
  *   A pointer to the first argument option of the switch, or NULL
  *   if no argument options exist.
  */
-UC_EXPORTED uc_arg_opt *uc_switch_opt_get_arg_opt(uc_switch_opt *p);
+UC_EXPORTED ucArgOpt *uc_switch_opt_get_arg_opt(uc_switch_opt *p);
 
 /*
  * Summary:

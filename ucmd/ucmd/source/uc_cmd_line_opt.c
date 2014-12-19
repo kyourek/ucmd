@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <string.h>
-#include "uc_arg_opt_p.h"
-#include "uc_arg_opt_owner_p.h"
+#include "ucArgOpt_p.h"
+#include "ucArgOpt_owner_p.h"
 #include "uc_cmd_line_opt_p.h"
 #include "uc_cmd_tok.h"
 #include "uc_memory_manager_p.h"
@@ -25,20 +25,20 @@ static const char *add_opt_to_usage_response(uc_opt *opt, uc_cmd_line *cmd, cons
     );
 }
 
-static const char *add_arg_opts_to_usage_response(uc_arg_opt *arg_opt, uc_cmd_line *cmd, const char *response) {
+static const char *add_arg_opts_to_usage_response(ucArgOpt *arg_opt, uc_cmd_line *cmd, const char *response) {
     
     while (NULL != arg_opt) {
         response = add_opt_to_usage_response((uc_opt*)arg_opt, cmd, response);
-        arg_opt = uc_arg_opt_get_next(arg_opt);
+        arg_opt = ucArgOpt_get_next(arg_opt);
     }
 
     return response;
 }
 
-static void send_arg_opts_help(uc_arg_opt *arg_opt, uc_cmd_line *cmd, const char *prefix) {
+static void send_arg_opts_help(ucArgOpt *arg_opt, uc_cmd_line *cmd, const char *prefix) {
     while (NULL != arg_opt) {
         uc_opt_send_help((uc_opt*)arg_opt, cmd, prefix);
-        arg_opt = uc_arg_opt_get_next(arg_opt);
+        arg_opt = ucArgOpt_get_next(arg_opt);
     }
 }
 
@@ -47,9 +47,9 @@ uc_cmd_line_opt *uc_cmd_line_opt_get_next(uc_cmd_line_opt *p) {
     return p->next;
 }
 
-uc_arg_opt *uc_cmd_line_opt_get_arg_opt(uc_cmd_line_opt *p) {
+ucArgOpt *uc_cmd_line_opt_get_arg_opt(uc_cmd_line_opt *p) {
     if (NULL == p) return NULL;
-    return uc_arg_opt_owner_get_arg_opt((uc_arg_opt_owner*)p);
+    return ucArgOpt_owner_get_arg_opt((ucArgOpt_owner*)p);
 }
 
 uc_switch_opt *uc_cmd_line_opt_get_switch_opt(uc_cmd_line_opt *p) {
@@ -57,9 +57,9 @@ uc_switch_opt *uc_cmd_line_opt_get_switch_opt(uc_cmd_line_opt *p) {
     return p->switch_opt;
 }
 
-uc_cmd_line_opt *uc_cmd_line_opt_init(uc_cmd_line_opt *p, uc_cmd_line_opt_func *func, void* state, const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next) {
+uc_cmd_line_opt *uc_cmd_line_opt_init(uc_cmd_line_opt *p, uc_cmd_line_opt_func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next) {
     if (NULL == p) return NULL;
-    if (NULL == uc_arg_opt_owner_init((uc_arg_opt_owner*)p, name, desc, UC_TRUE, arg_opt)) return NULL;
+    if (NULL == ucArgOpt_owner_init((ucArgOpt_owner*)p, name, desc, UC_TRUE, arg_opt)) return NULL;
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;
@@ -67,7 +67,7 @@ uc_cmd_line_opt *uc_cmd_line_opt_init(uc_cmd_line_opt *p, uc_cmd_line_opt_func *
     return p;
 }
 
-uc_cmd_line_opt *uc_cmd_line_opt_create(uc_cmd_line_opt_func *func, void *state, const char *name, const char *desc, uc_arg_opt* arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt *next) {
+uc_cmd_line_opt *uc_cmd_line_opt_create(uc_cmd_line_opt_func *func, void *state, const char *name, const char *desc, ucArgOpt* arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt *next) {
     return uc_cmd_line_opt_init(create_cmd_line_opt(), func, state, name, desc, arg_opt, switch_opt, next);
 }
 
@@ -149,7 +149,7 @@ const char *uc_cmd_line_opt_format_validation_err(uc_cmd_line_opt *p, uc_cmd_lin
 
     cmd_tok = uc_cmd_line_get_cmd_tok(cmd);
     
-    validation = uc_arg_opt_owner_format_validation_err((uc_arg_opt_owner*)p, cmd, uc_cmd_tok_get_arg(cmd_tok), NULL);
+    validation = ucArgOpt_owner_format_validation_err((ucArgOpt_owner*)p, cmd, uc_cmd_tok_get_arg(cmd_tok), NULL);
     if (NULL != validation) return validation;
 
     switch_tok = uc_cmd_tok_get_switch(cmd_tok);
@@ -233,7 +233,7 @@ void uc_cmd_line_opt_destroy_chain(uc_cmd_line_opt *p) {
     while (NULL != next) {
         p = next;
         next = uc_cmd_line_opt_get_next(p);
-        uc_arg_opt_destroy_chain(uc_cmd_line_opt_get_arg_opt(p));
+        ucArgOpt_destroy_chain(uc_cmd_line_opt_get_arg_opt(p));
         uc_switch_opt_destroy_chain(uc_cmd_line_opt_get_switch_opt(p));
         uc_cmd_line_opt_destroy(p);
     }

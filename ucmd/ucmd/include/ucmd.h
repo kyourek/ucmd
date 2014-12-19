@@ -1,8 +1,8 @@
 #ifndef UCMD_H
 #define UCMD_H
 
-#include "uc_arg_opt.h"
-#include "uc_arg_opt_owner.h"
+#include "ucArgOpt.h"
+#include "ucArgOpt_owner.h"
 #include "uc_arg_tok.h"
 #include "uc_arg_tok_owner.h"
 #include "uc_cmd_line.h"

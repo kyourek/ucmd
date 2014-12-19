@@ -1,27 +1,27 @@
 #include <stddef.h>
-#include "uc_arg_opt_p.h"
-#include "uc_arg_opt_owner_p.h"
+#include "ucArgOpt_p.h"
+#include "ucArgOpt_owner_p.h"
 
-uc_arg_opt *uc_arg_opt_owner_get_arg_opt(uc_arg_opt_owner *p) {
+ucArgOpt *ucArgOpt_owner_get_arg_opt(ucArgOpt_owner *p) {
     if (NULL == p) return NULL;
     return p->arg_opt;
 }
 
-uc_arg_opt_owner *uc_arg_opt_owner_init(uc_arg_opt_owner *p, const char *name, const char *desc, uc_bool is_required, uc_arg_opt *arg_opt) {
+ucArgOpt_owner *ucArgOpt_owner_init(ucArgOpt_owner *p, const char *name, const char *desc, uc_bool is_required, ucArgOpt *arg_opt) {
     if (NULL == p) return NULL;
     if (NULL == uc_opt_init((uc_opt*)p, name, desc, is_required)) return NULL;
     p->arg_opt = arg_opt;
     return p;
 }
 
-const char *uc_arg_opt_owner_format_validation_err(uc_arg_opt_owner *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name) {
+const char *ucArgOpt_owner_format_validation_err(ucArgOpt_owner *p, uc_cmd_line *cmd, uc_arg_tok *arg_tok, const char *switch_name) {
     int max_arg_tok_count;
 
     /* set the prefix for error messages */
     const char *validation, *prefix = switch_name == NULL ? uc_opt_validation_err_invalid_argument_prefix : uc_opt_validation_err_invalid_switch_argument_prefix;
 
     /* get the first argument option */
-    uc_arg_opt *arg_opt = uc_arg_opt_owner_get_arg_opt(p);
+    ucArgOpt *arg_opt = ucArgOpt_owner_get_arg_opt(p);
 
     /* check if an argument option does NOT exist */
     if (NULL == arg_opt) {
@@ -44,14 +44,14 @@ const char *uc_arg_opt_owner_format_validation_err(uc_arg_opt_owner *p, uc_cmd_l
     while (NULL != arg_opt) {
 
         /* validate this argument option agains the current token */
-        validation = uc_arg_opt_format_validation_err(arg_opt, cmd, arg_tok, switch_name);
+        validation = ucArgOpt_format_validation_err(arg_opt, cmd, arg_tok, switch_name);
         if (NULL != validation) return validation;
 
         /* get the number of tokens that this option allows */
-        max_arg_tok_count = uc_arg_opt_get_max_tok_count(arg_opt);
+        max_arg_tok_count = ucArgOpt_get_max_tok_count(arg_opt);
 
         /* move to the next option and the next token */
-        arg_opt = uc_arg_opt_get_next(arg_opt);
+        arg_opt = ucArgOpt_get_next(arg_opt);
         arg_tok = uc_arg_tok_get_next(arg_tok);
     }
 

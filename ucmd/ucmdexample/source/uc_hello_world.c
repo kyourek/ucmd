@@ -153,7 +153,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
                 /* Creates an argument 'first-name' for the
                 '-first' switch. This argument is required
                 if the '-first' switch is used. */
-                uc_arg_opt_create_required(
+                ucArgOpt_create_required(
                     "first-name",
                     "The first-name of the user.",
                 
@@ -168,7 +168,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
             uc_switch_opt_create(
                 "-last",
                 "Sets the user's last name.",
-                uc_arg_opt_create_required(
+                ucArgOpt_create_required(
                     "last-name",
                     "The last-name of the user.",
                 NULL),
@@ -188,7 +188,7 @@ void uc_hello_world(uc_cmd_line_transmit_func *transmit, uc_cmd_line_app_receive
             /* There is only one argument supplied
             to this command, and it is required. It
             is the phrase to say to the user. */
-            uc_arg_opt_create_required(
+            ucArgOpt_create_required(
                 "phrase",
                 "The phrase to say.",
                 NULL),

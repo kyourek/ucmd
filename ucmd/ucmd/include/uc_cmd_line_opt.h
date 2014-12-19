@@ -1,7 +1,7 @@
 #ifndef UC_CMD_LINE_OPT_H
 #define UC_CMD_LINE_OPT_H
 
-#include "uc_arg_opt_owner.h"
+#include "ucArgOpt_owner.h"
 #include "uc_cmd_line.h"
 #include "uc_cmd_tok.h"
 #include "uc_switch_opt.h"
@@ -38,7 +38,7 @@ typedef const char *(uc_cmd_line_opt_func)(uc_cmd_line *cmd, void *state);
  * Returns:
  *   A pointer to the newly created command option.
  */
-UC_EXPORTED uc_cmd_line_opt *uc_cmd_line_opt_create(uc_cmd_line_opt_func *func, void *state, const char *name, const char *desc, uc_arg_opt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next);
+UC_EXPORTED uc_cmd_line_opt *uc_cmd_line_opt_create(uc_cmd_line_opt_func *func, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, uc_switch_opt *switch_opt, uc_cmd_line_opt* next);
 
 /*
  * Summary:
@@ -59,7 +59,7 @@ UC_EXPORTED uc_cmd_line_opt *uc_cmd_line_opt_get_next(uc_cmd_line_opt *p);
  *   A pointer to the first argument option of the command,
  *   or NULL if no argument options exist.
  */
-UC_EXPORTED uc_arg_opt *uc_cmd_line_opt_get_arg_opt(uc_cmd_line_opt *p);
+UC_EXPORTED ucArgOpt *uc_cmd_line_opt_get_arg_opt(uc_cmd_line_opt *p);
 
 /*
  * Summary:
