@@ -24,14 +24,14 @@ static void transmit_2(const char *response, void *state) {
 }
 
 static void *is_cancelled_1_state;
-static ucBool is_cancelled_1_returned_value = ucBool_false;
+static ucBool is_cancelled_1_returned_value = ucBool_FALSE;
 static ucBool is_cancelled_1(void *state) {
     is_cancelled_1_state = state;
     return is_cancelled_1_returned_value;
 }
 
 static ucBool is_cancelled_2(void *state) {
-    return ucBool_true;
+    return ucBool_TRUE;
 }
 
 static ucTestErr ucCmdLine_get_cmd_tok_returns_cmd_tok(ucTestGroup *p) {
@@ -131,7 +131,7 @@ static ucTestErr ucCmdLine_get_transmit_returns_transmit(ucTestGroup *p) {
 
 static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
     ucCmdLine c;
-    c.is_quiet = ucBool_false;
+    c.is_quiet = ucBool_FALSE;
     c.transmit = transmit_1;
 
     transmit_1_response = NULL;
@@ -160,11 +160,11 @@ static ucTestErr ucCmdLine_is_cancelled_calls_is_cancelled(ucTestGroup *p) {
     ucCmdLine c;
     c.is_cancelled = is_cancelled_1;
 
-    is_cancelled_1_returned_value = ucBool_true;
-    ucTest_ASSERT(ucBool_true == ucCmdLine_is_cancelled(&c));
+    is_cancelled_1_returned_value = ucBool_TRUE;
+    ucTest_ASSERT(ucBool_TRUE == ucCmdLine_is_cancelled(&c));
 
-    is_cancelled_1_returned_value = ucBool_false;
-    ucTest_ASSERT(ucBool_false == ucCmdLine_is_cancelled(&c));
+    is_cancelled_1_returned_value = ucBool_FALSE;
+    ucTest_ASSERT(ucBool_FALSE == ucCmdLine_is_cancelled(&c));
 
     return ucTestErr_NONE;
 }
@@ -255,10 +255,10 @@ static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_get_instance();
     
     ucBool prev_val = ucCmdLine_get_is_quiet(ptr);
-    ucTest_ASSERT(ucBool_false == prev_val);
+    ucTest_ASSERT(ucBool_FALSE == prev_val);
 
-    ucCmdLine_set_is_quiet(ptr, ucBool_true);
-    ucTest_ASSERT(ucCmdLine_get_is_quiet(ptr) == ucBool_true);
+    ucCmdLine_set_is_quiet(ptr, ucBool_TRUE);
+    ucTest_ASSERT(ucCmdLine_get_is_quiet(ptr) == ucBool_TRUE);
 
     ucCmdLine_set_is_quiet(ptr, prev_val);
     ucTest_ASSERT(ucCmdLine_get_is_quiet(ptr) == prev_val);
@@ -270,7 +270,7 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_get_instance();
     ucBool pre_val = ucCmdLine_get_is_quiet(ptr);
 
-    ucCmdLine_set_is_quiet(ptr, ucBool_true);
+    ucCmdLine_set_is_quiet(ptr, ucBool_TRUE);
     ucCmdLine_set_transmit(ptr, transmit_1);
 
     transmit_1_response = NULL;

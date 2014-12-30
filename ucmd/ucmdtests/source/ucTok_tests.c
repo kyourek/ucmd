@@ -41,15 +41,15 @@ static ucTestErr ucTok_equals_returns_true_if_strings_are_equal(ucTestGroup *p) 
     char *value1 = "value";
     char value2[] = { 'v', 'a', 'l', 'u', 'e', '\0', 'n', 'a', '\0' };
     ucTok *ptr = "value";
-    ucTest_ASSERT(ucBool_true == ucTok_equals(ptr, value1));
-    ucTest_ASSERT(ucBool_true == ucTok_equals(ptr, value2));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_equals(ptr, value1));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_equals(ptr, value2));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_equals_returns_true_for_nulls(ucTestGroup *p) {
     char  *value = NULL;
     ucTok *ptr = NULL;
-    ucTest_ASSERT(ucBool_true == ucTok_equals(ptr, value));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_equals(ptr, value));
     return ucTestErr_NONE;
 }
 
@@ -57,62 +57,62 @@ static ucTestErr ucTok_equals_returns_false_if_strings_are_different(ucTestGroup
     char *value1 = "value";
     char value2[] = { 'v', 'a', 'l', 'u', '\0', 'u', '\0' };
     ucTok *ptr = "valuu";
-    ucTest_ASSERT(ucBool_false == ucTok_equals(ptr, value1));
-    ucTest_ASSERT(ucBool_false == ucTok_equals(ptr, value2));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_equals(ptr, value1));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_equals(ptr, value2));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_equals_returns_false_if_either_arg_is_null(ucTestGroup *p) {
     char *value = "value";
     ucTok *ptr = NULL;
-    ucTest_ASSERT(ucBool_false == ucTok_equals(ptr, value));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_equals(ptr, value));
 
     ptr = value;
     value = NULL;
-    ucTest_ASSERT(ucBool_false == ucTok_equals(ptr, value));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_equals(ptr, value));
 
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_is_numeric_returns_true_for_numbers(ucTestGroup *p) {
     char n1[] = { '4', '8', '.', '9', '1', '\0', 'n', 'a', '\0' };
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)"1"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)"1.2"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)"87"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)"-1"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)n1));
-    ucTest_ASSERT(ucBool_true == ucTok_is_numeric((ucTok*)"-543.234610"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)"1"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)"1.2"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)"87"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)"-1"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)n1));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_numeric((ucTok*)"-543.234610"));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_is_numeric_returns_false_for_non_numbers(ucTestGroup *p) {
     char c1[] = { '4', '8', '.', '9', '1', 'n', 'a', '\0' };
-    ucTest_ASSERT(ucBool_false == ucTok_is_numeric((ucTok*)"a"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_numeric((ucTok*)"1234_"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_numeric((ucTok*)"1_234"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_numeric((ucTok*)c1));
-    ucTest_ASSERT(ucBool_false == ucTok_is_numeric((ucTok*)NULL));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_numeric((ucTok*)"a"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_numeric((ucTok*)"1234_"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_numeric((ucTok*)"1_234"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_numeric((ucTok*)c1));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_numeric((ucTok*)NULL));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_is_switch_returns_true_for_switches(ucTestGroup *p) {
     char s1[] = { '-', 's', '1', '\0', 'n', 'a', '\0' };
-    ucTest_ASSERT(ucBool_true == ucTok_is_switch((ucTok*)"-switch"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_switch((ucTok*)"--double"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_switch((ucTok*)"-em-bed"));
-    ucTest_ASSERT(ucBool_true == ucTok_is_switch((ucTok*)s1));
-    ucTest_ASSERT(ucBool_true == ucTok_is_switch((ucTok*)"-1.23.4"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_switch((ucTok*)"-switch"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_switch((ucTok*)"--double"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_switch((ucTok*)"-em-bed"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_switch((ucTok*)s1));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_is_switch((ucTok*)"-1.23.4"));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_is_switch_returns_false_for_non_switches(ucTestGroup *p) {
     char a1[] = { 'a', 'r', 'g', '-', 'd', 'a', 's', 'h', '\0' };
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)"arg"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)"e-mbed"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)"-1"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)"-1.234"));
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)a1));
-    ucTest_ASSERT(ucBool_false == ucTok_is_switch((ucTok*)NULL));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)"arg"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)"e-mbed"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)"-1"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)"-1.234"));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)a1));
+    ucTest_ASSERT(ucBool_FALSE == ucTok_is_switch((ucTok*)NULL));
     return ucTestErr_NONE;
 }
 

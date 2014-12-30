@@ -10,10 +10,10 @@ static ucBool is_char_digit(char c) {
     const char *d;
     for (d = digits; *d; d++) {
         if (*d == c) {
-            return ucBool_true;
+            return ucBool_TRUE;
         }
     }
-    return ucBool_false;
+    return ucBool_FALSE;
 }
 
 int ucTok_get_length(ucTok *p) {
@@ -34,25 +34,25 @@ ucBool ucTok_equals(ucTok *p, const char *value) {
     int i, len;
 
     /* check if these pointers are the same */
-    if (value == p) return ucBool_true;
+    if (value == p) return ucBool_TRUE;
 
     /* make sure neither arg is null */
-    if (NULL == p) return ucBool_false;
-    if (NULL == value) return ucBool_false;
+    if (NULL == p) return ucBool_FALSE;
+    if (NULL == value) return ucBool_FALSE;
 
     /* check if the string lengths are the same */
     len = ucTok_get_length(p);
-    if (strlen(value) != len) return ucBool_false;
+    if (strlen(value) != len) return ucBool_FALSE;
 
     /* check for character equality */
     for (i = 0; i < len; i++) {
         if (p[i] != value[i]) {
-            return ucBool_false;
+            return ucBool_FALSE;
         }
     }
 
     /* if we got here, then the strings are equal */
-    return ucBool_true;
+    return ucBool_TRUE;
 }
 
 ucBool ucTok_is_numeric(ucTok *p) {
@@ -60,23 +60,23 @@ ucBool ucTok_is_numeric(ucTok *p) {
     ucBool dec_found;
 
     /* check if p is NULL */
-    if (NULL == p) return ucBool_false;
+    if (NULL == p) return ucBool_FALSE;
     
     /* get the length of the string */
     len = ucTok_get_length(p);
     
     /* numbers need to have at least 1 character */
-    if (len < 1) return ucBool_false;
+    if (len < 1) return ucBool_FALSE;
     
     /* we are allowed to start with a '-' or '.' for negative numbers and decimals */
     if ((p[0] == '-') || (p[0] == '.')) {
         
         /* but we need more than 1 char if we do */
-        if (len < 2) return ucBool_false;
+        if (len < 2) return ucBool_FALSE;
     }
 
     // initialize vars
-    dec_found = ucBool_false;
+    dec_found = ucBool_FALSE;
 
     /* loop through the chars */
     for (i = 0; i < len; i++) {
@@ -85,46 +85,46 @@ ucBool ucTok_is_numeric(ucTok *p) {
         
             /* allow a dash only at the beginning */
             case '-':
-                if (i != 0) return ucBool_false;
+                if (i != 0) return ucBool_FALSE;
                 break;
                 
             /* allow only 1 dot */
             case '.':
-                if (dec_found) return ucBool_false;
-                dec_found = ucBool_true;
+                if (dec_found) return ucBool_FALSE;
+                dec_found = ucBool_TRUE;
                 break;
                 
             /* everything else has to be a number */
             default:
-                if (is_char_digit(p[i]) == ucBool_false) return ucBool_false;
+                if (is_char_digit(p[i]) == ucBool_FALSE) return ucBool_FALSE;
                 break;
         }
     }
     
     /* if we got here, it's a number */
-    return ucBool_true;
+    return ucBool_TRUE;
 }
 
 ucBool ucTok_is_switch(ucTok* p) {
     int len = 0;
 
     /* check for a null pointer */
-    if (NULL == p) return ucBool_false;
+    if (NULL == p) return ucBool_FALSE;
     
     /* get the length so we can use it */
     len = ucTok_get_length(p);
     
     /* check for at least 2 characters (one '-' and at least another char) */
-    if (len < 2) return ucBool_false;
+    if (len < 2) return ucBool_FALSE;
     
     /* check if it starts with a '-' */
-    if (p[0] != '-') return ucBool_false;
+    if (p[0] != '-') return ucBool_FALSE;
     
     /* check if this is a numeric argument (negative numbers aren't switches) */
-    if (ucTok_is_numeric(p)) return ucBool_false;
+    if (ucTok_is_numeric(p)) return ucBool_FALSE;
 
     /* ok, it's a switch */
-    return ucBool_true;
+    return ucBool_TRUE;
 }
 
 ucTok *ucTok_get_next(ucTok *p) {

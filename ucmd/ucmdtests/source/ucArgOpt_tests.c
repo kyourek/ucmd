@@ -6,11 +6,11 @@
 static ucTestErr ucArgOpt_is_numeric_returns_is_numeric(ucTestGroup *p) {
     ucArgOpt o;
     
-    o.is_numeric = ucBool_false;
-    ucTest_ASSERT(ucBool_false == ucArgOpt_is_numeric(&o));
+    o.is_numeric = ucBool_FALSE;
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_numeric(&o));
 
-    o.is_numeric = ucBool_true;
-    ucTest_ASSERT(ucBool_true == ucArgOpt_is_numeric(&o));
+    o.is_numeric = ucBool_TRUE;
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(&o));
 
     return ucTestErr_NONE;
 }
@@ -38,8 +38,8 @@ static ucTestErr ucArgOpt_create_creates_arg_opt(ucTestGroup *p) {
     ucTest_ASSERT(ucOpt_get_name((ucOpt*)ptr));
     ucTest_ASSERT(ucOpt_get_desc((ucOpt*)ptr));
     ucTest_ASSERT(&a == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_false == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(0 == ucArgOpt_get_min_tok_count(ptr));
     ucTest_ASSERT(1 == ucArgOpt_get_max_tok_count(ptr));
 
@@ -58,8 +58,8 @@ static ucTestErr ucArgOpt_create_multiple_creates_arg_opt(ucTestGroup *p) {
     ucTest_ASSERT(0 == strcmp(name, ucOpt_get_name((ucOpt*)ptr)));
     ucTest_ASSERT(0 == strcmp(desc, ucOpt_get_desc((ucOpt*)ptr)));
     ucTest_ASSERT(NULL == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_false == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(min_tok_count == ucArgOpt_get_min_tok_count(ptr));
     ucTest_ASSERT(max_tok_count == ucArgOpt_get_max_tok_count(ptr));
 
@@ -67,7 +67,7 @@ static ucTestErr ucArgOpt_create_multiple_creates_arg_opt(ucTestGroup *p) {
 
     ptr = ucArgOpt_create_multiple(name, desc, 0, max_tok_count);
 
-    ucTest_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
 
     ucArgOpt_destroy(ptr);
 
@@ -83,8 +83,8 @@ static ucTestErr ucArgOpt_create_required_creates_arg_opt(ucTestGroup *p) {
     ucTest_ASSERT(ucOpt_get_name((ucOpt*)ptr));
     ucTest_ASSERT(ucOpt_get_desc((ucOpt*)ptr));
     ucTest_ASSERT(&a == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_false == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(1 == ucArgOpt_get_min_tok_count(ptr));
     ucTest_ASSERT(1 == ucArgOpt_get_max_tok_count(ptr));
 
@@ -103,8 +103,8 @@ static ucTestErr ucArgOpt_create_multiple_numeric_creates_arg_opt(ucTestGroup *p
     
     ucTest_ASSERT(0 == strcmp(desc, ucOpt_get_desc((ucOpt*)ptr)));
     ucTest_ASSERT(NULL == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_true == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(min_tok_count == ucArgOpt_get_min_tok_count(ptr));
     ucTest_ASSERT(max_tok_count == ucArgOpt_get_max_tok_count(ptr));
     ucTest_ASSERT(numeric_min == ucArgOpt_get_numeric_min(ptr));
@@ -114,7 +114,7 @@ static ucTestErr ucArgOpt_create_multiple_numeric_creates_arg_opt(ucTestGroup *p
 
     ptr = ucArgOpt_create_multiple_numeric(desc, 0, max_tok_count, numeric_min, numeric_max);
 
-    ucTest_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
 
     ucArgOpt_destroy(ptr);
 
@@ -130,8 +130,8 @@ static ucTestErr ucArgOpt_create_numeric_creates_arg_opt(ucTestGroup *p) {
     ucTest_ASSERT(ucOpt_get_name((ucOpt*)ptr));
     ucTest_ASSERT(ucOpt_get_desc((ucOpt*)ptr));
     ucTest_ASSERT(&a == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_true == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(-5.678 == ucArgOpt_get_numeric_min(ptr));
     ucTest_ASSERT(12.34 == ucArgOpt_get_numeric_max(ptr));
     ucTest_ASSERT(0 == ucArgOpt_get_min_tok_count(ptr));
@@ -151,8 +151,8 @@ static ucTestErr ucArgOpt_create_required_numeric_creates_arg_opt(ucTestGroup *p
     ucTest_ASSERT(ucOpt_get_name((ucOpt*)ptr));
     ucTest_ASSERT(ucOpt_get_desc((ucOpt*)ptr));
     ucTest_ASSERT(&a == ucArgOpt_get_next(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
-    ucTest_ASSERT(ucBool_true == ucArgOpt_is_numeric(ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
     ucTest_ASSERT(100.436 == ucArgOpt_get_numeric_min(ptr));
     ucTest_ASSERT(567.890 == ucArgOpt_get_numeric_max(ptr));
     ucTest_ASSERT(1 == ucArgOpt_get_min_tok_count(ptr));

@@ -36,5 +36,5 @@ ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value) {
 }
 
 ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value) {
-    return NULL == ucSwitchTok_find(p, switch_value) ? ucBool_false : ucBool_true;
+    return NULL == ucSwitchTok_find(p, switch_value) ? ucBool_FALSE : ucBool_TRUE;
 }

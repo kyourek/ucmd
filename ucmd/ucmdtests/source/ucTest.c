@@ -9,8 +9,8 @@ static void ucTest_print(ucTest *p, const char *str) {
 }
 
 static ucBool ucTest_exit(ucTest *p) {
-    if (NULL == p) return ucBool_true;
-    if (NULL == p->exit_func) return ucBool_true;
+    if (NULL == p) return ucBool_TRUE;
+    if (NULL == p->exit_func) return ucBool_TRUE;
     return p->exit_func(p->exit_state);
 }
 

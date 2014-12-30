@@ -5,7 +5,7 @@
 
 static ucBool is_char_white_space(char c) {
     /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */
-    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_true : ucBool_false;
+    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_TRUE : ucBool_FALSE;
 }
 
 static char is_char_a_quote(char c) {

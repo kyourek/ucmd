@@ -50,8 +50,8 @@ uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_val
  *   p: A pointer to the first switch token in the list.
  *   switch_value: The value of the switch to be found.
  * Returns:
- *   ucBool_true if a switch with the given value was found in the list. Otherwise,
- *   ucBool_false.
+ *   ucBool_TRUE if a switch with the given value was found in the list. Otherwise,
+ *   ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value);
 

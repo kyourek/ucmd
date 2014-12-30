@@ -37,7 +37,7 @@ uc_EXPORTED int ucArgOpt_get_max_tok_count(ucArgOpt *p);
  * Parameters:
  *   p: A pointer to the argument option in question.
  * Returns:
- *   ucBool_true if the argument is numeric. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the argument is numeric. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt *p);
 

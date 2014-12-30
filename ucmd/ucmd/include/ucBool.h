@@ -9,8 +9,8 @@
  *   more familiar "true" and "false" values.
  */
 typedef enum ucBool {
-    ucBool_false = 0,
-    ucBool_true = !ucBool_false
+    ucBool_FALSE = 0,
+    ucBool_TRUE = !ucBool_FALSE
 } ucBool;
 
 #endif

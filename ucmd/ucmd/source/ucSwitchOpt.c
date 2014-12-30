@@ -39,11 +39,11 @@ ucSwitchOpt *ucSwitchOpt_init(ucSwitchOpt *p, const char *name, const char *desc
 }
 
 ucSwitchOpt *ucSwitchOpt_create(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next) {
-    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_false, arg_opt, next);
+    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_FALSE, arg_opt, next);
 }
 
 ucSwitchOpt *ucSwitchOpt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next) {
-    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_true, arg_opt, next);
+    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_TRUE, arg_opt, next);
 }
 
 void ucSwitchOpt_destroy(ucSwitchOpt *p) {

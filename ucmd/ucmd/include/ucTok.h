@@ -27,7 +27,7 @@ uc_EXPORTED int ucTok_get_length(ucTok *p);
  *   p: A pointer to the token.
  *   value: The value against which the token is checked for equality.
  * Returns:
- *   ucBool_true if the token value equals the given value. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the token value equals the given value. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucTok_equals(ucTok *p, const char *value);
 
@@ -37,7 +37,7 @@ uc_EXPORTED ucBool ucTok_equals(ucTok *p, const char *value);
  * Parameters:
  *   p: A pointer to the token.
  * Returns:
- *   ucBool_true if the token is considered numeric. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the token is considered numeric. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucTok_is_numeric(ucTok *p);
 
@@ -47,7 +47,7 @@ uc_EXPORTED ucBool ucTok_is_numeric(ucTok *p);
  * Parameters:
  *   p: A pointer to the token.
  * Returns:
- *   ucBool_true if the token is a switch. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the token is a switch. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucTok_is_switch(ucTok* p);
 

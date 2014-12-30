@@ -28,20 +28,20 @@ static ucTestErr ucOpt_get_desc_returns_description(ucTestGroup *p) {
 
 static ucTestErr ucOpt_init_initializes_structure(ucTestGroup *p) {
     ucOpt o;
-    ucOpt *ptr = ucOpt_init(&o, "my_command_name", "Description of command.", ucBool_true);
+    ucOpt *ptr = ucOpt_init(&o, "my_command_name", "Description of command.", ucBool_TRUE);
     ucTest_ASSERT(ptr == (&o));
     ucTest_ASSERT(ucOpt_get_name(ptr));
     ucTest_ASSERT(ucOpt_get_desc(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required(ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required(ptr));
     return ucTestErr_NONE;
 }
 
 static ucTestErr ucOpt_is_required_returns_is_required(ucTestGroup *p) {
     ucOpt o;
-    o.is_required = ucBool_true;
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required(&o));
-    o.is_required = ucBool_false;
-    ucTest_ASSERT(ucBool_false == ucOpt_is_required(&o));
+    o.is_required = ucBool_TRUE;
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required(&o));
+    o.is_required = ucBool_FALSE;
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required(&o));
     return ucTestErr_NONE;
 }
 

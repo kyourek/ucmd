@@ -38,7 +38,7 @@ static ucTestErr ucCmdLineOpt_create_creates_structure(ucTestGroup *p) {
     ucTest_ASSERT(NULL != ptr);
     ucTest_ASSERT(uart_func_one == ucCmdLineOpt_get_func(ptr));
     ucTest_ASSERT(&state == ucCmdLineOpt_get_state(ptr));
-    ucTest_ASSERT(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
 
     arg_opt = ucArgOptOwner_get_arg_opt((ucArgOptOwner*)ptr);
     ucTest_ASSERT(ucOpt_get_name((ucOpt*)arg_opt));

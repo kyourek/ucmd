@@ -28,7 +28,7 @@ typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
  * Parameters:
  *   state: A stateful object.
  * Returns:
- *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the command has been cancelled. Otherwise, ucBool_FALSE.
  */
 typedef ucBool (ucCmdLine_IsCancelledFunc)(void *state);
 
@@ -106,7 +106,7 @@ uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value);
  * Parameters:
  *   p: The structure to check for cancellation.
  * Returns:
- *   ucBool_true if the command has been cancelled. Otherwise, ucBool_false.
+ *   ucBool_TRUE if the command has been cancelled. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucCmdLine_is_cancelled(ucCmdLine *p);
 

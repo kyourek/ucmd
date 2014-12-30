@@ -15,7 +15,7 @@ ucCmdLine *ucCmdLine_get_instance(void) {
         p->cmd_tok = NULL;
         p->transmit = NULL;
         p->transmit_state = NULL;
-        p->is_quiet = ucBool_false;
+        p->is_quiet = ucBool_FALSE;
         p->is_cancelled = NULL;
         p->is_cancelled_state = NULL;
     }
@@ -82,8 +82,8 @@ ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
 }
 
 ucBool ucCmdLine_is_cancelled(ucCmdLine *p) {
-    if (NULL == p) return ucBool_false;
-    if (NULL == p->is_cancelled) return ucBool_false;
+    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p->is_cancelled) return ucBool_FALSE;
     return p->is_cancelled(p->is_cancelled_state);
 }
 
@@ -123,6 +123,6 @@ void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {
 }
 
 ucBool ucCmdLine_get_is_quiet(ucCmdLine *p) {
-    if (NULL == p) return ucBool_false;
+    if (NULL == p) return ucBool_FALSE;
     return p->is_quiet;
 }

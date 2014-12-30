@@ -5,7 +5,7 @@
 
 static ucTestErr ucCmdTok_get_arg_gets_arg(ucTestGroup *p) {
     char cmd[] = "command\0arg\0\n";
-    ucTest_ASSERT(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(cmd), "arg"));
+    ucTest_ASSERT(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(cmd), "arg"));
     return ucTestErr_NONE;
 }
 
