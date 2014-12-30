@@ -1,6 +1,8 @@
 #ifndef UCBOOL_H
 #define UCBOOL_H
 
+#include "uc.h"
+
 /*
  * Summary:
  *   Boolean type definition. This definition is used
