@@ -1,6 +1,8 @@
 #ifndef UCERR_H
 #define UCERR_H
 
+#include "uc.h"
+
 /* 
  * Summary:
  *   Definition for the type returned
