@@ -173,7 +173,7 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
                     "The last-name of the user",
                 NULL),
 
-            /* That was the last switch for the 'name command,
+            /* That was the last switch for the 'name' command,
             so we pass NULL here. */
             NULL)),
 
