@@ -137,7 +137,7 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
             function when it is called. */
             &my_state,
             "name",
-            "Sets the user's name.",
+            "Sets the user's name",
 
             /* No arguments are required (or allowed)
             for the 'name' command, so NULL is passed
@@ -148,14 +148,14 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
             command. This switch is optional. */
             ucSwitchOpt_create(
                 "-first",
-                "Sets the user's first name.",
+                "Sets the user's first name",
 
                 /* Creates an argument 'first-name' for the
                 '-first' switch. This argument is required
                 if the '-first' switch is used. */
                 ucArgOpt_create_required(
                     "first-name",
-                    "The first-name of the user.",
+                    "The first-name of the user",
                 
                 /* No other arguments are required (or allowed)
                 for the '-first' switch, so NULL is passed
@@ -167,10 +167,10 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
             '-first' switch. */
             ucSwitchOpt_create(
                 "-last",
-                "Sets the user's last name.",
+                "Sets the user's last name",
                 ucArgOpt_create_required(
                     "last-name",
-                    "The last-name of the user.",
+                    "The last-name of the user",
                 NULL),
 
             /* That was the last switch for the 'name command,
@@ -183,14 +183,14 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
             say,
             &my_state,
             "say",
-            "Says a phrase.",
+            "Says a phrase",
 
             /* There is only one argument supplied
             to this command, and it is required. It
             is the phrase to say to the user. */
             ucArgOpt_create_required(
                 "phrase",
-                "The phrase to say.",
+                "The phrase to say",
                 NULL),
             NULL,
 
