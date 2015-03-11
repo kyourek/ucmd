@@ -1,1 +1,8 @@
+*.o
+*.opensdf
+*.sdf
+*.suo
+*.user
 .DS_Store
+Debug
+ipch

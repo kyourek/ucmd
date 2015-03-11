@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include_p">
+      <UniqueIdentifier>{72b0cb75-5da3-484d-865e-57743d1e36c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\ucmd\include\ucmd.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOptOwner_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTokOwner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucBool.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineApp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineToks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdParser.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucCmdTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucErr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucSwitchOpt.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucSwitchTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\ucTok.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineApp_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLine_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdParser_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucMemoryManager_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucSwitchOpt_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include_p\ucTok_p.h">
+      <Filter>include_p</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ucmd\include\uc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgOptOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTokOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLine.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineApp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineToks.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdParser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucCmdTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucSwitchOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucSwitchTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\source\ucTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

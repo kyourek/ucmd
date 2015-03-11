@@ -1,20 +1,20 @@
-#ifndef CMD_LINE_H
-#define CMD_LINE_H
+#ifndef UCMD_H
+#define UCMD_H
 
-#include "uc_arg_opt.h"
-#include "uc_arg_opt_owner.h"
-#include "uc_arg_tok.h"
-#include "uc_arg_tok_owner.h"
-#include "uc_cmd_line.h"
-#include "uc_cmd_line_app.h"
-#include "uc_cmd_line_opt.h"
-#include "uc_cmd_line_toks.h"
-#include "uc_cmd_parser.h"
-#include "uc_cmd_tok.h"
-#include "uc_common.h"
-#include "uc_opt.h"
-#include "uc_switch_opt.h"
-#include "uc_switch_tok.h"
-#include "uc_tok.h"
+#include "uc.h"
+#include "ucArgOpt.h"
+#include "ucArgOptOwner.h"
+#include "ucArgTok.h"
+#include "ucArgTokOwner.h"
+#include "ucCmdLine.h"
+#include "ucCmdLineApp.h"
+#include "ucCmdLineOpt.h"
+#include "ucCmdLineToks.h"
+#include "ucCmdParser.h"
+#include "ucCmdTok.h"
+#include "ucOpt.h"
+#include "ucSwitchOpt.h"
+#include "ucSwitchTok.h"
+#include "ucTok.h"
 
 #endif
