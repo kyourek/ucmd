@@ -14,11 +14,9 @@ typedef struct ucArgOptOwner ucArgOptOwner;
 /*
  * Summary:
  *   Gets the first argument option of the given option owner.
- * Parameters:
- *   p: A pointer to the option owner whose argument option is to be returned.
  * Returns:
  *   A pointer to the first argument option of the given option owner.
  */
-uc_EXPORTED ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p);
+uc_EXPORTED ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner*);
 
 #endif

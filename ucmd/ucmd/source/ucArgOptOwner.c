@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include "ucmd_internal.h"
 
 ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p) {

@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "ucmd_internal.h"
 
 const char *ucOpt_validation_err_invalid_argument_prefix = "Invalid argument: ";

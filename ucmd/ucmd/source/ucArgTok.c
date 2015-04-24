@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include "ucmd_internal.h"
 
 ucArgTok *ucArgTok_get_next(ucArgTok* p) {

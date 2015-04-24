@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "ucmd_internal.h"
 
 ucArgTok *ucCmdTok_get_arg(ucCmdTok *p) {

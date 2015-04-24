@@ -42,44 +42,37 @@ uc_EXPORTED ucSwitchOpt *ucSwitchOpt_create_required(const char *name, const cha
 /*
  * Summary:
  *   Gets the first argument option of the given switch.
- * Parameters:
- *   p: A pointer to the switch option whose argument is returned.
  * Returns:
  *   A pointer to the first argument option of the switch, or NULL
  *   if no argument options exist.
  */
-uc_EXPORTED ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt *p);
+uc_EXPORTED ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt*);
 
 /*
  * Summary:
  *   Finds the switch option in the linked list with the given name.
  * Parameters:
- *   p: A pointer to the first switch option in the list.
  *   name: The name of the switch option to be found.
  * Returns:
  *   The switch option with the given name, or NULL if
  *   no switch option is found.
  */
-uc_EXPORTED ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt *p, const char *name);
+uc_EXPORTED ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt*, const char *name);
 
 /*
  * Summary:
  *   Gets the next switch option.
- * Parameters:
- *   p: The switch option that precedes the returned option.
  * Returns:
  *   A pointer to the next switch option in the list, or NULL
  *   if no further options exist.
  */
-uc_EXPORTED ucSwitchOpt *ucSwitchOpt_get_next(ucSwitchOpt *p);
+uc_EXPORTED ucSwitchOpt *ucSwitchOpt_get_next(ucSwitchOpt*);
 
 /*
  * Summary:
  *   Releases memory used by the switch option.
- * Parameters:
- *   p: A pointer to the switch option whose memory is released.
  */
-uc_EXPORTED void ucSwitchOpt_destroy(ucSwitchOpt *p);
+uc_EXPORTED void ucSwitchOpt_destroy(ucSwitchOpt*);
 
 /*
  * Summary:
@@ -87,9 +80,7 @@ uc_EXPORTED void ucSwitchOpt_destroy(ucSwitchOpt *p);
  *   proceeding options in the list. All memory used by
  *   any argument options belonging to the switches in
  *   the list is also released.
- * Parameters:
- *   p: A pointer to the first switch option in the list.
  */
-uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt *p);
+uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt*);
 
 #endif

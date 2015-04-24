@@ -29,33 +29,29 @@ typedef char *(ucCmdLineApp_ReceiveFunc)(char *buf, size_t buf_size, void *state
  * Summary:
  *   Sets the escape string that will cause the app to exit.
  * Parameters:
- *   p: A pointer to the app whose property is set.
  *   value: The escape string that, when returned in a response,
  *          causes the app to exit.
  */
-uc_EXPORTED void ucCmdLineApp_set_escape_response(ucCmdLineApp *p, const char *value);
+uc_EXPORTED void ucCmdLineApp_set_escape_response(ucCmdLineApp*, const char *value);
 
 /*
  * Summary:
  *   Gets the escape string that causes the app to exit.
- * Parameters:
- *   p: A pointer to the app whose property is returned.
  * Returns:
  *   The escape string that, when returned in a response,
  *   causes the app to exit.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp *p);
+uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Runs the application with the given options.
  * Parameters:
- *   p: A pointer to the app to run.
  *   cmd_opt: A pointer to the first command option for the app.
  * Returns:
  *   An error code, if one occurred.
  */ 
-uc_EXPORTED ucErr ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt);
+uc_EXPORTED ucErr ucCmdLineApp_run(ucCmdLineApp*, ucCmdLineOpt *cmd_opt);
 
 /*
  * Summary:
@@ -69,105 +65,88 @@ uc_EXPORTED ucCmdLineApp *ucCmdLineApp_get_instance(void);
  * Summary:
  *   Sets the function that the app uses to receive data.
  * Parameters:
- *   p: A pointer to the app whose property is set.
  *   value: A pointer to the function used to receive data.
  */
-uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp *p, ucCmdLineApp_ReceiveFunc *value);
+uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp*, ucCmdLineApp_ReceiveFunc *value);
 
 /*
  * Summary:
  *   Gets the function that the app uses to receive data.
- * Parameters:
- *   p: A pointer to the app whose property is returned.
  * Returns:
  *   A pointer to the function used to receive data.
  */ 
-uc_EXPORTED ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp *p);
+uc_EXPORTED ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Gets the stateful object passed to the application's receive function.
- * Parameters:
- *   p: A pointer to the application object whose property is to be returned.
  * Returns:
  *   A pointer to the stateful object passed to the application's receive function.
  */
-uc_EXPORTED void *ucCmdLineApp_get_receive_state(ucCmdLineApp *p);
+uc_EXPORTED void *ucCmdLineApp_get_receive_state(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Sets the stateful object passed to the application's receive function.
  * Parameters:
- *   p: A pointer to the application object whose property is to be set.
  *   value: The stateful object passed to the application's receive function.
  */
-uc_EXPORTED void ucCmdLineApp_set_receive_state(ucCmdLineApp *p, void *value);
+uc_EXPORTED void ucCmdLineApp_set_receive_state(ucCmdLineApp*, void *value);
 
 /*
  * Summary:
  *   Sets the command used to quit the application.
  * Parameters:
- *   p: A pointer to the application.
  *   value: The value of the command that quits the application.
  */
-uc_EXPORTED void ucCmdLineApp_set_quit_command(ucCmdLineApp *p, const char *value);
+uc_EXPORTED void ucCmdLineApp_set_quit_command(ucCmdLineApp*, const char *value);
 
 /*
  * Summary:
  *   Gets the value of the command that quits the application.
- * Parameters:
- *   p: A pointer to the application.
  * Returns:
  *   The value of the command that quits the application.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_quit_command(ucCmdLineApp *p);
+uc_EXPORTED const char *ucCmdLineApp_get_quit_command(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Sets the value of the command that shows help information.
  * Parameters:
- *   p: A pointer to the application whose property is set.
  *   value: The value of the command that shows help information.
  */
-uc_EXPORTED void ucCmdLineApp_set_help_command(ucCmdLineApp *p, const char *value);
+uc_EXPORTED void ucCmdLineApp_set_help_command(ucCmdLineApp*, const char *value);
 
 /*
  * Summary:
  *   Gets the value of the command that shows help information.
- * Parameters:
- *   p: A pointer to the app whose property is returned.
  * Returns:
  *   The value of the command that shows help information.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_help_command(ucCmdLineApp *p);
+uc_EXPORTED const char *ucCmdLineApp_get_help_command(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Sets the command structure that the application uses.
  * Parameters:
- *   p: A pointer to the application.
  *   value: The command structure to be used by the application.
  */
-uc_EXPORTED void ucCmdLineApp_set_cmd(ucCmdLineApp *p, ucCmdLine *value);
+uc_EXPORTED void ucCmdLineApp_set_cmd(ucCmdLineApp*, ucCmdLine *value);
 
 /*
  * Summary:
  *   Gets the command structure used by the application.
- * Parameters:
- *   p: A pointer to the application.
  * Returns:
  *   A pointer to the command structure used by the application.
  */
-uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp *p);
+uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
 
 /*
  * Summary:
  *   Gets the command parser used by the application.
- * Parameters:
- *   p: A pointer to the application.
  * Returns:
  *   A pointer to the command parser used by the application.
  */
-uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp *p);
+uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
 
 #endif

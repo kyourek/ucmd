@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include "ucmd_internal.h"
 
 ucArgTok *ucArgTokOwner_get_arg(ucArgTokOwner *p) {

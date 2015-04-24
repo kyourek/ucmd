@@ -13,53 +13,43 @@ typedef struct ucArgOpt ucArgOpt;
 /*
  * Summary:
  *   Gets the minimum allowed token count of the argument option.
- * Parameters:
- *   p: A pointer to the argument option in question.
  * Returns:
  *   The minimum number of argument tokens allowed for this option.
  */
-uc_EXPORTED int ucArgOpt_get_min_tok_count(ucArgOpt *p);
+uc_EXPORTED int ucArgOpt_get_min_tok_count(ucArgOpt*);
 
 /*
  * Summary:
  *   Gets the maximum allowed token count of the argument option.
- * Parameters:
- *   p: A pointer to the argument option in question.
  * Returns:
  *   The maximum number of argument tokens allowed for this option.
  */
-uc_EXPORTED int ucArgOpt_get_max_tok_count(ucArgOpt *p);
+uc_EXPORTED int ucArgOpt_get_max_tok_count(ucArgOpt*);
 
 /*
  * Summary:
  *   Gets a flag that indicates whether or not this argument option
  *   is numeric.
- * Parameters:
- *   p: A pointer to the argument option in question.
  * Returns:
  *   ucBool_TRUE if the argument is numeric. Otherwise, ucBool_FALSE.
  */
-uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt *p);
+uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt*);
 
 /*
  * Summary:
  *   Gets the minimum value if this argument option is numeric.
- * Parameters:
- *   p: A pointer to the argument option in question.
  * Returns:
  *   The minimum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_min(ucArgOpt *p);
+uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_min(ucArgOpt*);
 
 /*
  * Summary:
  *   Gets the maximum value if this argument is numeric.
- * Parameters:
- *   p: A pointer to the argument option in question.
  * Returns:
  *   The maximum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_max(ucArgOpt* p);
+uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_max(ucArgOpt*);
 
 /*
  * Summary:
@@ -147,29 +137,23 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOp
 /*
  * Summary:
  *   Gets the next argument option after the given option.
- * Parameters:
- *   p: The option that precedes the returned option.
  * Returns:
  *   A pointer to the option that the given option precedes,
  *   or NULL of no further options exist.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_get_next(ucArgOpt* p);
+uc_EXPORTED ucArgOpt *ucArgOpt_get_next(ucArgOpt*);
 
 /*
  * Summary:
  *   Releases memory used by the argument option.
- * Parameters:
- *   p: The argument option to be released.
  */
-uc_EXPORTED void ucArgOpt_destroy(ucArgOpt *p);
+uc_EXPORTED void ucArgOpt_destroy(ucArgOpt*);
 
 /*
  * Summary:
  *   Releases memory used by the argument option
  *   and all proceeding options in the list.
- * Parameters:
- *   p: The first argument option in the list.
  */
-uc_EXPORTED void ucArgOpt_destroy_chain(ucArgOpt *p);
+uc_EXPORTED void ucArgOpt_destroy_chain(ucArgOpt*);
 
 #endif
