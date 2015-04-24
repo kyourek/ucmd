@@ -12,8 +12,8 @@ ucCmdLine *ucCmdLine_get_instance(void) {
         p->transmit = NULL;
         p->transmit_state = NULL;
         p->is_quiet = ucBool_FALSE;
-        p->is_cancelled = NULL;
-        p->is_cancelled_state = NULL;
+        p->is_canceled = NULL;
+        p->is_canceled_state = NULL;
     }
     return p;
 }
@@ -77,20 +77,20 @@ ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
     return p->transmit;
 }
 
-ucBool ucCmdLine_is_cancelled(ucCmdLine *p) {
+ucBool ucCmdLine_is_canceled(ucCmdLine *p) {
     if (NULL == p) return ucBool_FALSE;
-    if (NULL == p->is_cancelled) return ucBool_FALSE;
-    return p->is_cancelled(p->is_cancelled_state);
+    if (NULL == p->is_canceled) return ucBool_FALSE;
+    return p->is_canceled(p->is_canceled_state);
 }
 
-void ucCmdLine_set_is_cancelled(ucCmdLine *p, ucCmdLine_IsCancelledFunc *value) {
+void ucCmdLine_set_is_canceled(ucCmdLine *p, ucCmdLine_IsCanceledFunc *value) {
     if (NULL == p) return;
-    p->is_cancelled = value;
+    p->is_canceled = value;
 }
 
-ucCmdLine_IsCancelledFunc *ucCmdLine_get_is_cancelled(ucCmdLine *p) {
+ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine *p) {
     if (NULL == p) return NULL;
-    return p->is_cancelled;
+    return p->is_canceled;
 }
 
 void *ucCmdLine_get_transmit_state(ucCmdLine *p) {
@@ -103,14 +103,14 @@ uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
     p->transmit_state = value;
 }
 
-void *ucCmdLine_get_is_cancelled_state(ucCmdLine *p) {
+void *ucCmdLine_get_is_canceled_state(ucCmdLine *p) {
     if (NULL == p) return NULL;
-    return p->is_cancelled_state;
+    return p->is_canceled_state;
 }
 
-void ucCmdLine_set_is_cancelled_state(ucCmdLine *p, void *value) {
+void ucCmdLine_set_is_canceled_state(ucCmdLine *p, void *value) {
     if (NULL == p) return;
-    p->is_cancelled_state = value;
+    p->is_canceled_state = value;
 }
 
 void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {

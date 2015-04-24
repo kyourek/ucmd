@@ -17,14 +17,14 @@ static void transmit_1(const char *response, void *state) {
 static void transmit_2(const char *response, void *state) {
 }
 
-static void *is_cancelled_1_state;
-static ucBool is_cancelled_1_returned_value = ucBool_FALSE;
-static ucBool is_cancelled_1(void *state) {
-    is_cancelled_1_state = state;
-    return is_cancelled_1_returned_value;
+static void *is_canceled_1_state;
+static ucBool is_canceled_1_returned_value = ucBool_FALSE;
+static ucBool is_canceled_1(void *state) {
+    is_canceled_1_state = state;
+    return is_canceled_1_returned_value;
 }
 
-static ucBool is_cancelled_2(void *state) {
+static ucBool is_canceled_2(void *state) {
     return ucBool_TRUE;
 }
 
@@ -136,29 +136,29 @@ static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_get_is_cancelled_returns_value(ucTestGroup *p) {
+static ucTestErr ucCmdLine_get_is_canceled_returns_value(ucTestGroup *p) {
     ucCmdLine c;
-    c.is_cancelled = is_cancelled_1;
-    ucTest_ASSERT(is_cancelled_1 == ucCmdLine_get_is_cancelled(&c));
+    c.is_canceled = is_canceled_1;
+    ucTest_ASSERT(is_canceled_1 == ucCmdLine_get_is_canceled(&c));
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_set_is_cancelled_sets_value(ucTestGroup *p) {
+static ucTestErr ucCmdLine_set_is_canceled_sets_value(ucTestGroup *p) {
     ucCmdLine c;
-    ucCmdLine_set_is_cancelled(&c, is_cancelled_2);
-    ucTest_ASSERT(is_cancelled_2 == c.is_cancelled);
+    ucCmdLine_set_is_canceled(&c, is_canceled_2);
+    ucTest_ASSERT(is_canceled_2 == c.is_canceled);
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_is_cancelled_calls_is_cancelled(ucTestGroup *p) {
+static ucTestErr ucCmdLine_is_canceled_calls_is_canceled(ucTestGroup *p) {
     ucCmdLine c;
-    c.is_cancelled = is_cancelled_1;
+    c.is_canceled = is_canceled_1;
 
-    is_cancelled_1_returned_value = ucBool_TRUE;
-    ucTest_ASSERT(ucBool_TRUE == ucCmdLine_is_cancelled(&c));
+    is_canceled_1_returned_value = ucBool_TRUE;
+    ucTest_ASSERT(ucBool_TRUE == ucCmdLine_is_canceled(&c));
 
-    is_cancelled_1_returned_value = ucBool_FALSE;
-    ucTest_ASSERT(ucBool_FALSE == ucCmdLine_is_cancelled(&c));
+    is_canceled_1_returned_value = ucBool_FALSE;
+    ucTest_ASSERT(ucBool_FALSE == ucCmdLine_is_canceled(&c));
 
     return ucTestErr_NONE;
 }
@@ -205,43 +205,43 @@ static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_set_is_cancelled_state_sets_value(ucTestGroup *p) {
+static ucTestErr ucCmdLine_set_is_canceled_state_sets_value(ucTestGroup *p) {
     int state;
     ucCmdLine *ptr = ucCmdLine_get_instance();
-    void *prev_value = ptr->is_cancelled_state;
+    void *prev_value = ptr->is_canceled_state;
 
-    ucCmdLine_set_is_cancelled_state(ptr, &state);
-    ucTest_ASSERT(&state == ptr->is_cancelled_state);
+    ucCmdLine_set_is_canceled_state(ptr, &state);
+    ucTest_ASSERT(&state == ptr->is_canceled_state);
 
-    ptr->is_cancelled_state = prev_value;
+    ptr->is_canceled_state = prev_value;
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_get_is_cancelled_state_returns_value(ucTestGroup *p) {
+static ucTestErr ucCmdLine_get_is_canceled_state_returns_value(ucTestGroup *p) {
     char *state = "st";
     ucCmdLine *ptr = ucCmdLine_get_instance();
-    void *prev_value = ptr->is_cancelled_state;
+    void *prev_value = ptr->is_canceled_state;
 
-    ptr->is_cancelled_state = &state;
-    ucTest_ASSERT(&state == ucCmdLine_get_is_cancelled_state(ptr));
+    ptr->is_canceled_state = &state;
+    ucTest_ASSERT(&state == ucCmdLine_get_is_canceled_state(ptr));
 
-    ptr->is_cancelled_state = prev_value;
+    ptr->is_canceled_state = prev_value;
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLine_is_cancelled_uses_state(ucTestGroup *p) {
+static ucTestErr ucCmdLine_is_canceled_uses_state(ucTestGroup *p) {
     double state;
     ucCmdLine *ptr = ucCmdLine_get_instance();
-    void *prev_value = ptr->is_cancelled_state;
+    void *prev_value = ptr->is_canceled_state;
 
-    ucCmdLine_set_is_cancelled(ptr, is_cancelled_1);
-    ucCmdLine_set_is_cancelled_state(ptr, &state);
+    ucCmdLine_set_is_canceled(ptr, is_canceled_1);
+    ucCmdLine_set_is_canceled_state(ptr, &state);
 
-    ucCmdLine_is_cancelled(ptr);
+    ucCmdLine_is_canceled(ptr);
 
-    ucTest_ASSERT(&state == is_cancelled_1_state);
+    ucTest_ASSERT(&state == is_canceled_1_state);
 
-    ptr->is_cancelled_state = prev_value;
+    ptr->is_canceled_state = prev_value;
     return ucTestErr_NONE;
 }
 
@@ -288,15 +288,15 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_set_transmit_sets_transmit,
         ucCmdLine_get_transmit_returns_transmit,
         ucCmdLine_respond_uses_transmit,
-        ucCmdLine_get_is_cancelled_returns_value,
-        ucCmdLine_set_is_cancelled_sets_value,
-        ucCmdLine_is_cancelled_calls_is_cancelled,
+        ucCmdLine_get_is_canceled_returns_value,
+        ucCmdLine_set_is_canceled_sets_value,
+        ucCmdLine_is_canceled_calls_is_canceled,
         ucCmdLine_set_transmit_state_sets_value,
         ucCmdLine_get_transmit_state_gets_value,
         ucCmdLine_transmit_uses_state,
-        ucCmdLine_set_is_cancelled_state_sets_value,
-        ucCmdLine_get_is_cancelled_state_returns_value,
-        ucCmdLine_is_cancelled_uses_state,
+        ucCmdLine_set_is_canceled_state_sets_value,
+        ucCmdLine_get_is_canceled_state_returns_value,
+        ucCmdLine_is_canceled_uses_state,
         ucCmdLine_set_is_quiet_sets_value,
         ucCmdLine_respond_does_nothing_if_is_quiet,
         NULL

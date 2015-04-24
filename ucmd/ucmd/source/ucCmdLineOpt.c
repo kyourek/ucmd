@@ -202,7 +202,7 @@ const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
        the one that matches the name of the command */
     cmd_value = ucTok_get_value((ucTok*)cmd_tok);
     opt = ucCmdLineOpt_find_by_name(p, cmd_value);
-    if (NULL == opt) return ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\".", cmd_value);
+    if (NULL == opt) return ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
 
     /* validate the command structure against the option.
        if validation fails, then return the validation result */
@@ -211,7 +211,7 @@ const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
 
     /* get the function callback from the command option */
     func = ucCmdLineOpt_get_func(opt);
-    if (NULL == func) return "Invalid function: null pointer.";
+    if (NULL == func) return "Invalid function: null pointer";
 
     /* invoke the callback */
     return func(cmd, ucCmdLineOpt_get_state(opt));

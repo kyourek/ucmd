@@ -24,13 +24,13 @@ typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
 /*
  * Summary:
  *   The type of function used by a command structure
- *   to determine whether or not the command is cancelled.
+ *   to determine whether or not the command is canceled.
  * Parameters:
  *   state: A stateful object.
  * Returns:
- *   ucBool_TRUE if the command has been cancelled. Otherwise, ucBool_FALSE.
+ *   ucBool_TRUE if the command has been canceled. Otherwise, ucBool_FALSE.
  */
-typedef ucBool (ucCmdLine_IsCancelledFunc)(void *state);
+typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
 
 /*
  * Summary:
@@ -92,11 +92,11 @@ uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine*, void *value);
 
 /*
  * Summary:
- *   Determines whether or not the command has been cancelled.
+ *   Determines whether or not the command has been canceled.
  * Returns:
- *   ucBool_TRUE if the command has been cancelled. Otherwise, ucBool_FALSE.
+ *   ucBool_TRUE if the command has been canceled. Otherwise, ucBool_FALSE.
  */
-uc_EXPORTED ucBool ucCmdLine_is_cancelled(ucCmdLine*);
+uc_EXPORTED ucBool ucCmdLine_is_canceled(ucCmdLine*);
 
 /*
  * Summary:
@@ -104,7 +104,7 @@ uc_EXPORTED ucBool ucCmdLine_is_cancelled(ucCmdLine*);
  * Parameters:
  *   value: A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine*, ucCmdLine_IsCancelledFunc *value);
+uc_EXPORTED void ucCmdLine_set_is_canceled(ucCmdLine*, ucCmdLine_IsCanceledFunc *value);
 
 /*
  * Summary:
@@ -112,7 +112,7 @@ uc_EXPORTED void ucCmdLine_set_is_cancelled(ucCmdLine*, ucCmdLine_IsCancelledFun
  * Returns:
  *   A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED ucCmdLine_IsCancelledFunc *ucCmdLine_get_is_cancelled(ucCmdLine*);
+uc_EXPORTED ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine*);
 
 /*
  * Summary:
@@ -120,7 +120,7 @@ uc_EXPORTED ucCmdLine_IsCancelledFunc *ucCmdLine_get_is_cancelled(ucCmdLine*);
  * Returns:
  *   A pointer to the stateful object passed to the command's cancellation function.
  */
-uc_EXPORTED void *ucCmdLine_get_is_cancelled_state(ucCmdLine*);
+uc_EXPORTED void *ucCmdLine_get_is_canceled_state(ucCmdLine*);
 
 /*
  * Summary:
@@ -128,7 +128,7 @@ uc_EXPORTED void *ucCmdLine_get_is_cancelled_state(ucCmdLine*);
  * Parameters:
  *   value: The stateful object passed to the command's cancellation function.
  */
-uc_EXPORTED void ucCmdLine_set_is_cancelled_state(ucCmdLine*, void *value);
+uc_EXPORTED void ucCmdLine_set_is_canceled_state(ucCmdLine*, void *value);
 
 /*
  * Summary:
