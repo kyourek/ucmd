@@ -3,7 +3,6 @@
 
 #include "ucTok.h"
 
-extern const char ucTok_separator;
-extern const char uc_cmd_terminator;
+
 
 #endif

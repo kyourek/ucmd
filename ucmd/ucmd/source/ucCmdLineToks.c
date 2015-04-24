@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucCmdLineToks.h"
+#include "ucmd_internal.h"
 
 ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks *p) {
     if (NULL == p) return NULL;

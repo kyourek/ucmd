@@ -1,7 +1,5 @@
 #include <string.h>
-#include "ucCmdParser_p.h"
-#include "ucCmdTok.h"
-#include "ucTok_p.h"
+#include "ucmd_internal.h"
 
 static ucBool is_char_white_space(char c) {
     /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */

@@ -1,7 +1,7 @@
 #ifndef UC_TEST_H
 #define UC_TEST_H
 
-#include "ucBool.h"
+#include "ucmd_internal.h"
 #include "ucTestGroup.h"
 
 typedef struct ucTest ucTest;

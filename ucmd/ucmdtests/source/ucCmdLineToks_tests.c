@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "ucCmdLineToks.h"
 #include "ucTest.h"
 
 static ucTestErr ucCmdLineToks_get_cmd_tok_returns_value(ucTestGroup *p) {

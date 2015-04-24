@@ -80,4 +80,9 @@
 #define uc_EXPORTED uc_EXTERN_C
 #endif
 
+/* Define NULL if it hasn't yet been defined. */
+#ifndef NULL
+#define NULL ((void*)0)
+#endif
+
 #endif

@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ucTest.h"
-#include "ucTok.h"
 
 static ucTestErr ucTok_get_length_returns_string_length(ucTestGroup *p) {
     char s[] = { 'h', 'e', 'l', 'l', 'o', '\0' };

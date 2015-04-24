@@ -1,6 +1,5 @@
 #include <stddef.h>
-#include "ucArgTok.h"
-#include "ucTok_p.h"
+#include "ucmd_internal.h"
 
 ucArgTok *ucArgTok_get_next(ucArgTok* p) {
     ucTok *tok;

@@ -1,6 +1,5 @@
 #include <stddef.h>
-#include "ucArgOpt_p.h"
-#include "ucArgOptOwner_p.h"
+#include "ucmd_internal.h"
 
 ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner *p) {
     if (NULL == p) return NULL;

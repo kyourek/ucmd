@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "ucCmdLine_p.h"
-#include "ucCmdLineToks.h"
-#include "ucCmdParser_p.h"
-#include "ucCmdTok.h"
-#include "ucSwitchTok.h"
 #include "ucTest.h"
-#include "ucTok.h"
 
 static ucCmdTok *parse_cmd(char *cmd) {
     return ucCmdParser_parse(ucCmdParser_get_instance(), cmd);

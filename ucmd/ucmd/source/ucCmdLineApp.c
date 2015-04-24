@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ucArgOpt.h"
-#include "ucArgTok.h"
-#include "ucCmdLine.h"
-#include "ucCmdLineApp_p.h"
-#include "ucCmdLineOpt.h"
-#include "ucCmdParser_p.h"
-#include "ucSwitchOpt.h"
+#include "ucmd_internal.h"
 
 typedef struct HelpState {
     ucCmdLineApp *app;

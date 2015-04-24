@@ -1,7 +1,5 @@
 #include <stddef.h>
-#include "ucArgTokOwner.h"
 #include "ucTest.h"
-#include "ucTok.h"
 
 static ucTestErr ucArgTokOwner_get_arg_returns_first_arg(ucTestGroup *p) {
     char cmd[] = "c\0a1\0a2\0\n";

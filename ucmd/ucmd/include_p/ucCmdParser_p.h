@@ -3,8 +3,6 @@
 
 #include "ucCmdParser.h"
 
-struct ucCmdParser {
-    ucCmdTok *(*parse)(ucCmdParser *p, char *cmd);
-};
+
 
 #endif

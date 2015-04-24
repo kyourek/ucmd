@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucCmdTok.h"
+#include "ucmd_internal.h"
 
 ucArgTok *ucCmdTok_get_arg(ucCmdTok *p) {
     return ucArgTokOwner_get_arg((ucArgTokOwner*)p);

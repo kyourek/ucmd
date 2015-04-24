@@ -1,7 +1,5 @@
 #include <string.h>
-#include "ucArgTok.h"
 #include "ucTest.h"
-#include "ucTok.h"
 
 static ucTestErr ucArgTok_get_next_returns_next(ucTestGroup *p) {
     ucArgTok *a1 = "a1\0a2\0\n";

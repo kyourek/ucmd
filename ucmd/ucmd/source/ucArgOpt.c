@@ -1,6 +1,5 @@
 #include <stdlib.h>
-#include "ucArgOpt_p.h"
-#include "ucMemoryManager_p.h"
+#include "ucmd_internal.h"
 
 static const char *numeric_arg_name = "<number>";
 

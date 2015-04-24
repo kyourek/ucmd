@@ -1,5 +1,5 @@
 #include <string.h>
-#include "ucTok_p.h"
+#include "ucmd_internal.h"
 
 const char ucTok_separator = '\0';
 const char uc_cmd_terminator = '\n';

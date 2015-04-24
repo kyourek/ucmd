@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucOpt_p.h"
+#include "ucmd_internal.h"
 
 const char *ucOpt_validation_err_invalid_argument_prefix = "Invalid argument: ";
 const char *ucOpt_validation_err_invalid_switch_prefix = "Invalid switch: ";

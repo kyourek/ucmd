@@ -1,5 +1,4 @@
 #include <string.h>
-#include "ucCmdLineOpt_p.h"
 #include "ucTest.h"
 
 static const char *transmit_func_one_response = NULL;

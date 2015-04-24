@@ -1,6 +1,5 @@
 #include <float.h>
 #include <string.h>
-#include "ucArgOpt_p.h"
 #include "ucTest.h"
 
 static ucTestErr ucArgOpt_is_numeric_returns_is_numeric(ucTestGroup *p) {

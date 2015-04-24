@@ -1,6 +1,4 @@
 #include <string.h>
-#include "ucCmdLine_p.h"
-#include "ucCmdLineApp_p.h"
 #include "ucTest.h"
 
 void *receive_1_state;

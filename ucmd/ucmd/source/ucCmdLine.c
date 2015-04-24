@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "ucTok_p.h"
-#include "ucCmdLine_p.h"
-#include "ucCmdParser.h"
-#include "ucArgTokOwner.h"
-#include "ucSwitchTok.h"
+#include "ucmd_internal.h"
 
 ucCmdLine *ucCmdLine_get_instance(void) {
     static ucCmdLine instance = { 0 };

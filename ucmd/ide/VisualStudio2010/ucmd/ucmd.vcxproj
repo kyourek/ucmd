@@ -86,20 +86,11 @@
     <ClInclude Include="..\..\..\ucmd\include\ucCmdParser.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucCmdTok.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucErr.h" />
+    <ClInclude Include="..\..\..\ucmd\include\ucmd_internal.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucOpt.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucSwitchOpt.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucSwitchTok.h" />
     <ClInclude Include="..\..\..\ucmd\include\ucTok.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOptOwner_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucArgOpt_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineApp_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLineOpt_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdLine_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucCmdParser_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucMemoryManager_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucOpt_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucSwitchOpt_p.h" />
-    <ClInclude Include="..\..\..\ucmd\include_p\ucTok_p.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c" />

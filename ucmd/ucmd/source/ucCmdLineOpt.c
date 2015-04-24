@@ -1,12 +1,6 @@
 #include <stddef.h>
 #include <string.h>
-#include "ucArgOpt_p.h"
-#include "ucArgOptOwner_p.h"
-#include "ucCmdLineOpt_p.h"
-#include "ucCmdTok.h"
-#include "ucMemoryManager_p.h"
-#include "ucOpt_p.h"
-#include "ucSwitchOpt_p.h"
+#include "ucmd_internal.h"
 
 ucMemoryManager_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
 
