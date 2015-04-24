@@ -34,6 +34,20 @@ typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
 
 /*
  * Summary:
+ *   The type of the function that is invoked when an
+ *   invalid command is encountered. An invalid command
+ *   is one that does not exist in the list of command
+ *   options.
+ * Parameters:
+ *   invalid_command: The invalid command string that was encountered.
+ *   state: The stateful object for this callback.
+ * Returns:
+ *   ucBool_TRUE if the invalid command was handeled. Otherwise, ucBool_FALSE.
+ */
+typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command, void *state);
+
+/*
+ * Summary:
  *   Gets the command token from the command structure.
  * Returns:
  *   A pointer to the command token of the structure.
@@ -129,6 +143,14 @@ uc_EXPORTED void *ucCmdLine_get_is_canceled_state(ucCmdLine*);
  *   value: The stateful object passed to the command's cancellation function.
  */
 uc_EXPORTED void ucCmdLine_set_is_canceled_state(ucCmdLine*, void *value);
+
+uc_EXPORTED void ucCmdLine_set_handle_invalid_command(ucCmdLine*, ucCmdLine_HandleInvalidCommandFunc *value);
+
+uc_EXPORTED ucCmdLine_HandleInvalidCommandFunc *ucCmdLine_get_handle_invalid_command(ucCmdLine*);
+
+uc_EXPORTED void ucCmdLine_set_handle_invalid_command_state(ucCmdLine*, void *value);
+
+uc_EXPORTED void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine*);
 
 /*
  * Summary:

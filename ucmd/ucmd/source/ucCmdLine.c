@@ -14,6 +14,8 @@ ucCmdLine *ucCmdLine_get_instance(void) {
         p->is_quiet = ucBool_FALSE;
         p->is_canceled = NULL;
         p->is_canceled_state = NULL;
+        p->handle_invalid_command = NULL;
+        p->handle_invalid_command_state = NULL;
     }
     return p;
 }
@@ -121,4 +123,30 @@ void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {
 ucBool ucCmdLine_get_is_quiet(ucCmdLine *p) {
     if (NULL == p) return ucBool_FALSE;
     return p->is_quiet;
+}
+
+void ucCmdLine_set_handle_invalid_command(ucCmdLine *p, ucCmdLine_HandleInvalidCommandFunc *value) {
+    if (NULL == p) return;
+    p->handle_invalid_command = value;
+}
+
+ucCmdLine_HandleInvalidCommandFunc *ucCmdLine_get_handle_invalid_command(ucCmdLine *p) {
+    if (NULL == p) return NULL;
+    return p->handle_invalid_command;
+}
+
+void ucCmdLine_set_handle_invalid_command_state(ucCmdLine *p, void *value) {
+    if (NULL == p) return;
+    p->handle_invalid_command_state = value;
+}
+
+void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine *p) {
+    if (NULL == p) return NULL;
+    return p->handle_invalid_command_state;
+}
+
+ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_command) {
+    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p->handle_invalid_command) return ucBool_FALSE;
+    return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
 }

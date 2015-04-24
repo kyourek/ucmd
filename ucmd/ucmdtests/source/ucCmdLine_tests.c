@@ -28,6 +28,15 @@ static ucBool is_canceled_2(void *state) {
     return ucBool_TRUE;
 }
 
+static void *handle_invalid_command_1_state;
+static const char *handle_invalid_command_1_invalid_command;
+static ucBool handle_invalid_command_1_return = ucBool_FALSE;
+static ucBool handle_invalid_command_1(const char *invalid_command, void *state) {
+    handle_invalid_command_1_state = state;
+    handle_invalid_command_1_invalid_command = invalid_command;
+    return handle_invalid_command_1_return;
+}
+
 static ucTestErr ucCmdLine_get_cmd_tok_returns_cmd_tok(ucTestGroup *p) {
     ucCmdLine c;
     ucCmdTok *t = "token";
@@ -275,6 +284,22 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup *p) {
+    int state;
+    ucBool ret_val;
+    ucCmdLine *ptr = ucCmdLine_get_instance();
+    ucCmdLine_set_handle_invalid_command(ptr, handle_invalid_command_1);
+    ucCmdLine_set_handle_invalid_command_state(ptr, &state);
+
+    handle_invalid_command_1_return = ucBool_TRUE;
+    ret_val = ucCmdLine_handle_invalid_command(ptr, "n-a");
+    ucTest_ASSERT(handle_invalid_command_1_state == &state);
+    ucTest_ASSERT(0 == strcmp("n-a", handle_invalid_command_1_invalid_command));
+    ucTest_ASSERT(ucBool_TRUE == ret_val);
+
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -299,6 +324,7 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_is_canceled_uses_state,
         ucCmdLine_set_is_quiet_sets_value,
         ucCmdLine_respond_does_nothing_if_is_quiet,
+        ucCmdLine_set_handle_invalid_command_sets_callback,
         NULL
     };
 

@@ -194,26 +194,37 @@ const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
     ucCmdLineOpt_Func *func;
     const char *cmd_value;
     const char *validation;
+    ucBool invalid_command_handled;
 
-    /* get the command token of the command structure */
+    /* Get the command token of the command structure. */
     cmd_tok = ucCmdLine_get_cmd_tok(cmd);
 
-    /* get the command option that we'll process by finding
-       the one that matches the name of the command */
+    /* Get the command option that we'll process by finding
+       the one that matches the name of the command. */
     cmd_value = ucTok_get_value((ucTok*)cmd_tok);
     opt = ucCmdLineOpt_find_by_name(p, cmd_value);
-    if (NULL == opt) return ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
+    if (NULL == opt) {
 
-    /* validate the command structure against the option.
-       if validation fails, then return the validation result */
+        /* The command is invalid (meaning it doesn't exist).
+           Try to handle it. */
+        invalid_command_handled = ucCmdLine_handle_invalid_command(cmd, cmd_value);
+
+        /* If the command was handled, then we don't return an error. */
+        return invalid_command_handled
+            ? NULL
+            : ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
+    }
+
+    /* Validate the command structure against the option.
+       If validation fails, then return the validation result. */
     validation = ucCmdLineOpt_format_validation_err(opt, cmd);
     if (validation) return validation;
 
-    /* get the function callback from the command option */
+    /* Get the function callback from the command option. */
     func = ucCmdLineOpt_get_func(opt);
     if (NULL == func) return "Invalid function: null pointer";
 
-    /* invoke the callback */
+    /* Invoke the callback. */
     return func(cmd, ucCmdLineOpt_get_state(opt));
 }
 

@@ -14,6 +14,15 @@ static const char *uart_func_two(ucCmdLine *p, void *state) {
     return "The result of uart_func_two.";
 }
 
+static void *handle_invalid_command_1_state;
+static const char *handle_invalid_command_1_invalid_command;
+static ucBool handle_invalid_command_1_return = ucBool_FALSE;
+static ucBool handle_invalid_command_1(const char *invalid_command, void *state) {
+    handle_invalid_command_1_state = state;
+    handle_invalid_command_1_invalid_command = invalid_command;
+    return handle_invalid_command_1_return;
+}
+
 static ucTestErr ucCmdLineOpt_create_creates_structure(ucTestGroup *p) {
     int state;
     ucArgOpt *arg_opt;
@@ -223,6 +232,41 @@ static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_switch(ucTe
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLineOpt_process_handles_invalid_commands(ucTestGroup *p) {
+    int state;
+    const char *err;
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
+
+    ucCmdLine_set_handle_invalid_command(cmd, handle_invalid_command_1);
+    ucCmdLine_set_handle_invalid_command_state(cmd, &state);
+    ucCmdLine_set_cmd_tok(cmd, "noopt\0\n");
+
+    handle_invalid_command_1_return = ucBool_TRUE;
+    err = ucCmdLineOpt_process(opt, cmd);
+    ucTest_ASSERT(NULL == err);
+    ucTest_ASSERT(handle_invalid_command_1_state == &state);
+    ucTest_ASSERT(0 == strcmp(handle_invalid_command_1_invalid_command, "noopt"));
+
+    ucCmdLineOpt_destroy_chain(opt);
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucCmdLineOpt_process_does_not_handle_invalid_command(ucTestGroup *p) {
+    const char *err;
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
+
+    ucCmdLine_set_handle_invalid_command(cmd, NULL);
+    ucCmdLine_set_cmd_tok(cmd, "noopt\0\n");
+
+    err = ucCmdLineOpt_process(opt, cmd);
+    ucTest_ASSERT(0 == strcmp(err, "Invalid command: no option found for \"noopt\""));
+
+    ucCmdLineOpt_destroy_chain(opt);
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -234,6 +278,8 @@ ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
         ucCmdLineOpt_send_usage_responds_with_usage_string,
         ucCmdLineOpt_format_validation_err_catches_required_arg,
         ucCmdLineOpt_format_validation_err_catches_required_switch,
+        ucCmdLineOpt_process_handles_invalid_commands,
+        ucCmdLineOpt_process_does_not_handle_invalid_command,
         NULL
     };
 
