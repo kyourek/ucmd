@@ -1,5 +1,0 @@
-#ifndef UCMEMORYMANAGER_P_H
-#define UCMEMORYMANAGER_P_H
-
-
-#endif
