@@ -14,57 +14,6 @@
     <ClInclude Include="..\..\..\ucmd\include\ucmd.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucArgOpt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucArgOptOwner.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucArgTokOwner.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucArgTok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucBool.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdLine.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineApp.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineOpt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdLineToks.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdParser.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucCmdTok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucErr.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucOpt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucSwitchOpt.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucSwitchTok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucTok.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\uc.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmd\include\ucmd_internal.h">
       <Filter>include</Filter>
     </ClInclude>

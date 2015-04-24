@@ -1,7 +1,7 @@
 #ifndef UC_TEST_STATE_H
 #define UC_TEST_STATE_H
 
-#include "uc.h"
+#include "ucmd.h"
 
 typedef struct ucTestState ucTestState;
 
