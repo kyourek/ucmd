@@ -11,54 +11,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd\include\ucmd.h">
+    <ClInclude Include="..\..\..\ucmd\ucmd.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ucmd\include\ucmd_internal.h">
+    <ClInclude Include="..\..\..\ucmd\ucmd_internal.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c">
+    <ClCompile Include="..\..\..\ucmd\ucTok.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucArgOptOwner.c">
+    <ClCompile Include="..\..\..\ucmd\ucSwitchTok.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucArgTokOwner.c">
+    <ClCompile Include="..\..\..\ucmd\ucSwitchOpt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c">
+    <ClCompile Include="..\..\..\ucmd\ucOpt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLine.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdTok.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineApp.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdParser.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineOpt.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineToks.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineToks.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineOpt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdParser.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineApp.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdTok.c">
+    <ClCompile Include="..\..\..\ucmd\ucCmdLine.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucOpt.c">
+    <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucSwitchOpt.c">
+    <ClCompile Include="..\..\..\ucmd\ucArgTok.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucSwitchTok.c">
+    <ClCompile Include="..\..\..\ucmd\ucArgOptOwner.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\source\ucTok.c">
+    <ClCompile Include="..\..\..\ucmd\ucArgOpt.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

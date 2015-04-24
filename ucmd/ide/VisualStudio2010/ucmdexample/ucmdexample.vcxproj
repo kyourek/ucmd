@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>
@@ -59,7 +59,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ucmd;..\..\..\ucmdexample\include;..\..\..\ucmdexample\include_p;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>false</ExceptionHandling>

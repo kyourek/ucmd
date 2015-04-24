@@ -10,6 +10,26 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\ucmd\ucmd.h" />
+    <ClInclude Include="..\..\..\ucmd\ucmd_internal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ucmd\ucArgOpt.c" />
+    <ClCompile Include="..\..\..\ucmd\ucArgOptOwner.c" />
+    <ClCompile Include="..\..\..\ucmd\ucArgTok.c" />
+    <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdLine.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineApp.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineOpt.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdLineToks.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdParser.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdTok.c" />
+    <ClCompile Include="..\..\..\ucmd\ucOpt.c" />
+    <ClCompile Include="..\..\..\ucmd\ucSwitchOpt.c" />
+    <ClCompile Include="..\..\..\ucmd\ucSwitchTok.c" />
+    <ClCompile Include="..\..\..\ucmd\ucTok.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDA5AB74-9BFE-4963-B20F-F2776706917F}</ProjectGuid>
     <RootNamespace>ucmd</RootNamespace>
@@ -41,7 +61,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -58,7 +78,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\ucmd\include;..\..\..\ucmd\include_p;..\..\..\ucmd\config;..\..\..\ucmd\config\console;..\..\..\ucmd\config\console\windows;..\..\..\ucmd\config\console\windows\export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -71,26 +91,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\ucmd\include\ucmd.h" />
-    <ClInclude Include="..\..\..\ucmd\include\ucmd_internal.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\ucmd\source\ucArgOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucArgOptOwner.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucArgTok.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucArgTokOwner.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLine.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineApp.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdLineToks.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdParser.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucCmdTok.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucSwitchOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucSwitchTok.c" />
-    <ClCompile Include="..\..\..\ucmd\source\ucTok.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
