@@ -1,6 +1,7 @@
 #ifndef UCMD_H
 #define UCMD_H
 
+#include <stdarg.h>
 #include <stddef.h>
 
 /* Sets the size of the command buffer when using
@@ -80,6 +81,11 @@
    of our extern "C" check. */
 #ifndef uc_EXPORTED
 #define uc_EXPORTED uc_EXTERN_C
+#endif
+
+/* Define NULL, if it hasn't been defined. */
+#ifndef NULL
+#define NULL ((void*)0)
 #endif
 
 /* 
