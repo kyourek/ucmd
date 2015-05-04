@@ -533,6 +533,8 @@ uc_EXPORTED void ucCmdLine_set_handle_invalid_command_state(ucCmdLine*, void *va
 
 uc_EXPORTED void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine*);
 
+uc_EXPORTED size_t ucCmdLine_get_response_size_max(ucCmdLine*);
+
 /*
  * Summary:
  *   Gets a static, default instance of the command structure.

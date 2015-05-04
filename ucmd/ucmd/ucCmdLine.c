@@ -150,3 +150,7 @@ ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_comman
     if (NULL == p->handle_invalid_command) return ucBool_FALSE;
     return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
 }
+
+size_t ucCmdLine_get_response_size_max(ucCmdLine *p) {
+    return sizeof(p->response);
+}
