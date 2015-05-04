@@ -72,8 +72,8 @@ struct ucCmdLine {
     void*                               transmit_state;
     void*                               is_canceled_state;
     void*                               handle_invalid_command_state;
-    char                                response[ucCmdLine_RESPONSE_LENGTH];
-	char                                response_buffer[ucCmdLine_RESPONSE_LENGTH];
+    char                                response[ucCmdLine_RESPONSE_SIZE];
+	char                                response_buffer[ucCmdLine_RESPONSE_SIZE];
     ucBool                              is_quiet;
 };
 
@@ -86,7 +86,7 @@ struct ucCmdLineApp {
     const char*                         help_command;
     const char*                         quit_command;
     const char*                         escape_response;
-    char                                cmd_buf[ucCmdLineApp_CMD_BUF_LENGTH + 1];
+    char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE];
 };
 
 /* 

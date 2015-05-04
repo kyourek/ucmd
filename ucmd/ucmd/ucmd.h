@@ -8,16 +8,16 @@
    the command-line application framework. All
    entered commands must have a size equal to or
    less than this buffer's size. */
-#ifndef ucCmdLineApp_CMD_BUF_LENGTH
-#define ucCmdLineApp_CMD_BUF_LENGTH 200
+#ifndef ucCmdLineApp_CMD_STR_SIZE
+#define ucCmdLineApp_CMD_STR_SIZE 200
 #endif
 
 /* Sets the size of the command response buffer.
    All response strings must have a size equal to
    or less than the size of this buffer to avoid
    truncation. */
-#ifndef ucCmdLine_RESPONSE_LENGTH
-#define ucCmdLine_RESPONSE_LENGTH 200
+#ifndef ucCmdLine_RESPONSE_SIZE
+#define ucCmdLine_RESPONSE_SIZE 200
 #endif
 
 /* Sets the number of available command options.
@@ -44,7 +44,7 @@
 /* Sets the maximum expected length of a single
    token in a command line. */
 #ifndef ucTok_LENGTH_MAX
-#define ucTok_LENGTH_MAX ucCmdLineApp_CMD_BUF_LENGTH
+#define ucTok_LENGTH_MAX ucCmdLineApp_CMD_STR_SIZE
 #endif
 
 /* Sets the numeric type of numeric argument
@@ -1185,5 +1185,7 @@ uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
  *   A pointer to the command parser used by the application.
  */
 uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
+
+uc_EXPORTED size_t ucCmdLineApp_get_cmd_str_size_max(ucCmdLineApp *p);
 
 #endif

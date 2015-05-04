@@ -152,5 +152,6 @@ ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_comman
 }
 
 size_t ucCmdLine_get_response_size_max(ucCmdLine *p) {
+    if (NULL == p) return 0;
     return sizeof(p->response);
 }

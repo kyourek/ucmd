@@ -303,7 +303,8 @@ static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup 
 static ucTestErr ucCmdLine_get_response_size_max_returns_size(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_get_instance();
     size_t size = ucCmdLine_get_response_size_max(ptr);
-    ucTest_ASSERT(ucCmdLine_RESPONSE_LENGTH == size);
+    ucTest_ASSERT(ucCmdLine_RESPONSE_SIZE == size);
+    ucTest_ASSERT(0 == ucCmdLine_get_response_size_max(NULL));
     return ucTestErr_NONE;
 }
 

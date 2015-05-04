@@ -140,6 +140,14 @@ static ucTestErr ucCmdLineApp_receive_uses_state(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLineApp_get_cmd_str_size_max_gets_size(ucTestGroup *p) {
+    ucCmdLineApp *ptr = ucCmdLineApp_get_instance();
+    size_t size = ucCmdLineApp_get_cmd_str_size_max(ptr);
+    ucTest_ASSERT((ucCmdLineApp_CMD_STR_SIZE) == size);
+    ucTest_ASSERT(0 == ucCmdLineApp_get_cmd_str_size_max(NULL));
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucCmdLineApp_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -158,6 +166,7 @@ ucTestGroup *ucCmdLineApp_tests_get_group(void) {
         ucCmdLineApp_set_receive_state_sets_value,
         ucCmdLineApp_get_receive_state_gets_value,
         ucCmdLineApp_receive_uses_state,
+        ucCmdLineApp_get_cmd_str_size_max_gets_size,
         NULL
     };
 
