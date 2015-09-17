@@ -70,6 +70,7 @@ void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *rece
 
     ucCmdLine_set_transmit(cmd, transmit);
     ucCmdLineApp_set_receive(app, receive);
+    ucCmdLineApp_set_response_terminator(app, "*******");
 
     ucCmdLineApp_run(app, commands);
 }

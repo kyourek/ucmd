@@ -12,6 +12,7 @@ static char *receive(char *buf, size_t buf_size, void *state) {
 }
 
 int main (int argc, const char *argv[]) {
+    //uc_example(transmit, receive);
     uc_hello_world(transmit, receive);
     return 0;
 }
