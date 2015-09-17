@@ -63,6 +63,7 @@ uc_EXPORTED ucCmdLineOpt*                       ucCmdLineOpt_init(ucCmdLineOpt*,
             ucSwitchOpt*                        switch_opt;
             ucCmdLineOpt*                       next; };
 
+uc_EXPORTED ucCmdLineApp*                       ucCmdLineApp_init(ucCmdLineApp*, ucCmdParser*, ucCmdLine*);
 uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineApp*);
             struct                              ucCmdLineApp {
             ucCmdLine*                          cmd;
@@ -73,6 +74,7 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             const char*                         help_command;
             const char*                         quit_command;
             const char*                         escape_response;
+            const char*                         response_terminator;
             char                                cmd_buf[ucCmdLineApp_CMD_BUF_LENGTH + 1]; };
 
 /* 

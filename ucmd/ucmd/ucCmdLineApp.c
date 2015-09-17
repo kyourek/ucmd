@@ -46,6 +46,15 @@ static const char *help(ucCmdLine *cmd, void *state) {
     return 0;
 }
 
+static void terminate_response(ucCmdLineApp *p) {
+    ucCmdLine *cmd;
+    const char *response_terminator = ucCmdLineApp_get_response_terminator(p);
+    if (response_terminator) {
+        cmd = ucCmdLineApp_get_cmd(p);
+        ucCmdLine_respond(cmd, response_terminator);
+    }
+}
+
 static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     char *command;
     const char *response;
@@ -57,57 +66,60 @@ static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
 
     if (NULL == p) return -1;
 
-    /* create options for help and quit */
+    /* Create options for help and quit. */
     quit_opt = ucCmdLineOpt_create(quit, &QuitState_s, ucCmdLineApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
     main_opt = ucCmdLineOpt_create(help, &HelpState_s, ucCmdLineApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
-    /* set the state used for the help and quit commands */
+    /* Set the state used for the help and quit commands. */
     QuitState_s.app = p;
     HelpState_s.app = p;
     HelpState_s.cmd_opt = main_opt;
 
-    /* get this app's command object */
+    /* Get this app's command object. */
     cmd = ucCmdLineApp_get_cmd(p);
 
-    /* show the banner */
+    /* Show the banner. */
     ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Type %s to quit.", ucCmdLineApp_get_quit_command(p)));
     ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Type %s for help.", ucCmdLineApp_get_help_command(p)));
 
-    /* loop until we quit */
+    /* Loop until quit. */
     for (;;) {
                 
-        /* read the command */
+        /* Read the command. */
         command = ucCmdLineApp_receive(p);
 
-        /* parse the input into a command token */
+        /* Parse the input into a command token. */
         cmd_tok = ucCmdParser_parse(ucCmdLineApp_get_cmd_parser(p), command);
 
-        /* set the command's parsed command token */
+        /* Set the command's parsed command token. */
         ucCmdLine_set_cmd_tok(cmd, cmd_tok);
 
-        /* process the command */
+        /* Process the command. */
         response = ucCmdLineOpt_process(main_opt, cmd);
 
-        /* check if we got a response */
-        if (NULL != response) {
+        /* Check if we got a response. */
+        if (response) {
 
-            /* check if the response is the escape response */
+            /* Check if the response is the escape response. */
             if (0 == strcmp(response, ucCmdLineApp_get_escape_response(p))) {
 
-                /* we've been signaled to quit the app */
+                /* We've been signaled to quit the app. */
                 break;
             }
 
-            /* send the response */
+            /* Send the response. */
             ucCmdLine_respond(cmd, response);
         }
+
+        /* Signal that this command's response is complete. */
+        terminate_response(p);
     }
 
-    /* clear the options we created */
+    /* Clear the options we created. */
     ucCmdLineOpt_destroy(quit_opt);
     ucCmdLineOpt_destroy(main_opt);
 
-    /* if we got here, then the app was quit */
+    /* If we got here, then the app was quit. */
     return ucErr_NONE;
 }
 
@@ -176,21 +188,37 @@ ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp *p) {
     return p->cmd_parser;
 }
 
+void ucCmdLineApp_set_response_terminator(ucCmdLineApp *p, const char *value) {
+    if (NULL == p) return;
+    p->response_terminator = value;
+}
+
+const char *ucCmdLineApp_get_response_terminator(ucCmdLineApp *p) {
+    if (NULL == p) return NULL;
+    return p->response_terminator;
+}
+
+ucCmdLineApp *ucCmdLineApp_init(ucCmdLineApp *p, ucCmdParser *cmd_parser, ucCmdLine *cmd) {
+    if (NULL == p) return NULL;
+    p->cmd = cmd;
+    p->cmd_parser = cmd_parser;
+    p->run = run;
+    p->receive = NULL;
+    p->receive_state = NULL;
+    p->help_command = "help";
+    p->quit_command = "quit";
+    p->escape_response = "\x1b";
+    p->response_terminator = NULL;
+    return p;
+}
+
 ucCmdLineApp *ucCmdLineApp_get_instance(void) {
     static ucCmdLineApp instance = { 0 };
-    static ucCmdLineApp *p = NULL;
-    if (NULL == p) {
-        p = &instance;
-        p->cmd = ucCmdLine_get_instance();
-        p->cmd_parser = ucCmdParser_get_instance();
-        p->run = run;
-        p->receive = NULL;
-        p->receive_state = NULL;
-        p->help_command = "help";
-        p->quit_command = "quit";
-        p->escape_response = "\x1b";
+    static ucCmdLineApp *pointer = NULL;
+    if (pointer == NULL) {
+        pointer = ucCmdLineApp_init(&instance, ucCmdParser_get_instance(), ucCmdLine_get_instance());
     }
-    return p;
+    return pointer;
 }
 
 ucErr ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {

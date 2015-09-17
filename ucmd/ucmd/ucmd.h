@@ -1184,4 +1184,20 @@ uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
  */
 uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
 
+/*
+ * Summary:
+ *   Sets the string that is sent following the conclusion of a processed command.
+ * Parameters:
+ *   value: The string value. This string's memory must be managed by the caller.
+ */
+uc_EXPORTED void ucCmdLineApp_set_response_terminator(ucCmdLineApp*, const char *value);
+
+/*
+ * Summary:
+ *   Gets the string that was set as the command response terminator.
+ * Returns:
+ *   The string value.
+ */
+uc_EXPORTED const char *ucCmdLineApp_get_response_terminator(ucCmdLineApp*);
+
 #endif
