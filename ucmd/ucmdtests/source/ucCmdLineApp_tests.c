@@ -10,7 +10,7 @@ static char *receive_1(char *buf, size_t buf_size, void *state) {
 static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
 
 static ucCmdLineApp *init_subject(void) {
-    return ucCmdLineApp_init(ucCmdLineApp_get_instance(), ucCmdParser_get_instance(), ucCmdLine_get_instance());
+    return ucCmdLineApp_init(ucCmdLineApp_get_instance(), ucCmdParser_get_instance(), ucCmdLine_init(ucCmdLine_get_instance()));
 }
 
 static ucTestErr ucCmdLineApp_get_instance_is_not_null(ucTestGroup *p) {
@@ -152,26 +152,6 @@ static ucTestErr ucCmdLineApp_get_cmd_str_size_max_gets_size(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucCmdLineApp_response_terminator_is_initially_null(ucTestGroup *p) {
-    ucCmdLineApp *subject = init_subject();
-    ucTest_ASSERT(NULL == subject->response_terminator);
-    return ucTestErr_NONE;
-}
-
-static ucTestErr ucCmdLineApp_get_response_terminator_returns_set_value(ucTestGroup *p) {
-    ucCmdLineApp *subject = init_subject();
-    const char *expected, *actual, *values[] = { "EOT", "\x1b", "We're DONE!" };
-    int i;
-    for (i = 0; i < 3; i++) {
-        expected = values[i];
-        ucCmdLineApp_set_response_terminator(subject, expected);
-        actual = ucCmdLineApp_get_response_terminator(subject);
-        ucTest_ASSERT(0 == strcmp(expected, actual));
-        ucTest_ASSERT(expected == actual);
-    }
-    return ucTestErr_NONE;
-}
-
 static int ucCmdLineApp_run_ends_when_quit_is_received_count = 0;
 static char *ucCmdLineApp_run_ends_when_quit_is_received_receive(char *buf, size_t buf_size, void *state) {
     if (0 == ucCmdLineApp_run_ends_when_quit_is_received_count) {
@@ -227,10 +207,58 @@ static ucTestErr ucCmdLineApp_run_sends_response_terminator_after_command_comple
     ucCmdLine_set_transmit(cmd, ucCmdLineApp_run_sends_response_terminator_after_command_completion_transmit);
     ucCmdLineApp_set_receive(subject, ucCmdLineApp_run_sends_response_terminator_after_command_completion_receive);
 
-    ucCmdLineApp_set_response_terminator(subject, "End of transmission");
+    ucCmdLine_set_response_terminator(ucCmdLineApp_get_cmd(subject), "End of transmission");
     ucCmdLineApp_run(subject, NULL);
     ucTest_ASSERT(0 == ucCmdLineApp_run_sends_response_terminator_after_command_completion_transmit_error);
     return ucTestErr_NONE;
+}
+
+static int ucCmdLineApp_run_sends_command_acknowledgment_testing;
+static char *ucCmdLineApp_run_sends_command_acknowledgment_receive(char *buf, size_t buf_size, void *state) {
+    if (0 == ucCmdLineApp_run_sends_command_acknowledgment_testing) {
+        strncpy(buf, "help", buf_size);
+        ucCmdLineApp_run_sends_command_acknowledgment_testing = 1;
+    }
+    else {
+        strncpy(buf, "quit", buf_size);
+    }
+    return buf;
+}
+
+static const char *ucCmdLineApp_run_sends_command_acknowledgment_value;
+static int ucCmdLineApp_run_sends_command_acknowledgment_error;
+static ucCmdLineApp_run_sends_command_acknowledgment_transmit(const char *response, void *state) {
+    if (1 == ucCmdLineApp_run_sends_command_acknowledgment_testing) {
+        if ( 0 != strcmp(ucCmdLineApp_run_sends_command_acknowledgment_value, response)) {
+            ucCmdLineApp_run_sends_command_acknowledgment_error = 1;
+        }
+        else {
+            ucCmdLineApp_run_sends_command_acknowledgment_error = 0;
+        }
+        ucCmdLineApp_run_sends_command_acknowledgment_testing = -1;
+    }
+}
+
+static ucTestErr ucCmdLineApp_run_sends_command_acknowledgment(ucTestGroup *p, const char *command_acknowledgment) {
+    ucCmdLineApp *subject = init_subject();
+    ucCmdLine *cmd = ucCmdLineApp_get_cmd(subject);
+    ucCmdLineApp_run_sends_command_acknowledgment_error = 1;
+    ucCmdLineApp_run_sends_command_acknowledgment_testing = 0;
+    ucCmdLineApp_run_sends_command_acknowledgment_value = command_acknowledgment;
+    ucCmdLine_set_command_acknowledgment(cmd, command_acknowledgment);
+    ucCmdLine_set_transmit(cmd, ucCmdLineApp_run_sends_command_acknowledgment_transmit);
+    ucCmdLineApp_set_receive(subject, ucCmdLineApp_run_sends_command_acknowledgment_receive);
+    ucCmdLineApp_run(subject, NULL);
+    ucTest_ASSERT(0 == ucCmdLineApp_run_sends_command_acknowledgment_error);
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucCmdLineApp_run_sends_command_acknowledgment_here_we_go(ucTestGroup *p) {
+    return ucCmdLineApp_run_sends_command_acknowledgment(p, "Here we GO!");
+}
+
+static ucTestErr ucCmdLineApp_run_sends_command_acknowledgment_dashes(ucTestGroup *p) {
+    return ucCmdLineApp_run_sends_command_acknowledgment(p, "----");
 }
 
 ucTestGroup *ucCmdLineApp_tests_get_group(void) {
@@ -252,10 +280,10 @@ ucTestGroup *ucCmdLineApp_tests_get_group(void) {
         ucCmdLineApp_get_receive_state_gets_value,
         ucCmdLineApp_receive_uses_state,
         ucCmdLineApp_get_cmd_str_size_max_gets_size,
-        ucCmdLineApp_response_terminator_is_initially_null,
-        ucCmdLineApp_get_response_terminator_returns_set_value,
         ucCmdLineApp_run_ends_when_quit_is_received,
         ucCmdLineApp_run_sends_response_terminator_after_command_completion,
+        ucCmdLineApp_run_sends_command_acknowledgment_here_we_go,
+        ucCmdLineApp_run_sends_command_acknowledgment_dashes,
         NULL
     };
 

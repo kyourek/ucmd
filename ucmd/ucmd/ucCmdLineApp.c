@@ -46,15 +46,6 @@ static const char *help(ucCmdLine *cmd, void *state) {
     return 0;
 }
 
-static void terminate_response(ucCmdLineApp *p) {
-    ucCmdLine *cmd;
-    const char *response_terminator = ucCmdLineApp_get_response_terminator(p);
-    if (response_terminator) {
-        cmd = ucCmdLineApp_get_cmd(p);
-        ucCmdLine_respond(cmd, response_terminator);
-    }
-}
-
 static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
     char *command;
     const char *response;
@@ -106,13 +97,7 @@ static ucErr run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
                 /* We've been signaled to quit the app. */
                 break;
             }
-
-            /* Send the response. */
-            ucCmdLine_respond(cmd, response);
         }
-
-        /* Signal that this command's response is complete. */
-        terminate_response(p);
     }
 
     /* Clear the options we created. */
@@ -188,16 +173,6 @@ ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp *p) {
     return p->cmd_parser;
 }
 
-void ucCmdLineApp_set_response_terminator(ucCmdLineApp *p, const char *value) {
-    if (NULL == p) return;
-    p->response_terminator = value;
-}
-
-const char *ucCmdLineApp_get_response_terminator(ucCmdLineApp *p) {
-    if (NULL == p) return NULL;
-    return p->response_terminator;
-}
-
 ucCmdLineApp *ucCmdLineApp_init(ucCmdLineApp *p, ucCmdParser *cmd_parser, ucCmdLine *cmd) {
     if (NULL == p) return NULL;
     p->cmd = cmd;
@@ -208,7 +183,6 @@ ucCmdLineApp *ucCmdLineApp_init(ucCmdLineApp *p, ucCmdParser *cmd_parser, ucCmdL
     p->help_command = "help";
     p->quit_command = "quit";
     p->escape_response = "\x1b";
-    p->response_terminator = NULL;
     return p;
 }
 

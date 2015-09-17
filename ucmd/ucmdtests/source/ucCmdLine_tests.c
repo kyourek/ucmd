@@ -3,6 +3,10 @@
 #include <string.h>
 #include "ucTest.h"
 
+static ucCmdLine *init_subject(void) {
+    return ucCmdLine_init(ucCmdLine_get_instance());
+}
+
 static ucCmdTok *parse_cmd(char *cmd) {
     return ucCmdParser_parse(ucCmdParser_get_instance(), cmd);
 }
@@ -308,6 +312,46 @@ static ucTestErr ucCmdLine_get_response_size_max_returns_size(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLine_get_response_terminator_is_initially_null(ucTestGroup *p) {
+    ucCmdLine *subject = init_subject();
+    ucTest_ASSERT(NULL == ucCmdLine_get_response_terminator(subject));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucCmdLine_get_response_terminator_returns_set_value(ucTestGroup *p) {
+    ucCmdLine *subject = init_subject();
+    const char *expected, *actual, *values[] = { "EOT", "\x1b", "We're DONE!" };
+    int i;
+    for (i = 0; i < 3; i++) {
+        expected = values[i];
+        ucCmdLine_set_response_terminator(subject, expected);
+        actual = ucCmdLine_get_response_terminator(subject);
+        ucTest_ASSERT(0 == strcmp(expected, actual));
+        ucTest_ASSERT(expected == actual);
+    }
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucCmdLine_get_command_acknowledgment_is_initially_null(ucTestGroup *p) {
+    ucCmdLine *subject = init_subject();
+    ucTest_ASSERT(NULL == ucCmdLine_get_command_acknowledgment(subject));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucCmdLine_get_command_acknoledgment_returns_set_value(ucTestGroup *p) {
+    ucCmdLine *subject = init_subject();
+    const char *expected, *actual, *values[] = { "Got it!", "\x1b", "***" };
+    int i;
+    for (i = 0; i < 3; i++) {
+        expected = values[i];
+        ucCmdLine_set_command_acknowledgment(subject, expected);
+        actual = ucCmdLine_get_command_acknowledgment(subject);
+        ucTest_ASSERT(0 == strcmp(expected, actual));
+        ucTest_ASSERT(expected == actual);
+    }
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -334,6 +378,10 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_respond_does_nothing_if_is_quiet,
         ucCmdLine_set_handle_invalid_command_sets_callback,
         ucCmdLine_get_response_size_max_returns_size,
+        ucCmdLine_get_response_terminator_is_initially_null,
+        ucCmdLine_get_response_terminator_returns_set_value,
+        ucCmdLine_get_command_acknowledgment_is_initially_null,
+        ucCmdLine_get_command_acknoledgment_returns_set_value,
         NULL
     };
 

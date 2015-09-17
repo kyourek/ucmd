@@ -3,21 +3,28 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
+ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
+    if (NULL == p) return NULL;
+    p->cmd_tok = NULL;
+    p->command_acknowledgment = NULL;
+    p->transmit = NULL;
+    p->transmit_state = NULL;
+    p->is_quiet = ucBool_FALSE;
+    p->is_canceled = NULL;
+    p->is_canceled_state = NULL;
+    p->handle_invalid_command = NULL;
+    p->handle_invalid_command_state = NULL;
+    p->response_terminator = NULL;
+    return p;
+}
+
 ucCmdLine *ucCmdLine_get_instance(void) {
     static ucCmdLine instance = { 0 };
-    static ucCmdLine *p = NULL;
-    if (NULL == p) {
-        p = &instance;
-        p->cmd_tok = NULL;
-        p->transmit = NULL;
-        p->transmit_state = NULL;
-        p->is_quiet = ucBool_FALSE;
-        p->is_canceled = NULL;
-        p->is_canceled_state = NULL;
-        p->handle_invalid_command = NULL;
-        p->handle_invalid_command_state = NULL;
+    static ucCmdLine *pointer = NULL;
+    if (pointer == NULL) {
+        pointer = ucCmdLine_init(&instance);
     }
-    return p;
+    return pointer;
 }
 
 ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine *p) {
@@ -154,4 +161,38 @@ ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_comman
 size_t ucCmdLine_get_response_size_max(ucCmdLine *p) {
     if (NULL == p) return 0;
     return sizeof(p->response);
+}
+
+void ucCmdLine_set_response_terminator(ucCmdLine *p, const char *value) {
+    if (NULL == p) return;
+    p->response_terminator = value;
+}
+
+const char *ucCmdLine_get_response_terminator(ucCmdLine *p) {
+    if (NULL == p) return NULL;
+    return p->response_terminator;
+}
+
+void ucCmdLine_set_command_acknowledgment(ucCmdLine *p, const char *value) {
+    if (NULL == p) return;
+    p->command_acknowledgment = value;
+}
+
+const char *ucCmdLine_get_command_acknowledgment(ucCmdLine *p) {
+    if (NULL == p) return NULL;
+    return p->command_acknowledgment;
+}
+
+void ucCmdLine_acknowledge_command(ucCmdLine *p) {
+    const char *command_acknowledgment = ucCmdLine_get_command_acknowledgment(p);
+    if (command_acknowledgment) {
+        ucCmdLine_respond(p, command_acknowledgment);
+    }
+}
+
+void ucCmdLine_terminate_response(ucCmdLine *p) {
+    const char *response_terminator = ucCmdLine_get_response_terminator(p);
+    if (response_terminator) {
+        ucCmdLine_respond(p, response_terminator);
+    }
 }

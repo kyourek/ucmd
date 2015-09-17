@@ -188,35 +188,40 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
     return NULL;
 }
 
-const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
+static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *invalid_command_handled) {
     ucCmdTok *cmd_tok;
     ucCmdLineOpt *opt;
     ucCmdLineOpt_Func *func;
     const char *cmd_value;
     const char *validation;
-    ucBool invalid_command_handled;
 
     /* Get the command token of the command structure. */
     cmd_tok = ucCmdLine_get_cmd_tok(cmd);
 
     /* Get the command option that we'll process by finding
-       the one that matches the name of the command. */
+    the one that matches the name of the command. */
     cmd_value = ucTok_get_value((ucTok*)cmd_tok);
     opt = ucCmdLineOpt_find_by_name(p, cmd_value);
     if (NULL == opt) {
 
         /* The command is invalid (meaning it doesn't exist).
-           Try to handle it. */
-        invalid_command_handled = ucCmdLine_handle_invalid_command(cmd, cmd_value);
+        Try to handle it. */
+        *invalid_command_handled = ucCmdLine_handle_invalid_command(cmd, cmd_value);
 
         /* If the command was handled, then we don't return an error. */
-        return invalid_command_handled
-            ? NULL
-            : ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
+        if (*invalid_command_handled) {
+            return NULL;
+        }
     }
 
+    /* Send an indication that the command was received. */
+    ucCmdLine_acknowledge_command(cmd);
+
+    /* Check to see if the command is unknown. */
+    if (NULL == opt) return ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
+
     /* Validate the command structure against the option.
-       If validation fails, then return the validation result. */
+    If validation fails, then return the validation result. */
     validation = ucCmdLineOpt_format_validation_err(opt, cmd);
     if (validation) return validation;
 
@@ -226,6 +231,22 @@ const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
 
     /* Invoke the callback. */
     return func(cmd, ucCmdLineOpt_get_state(opt));
+}
+
+const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
+    ucBool invalid_command_handled = ucBool_FALSE;
+    const char *response = internal_process(p, cmd, &invalid_command_handled);
+    if (invalid_command_handled) {
+        return response;
+    }
+
+    if (response) {
+        ucCmdLine_respond(cmd, response);
+    }
+
+    ucCmdLine_terminate_response(cmd);
+
+    return response;
 }
 
 void ucCmdLineOpt_destroy(ucCmdLineOpt *p) {

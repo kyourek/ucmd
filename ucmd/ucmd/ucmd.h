@@ -593,6 +593,13 @@ uc_EXPORTED void ucCmdLine_set_is_quiet(ucCmdLine*, ucBool value);
  */
 uc_EXPORTED ucBool ucCmdLine_get_is_quiet(ucCmdLine*);
 
+uc_EXPORTED void            ucCmdLine_acknowledge_command(ucCmdLine*);
+uc_EXPORTED const char*     ucCmdLine_get_command_acknowledgment(ucCmdLine*);
+uc_EXPORTED const char*     ucCmdLine_get_response_terminator(ucCmdLine*);
+uc_EXPORTED void            ucCmdLine_set_response_terminator(ucCmdLine*, const char *value);
+uc_EXPORTED void            ucCmdLine_set_command_acknowledgment(ucCmdLine*, const char *value);
+uc_EXPORTED void            ucCmdLine_terminate_response(ucCmdLine*);
+
 /*
  * Summary:
  *   Base type for command, argument, and switch options.
@@ -1193,21 +1200,5 @@ uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
  *   The size of the command-string buffer.
  */
 uc_EXPORTED size_t ucCmdLineApp_get_cmd_str_size_max(ucCmdLineApp *p);
-
-/*
- * Summary:
- *   Sets the string that is sent following the conclusion of a processed command.
- * Parameters:
- *   value: The string value. This string's memory must be managed by the caller.
- */
-uc_EXPORTED void ucCmdLineApp_set_response_terminator(ucCmdLineApp*, const char *value);
-
-/*
- * Summary:
- *   Gets the string that was set as the command response terminator.
- * Returns:
- *   The string value.
- */
-uc_EXPORTED const char *ucCmdLineApp_get_response_terminator(ucCmdLineApp*);
 
 #endif

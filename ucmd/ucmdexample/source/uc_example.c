@@ -69,8 +69,10 @@ void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *rece
     ucCmdLine *cmd = ucCmdLineApp_get_cmd(app);
 
     ucCmdLine_set_transmit(cmd, transmit);
+    ucCmdLine_set_command_acknowledgment(cmd, "\\\\\\\\\\\\\\");
+    ucCmdLine_set_response_terminator(cmd, "///////");
+
     ucCmdLineApp_set_receive(app, receive);
-    ucCmdLineApp_set_response_terminator(app, "*******");
 
     ucCmdLineApp_run(app, commands);
 }

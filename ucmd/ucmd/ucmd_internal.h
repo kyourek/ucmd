@@ -42,6 +42,7 @@ uc_EXPORTED ucSwitchOpt*                        ucSwitchOpt_init(ucSwitchOpt*, c
             ucSwitchOpt*                        next; };
 
 uc_EXPORTED ucBool                              ucCmdLine_handle_invalid_command(ucCmdLine*, const char *invalid_command);
+uc_EXPORTED ucCmdLine*                          ucCmdLine_init(ucCmdLine*);
             struct                              ucCmdLine {
             ucCmdTok*                           cmd_tok;
             ucCmdLine_TransmitFunc*             transmit;
@@ -50,6 +51,8 @@ uc_EXPORTED ucBool                              ucCmdLine_handle_invalid_command
             void*                               transmit_state;
             void*                               is_canceled_state;
             void*                               handle_invalid_command_state;
+            const char*                         response_terminator;
+            const char*                         command_acknowledgment;
             char                                response[ucCmdLine_RESPONSE_SIZE];
 	        char                                response_buffer[ucCmdLine_RESPONSE_SIZE];
             ucBool                              is_quiet; };
@@ -73,8 +76,7 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             ucErr                               (*run)(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt);
             const char*                         help_command;
             const char*                         quit_command;
-            const char*                         escape_response;
-            const char*                         response_terminator;
+            const char*                         escape_response;            
             char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE + 1]; };
 
 /* 
