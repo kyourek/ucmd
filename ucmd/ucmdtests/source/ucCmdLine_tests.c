@@ -300,6 +300,14 @@ static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup 
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLine_get_response_size_max_returns_size(ucTestGroup *p) {
+    ucCmdLine *ptr = ucCmdLine_get_instance();
+    size_t size = ucCmdLine_get_response_size_max(ptr);
+    ucTest_ASSERT(ucCmdLine_RESPONSE_SIZE == size);
+    ucTest_ASSERT(0 == ucCmdLine_get_response_size_max(NULL));
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -325,6 +333,7 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_set_is_quiet_sets_value,
         ucCmdLine_respond_does_nothing_if_is_quiet,
         ucCmdLine_set_handle_invalid_command_sets_callback,
+        ucCmdLine_get_response_size_max_returns_size,
         NULL
     };
 

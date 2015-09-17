@@ -230,5 +230,10 @@ ucErr ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
 char *ucCmdLineApp_receive(ucCmdLineApp *p) {
     if (NULL == p) return NULL;
     if (NULL == p->receive) return NULL;
-    return p->receive(p->cmd_buf, sizeof(p->cmd_buf), p->receive_state);
+    return p->receive(p->cmd_str, sizeof(p->cmd_str), p->receive_state);
+}
+
+size_t ucCmdLineApp_get_cmd_str_size_max(ucCmdLineApp *p) {
+    if (NULL == p) return 0;
+    return ucCmdLineApp_CMD_STR_SIZE;
 }

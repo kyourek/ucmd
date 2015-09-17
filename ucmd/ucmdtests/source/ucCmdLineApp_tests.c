@@ -144,6 +144,14 @@ static ucTestErr ucCmdLineApp_receive_uses_state(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLineApp_get_cmd_str_size_max_gets_size(ucTestGroup *p) {
+    ucCmdLineApp *ptr = ucCmdLineApp_get_instance();
+    size_t size = ucCmdLineApp_get_cmd_str_size_max(ptr);
+    ucTest_ASSERT((ucCmdLineApp_CMD_STR_SIZE) == size);
+    ucTest_ASSERT(0 == ucCmdLineApp_get_cmd_str_size_max(NULL));
+    return ucTestErr_NONE;
+}
+
 static ucTestErr ucCmdLineApp_response_terminator_is_initially_null(ucTestGroup *p) {
     ucCmdLineApp *subject = init_subject();
     ucTest_ASSERT(NULL == subject->response_terminator);
@@ -176,6 +184,7 @@ static char *ucCmdLineApp_run_ends_when_quit_is_received_receive(char *buf, size
 
     return buf;
 }
+
 static ucTestErr ucCmdLineApp_run_ends_when_quit_is_received(ucTestGroup *p) {
     ucCmdLineApp *subject = init_subject();
     ucCmdLine *cmd = ucCmdLineApp_get_cmd(subject);
@@ -185,7 +194,6 @@ static ucTestErr ucCmdLineApp_run_ends_when_quit_is_received(ucTestGroup *p) {
     ucTest_ASSERT(2 == ucCmdLineApp_run_ends_when_quit_is_received_count);
     return ucTestErr_NONE;
 }
-
 
 static int ucCmdLineApp_run_sends_response_terminator_after_command_completion_count;
 static char *ucCmdLineApp_run_sends_response_terminator_after_command_completion_receive(char *buf, size_t buf_size, void *state) {
@@ -243,6 +251,7 @@ ucTestGroup *ucCmdLineApp_tests_get_group(void) {
         ucCmdLineApp_set_receive_state_sets_value,
         ucCmdLineApp_get_receive_state_gets_value,
         ucCmdLineApp_receive_uses_state,
+        ucCmdLineApp_get_cmd_str_size_max_gets_size,
         ucCmdLineApp_response_terminator_is_initially_null,
         ucCmdLineApp_get_response_terminator_returns_set_value,
         ucCmdLineApp_run_ends_when_quit_is_received,

@@ -50,8 +50,8 @@ uc_EXPORTED ucBool                              ucCmdLine_handle_invalid_command
             void*                               transmit_state;
             void*                               is_canceled_state;
             void*                               handle_invalid_command_state;
-            char                                response[ucCmdLine_RESPONSE_LENGTH];
-	        char                                response_buffer[ucCmdLine_RESPONSE_LENGTH];
+            char                                response[ucCmdLine_RESPONSE_SIZE];
+	        char                                response_buffer[ucCmdLine_RESPONSE_SIZE];
             ucBool                              is_quiet; };
 
 uc_EXPORTED const char*                         ucCmdLineOpt_format_validation_err(ucCmdLineOpt*, ucCmdLine *cmd);
@@ -75,7 +75,7 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             const char*                         quit_command;
             const char*                         escape_response;
             const char*                         response_terminator;
-            char                                cmd_buf[ucCmdLineApp_CMD_BUF_LENGTH + 1]; };
+            char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE + 1]; };
 
 /* 
  * Summary:
