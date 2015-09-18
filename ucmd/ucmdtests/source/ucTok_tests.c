@@ -312,7 +312,6 @@ static ucTestErr ucTok_parse_boolean__does_not_parse_invalid(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-
 ucTestGroup *ucTok_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
