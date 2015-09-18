@@ -106,7 +106,7 @@ ucBool ucTok_is_numeric(ucTok *p) {
     return ucBool_TRUE;
 }
 
-ucBool ucTok_parse_numeric(ucTok *p, double *value) {
+ucBool ucTok_try_parse_numeric(ucTok *p, double *value) {
     if (ucTok_is_numeric(p)) {
         if (value) {
             *value = atof(ucTok_get_value(p));
@@ -114,6 +114,12 @@ ucBool ucTok_parse_numeric(ucTok *p, double *value) {
         return ucBool_TRUE;
     }
     return ucBool_FALSE;
+}
+
+double ucTok_parse_numeric(ucTok *p) {
+    double value = 0;
+    ucTok_try_parse_numeric(p, &value);
+    return value;
 }
 
 ucBool ucTok_is_boolean(ucTok *p) {
@@ -129,7 +135,7 @@ ucBool ucTok_is_boolean(ucTok *p) {
     return ucBool_FALSE;
 }
 
-ucBool ucTok_parse_boolean(ucTok *p, ucBool *value) {
+ucBool ucTok_try_parse_boolean(ucTok *p, ucBool *value) {
     int i, len;
     const char *t[] = { ucTok_BOOLEAN_TRUE };
     const char *f[] = { ucTok_BOOLEAN_FALSE };
@@ -152,6 +158,12 @@ ucBool ucTok_parse_boolean(ucTok *p, ucBool *value) {
         }
     }
     return ucBool_FALSE;
+}
+
+ucBool ucTok_parse_boolean(ucTok *p) {
+    ucBool value = ucBool_FALSE;
+    ucTok_try_parse_boolean(p, &value);
+    return value;
 }
 
 ucBool ucTok_is_switch(ucTok* p) {

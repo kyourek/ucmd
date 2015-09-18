@@ -132,9 +132,9 @@ static ucTestErr ucTok_count_counts_tokens(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucTok_parse_numeric__test(ucTestGroup *p, const char *s, ucBool parsed) {
+static ucTestErr ucTok_try_parse_numeric__test(ucTestGroup *p, const char *s, ucBool parsed) {
     double expected, actual;
-    ucTest_ASSERT(parsed == ucTok_parse_numeric((ucTok*)s, &actual));
+    ucTest_ASSERT(parsed == ucTok_try_parse_numeric((ucTok*)s, &actual));
     if (parsed) {
         expected = atof(s);
         ucTest_ASSERT(actual == expected);
@@ -142,29 +142,29 @@ static ucTestErr ucTok_parse_numeric__test(ucTestGroup *p, const char *s, ucBool
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucTok_parse_numeric__does_not_parse_null(ucTestGroup *p) {
-    return ucTok_parse_numeric__test(p, NULL, ucBool_FALSE);
+static ucTestErr ucTok_try_parse_numeric__does_not_parse_null(ucTestGroup *p) {
+    return ucTok_try_parse_numeric__test(p, NULL, ucBool_FALSE);
 }
 
-static ucTestErr ucTok_parse_numeric__does_not_parse_string(ucTestGroup *p) {
-    return ucTok_parse_numeric__test(p, "not numeric", ucBool_FALSE);
+static ucTestErr ucTok_try_parse_numeric__does_not_parse_string(ucTestGroup *p) {
+    return ucTok_try_parse_numeric__test(p, "not numeric", ucBool_FALSE);
 }
 
-static ucTestErr ucTok_parse_numeric__does_not_parse_invalid_number(ucTestGroup *p) {
-    return ucTok_parse_numeric__test(p, "1.34.0", ucBool_FALSE);
+static ucTestErr ucTok_try_parse_numeric__does_not_parse_invalid_number(ucTestGroup *p) {
+    return ucTok_try_parse_numeric__test(p, "1.34.0", ucBool_FALSE);
 }
 
-static ucTestErr ucTok_parse_numeric__parses_number(ucTestGroup *p) {
-    return ucTok_parse_numeric__test(p, "1.34", ucBool_TRUE);
+static ucTestErr ucTok_try_parse_numeric__parses_number(ucTestGroup *p) {
+    return ucTok_try_parse_numeric__test(p, "1.34", ucBool_TRUE);
 }
 
-static ucTestErr ucTok_parse_numeric__parses_negative_number(ucTestGroup *p) {
-    return ucTok_parse_numeric__test(p, "-349.104", ucBool_TRUE);
+static ucTestErr ucTok_try_parse_numeric__parses_negative_number(ucTestGroup *p) {
+    return ucTok_try_parse_numeric__test(p, "-349.104", ucBool_TRUE);
 }
 
-static ucTestErr ucTok_parse_numeric__parses_zero(ucTestGroup *p) {
-    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_numeric__test(p, "0", ucBool_TRUE));
-    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_numeric__test(p, "0.000", ucBool_TRUE));
+static ucTestErr ucTok_try_parse_numeric__parses_zero(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_numeric__test(p, "0", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_numeric__test(p, "0.000", ucBool_TRUE));
     return ucTestErr_NONE;
 }
 
@@ -217,58 +217,101 @@ static ucTestErr ucTok_is_boolean__returns_false_for_string(ucTestGroup *p) {
     return ucTok_is_boolean__test(p, "not a bool", ucBool_FALSE);
 }
 
-static ucTestErr ucTok_parse_boolean__test(ucTestGroup *p, const char *s, ucBool is_boolean, ucBool expected) {
+static ucTestErr ucTok_try_parse_boolean__test(ucTestGroup *p, const char *s, ucBool is_boolean, ucBool expected) {
     ucBool actual;
-    ucTest_ASSERT(is_boolean == ucTok_parse_boolean((ucTok*)s, &actual));
+    ucTest_ASSERT(is_boolean == ucTok_try_parse_boolean((ucTok*)s, &actual));
     if (is_boolean) {
         ucTest_ASSERT(expected == actual);
     }
     return ucTestErr_NONE;
 }
 
-static ucTestErr ucTok_parse_boolean__parses_1(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "1", ucBool_TRUE, ucBool_TRUE);
+static ucTestErr ucTok_try_parse_boolean__parses_1(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "1", ucBool_TRUE, ucBool_TRUE);
 }
 
-static ucTestErr ucTok_parse_boolean__parses_on(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "on", ucBool_TRUE, ucBool_TRUE);
+static ucTestErr ucTok_try_parse_boolean__parses_on(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "on", ucBool_TRUE, ucBool_TRUE);
 }
 
-static ucTestErr ucTok_parse_boolean__parses_yes(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "yes", ucBool_TRUE, ucBool_TRUE);
+static ucTestErr ucTok_try_parse_boolean__parses_yes(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "yes", ucBool_TRUE, ucBool_TRUE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__parses_true(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "true", ucBool_TRUE, ucBool_TRUE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__parses_0(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "0", ucBool_TRUE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__parses_off(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "off", ucBool_TRUE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__parses_no(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "no", ucBool_TRUE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__parses_false(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "false", ucBool_TRUE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__does_not_parse_invalid_string(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "invalid", ucBool_FALSE, ucBool_FALSE);    
+}
+
+static ucTestErr ucTok_try_parse_boolean__does_not_parse_null(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, NULL, ucBool_FALSE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_try_parse_boolean__does_not_parse_numeric(ucTestGroup *p) {
+    return ucTok_try_parse_boolean__test(p, "0.0", ucBool_FALSE, ucBool_FALSE);
+}
+
+static ucTestErr ucTok_parse_numeric__test(ucTestGroup *p, const char *s, double expected) {
+    ucTest_ASSERT(expected == ucTok_parse_numeric((ucTok*)s));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_parse_numeric__parses_number(ucTestGroup *p) {
+    return ucTok_parse_numeric__test(p, "5.43210", 5.43210);
+}
+
+static ucTestErr ucTok_parse_numeric__does_not_parse_invalid(ucTestGroup *p) {
+    return ucTok_parse_numeric__test(p, "invalid", 0);
+}
+
+static ucTestErr ucTok_parse_boolean__test(ucTestGroup *p, const char *s, ucBool expected) {
+    ucTest_ASSERT(expected == ucTok_parse_boolean((ucTok*)s));
+    return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_parse_boolean__parses_true(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "true", ucBool_TRUE, ucBool_TRUE);
-}
-
-static ucTestErr ucTok_parse_boolean__parses_0(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "0", ucBool_TRUE, ucBool_FALSE);
-}
-
-static ucTestErr ucTok_parse_boolean__parses_off(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "off", ucBool_TRUE, ucBool_FALSE);
-}
-
-static ucTestErr ucTok_parse_boolean__parses_no(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "no", ucBool_TRUE, ucBool_FALSE);
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "true", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "yes", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "on", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "1", ucBool_TRUE));
+    return ucTestErr_NONE;
 }
 
 static ucTestErr ucTok_parse_boolean__parses_false(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "false", ucBool_TRUE, ucBool_FALSE);
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "false", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "no", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "off", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "0", ucBool_FALSE));
+    return ucTestErr_NONE;
 }
 
-static ucTestErr ucTok_parse_boolean__does_not_parse_invalid_string(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "invalid", ucBool_FALSE, ucBool_FALSE);    
+static ucTestErr ucTok_parse_boolean__does_not_parse_invalid(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "truthy", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "yup", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "bzzz", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_boolean__test(p, "1.0", ucBool_FALSE));
+    return ucTestErr_NONE;
 }
 
-static ucTestErr ucTok_parse_boolean__does_not_parse_null(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, NULL, ucBool_FALSE, ucBool_FALSE);
-}
-
-static ucTestErr ucTok_parse_boolean__does_not_parse_numeric(ucTestGroup *p) {
-    return ucTok_parse_boolean__test(p, "0.0", ucBool_FALSE, ucBool_FALSE);
-}
 
 ucTestGroup *ucTok_tests_get_group(void) {
     static ucTestGroup group;
@@ -289,12 +332,12 @@ ucTestGroup *ucTok_tests_get_group(void) {
         ucTok_is_switch_returns_false_for_non_switches,
         ucTok_get_next_returns_next_token,
         ucTok_count_counts_tokens,
-        ucTok_parse_numeric__does_not_parse_null,
-        ucTok_parse_numeric__does_not_parse_string,
-        ucTok_parse_numeric__does_not_parse_invalid_number,
-        ucTok_parse_numeric__parses_number,
-        ucTok_parse_numeric__parses_negative_number,
-        ucTok_parse_numeric__parses_zero,
+        ucTok_try_parse_numeric__does_not_parse_null,
+        ucTok_try_parse_numeric__does_not_parse_string,
+        ucTok_try_parse_numeric__does_not_parse_invalid_number,
+        ucTok_try_parse_numeric__parses_number,
+        ucTok_try_parse_numeric__parses_negative_number,
+        ucTok_try_parse_numeric__parses_zero,
         ucTok_is_boolean__returns_true_for_1,
         ucTok_is_boolean__returns_true_for_on,
         ucTok_is_boolean__returns_true_for_yes,
@@ -306,17 +349,22 @@ ucTestGroup *ucTok_tests_get_group(void) {
         ucTok_is_boolean__returns_false_for_numeric,
         ucTok_is_boolean__returns_false_for_null,
         ucTok_is_boolean__returns_false_for_string,
-        ucTok_parse_boolean__parses_1,
-        ucTok_parse_boolean__parses_on,
-        ucTok_parse_boolean__parses_yes,
+        ucTok_try_parse_boolean__parses_1,
+        ucTok_try_parse_boolean__parses_on,
+        ucTok_try_parse_boolean__parses_yes,
+        ucTok_try_parse_boolean__parses_true,
+        ucTok_try_parse_boolean__parses_0,
+        ucTok_try_parse_boolean__parses_off,
+        ucTok_try_parse_boolean__parses_no,
+        ucTok_try_parse_boolean__parses_false,
+        ucTok_try_parse_boolean__does_not_parse_invalid_string,
+        ucTok_try_parse_boolean__does_not_parse_null,
+        ucTok_try_parse_boolean__does_not_parse_numeric,
+        ucTok_parse_numeric__parses_number,
+        ucTok_parse_numeric__does_not_parse_invalid,
         ucTok_parse_boolean__parses_true,
-        ucTok_parse_boolean__parses_0,
-        ucTok_parse_boolean__parses_off,
-        ucTok_parse_boolean__parses_no,
         ucTok_parse_boolean__parses_false,
-        ucTok_parse_boolean__does_not_parse_invalid_string,
-        ucTok_parse_boolean__does_not_parse_null,
-        ucTok_parse_boolean__does_not_parse_numeric,
+        ucTok_parse_boolean__does_not_parse_invalid,
         NULL
     };
 

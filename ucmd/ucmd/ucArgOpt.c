@@ -59,7 +59,7 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
         if (arg_tok) {
             
             /* Parse the argument token into a number. */
-            is_num = ucTok_parse_numeric((ucTok*)arg_tok, &arg_num);
+            is_num = ucTok_try_parse_numeric((ucTok*)arg_tok, &arg_num);
             if (!is_num) {
 
                 /* The argument option requires a number, but the

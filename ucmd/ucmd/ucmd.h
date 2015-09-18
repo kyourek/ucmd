@@ -152,12 +152,11 @@ uc_EXPORTED ucBool ucTok_equals(ucTok*, const char *value);
  *   ucBool_TRUE if the token is considered numeric. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucTok_is_numeric(ucTok*);
-
-uc_EXPORTED ucBool ucTok_parse_numeric(ucTok*, double *value);
-
+uc_EXPORTED ucBool ucTok_try_parse_numeric(ucTok*, double *value);
+uc_EXPORTED double ucTok_parse_numeric(ucTok*);
 uc_EXPORTED ucBool ucTok_is_boolean(ucTok*);
-
-uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*, ucBool *value);
+uc_EXPORTED ucBool ucTok_try_parse_boolean(ucTok*, ucBool *value);
+uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*);
 
 /*
  * Summary:

@@ -8,8 +8,8 @@ typedef struct ucTest ucTest;
 
 #define ucTest_FAIL() do { return -1; } while (0)
 
-#include <stdio.h>
-#define ucTest_ASSERT(TRUE) do { if (!(TRUE)) { printf("%s\n", #TRUE); return -1; } } while (0)
+/* #include <stdio.h> */
+#define ucTest_ASSERT(TRUE) do { if (!(TRUE)) { /* printf("%s\n", #TRUE); */ return -1; } } while (0)
 
 /*
  * Summary:
