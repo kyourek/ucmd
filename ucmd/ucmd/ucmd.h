@@ -746,6 +746,9 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple(const char *name, const char *des
  */
 uc_EXPORTED ucArgOpt *ucArgOpt_create_required(const char *name, const char *desc, ucArgOpt *next);
 
+uc_EXPORTED ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next);
+
 /*
  * Summary:
  *   Creates a new, numeric argument option.

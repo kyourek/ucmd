@@ -198,6 +198,29 @@ static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup 
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucCmdLineOpt_send_usage__uses_boolean_argument_name(ucTestGroup *p) {
+    const char *expected;
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine_TransmitFunc *prev_transmit_func = ucCmdLine_get_transmit(cmd);
+
+    ucCmdLineOpt *cmd_opt =
+        ucCmdLineOpt_create(NULL, NULL, "some-action", NULL,
+        ucArgOpt_create_boolean("bool val", NULL),
+        ucSwitchOpt_create_required("-sw", "the-sw",
+        ucArgOpt_create_required_boolean("req. bool val",
+        NULL), NULL), NULL);
+
+    ucCmdLine_set_transmit(cmd, transmit_func_one);
+
+    ucCmdLineOpt_send_usage(cmd_opt, cmd);
+    expected = "some-action [<boolean>] -sw <boolean>";
+    ucTest_ASSERT(0 == strcmp(expected, transmit_func_one_response));
+
+    ucCmdLineOpt_destroy_chain(cmd_opt);
+    ucCmdLine_set_transmit(cmd, prev_transmit_func);
+    return ucTestErr_NONE;
+}
+
 static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
     ucCmdLine *cmd = ucCmdLine_get_instance();
@@ -280,6 +303,7 @@ ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
         ucCmdLineOpt_format_validation_err_catches_required_switch,
         ucCmdLineOpt_process_handles_invalid_commands,
         ucCmdLineOpt_process_does_not_handle_invalid_command,
+        ucCmdLineOpt_send_usage__uses_boolean_argument_name,
         NULL
     };
 

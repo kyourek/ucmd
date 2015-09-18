@@ -330,6 +330,80 @@ static ucTestErr ucArgOpt_format_validation_err_catches_multiple_numbers(ucTestG
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucArgOpt_create_boolean__creates_boolean_option(ucTestGroup *p) {
+    ucArgOpt *a2 = ucArgOpt_create_boolean("An optional arg", NULL);
+    ucArgOpt *a1 = ucArgOpt_create_required_boolean("A required arg", a2);
+    ucTest_ASSERT(a2 = ucArgOpt_get_next(a1));
+    ucTest_ASSERT(0 == strcmp("<boolean>", ucOpt_get_name((ucOpt*)a2)));
+    ucTest_ASSERT(0 == strcmp("<boolean>", ucOpt_get_name((ucOpt*)a1)));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)a2));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)a1));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_boolean(a2));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_boolean(a1));
+    ucArgOpt_destroy(a2);
+    ucArgOpt_destroy(a1);
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucArgOpt_format_validation_err__catches_boolean_errors(ucTestGroup *p) {
+    const char *err;
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);
+
+    err = ucArgOpt_format_validation_err(a, cmd, "3" "\0\n", NULL);
+    ucTest_ASSERT(NULL != err);
+
+    err = ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL);
+    ucTest_ASSERT(NULL != err);
+
+    ucArgOpt_destroy(a);
+
+    return ucTestErr_NONE;
+}
+
+#define ucArgOpt_format_validation_err__ALLOWS_BOOLEAN(VALUE)                   \
+    const char *err;                                                            \
+    ucCmdLine *cmd = ucCmdLine_get_instance();                                  \
+    ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);                           \
+    err = ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL);           \
+    ucTest_ASSERT(NULL == err);                                                 \
+    err = ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL);           \
+    ucTest_ASSERT(NULL == err);                                                 \
+    ucArgOpt_destroy(a);                                                        \
+    return ucTestErr_NONE;                                                          
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_1(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("1");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_0(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("0");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_yes(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("yes");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_no(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("no");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_true(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("true");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_false(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("false");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_on(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("on");
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_boolean_off(ucTestGroup *p) {
+    ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("off");
+}
+
 ucTestGroup *ucArgOpt_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -352,6 +426,16 @@ ucTestGroup *ucArgOpt_tests_get_group(void) {
         ucArgOpt_format_validation_err_catches_too_many_tokens,
         ucArgOpt_format_validation_err_allows_correct_number_of_tokens,
         ucArgOpt_format_validation_err_catches_multiple_numbers,
+        ucArgOpt_create_boolean__creates_boolean_option,
+        ucArgOpt_format_validation_err__catches_boolean_errors,
+        ucArgOpt_format_validation_err__allows_boolean_1,
+        ucArgOpt_format_validation_err__allows_boolean_0,
+        ucArgOpt_format_validation_err__allows_boolean_on,
+        ucArgOpt_format_validation_err__allows_boolean_off,
+        ucArgOpt_format_validation_err__allows_boolean_yes,
+        ucArgOpt_format_validation_err__allows_boolean_no,
+        ucArgOpt_format_validation_err__allows_boolean_true,
+        ucArgOpt_format_validation_err__allows_boolean_false,
         NULL
     };
 
