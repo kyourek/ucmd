@@ -1,23 +1,13 @@
 #include <stdlib.h>
 #include "ucmd_internal.h"
 
-static const char *numeric_arg_name = "<number>";
+static const char *boolean_arg_name = "<boolean>";
+static const char *numeric_arg_name = "<numeric>";
 
 ucMemoryManager_INIT(ucArgOpt, ucArgOpt_COUNT);
 
-static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_numeric, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return ucArgOpt_init(
-        ucMemoryManager_create(),
-        name,
-        desc,
-        is_required,
-        min_tok_count,
-        max_tok_count,
-        is_numeric,
-        numeric_min,
-        numeric_max,
-        next
-    );
+static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
+    return ucArgOpt_init(ucMemoryManager_create(), name, desc, is_required, min_tok_count, max_tok_count, is_boolean, is_numeric, numeric_min, numeric_max, next);
 }
 
 static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
@@ -42,45 +32,59 @@ static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd
     return NULL;
 }
 
+static const char *format_is_boolean_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
+    ucBool is_bool;
+    if (ucArgOpt_is_boolean(p)) {
+        if (arg_tok) {
+            is_bool = ucTok_is_boolean((ucTok*)arg_tok);
+            if (!is_bool) {
+                return NULL == switch_name
+                    ? ucCmdLine_format_response(cmd, "%sthe argument \"%s\" is not boolean.", prefix, ucTok_get_value(arg_tok))
+                    : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not boolean.", prefix, switch_name, ucTok_get_value(arg_tok));
+            }
+        }
+    }
+
+    return NULL;
+}
+
 static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
+    ucBool is_num;
     double arg_num;
 
-    /* check if this argument option must be numeric */
+    /* Check if this argument option must be numeric. */
     if (ucArgOpt_is_numeric(p)) {
 
-        /* check if the argument token was provided */
-        if (NULL != arg_tok) {
+        /* Check if the argument token was provided. */
+        if (arg_tok) {
             
-            /* check if the argument token is not numeric */
-            if (!ucTok_is_numeric((ucTok*)arg_tok)) {
+            /* Parse the argument token into a number. */
+            is_num = ucTok_parse_numeric((ucTok*)arg_tok, &arg_num);
+            if (!is_num) {
 
-                /* the argument option requires a number, but the
+                /* The argument option requires a number, but the
                    provided token is not numeric, so return the
-                   appropriate error message */
+                   appropriate error message. */
                 return NULL == switch_name
                     ? ucCmdLine_format_response(cmd, "%sthe argument \"%s\" is not numeric.", prefix, ucTok_get_value(arg_tok))
                     : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%s\" is not numeric.", prefix, switch_name, ucTok_get_value(arg_tok));
             }
 
-            /* the profided argument token is numeric,
-               so convert it to a number */
-            arg_num = atof(ucTok_get_value((ucTok*)arg_tok));
-
-            /* check that that number is above the lower bound */
+            /* Check that that number is above the lower bound. */
             if (ucArgOpt_get_numeric_min(p) > arg_num) {
 
-                /* the number is below the lower bound, so return the
-                   appropriate error message */
+                /* The number is below the lower bound, so return the
+                   appropriate error message. */
                 return NULL == switch_name
                     ? ucCmdLine_format_response(cmd, "%sthe argument \"%f\" is above the minimum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_min(p))
                     : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%f\" is above the minimum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_min(p));
             }
 
-            /* check that the number is below the upper bound */
+            /* Check that the number is below the upper bound. */
             if (ucArgOpt_get_numeric_max(p) < arg_num) {
 
-                /* the number is above the upper bound, so return the
-                   appropriate error message */
+                /* The number is above the upper bound, so return the
+                   appropriate error message. */
                 return NULL == switch_name
                     ? ucCmdLine_format_response(cmd, "%sthe argument \"%f\" is below the maximum value of \"%f\".", prefix, arg_num, ucArgOpt_get_numeric_max(p))
                     : ucCmdLine_format_response(cmd, "%sthe \"%s\" argument \"%f\" is below the maximum value of \"%f\".", prefix, switch_name, arg_num, ucArgOpt_get_numeric_max(p));
@@ -88,7 +92,7 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
         }
     }
 
-    /* return no error */
+    /* Return no error. */
     return NULL;
 }
 
@@ -96,6 +100,9 @@ static const char *format_arg_tok_validation_err(ucArgOpt *p, ucCmdLine *cmd, uc
     const char *err;
 
     err = format_is_required_validation_err(p, cmd, arg_tok, switch_name, prefix);
+    if (err) return err;
+
+    err = format_is_boolean_validation_err(p, cmd, arg_tok, switch_name, prefix);
     if (err) return err;
 
     err = format_is_numeric_validation_err(p, cmd, arg_tok, switch_name, prefix);
@@ -112,6 +119,11 @@ int ucArgOpt_get_min_tok_count(ucArgOpt *p) {
 int ucArgOpt_get_max_tok_count(ucArgOpt *p) {
     if (NULL == p) return 0;
     return p->max_tok_count;
+}
+
+ucBool ucArgOpt_is_boolean(ucArgOpt *p) {
+    if (NULL == p) return ucBool_FALSE;
+    return p->is_boolean;
 }
 
 ucBool ucArgOpt_is_numeric(ucArgOpt *p) {
@@ -134,13 +146,14 @@ ucArgOpt *ucArgOpt_get_next(ucArgOpt* p) {
     return p->next;
 }
 
-ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_numeric, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
 
     if (NULL == p) return NULL;
     if (NULL == ucOpt_init((ucOpt*)p, name, desc, is_required)) return NULL;
 
     p->min_tok_count = min_tok_count;
     p->max_tok_count = max_tok_count;
+    p->is_boolean = is_boolean;
     p->is_numeric = is_numeric;
     p->numeric_min = numeric_min;
     p->numeric_max = numeric_max;
@@ -150,27 +163,35 @@ ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool 
 }
 
 ucArgOpt *ucArgOpt_create(const char *name, const char *desc, ucArgOpt *next) {
-    return create(name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, 0, 0, next);
+    return create(name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_multiple(const char *name, const char *desc, int min_tok_count, int max_tok_count) {
-    return create(name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, 0, 0, NULL);
+    return create(name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, ucBool_FALSE, 0, 0, NULL);
 }
 
 ucArgOpt *ucArgOpt_create_required(const char *name, const char *desc, ucArgOpt *next) {
-    return create(name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, 0, 0, next);
+    return create(name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
+}
+
+ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next) {
+    return create(boolean_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_TRUE, ucBool_FALSE, 0, 0, next);
+}
+
+ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next) {
+    return create(boolean_arg_name, desc, ucBool_TRUE, 0, 1, ucBool_TRUE, ucBool_FALSE, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(numeric_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, ucBool_TRUE, numeric_min, numeric_max, next);
 }
 
 ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max) {
-    return create(numeric_arg_name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_TRUE, numeric_min, numeric_max, NULL);
+    return create(numeric_arg_name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, ucBool_TRUE, numeric_min, numeric_max, NULL);
 }
 
 ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(numeric_arg_name, desc, ucBool_TRUE, 1, 1, ucBool_TRUE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, ucBool_TRUE, numeric_min, numeric_max, next);
 }
 
 const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {

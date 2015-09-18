@@ -186,7 +186,7 @@ static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup 
     ucCmdLine_set_transmit(cmd, transmit_func_one);
     
     ucCmdLineOpt_send_usage(cmd_opt, cmd);
-    expected = "dothis [firstarg] secondarg [<number>] [-s1] <number> [-s2] -sthree [s3arg]";
+    expected = "dothis [firstarg] secondarg [<numeric>] [-s1] <numeric> [-s2] -sthree [s3arg]";
     ucTest_ASSERT(0 == strcmp(expected, transmit_func_one_response));
 
     ucCmdLineOpt_send_usage(ucCmdLineOpt_get_next(cmd_opt), cmd);

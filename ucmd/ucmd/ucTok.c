@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include "ucmd_internal.h"
 
@@ -103,6 +104,54 @@ ucBool ucTok_is_numeric(ucTok *p) {
     
     /* if we got here, it's a number */
     return ucBool_TRUE;
+}
+
+ucBool ucTok_parse_numeric(ucTok *p, double *value) {
+    if (ucTok_is_numeric(p)) {
+        if (value) {
+            *value = atof(ucTok_get_value(p));
+        }
+        return ucBool_TRUE;
+    }
+    return ucBool_FALSE;
+}
+
+ucBool ucTok_is_boolean(ucTok *p) {
+    int i, len;
+    const char *b[] = { ucTok_BOOLEAN_FALSE, ucTok_BOOLEAN_TRUE };
+    if (NULL == p) return ucBool_FALSE;
+    len = sizeof(b) / sizeof(b[0]);
+    for (i = 0; i < len; i++) {
+        if (ucTok_equals(p, b[i])) {
+            return ucBool_TRUE;
+        }
+    }
+    return ucBool_FALSE;
+}
+
+ucBool ucTok_parse_boolean(ucTok *p, ucBool *value) {
+    int i, len;
+    const char *t[] = { ucTok_BOOLEAN_TRUE };
+    const char *f[] = { ucTok_BOOLEAN_FALSE };
+    len = sizeof(t) / sizeof(t[0]);
+    for (i = 0; i < len; i++) {
+        if (ucTok_equals(p, t[i])) {
+            if (value) {
+                *value = ucBool_TRUE;
+            }
+            return ucBool_TRUE;
+        }
+    }
+    len = sizeof(f) / sizeof(f[0]);
+    for (i = 0; i < len; i++) {
+        if (ucTok_equals(p, f[i])) {
+            if (value) {
+                *value = ucBool_FALSE;
+            }
+            return ucBool_TRUE;
+        }
+    }
+    return ucBool_FALSE;
 }
 
 ucBool ucTok_is_switch(ucTok* p) {

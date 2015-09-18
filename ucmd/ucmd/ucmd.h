@@ -47,6 +47,14 @@
 #define ucTok_LENGTH_MAX ucCmdLineApp_CMD_STR_SIZE
 #endif
 
+#ifndef ucTok_BOOLEAN_TRUE
+#define ucTok_BOOLEAN_TRUE "1", "on", "yes", "true"
+#endif
+
+#ifndef ucTok_BOOLEAN_FALSE
+#define ucTok_BOOLEAN_FALSE "0", "off", "no", "false"
+#endif
+
 /* Sets the numeric type of numeric argument
    options. */
 #ifndef ucArgOpt_NUMERIC_TYPE
@@ -144,6 +152,12 @@ uc_EXPORTED ucBool ucTok_equals(ucTok*, const char *value);
  *   ucBool_TRUE if the token is considered numeric. Otherwise, ucBool_FALSE.
  */
 uc_EXPORTED ucBool ucTok_is_numeric(ucTok*);
+
+uc_EXPORTED ucBool ucTok_parse_numeric(ucTok*, double *value);
+
+uc_EXPORTED ucBool ucTok_is_boolean(ucTok*);
+
+uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*, ucBool *value);
 
 /*
  * Summary:
@@ -664,6 +678,8 @@ uc_EXPORTED int ucArgOpt_get_min_tok_count(ucArgOpt*);
  *   The maximum number of argument tokens allowed for this option.
  */
 uc_EXPORTED int ucArgOpt_get_max_tok_count(ucArgOpt*);
+
+uc_EXPORTED ucBool ucArgOpt_is_boolean(ucArgOpt*);
 
 /*
  * Summary:
