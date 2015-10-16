@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucTestGroup.h"
+#include "ucmdtests.h"
 
 ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p) {
     if (NULL == p) return -1;

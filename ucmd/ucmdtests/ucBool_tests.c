@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr uc_true_causes_if_statement(ucTestGroup *p) {
     int entered = 0;

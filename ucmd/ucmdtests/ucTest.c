@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static void ucTest_print(ucTest *p, const char *str) {
     if (NULL == p) return;

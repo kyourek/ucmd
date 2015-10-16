@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucTestState.h"
+#include "ucmdtests.h"
 
 int ucTestState_get_run_test_count(ucTestState *p) {
     if (NULL == p) return 0;

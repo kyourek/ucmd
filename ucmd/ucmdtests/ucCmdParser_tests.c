@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucCmdParser *get_cmd_parser(void) {
     return ucCmdParser_get_instance();

@@ -1,5 +1,5 @@
 #include <stddef.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr ucSwitchTok_get_next_returns_next_switch(ucTestGroup *p) {
     ucSwitchTok *s = "-s1\0-s2\0-s3\0\n";

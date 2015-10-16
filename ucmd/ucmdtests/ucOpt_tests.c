@@ -1,5 +1,5 @@
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr ucOpt_get_name_returns_name(ucTestGroup *p) {
     ucOpt o;

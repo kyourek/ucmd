@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr ucCmdLineToks_get_cmd_tok_returns_value(ucTestGroup *p) {
     ucCmdLineToks inst = { 0 };

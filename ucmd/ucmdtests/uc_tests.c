@@ -1,7 +1,6 @@
 #include <stdarg.h>
 #include <stdlib.h>
-#include "ucTest.h"
-#include "uc_tests.h"
+#include "ucmdtests.h"
 
 static ucTestGroup **uc_tests_get_groups_va(ucTestGroup *group, ...) {
     static ucTestGroup *groups[20];

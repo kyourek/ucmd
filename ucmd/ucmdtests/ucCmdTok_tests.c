@@ -1,5 +1,5 @@
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr ucCmdTok_get_arg_gets_arg(ucTestGroup *p) {
     char cmd[] = "command\0arg\0\n";

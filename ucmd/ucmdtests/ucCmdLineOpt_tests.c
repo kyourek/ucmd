@@ -1,5 +1,5 @@
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static const char *transmit_func_one_response = NULL;
 static void transmit_func_one(const char *response, void *state) {

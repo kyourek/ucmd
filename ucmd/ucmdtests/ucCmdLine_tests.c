@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucCmdLine *init_subject(void) {
     return ucCmdLine_init(ucCmdLine_get_instance());

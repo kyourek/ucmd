@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {
     ucSwitchOpt o1;

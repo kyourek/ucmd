@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "uc_tests.h"
+#include "ucmdtests.h"
 
 static void print_func(const char *str, void *state) {
     printf("%s", str);

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "ucTest.h"
+#include "ucmdtests.h"
 
 void *receive_1_state;
 static char *receive_1(char *buf, size_t buf_size, void *state) { 
