@@ -1,8 +1,39 @@
-#ifndef UCMD_H
-#define UCMD_H
+/********************************************************************************
+ *  Copyright (c) 2015 Ken Yourek
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ *******************************************************************************/
 
-#include <stdarg.h>
-#include <stddef.h>
+/** \file ucmd.h
+ *  \date 16 October 2015
+ *  \version 1.9
+ *  \brief Public declarations for the ucmd library and framework.
+ *  \see https://github.com/kyourek/ucmd
+ *
+ *  These are the types and functions made publicly available by ucmd.
+ */
+
+#ifndef     _UCMD_H
+#define     _UCMD_H
+
+#include    <stdarg.h>
+#include    <stddef.h>
 
 /* Sets the size of the command buffer when using
    the command-line application framework. All
@@ -109,16 +140,15 @@ typedef int ucErr;
  */
 #define ucErr_NONE 0
 
-/*
- * Summary:
- *   Boolean type definition. This definition is used
- *   to increase the readability of the source by replacing
- *   integer representations of boolean values with the
- *   more familiar "true" and "false" values.
+/** \brief Boolean type definition.
+ *
+ *   This definition is used to increase the readability of the source by replacing
+ *   integer representations of boolean values with the more familiar "true" and
+ *   "false" values.
  */
 typedef enum ucBool {
-    ucBool_FALSE = 0,
-    ucBool_TRUE = !ucBool_FALSE
+    ucBool_FALSE = 0,               /**< Falsey value. */
+    ucBool_TRUE = !ucBool_FALSE     /**< Truthy value. */
 } ucBool;
 
 /*
