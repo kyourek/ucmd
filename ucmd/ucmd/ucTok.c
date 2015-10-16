@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include "ucmd_internal.h"
@@ -54,6 +55,43 @@ ucBool ucTok_equals(ucTok *p, const char *value) {
 
     /* if we got here, then the strings are equal */
     return ucBool_TRUE;
+}
+
+ucBool ucTok_is_integer(ucTok *p) {
+    const char *str = ucTok_get_value(p);
+
+    /* Handle NULL values. */
+    if (NULL == str) return ucBool_FALSE;
+
+    /* Handle negative numbers. */
+    if (*str == '-') ++str;
+
+    /* Handle empty string or just "-". */
+    if (!*str) return ucBool_FALSE;
+
+    /* Check for non-digit chars in the rest of the stirng. */
+    while (*str) {
+        if (!isdigit(*str)) return ucBool_FALSE;
+        ++str;
+    }
+
+    return ucBool_TRUE;
+}
+
+ucBool ucTok_try_parse_integer(ucTok *p, int *value) {
+    if (ucTok_is_integer(p)) {
+        if (value) {
+            *value = atoi(ucTok_get_value(p));
+        }
+        return ucBool_TRUE;
+    }
+    return ucBool_FALSE;
+}
+
+int ucTok_parse_integer(ucTok *p) {
+    int value = 0;
+    ucTok_try_parse_integer(p, &value);
+    return value;
 }
 
 ucBool ucTok_is_numeric(ucTok *p) {

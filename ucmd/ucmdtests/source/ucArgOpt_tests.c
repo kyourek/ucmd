@@ -404,6 +404,65 @@ static ucTestErr ucArgOpt_format_validation_err__allows_boolean_off(ucTestGroup 
     ucArgOpt_format_validation_err__ALLOWS_BOOLEAN("off");
 }
 
+static ucTestErr ucArgOpt_create_integer__creates_option(ucTestGroup *p) {
+    ucArgOpt *a3 = ucArgOpt_create_multiple_integer("Multiple options", 1, 5, -2500, 1500);
+    ucArgOpt *a2 = ucArgOpt_create_integer("An optional arg", 0, 50, a3);
+    ucArgOpt *a1 = ucArgOpt_create_required_integer("A required arg", -100, 100, a2);
+    ucTest_ASSERT(NULL == ucArgOpt_get_next(a3));
+    ucTest_ASSERT(a3 == ucArgOpt_get_next(a2));
+    ucTest_ASSERT(a2 = ucArgOpt_get_next(a1));
+    ucTest_ASSERT(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a3)));
+    ucTest_ASSERT(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a2)));
+    ucTest_ASSERT(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a1)));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)a3));
+    ucTest_ASSERT(ucBool_FALSE == ucOpt_is_required((ucOpt*)a2));
+    ucTest_ASSERT(ucBool_TRUE == ucOpt_is_required((ucOpt*)a1));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_integer(a3));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_integer(a2));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_integer(a1));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(a3));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(a2));
+    ucTest_ASSERT(ucBool_TRUE == ucArgOpt_is_numeric(a1));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_boolean(a3));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_boolean(a2));
+    ucTest_ASSERT(ucBool_FALSE == ucArgOpt_is_boolean(a1));
+    ucTest_ASSERT(-2500 == ucArgOpt_get_numeric_min(a3));
+    ucTest_ASSERT(1500 == ucArgOpt_get_numeric_max(a3));
+    ucTest_ASSERT(0 == ucArgOpt_get_numeric_min(a2));
+    ucTest_ASSERT(50 == ucArgOpt_get_numeric_max(a2));
+    ucTest_ASSERT(-100 == ucArgOpt_get_numeric_min(a1));
+    ucTest_ASSERT(100 == ucArgOpt_get_numeric_max(a1));
+    ucTest_ASSERT(0 == strcmp("Multiple options", ucOpt_get_desc((ucOpt*)a3)));
+    ucTest_ASSERT(0 == strcmp("An optional arg", ucOpt_get_desc((ucOpt*)a2)));
+    ucTest_ASSERT(0 == strcmp("A required arg", ucOpt_get_desc((ucOpt*)a1)));
+    ucArgOpt_destroy(a3);
+    ucArgOpt_destroy(a2);
+    ucArgOpt_destroy(a1);
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucArgOpt_format_validation_err__catches_integer_errors(ucTestGroup *p) {
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
+    ucTest_ASSERT(NULL != ucArgOpt_format_validation_err(a, cmd, "3.1" "\0\n", NULL));
+    ucTest_ASSERT(NULL != ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL));
+    ucTest_ASSERT(NULL != ucArgOpt_format_validation_err(a, cmd, "-6" "\0\n", NULL));
+    ucTest_ASSERT(NULL != ucArgOpt_format_validation_err(a, cmd, "11" "\0\n", NULL));
+    ucArgOpt_destroy(a);
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucArgOpt_format_validation_err__allows_valid_integers(ucTestGroup *p) {
+    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
+    ucTest_ASSERT(NULL == ucArgOpt_format_validation_err(a, cmd, "-5" "\0\n", NULL));
+    ucTest_ASSERT(NULL == ucArgOpt_format_validation_err(a, cmd, "-1" "\0\n", NULL));
+    ucTest_ASSERT(NULL == ucArgOpt_format_validation_err(a, cmd, "0" "\0\n", NULL));
+    ucTest_ASSERT(NULL == ucArgOpt_format_validation_err(a, cmd, "10" "\0\n", NULL));
+    ucArgOpt_destroy(a);
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucArgOpt_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -436,6 +495,9 @@ ucTestGroup *ucArgOpt_tests_get_group(void) {
         ucArgOpt_format_validation_err__allows_boolean_no,
         ucArgOpt_format_validation_err__allows_boolean_true,
         ucArgOpt_format_validation_err__allows_boolean_false,
+        ucArgOpt_create_integer__creates_option,
+        ucArgOpt_format_validation_err__catches_integer_errors,
+        ucArgOpt_format_validation_err__allows_valid_integers,
         NULL
     };
 

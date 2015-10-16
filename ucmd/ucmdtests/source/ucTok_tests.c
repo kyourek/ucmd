@@ -312,6 +312,86 @@ static ucTestErr ucTok_parse_boolean__does_not_parse_invalid(ucTestGroup *p) {
     return ucTestErr_NONE;
 }
 
+static ucTestErr ucTok_is_integer__test(ucTestGroup *p, const char *s, ucBool expected) {
+    ucTest_ASSERT(expected == ucTok_is_integer((ucTok*)s));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_is_integer__returns_true_for_int(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "-4923", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "-1", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "0", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "1", ucBool_TRUE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "2341", ucBool_TRUE));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_is_integer__returns_false_for_numeric(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "-49.23", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "-1.1", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "0.0", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "1.0", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "234.1", ucBool_FALSE));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_is_integer__returns_false_for_null(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, NULL, ucBool_FALSE));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_is_integer__returns_false_for_strings(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "a-4923", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "-11b", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "--00", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "56    -", ucBool_FALSE));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_is_integer__test(p, "NOT AN INT", ucBool_FALSE));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_try_parse_integer__test(ucTestGroup *p, const char *s, ucBool parsed, int result) {
+    int r;
+    ucTest_ASSERT(parsed == ucTok_try_parse_integer((ucTok*)s, &r));
+    if (parsed) {
+        ucTest_ASSERT(result == r);
+    }
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_try_parse_integer__returns_false_if_not_parsed(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "invalid", ucBool_FALSE, 0));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "--4", ucBool_FALSE, 0));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "-4a", ucBool_FALSE, 0));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "1.0", ucBool_FALSE, 0));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_try_parse_integer__returns_true_if_parsed(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "43", ucBool_TRUE, 43));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "-211", ucBool_TRUE, -211));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "0", ucBool_TRUE, 0));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_try_parse_integer__test(p, "1", ucBool_TRUE, 1));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_parse_integer__test(ucTestGroup *p, const char *s, int i) {
+    ucTest_ASSERT(i == ucTok_parse_integer((ucTok*)s));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_parse_integer__returns_0_for_invalid_strings(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_integer__test(p, "--1", 0));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_integer__test(p, "2.1", 0));
+    return ucTestErr_NONE;
+}
+
+static ucTestErr ucTok_parse_integer__returns_integer_value(ucTestGroup *p) {
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_integer__test(p, "1", 1));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_integer__test(p, "21", 21));
+    ucTest_ASSERT(ucTestErr_NONE == ucTok_parse_integer__test(p, "-3294821", -3294821));
+    return ucTestErr_NONE;
+}
+
 ucTestGroup *ucTok_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
@@ -364,6 +444,14 @@ ucTestGroup *ucTok_tests_get_group(void) {
         ucTok_parse_boolean__parses_true,
         ucTok_parse_boolean__parses_false,
         ucTok_parse_boolean__does_not_parse_invalid,
+        ucTok_is_integer__returns_true_for_int,
+        ucTok_is_integer__returns_false_for_numeric,
+        ucTok_is_integer__returns_false_for_null,
+        ucTok_is_integer__returns_false_for_strings,
+        ucTok_try_parse_integer__returns_false_if_not_parsed,
+        ucTok_try_parse_integer__returns_true_if_parsed,
+        ucTok_parse_integer__returns_0_for_invalid_strings,
+        ucTok_parse_integer__returns_integer_value,
         NULL
     };
 

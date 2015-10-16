@@ -145,12 +145,9 @@ uc_EXPORTED int ucTok_get_length(ucTok*);
  */
 uc_EXPORTED ucBool ucTok_equals(ucTok*, const char *value);
 
-/*
- * Summary:
- *   Determines whether or not the given token is considered numeric.
- * Returns:
- *   ucBool_TRUE if the token is considered numeric. Otherwise, ucBool_FALSE.
- */
+uc_EXPORTED ucBool ucTok_is_integer(ucTok *p);
+uc_EXPORTED ucBool ucTok_try_parse_integer(ucTok *p, int *value);
+uc_EXPORTED int ucTok_parse_integer(ucTok *p);
 uc_EXPORTED ucBool ucTok_is_numeric(ucTok*);
 uc_EXPORTED ucBool ucTok_try_parse_numeric(ucTok*, double *value);
 uc_EXPORTED double ucTok_parse_numeric(ucTok*);
@@ -679,6 +676,7 @@ uc_EXPORTED int ucArgOpt_get_min_tok_count(ucArgOpt*);
 uc_EXPORTED int ucArgOpt_get_max_tok_count(ucArgOpt*);
 
 uc_EXPORTED ucBool ucArgOpt_is_boolean(ucArgOpt*);
+uc_EXPORTED ucBool ucArgOpt_is_integer(ucArgOpt*);
 
 /*
  * Summary:
@@ -747,6 +745,9 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required(const char *name, const char *des
 
 uc_EXPORTED ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next);
 uc_EXPORTED ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
 
 /*
  * Summary:
