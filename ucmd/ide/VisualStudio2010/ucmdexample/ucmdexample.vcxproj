@@ -81,8 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ucmdexample\ucmdexample.h" />
-    <ClInclude Include="..\..\..\ucmdexample\uc_example.h" />
-    <ClInclude Include="..\..\..\ucmdexample\uc_hello_world.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmdexample\main.c" />

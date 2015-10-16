@@ -1,5 +1,5 @@
 #include <stddef.h>
-#include "uc_example.h"
+#include "ucmdexample.h"
 
 static const char *cmd(ucCmdLine *cmd, void *state) {
     ucCmdTok *cmd_tok;

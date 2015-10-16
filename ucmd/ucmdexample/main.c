@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "uc_example.h"
-#include "uc_hello_world.h"
+#include "ucmdexample.h"
 
 static void transmit(const char *response, void *state) {
     printf("%s\n", response);

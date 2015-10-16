@@ -11,12 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdexample\uc_example.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ucmdexample\uc_hello_world.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ucmdexample\ucmdexample.h">
       <Filter>include</Filter>
     </ClInclude>

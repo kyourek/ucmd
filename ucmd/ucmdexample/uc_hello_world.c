@@ -1,5 +1,5 @@
 #include <string.h>
-#include "uc_hello_world.h"
+#include "ucmdexample.h"
 
 #define NAME_LENGTH 50
 
