@@ -74,20 +74,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdexample\include\ucmdexample.h" />
-    <ClInclude Include="..\..\..\ucmdexample\include\uc_example.h" />
-    <ClInclude Include="..\..\..\ucmdexample\include\uc_hello_world.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\ucmdexample\source\uc_example.c" />
-    <ClCompile Include="..\..\..\ucmdexample\source\uc_hello_world.c" />
-    <ClCompile Include="..\..\..\ucmdexample\source\main.c" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ucmd\ucmd.vcxproj">
       <Project>{eda5ab74-9bfe-4963-b20f-f2776706917f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\ucmdexample\ucmdexample.h" />
+    <ClInclude Include="..\..\..\ucmdexample\uc_example.h" />
+    <ClInclude Include="..\..\..\ucmdexample\uc_hello_world.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ucmdexample\main.c" />
+    <ClCompile Include="..\..\..\ucmdexample\uc_example.c" />
+    <ClCompile Include="..\..\..\ucmdexample\uc_hello_world.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -74,39 +74,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ucmdtests\include\ucmdtests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTest.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\uc_tests.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTestErr.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTestGroup.h" />
-    <ClInclude Include="..\..\..\ucmdtests\include\ucTestState.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\ucmdtests\source\ucArgOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucArgTokOwner_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucArgTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucBool_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdLineApp_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdLineOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdLine_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdLineToks_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdParser_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucCmdTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucSwitchOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucSwitchTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTest.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\uc_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTestGroup.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTestState.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\ucTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\source\main.c" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ucmd\ucmd.vcxproj">
       <Project>{eda5ab74-9bfe-4963-b20f-f2776706917f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\ucmdtests\ucmdtests.h" />
+    <ClInclude Include="..\..\..\ucmdtests\ucTest.h" />
+    <ClInclude Include="..\..\..\ucmdtests\ucTestErr.h" />
+    <ClInclude Include="..\..\..\ucmdtests\ucTestGroup.h" />
+    <ClInclude Include="..\..\..\ucmdtests\ucTestState.h" />
+    <ClInclude Include="..\..\..\ucmdtests\uc_tests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ucmdtests\main.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucArgOpt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucArgTokOwner_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucArgTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucBool_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineApp_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineOpt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineToks_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdLine_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdParser_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucCmdTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucOpt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucSwitchOpt_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucSwitchTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTest.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestState.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\uc_tests.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
