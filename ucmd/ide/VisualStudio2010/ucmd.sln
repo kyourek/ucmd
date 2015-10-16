@@ -24,8 +24,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucmdtests", "ucmdtests\ucmd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucmdexample", "ucmdexample\ucmdexample.vcxproj", "{EAB08456-DA02-4CF0-BAE4-B3B0720BD07F}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "scripts", "scripts\scripts.pyproj", "{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,16 +64,6 @@ Global
 		{EAB08456-DA02-4CF0-BAE4-B3B0720BD07F}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{EAB08456-DA02-4CF0-BAE4-B3B0720BD07F}.Release|Win32.ActiveCfg = Release|Win32
 		{EAB08456-DA02-4CF0-BAE4-B3B0720BD07F}.Release|Win32.Build.0 = Release|Win32
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{81D26454-87F4-4FDC-AFC2-2BC48CE703FF}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
