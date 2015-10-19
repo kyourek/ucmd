@@ -19,9 +19,6 @@
     <ClCompile Include="..\..\..\ucmdtests\main.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\uc_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucArgOpt_tests.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -71,6 +68,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTok_tests.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTests.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

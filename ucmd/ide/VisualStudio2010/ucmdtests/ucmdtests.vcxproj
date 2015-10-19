@@ -101,7 +101,7 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestState.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\uc_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTests.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
