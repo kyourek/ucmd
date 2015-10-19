@@ -21,7 +21,7 @@ A program that requires one command with multiple arguments and switches could b
                 ucArgOpt_create("s1-a1", "Info about switch 1, arg 1.",
                 ucArgOpt_create("s1-a2", "Some help for switch 1, arg 2.",
                 NULL)),
-            ucSwitchOpt_create_required("-sw2", "And this is the second switch, which is required.",
+            ucSwitchOpt_create_required("-sw2", "This is the second switch, which is required.",
                 ucArgOpt_create_required("s2-a1", "It has a required argument.",
                 NULL),
             NULL)),
