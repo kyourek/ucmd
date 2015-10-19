@@ -3,25 +3,25 @@
 
 static ucTestErr ucCmdTok_get_arg_gets_arg(ucTestGroup *p) {
     char cmd[] = "command\0arg\0\n";
-    ucTEST(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(cmd), "arg"));
+    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(cmd), "arg"));
     ucPASS();
 }
 
 static ucTestErr ucCmdTok_get_arg_returns_null_if_followed_by_switch(ucTestGroup *p) {
     char cmd[] = "cmd\0-s\0a\0\n";
-    ucTEST(NULL == ucCmdTok_get_arg(cmd));
+    ucTRUE(NULL == ucCmdTok_get_arg(cmd));
     ucPASS();
 }
 
 static ucTestErr ucCmdTok_get_switch_gets_first_switch(ucTestGroup *p) {
     char cmd[] = "c\0a\0a2\0-s1\0-s2\0\n";
-    ucTEST(ucTok_equals((ucTok*)ucCmdTok_get_switch(cmd), "-s1"));
+    ucTRUE(ucTok_equals((ucTok*)ucCmdTok_get_switch(cmd), "-s1"));
     ucPASS();
 }
 
 static ucTestErr ucCmdTok_get_switch_returns_null_if_no_switch(ucTestGroup *p) {
     char cmd[] = "name\0a1\0ssss\0\n";
-    ucTEST(NULL == ucCmdTok_get_switch(cmd));
+    ucTRUE(NULL == ucCmdTok_get_switch(cmd));
     ucPASS();
 }
 

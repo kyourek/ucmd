@@ -29,8 +29,8 @@
  *  These are the types and functions made publicly available by ucmd.
  */
 
-#ifndef     _UCMD_H
-#define     _UCMD_H
+#ifndef     UCMD_H
+#define     UCMD_H
 
 #include    <stdarg.h>
 #include    <stddef.h>

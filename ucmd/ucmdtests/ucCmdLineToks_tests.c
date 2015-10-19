@@ -6,11 +6,11 @@ static ucTestErr ucCmdLineToks_get_cmd_tok_returns_value(ucTestGroup *p) {
     ucCmdLineToks *ptr = &inst;
     ucCmdTok *cmd_tok = "c";
 
-    ucTEST(NULL == ucCmdLineToks_get_cmd_tok(NULL));
-    ucTEST(NULL == ucCmdLineToks_get_cmd_tok(ptr));
+    ucTRUE(NULL == ucCmdLineToks_get_cmd_tok(NULL));
+    ucTRUE(NULL == ucCmdLineToks_get_cmd_tok(ptr));
 
     ptr->cmd_tok = cmd_tok;
-    ucTEST(cmd_tok == ucCmdLineToks_get_cmd_tok(ptr));
+    ucTRUE(cmd_tok == ucCmdLineToks_get_cmd_tok(ptr));
 
     ucPASS();
 }
@@ -20,11 +20,11 @@ static ucTestErr ucCmdLineToks_get_arg_tok_returns_value(ucTestGroup *p) {
     ucCmdLineToks *ptr = &inst;
     ucArgTok *arg_tok = "a";
 
-    ucTEST(NULL == ucCmdLineToks_get_arg_tok(NULL));
-    ucTEST(NULL == ucCmdLineToks_get_arg_tok(ptr));
+    ucTRUE(NULL == ucCmdLineToks_get_arg_tok(NULL));
+    ucTRUE(NULL == ucCmdLineToks_get_arg_tok(ptr));
 
     ptr->arg_tok = arg_tok;
-    ucTEST(arg_tok == ucCmdLineToks_get_arg_tok(ptr));
+    ucTRUE(arg_tok == ucCmdLineToks_get_arg_tok(ptr));
 
     ucPASS();
 }
@@ -34,11 +34,11 @@ static ucTestErr ucCmdLineToks_get_switch_tok_returns_value(ucTestGroup *p) {
     ucCmdLineToks *ptr = &inst;
     ucArgTok *switch_tok = "-s";
 
-    ucTEST(NULL == ucCmdLineToks_get_switch_tok(NULL));
-    ucTEST(NULL == ucCmdLineToks_get_switch_tok(ptr));
+    ucTRUE(NULL == ucCmdLineToks_get_switch_tok(NULL));
+    ucTRUE(NULL == ucCmdLineToks_get_switch_tok(ptr));
 
     ptr->switch_tok = switch_tok;
-    ucTEST(switch_tok == ucCmdLineToks_get_switch_tok(ptr));
+    ucTRUE(switch_tok == ucCmdLineToks_get_switch_tok(ptr));
 
     ucPASS();
 }

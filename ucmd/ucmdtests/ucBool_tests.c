@@ -6,12 +6,12 @@ static ucTestErr uc_true_causes_if_statement(ucTestGroup *p) {
     if (ucBool_TRUE) {
         entered = 1;
     }
-    ucTEST(entered == 1);
+    ucTRUE(entered == 1);
 
     if (!ucBool_TRUE) {
         entered = 2;
     }
-    ucTEST(entered == 1);
+    ucTRUE(entered == 1);
     ucPASS();
 }
 
@@ -20,22 +20,22 @@ static ucTestErr uc_false_avoids_if_statement(ucTestGroup *p) {
     if (ucBool_FALSE) {
         entered = 1;
     }
-    ucTEST(entered == 0);
+    ucTRUE(entered == 0);
 
     if (!ucBool_FALSE) {
         entered = 2;
     }
-    ucTEST(entered == 2);
+    ucTRUE(entered == 2);
     ucPASS();
 }
 
 static ucTestErr uc_true_is_opposite_of_uc_false(ucTestGroup *p) {
-    ucTEST(ucBool_TRUE == !ucBool_FALSE);
+    ucTRUE(ucBool_TRUE == !ucBool_FALSE);
     ucPASS();
 }
 
 static ucTestErr uc_false_is_opposite_of_uc_true(ucTestGroup *p) {
-    ucTEST(ucBool_FALSE == !ucBool_TRUE);
+    ucTRUE(ucBool_FALSE == !ucBool_TRUE);
     ucPASS();
 }
 
