@@ -75,7 +75,7 @@ uc_EXPORTED ucTestGroup*                    ucSwitchOpt_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucSwitchTok_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucTok_tests_get_group(void);
 
-uc_EXPORTED ucTest*                         uc_tests_get_test(void);
+uc_EXPORTED ucTest*                         ucTests_get_test(void);
 
 #define ucTest_FAIL() do { return -1; } while (0)
 

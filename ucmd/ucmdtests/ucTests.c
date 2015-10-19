@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
-static ucTestGroup **uc_tests_get_groups_va(ucTestGroup *group, ...) {
+static ucTestGroup **ucTests_get_groups_va(ucTestGroup *group, ...) {
     static ucTestGroup *groups[20];
     int i, len;
     va_list arg_list;
@@ -25,8 +25,8 @@ static ucTestGroup **uc_tests_get_groups_va(ucTestGroup *group, ...) {
     return groups;
 }
 
-static ucTestGroup **uc_tests_get_groups(void) {
-    return uc_tests_get_groups_va(
+static ucTestGroup **ucTests_get_groups(void) {
+    return ucTests_get_groups_va(
         ucArgOpt_tests_get_group(),
         ucArgTokOwner_tests_get_group(),
         ucArgTok_tests_get_group(),
@@ -45,7 +45,7 @@ static ucTestGroup **uc_tests_get_groups(void) {
     );
 }
 
-ucTest *uc_tests_get_test(void) {
+ucTest *ucTests_get_test(void) {
     static ucTest test;
-    return ucTest_init(&test, "ucmd tests", uc_tests_get_groups());
+    return ucTest_init(&test, "ucmd tests", ucTests_get_groups());
 }
