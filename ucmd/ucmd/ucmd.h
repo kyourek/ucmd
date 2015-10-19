@@ -1,5 +1,5 @@
 /********************************************************************************
- *  Copyright (c) 2015 Ken Yourek
+ *  Copyright (c) 2013-2015 Ken Yourek
  * 
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,11 @@
  *  THE SOFTWARE.
  *******************************************************************************/
 
-/** \file ucmd.h
- *  \date 16 October 2015
- *  \version 1.9
- *  \brief Public declarations for the ucmd library and framework.
- *  \see https://github.com/kyourek/ucmd
+/** @file ucmd.h
+ *  @date 16 October 2015
+ *  @version 1.9
+ *  @brief Public declarations for the ucmd library and framework.
+ *  @see https://github.com/kyourek/ucmd
  *
  *  These are the types and functions made publicly available by ucmd.
  */
@@ -127,24 +127,24 @@
 #define NULL ((void*)0)
 #endif
 
-/* 
+/*
  * Summary:
  *   Definition for the type returned
- *   by functions that use an error code. 
+ *   by functions that use an error code.
  */
 typedef int ucErr;
 
-/* 
+/*
  * Summary:
  *   Defines the value that represents no error.
  */
 #define ucErr_NONE 0
 
-/** \brief Boolean type definition.
+/** @brief Boolean type definition.
  *
- *   This definition is used to increase the readability of the source by replacing
- *   integer representations of boolean values with the more familiar "true" and
- *   "false" values.
+ *  This definition is used to increase the readability of the source by replacing
+ *  integer representations of boolean values with the more familiar "true" and
+ *  "false" values. 
  */
 typedef enum ucBool {
     ucBool_FALSE = 0,               /**< Falsey value. */
@@ -157,11 +157,8 @@ typedef enum ucBool {
  */
 typedef const char ucTok;
 
-/*
- * Summary:
- *   Gets the length of the token.
- * Returns:
- *   The number of characters in the token.
+/** @brief Gets the length of the token.
+ *  @returns The number of characters in the token. 
  */
 uc_EXPORTED int ucTok_get_length(ucTok*);
 
