@@ -35,7 +35,7 @@ A program that requires one command with multiple arguments and switches could b
         [-sw1]: This is Switch 1.
                 [s1-a1]: Info about switch 1, arg 1.
                 [s1-a2]: Some help for switch 1, arg 2.
-        -sw2: And this is the second switch, which is required.
+        -sw2: This is the second switch, which is required.
                 s2-a1: It has a required argument.
 
 Above, `-sw2` was created as a `required` switch. Therefore, if it is not supplied, the application responds with an error message:
