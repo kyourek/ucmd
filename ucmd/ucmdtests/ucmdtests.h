@@ -9,7 +9,11 @@ typedef     int                             ucTestErr;
 typedef     struct ucTestGroup              ucTestGroup;
 typedef     struct ucTestState              ucTestState;
 
-#define ucTestErr_NONE   0
+/* #include <stdio.h> */
+#define ucTEST(TRUE) do { if (!(TRUE)) { /* printf("%s\n", #TRUE); */ return -1; } } while (0)
+#define ucFAIL() do { return -1; } while (0)
+#define ucPASS() do { return -0; } while (0)
+
 
 uc_EXPORTED int                             ucTestState_get_run_group_count(ucTestState*);
 uc_EXPORTED int                             ucTestState_get_run_group_test_count(ucTestState*);
@@ -61,12 +65,12 @@ uc_EXPORTED void                            ucTest_set_print_state(ucTest*, void
             ucTestGroup**                   groups; };
 
 uc_EXPORTED ucTestGroup*                    ucArgOpt_tests_get_group(void);
-uc_EXPORTED ucTestGroup*                    ucArgTokOwner_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucArgTok_tests_get_group(void);
+uc_EXPORTED ucTestGroup*                    ucArgTokOwner_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucBool_tests_get_group(void);
+uc_EXPORTED ucTestGroup*                    ucCmdLine_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucCmdLineApp_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucCmdLineOpt_tests_get_group(void);
-uc_EXPORTED ucTestGroup*                    ucCmdLine_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucCmdLineToks_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucCmdParser_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucCmdTok_tests_get_group(void);
@@ -76,10 +80,5 @@ uc_EXPORTED ucTestGroup*                    ucSwitchTok_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                    ucTok_tests_get_group(void);
 
 uc_EXPORTED ucTest*                         ucTests_get_test(void);
-
-#define ucTest_FAIL() do { return -1; } while (0)
-
-/* #include <stdio.h> */
-#define ucTest_ASSERT(TRUE) do { if (!(TRUE)) { /* printf("%s\n", #TRUE); */ return -1; } } while (0)
 
 #endif

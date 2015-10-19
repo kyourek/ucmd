@@ -8,7 +8,7 @@ ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p) {
 }
 
 ucTestErr ucTestGroup_base_before_all_tests(ucTestGroup *p) {
-    return ucTestErr_NONE;
+    ucPASS();
 }
 
 ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p) {
@@ -18,7 +18,7 @@ ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p) {
 }
 
 ucTestErr ucTestGroup_base_after_all_tests(ucTestGroup *p) {
-    return ucTestErr_NONE;
+    ucPASS();
 }
 
 ucTestErr ucTestGroup_before_each_test(ucTestGroup *p) {
@@ -28,7 +28,7 @@ ucTestErr ucTestGroup_before_each_test(ucTestGroup *p) {
 }
 
 ucTestErr ucTestGroup_base_before_each_test(ucTestGroup *p) {
-    return ucTestErr_NONE;
+    ucPASS();
 }
 
 ucTestErr ucTestGroup_after_each_test(ucTestGroup *p) {
@@ -38,7 +38,7 @@ ucTestErr ucTestGroup_after_each_test(ucTestGroup *p) {
 }
 
 ucTestErr ucTestGroup_base_after_each_test(ucTestGroup *p) {
-    return ucTestErr_NONE;
+    ucPASS();
 }
 
 ucTestGroup_TestFunc **ucTestGroup_get_tests(ucTestGroup *p) {
@@ -82,7 +82,7 @@ ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
     callback_err = ucTestGroup_before_all_tests(p);
     if (callback_err) return callback_err;
 
-    err = ucTestErr_NONE;
+    err = 0;
     for (; *tests; tests++) {
 
         callback_err = ucTestGroup_before_each_test(p);
@@ -106,5 +106,5 @@ ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
 
     ucTestState_set_run_group_count(state, ucTestState_get_run_group_count(state) + 1);
 
-    return ucTestErr_NONE;
+    ucPASS();
 }

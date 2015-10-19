@@ -63,7 +63,7 @@ ucTestErr ucTest_run(ucTest *p) {
     sprintf(str, "%s\n", ucTest_get_label(p));
     ucTest_print(p, str);
 
-    err = ucTestErr_NONE;
+    err = 0;
     for (; *groups; groups++) {
 
         err = ucTestGroup_run(*groups, state);
