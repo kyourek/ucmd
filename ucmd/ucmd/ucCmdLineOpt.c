@@ -3,56 +3,53 @@
 
 ucInstance_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
 
-static ucCmdLineOpt *create_cmd_line_opt(void) {
-    return ucInstance_create();
-}
-
 static const char *add_opt_to_usage_response(ucOpt *opt, ucCmdLine *cmd, const char *response) {
     static const char *required_format = "%s %s";
     static const char *optional_format = "%s [%s]";
+    const char *format = ucOpt_is_required(opt) 
+        ? required_format 
+        : optional_format;
     return ucCmdLine_format_response(
         cmd,
-        ucOpt_is_required(opt) ? required_format : optional_format,
+        format,
         response,
         ucOpt_get_name(opt)
     );
 }
 
 static const char *add_arg_opts_to_usage_response(ucArgOpt *arg_opt, ucCmdLine *cmd, const char *response) {
-    
-    while (NULL != arg_opt) {
+    while (arg_opt) {
         response = add_opt_to_usage_response((ucOpt*)arg_opt, cmd, response);
         arg_opt = ucArgOpt_get_next(arg_opt);
     }
-
     return response;
 }
 
 static void send_arg_opts_help(ucArgOpt *arg_opt, ucCmdLine *cmd, const char *prefix) {
-    while (NULL != arg_opt) {
+    while (arg_opt) {
         ucOpt_send_help((ucOpt*)arg_opt, cmd, prefix);
         arg_opt = ucArgOpt_get_next(arg_opt);
     }
 }
 
 ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->next;
 }
 
 ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return ucArgOptOwner_get_arg_opt((ucArgOptOwner*)p);
 }
 
 ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->switch_opt;
 }
 
 ucCmdLineOpt *ucCmdLineOpt_init(ucCmdLineOpt *p, ucCmdLineOpt_Func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next) {
-    if (NULL == p) return NULL;
-    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_true, arg_opt)) return NULL;
+    assert(p);
+    assert(ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_true, arg_opt));
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;
@@ -61,11 +58,12 @@ ucCmdLineOpt *ucCmdLineOpt_init(ucCmdLineOpt *p, ucCmdLineOpt_Func *func, void* 
 }
 
 ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_Func *func, void *state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next) {
-    return ucCmdLineOpt_init(create_cmd_line_opt(), func, state, name, desc, arg_opt, switch_opt, next);
+    return ucCmdLineOpt_init(ucInstance_create(), func, state, name, desc, arg_opt, switch_opt, next);
 }
 
 ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt* p, const char *name) {
-    while (NULL != p) {
+    assert(p);
+    while (p) {
         if (0 == strcmp(name, ucOpt_get_name((ucOpt*)p))) {
             return p;
         }
@@ -75,12 +73,12 @@ ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt* p, const char *name) {
 }
 
 ucCmdLineOpt_Func *ucCmdLineOpt_get_func(ucCmdLineOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->func;
 }
 
 void *ucCmdLineOpt_get_state(ucCmdLineOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->state;
 }
 
