@@ -1,26 +1,29 @@
 #include "ucmd_internal.h"
 
 const char *ucOpt_get_name(ucOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->name;
 }
 
 const char *ucOpt_get_desc(ucOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->desc;
 }
 
 ucBool ucOpt_is_required(ucOpt *p) {
-    if (NULL == p) return ucBool_false;
+    assert(p);
     return p->is_required;
 }
 
 void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix) {
     static const char *required_format = "%s%s: %s";
     static const char *optional_format = "%s[%s]: %s";
+    const char *format = ucOpt_is_required(p) 
+        ? required_format 
+        : optional_format;
     ucCmdLine_respond(cmd, ucCmdLine_format_response(
         cmd,
-        ucOpt_is_required(p) ? required_format : optional_format,
+        format,
         prefix,
         ucOpt_get_name(p),
         ucOpt_get_desc(p)
