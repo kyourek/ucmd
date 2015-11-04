@@ -2,46 +2,70 @@
 #include "ucmd_internal.h"
 
 static ucBool is_char_white_space(char c) {
-    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_true : ucBool_false;
+    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) 
+        ? ucBool_true 
+        : ucBool_false;
 }
 
 static char is_char_a_quote(char c) {
     if (c == '"') return '"';
     if (c == '\'') return '\'';
-    return 0;
+    return '\0';
 }
 
-static void remove_cmd_char(char *cmd, int index) {
+static void remove_cmd_char(ucCmdParser *p, char *cmd, int index) {
+    char done;
     assert(cmd);
-    while ('\n' != cmd[index]) {
+    done = ucCmdParser_get_cmd_terminator(p);
+    while (cmd[index] != done) {
         cmd[index] = cmd[index + 1];
         index++;
     }
 }
 
-static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
-    int i, j, len;
-    char quote, current_quote;
+ucCmdParser *ucCmdParser_init(ucCmdParser *p) {
+    assert(p);
+    p->cmd_terminator = '\n';
+    return p;
+}
 
+char ucCmdParser_get_cmd_terminator(ucCmdParser *p) {
+    assert(p);
+    return p->cmd_terminator;
+}
+
+void ucCmdParser_set_cmd_terminator(ucCmdParser *p, char value) {
+    assert(p);
+    p->cmd_terminator = value;
+}
+
+ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd) {
+    int i, j, len;
+    char done, quote, current_quote;
+
+    assert(p);
     assert(cmd);
+
+    /* Get the character that terminates the parse. */
+    done = ucCmdParser_get_cmd_terminator(p);
 
     /* Get the length of the whole command. */
     len = strlen(cmd);
 
     /* Replace any command-terminating characters in the string with a space. */
     for (i = 0; i < len; i++) {
-        if ('\n' == cmd[i]) {
+        if (cmd[i] == done) {
             cmd[i] = ' ';
         }
     }
 
     /* Append a command terminator. */
-    cmd[len + 1] = '\n';
+    cmd[len + 1] = done;
 
     /* Loop through each character in the command. */
     i = 0;
     current_quote = 0;
-    while ('\n' != cmd[i]) {
+    while (cmd[i] != done) {
 
         /* Check if this command character is a quote. */
         quote = is_char_a_quote(cmd[i]);
@@ -71,7 +95,7 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
                     only if this is not an empty
                     quote. */
                     if (current_quote != cmd[i + 1]) {
-                        remove_cmd_char(cmd, i);
+                        remove_cmd_char(p, cmd, i);
                     }
                 }
             }
@@ -89,7 +113,7 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
                 /* Remove any remaining white space. */
                 j = i + 1;
                 while (is_char_white_space(cmd[j])) {
-                    remove_cmd_char(cmd, j);
+                    remove_cmd_char(p, cmd, j);
                 }
             }
         }
@@ -102,18 +126,11 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
     return (ucCmdTok*)cmd;
 }
 
-ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd) {
-    if (NULL == p) return NULL;
-    if (NULL == p->parse) return NULL;
-    return p->parse(p, cmd);
-}
-
-ucCmdParser *ucCmdParser_get_instance(void) {
-    static ucCmdParser instance;
-    static ucCmdParser *p = NULL;
-    if (NULL == p) {
-        p = &instance;
-        p->parse = parse;
+ucCmdParser *ucCmdParser_instance(void) {
+    static ucCmdParser instance = { 0 };
+    static ucCmdParser *pointer = NULL;
+    if (pointer == NULL) {
+        pointer = ucCmdParser_init(&instance);
     }
-    return p;
+    return pointer;
 }

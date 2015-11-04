@@ -3,7 +3,7 @@
 #include "ucmdtests.h"
 
 static ucCmdParser *get_cmd_parser(void) {
-    return ucCmdParser_get_instance();
+    return ucCmdParser_instance();
 }
 
 static ucCmdTok *parse_cmd(char *cmd) {
@@ -228,9 +228,29 @@ static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
     ucPASS();
 }
 
+static ucTestErr ucCmdParser_get_cmd_terminator_default_is_line_feed(ucTestGroup *p) {
+    ucCmdParser *subject = ucCmdParser_init(ucCmdParser_instance());
+    ucTRUE('\n' == ucCmdParser_get_cmd_terminator(subject));
+    ucPASS();
+}
+
+static ucTestErr ucCmdParser_set_cmd_terminator_sets_value(ucTestGroup *p) {
+    int i, len;
+    char values[] = { '\r', '\n', '\x007' };
+    ucCmdParser *subject = ucCmdParser_init(ucCmdParser_instance());
+    len = sizeof(values) / sizeof(values[0]);
+    for (i = 0; i < len; i++) {
+        ucCmdParser_set_cmd_terminator(subject, values[i]);
+        ucTRUE(values[i] == ucCmdParser_get_cmd_terminator(subject));
+    }
+    ucCmdParser_init(ucCmdParser_instance());
+    ucPASS();
+}
+
 ucTestGroup *ucCmdParser_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
+        ucCmdParser_get_cmd_terminator_default_is_line_feed,
         ucCmdParser_parse_parses_command_value,
         ucCmdParser_parse_parses_short_argument,
         ucCmdParser_parse_parses_long_argument,
@@ -245,6 +265,7 @@ ucTestGroup *ucCmdParser_tests_get_group(void) {
         ucCmdParser_parse_parses_trailing_quotes,
         ucCmdParser_parse_allows_empty_double_quotes,
         ucCmdParser_parse_allows_empty_single_quotes,
+        ucCmdParser_set_cmd_terminator_sets_value,
         NULL
     };
 

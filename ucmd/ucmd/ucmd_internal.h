@@ -27,7 +27,7 @@
 #include    "ucmd.h"
 
             struct                              ucCmdParser {
-            ucCmdTok*                           (*parse)(ucCmdParser *p, char *cmd); };
+            char                                cmd_terminator; };
 
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
             struct                              ucOpt {
@@ -98,6 +98,7 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             const char*                         escape_response;            
             char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE + 1]; };
 
+uc_EXPORTED ucCmdParser*                        ucCmdParser_init(ucCmdParser*);
 /* 
  * Summary:
  *   Defines a macro that is used to provide a dynamic

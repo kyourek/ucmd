@@ -30,7 +30,7 @@
 
 #define     ucFAIL()                            do { return -1; } while (0)
 #define     ucPASS()                            do { return -0; } while (0)
-#define     ucTRUE(TRUE)                        do { if (!(TRUE)) { /* printf("%s\n", #TRUE); */ return -1; } } while (0)
+#define     ucTRUE(TRUE)                        do { if (!(TRUE)) { printf("%s\n", #TRUE); return -1; } } while (0)
 
 typedef     struct ucTest                       ucTest;
 typedef     int                                 ucTestErr;

@@ -947,6 +947,10 @@ uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt*);
  */
 typedef struct ucCmdParser ucCmdParser;
 
+uc_EXPORTED char ucCmdParser_get_cmd_terminator(ucCmdParser*);
+
+uc_EXPORTED void ucCmdParser_set_cmd_terminator(ucCmdParser*, char);
+
 /*
  * Summary:
  *   Gets a static, default instance of the parser.
@@ -954,7 +958,7 @@ typedef struct ucCmdParser ucCmdParser;
  *   The static, default instance of the parser, or NULL
  *   if an error occurred.
  */
-uc_EXPORTED ucCmdParser *ucCmdParser_get_instance(void);
+uc_EXPORTED ucCmdParser *ucCmdParser_instance(void);
 
 /*
  * Summary:

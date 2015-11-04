@@ -134,15 +134,16 @@ void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd) {
 
 const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) {
     static const char *invalid_switch = "Invalid switch: ";
-
+    ucArgTok *arg_tok;
     ucCmdTok *cmd_tok;
     ucSwitchOpt *switch_opt, *found_switch_opt, *next_switch_opt;
     ucSwitchTok *switch_tok, *found_switch_tok, *next_switch_tok;
     const char *switch_name, *validation;
 
     cmd_tok = ucCmdLine_get_cmd_tok(cmd);
-    
-    validation = ucArgOptOwner_format_validation_err((ucArgOptOwner*)p, cmd, ucCmdTok_get_arg(cmd_tok), NULL);
+    arg_tok = ucCmdTok_get_arg(cmd_tok);
+
+    validation = ucArgOptOwner_format_validation_err((ucArgOptOwner*)p, cmd, arg_tok, NULL);
     if (NULL != validation) return validation;
 
     switch_tok = ucCmdTok_get_switch(cmd_tok);

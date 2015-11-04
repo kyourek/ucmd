@@ -228,8 +228,12 @@ ucBool ucTok_is_switch(ucTok* p) {
 
 ucTok *ucTok_get_next(ucTok *p) {
     int i;
+    char done;
 
     assert(p);
+
+    /* Get the command terminator. */
+    done = ucCmdParser_get_cmd_terminator(ucCmdParser_instance());
 
     /* Loop until we've hit the max length. */
     i = 0;
@@ -239,7 +243,7 @@ ucTok *ucTok_get_next(ucTok *p) {
         if ('\0' == p[i - 1]) {
 
             /* Check if this character is the terminator. */
-            if ('\n' == p[i]) {
+            if (done == p[i]) {
 
                 /* It is, so no more tokens exist. */
                 return NULL;

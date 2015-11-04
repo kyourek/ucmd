@@ -8,7 +8,7 @@ static ucCmdLine *init_subject(void) {
 }
 
 static ucCmdTok *parse_cmd(char *cmd) {
-    return ucCmdParser_parse(ucCmdParser_get_instance(), cmd);
+    return ucCmdParser_parse(ucCmdParser_instance(), cmd);
 }
 
 static void *transmit_1_state;
