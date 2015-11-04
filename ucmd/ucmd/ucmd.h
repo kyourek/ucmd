@@ -21,7 +21,7 @@
  *******************************************************************************/
 
 /** @file ucmd.h
- *  @date 16 October 2015
+ *  @date 4 November 2015
  *  @version 2.0.0-alpha
  *  @brief Public declarations for the ucmd library and framework.
  *  @see https://github.com/kyourek/ucmd
