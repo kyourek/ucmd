@@ -147,8 +147,8 @@ typedef int ucErr;
  *  "false" values. 
  */
 typedef enum ucBool {
-    ucBool_FALSE = 0,               /**< Falsey value. */
-    ucBool_TRUE = !ucBool_FALSE     /**< Truthy value. */
+    ucBool_false = 0,               /**< Falsey value. */
+    ucBool_true = !ucBool_false     /**< Truthy value. */
 } ucBool;
 
 /*
@@ -168,7 +168,7 @@ uc_EXPORTED int ucTok_get_length(ucTok*);
  * Parameters:
  *   value: The value against which the token is checked for equality.
  * Returns:
- *   ucBool_TRUE if the token value equals the given value. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the token value equals the given value. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucTok_equals(ucTok*, const char *value);
 
@@ -186,7 +186,7 @@ uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*);
  * Summary:
  *   Determines whether or not the given token is considered a switch.
  * Returns:
- *   ucBool_TRUE if the token is a switch. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the token is a switch. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucTok_is_switch(ucTok*);
 
@@ -249,8 +249,8 @@ uc_EXPORTED ucArgTok *ucArgTok_find(ucArgTok*, const char *arg_value);
  * Parameters:
  *   arg_value: The value of the argument to be found.
  * Returns:
- *   ucBool_TRUE if an argument token with the given value is found.
- *   Otherwise, ucBool_FALSE.
+ *   ucBool_true if an argument token with the given value is found.
+ *   Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucArgTok_contains(ucArgTok*, const char *arg_value);
 
@@ -313,8 +313,8 @@ uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok*, const char *switch_value
  * Parameters:
  *   switch_value: The value of the switch to be found.
  * Returns:
- *   ucBool_TRUE if a switch with the given value was found in the list. Otherwise,
- *   ucBool_FALSE.
+ *   ucBool_true if a switch with the given value was found in the list. Otherwise,
+ *   ucBool_false.
  */
 uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok*, const char *switch_value);
 
@@ -438,7 +438,7 @@ typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
  * Parameters:
  *   state: A stateful object.
  * Returns:
- *   ucBool_TRUE if the command has been canceled. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the command has been canceled. Otherwise, ucBool_false.
  */
 typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
 
@@ -452,7 +452,7 @@ typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
  *   invalid_command: The invalid command string that was encountered.
  *   state: The stateful object for this callback.
  * Returns:
- *   ucBool_TRUE if the invalid command was handeled. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the invalid command was handeled. Otherwise, ucBool_false.
  */
 typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command, void *state);
 
@@ -518,7 +518,7 @@ uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine*, void *value);
  * Summary:
  *   Determines whether or not the command has been canceled.
  * Returns:
- *   ucBool_TRUE if the command has been canceled. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the command has been canceled. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucCmdLine_is_canceled(ucCmdLine*);
 
@@ -656,7 +656,7 @@ uc_EXPORTED const char *ucOpt_get_desc(ucOpt*);
  *   Gets a flag that indicates whether or not the option
  *   is required.
  * Returns:
- *   ucBool_TRUE if the option is required. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the option is required. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucOpt_is_required(ucOpt*);
 
@@ -702,7 +702,7 @@ uc_EXPORTED ucBool ucArgOpt_is_integer(ucArgOpt*);
  *   Gets a flag that indicates whether or not this argument option
  *   is numeric.
  * Returns:
- *   ucBool_TRUE if the argument is numeric. Otherwise, ucBool_FALSE.
+ *   ucBool_true if the argument is numeric. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt*);
 

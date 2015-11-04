@@ -15,7 +15,7 @@ const char *ucOpt_get_desc(ucOpt *p) {
 }
 
 ucBool ucOpt_is_required(ucOpt *p) {
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     return p->is_required;
 }
 

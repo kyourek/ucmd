@@ -3,7 +3,7 @@
 
 static ucTestErr ucArgTokOwner_get_arg_returns_first_arg(ucTestGroup *p) {
     char cmd[] = "c\0a1\0a2\0\n";
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucArgTokOwner_get_arg(cmd), "a1"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucArgTokOwner_get_arg(cmd), "a1"));
     ucPASS();
 }
 

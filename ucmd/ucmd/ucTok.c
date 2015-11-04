@@ -4,75 +4,73 @@
 #include "ucmd_internal.h"
 
 static ucBool is_char_digit(char c) {
-    /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator. */
     static const char *digits = "0123456789";
     const char *d;
     for (d = digits; *d; d++) {
         if (*d == c) {
-            return ucBool_TRUE;
+            return ucBool_true;
         }
     }
-    return ucBool_FALSE;
+    return ucBool_false;
 }
 
 int ucTok_get_length(ucTok *p) {
     int length;
-    if (NULL == p) return 0;
-
+    assert(p);
     for (length = 0; *p; length++, p++);
-
     return length;
 }
 
 const char *ucTok_get_value(ucTok *p) {
-    if (NULL == p) return NULL;
-    return (const char*)p;
+    assert(p);
+    return p;
 }
 
 ucBool ucTok_equals(ucTok *p, const char *value) {
     int i, len;
 
-    /* check if these pointers are the same */
-    if (value == p) return ucBool_TRUE;
+    assert(p);
 
-    /* make sure neither arg is null */
-    if (NULL == p) return ucBool_FALSE;
-    if (NULL == value) return ucBool_FALSE;
+    /* Check if these pointers are the same. */
+    if (value == p) return ucBool_true;
 
-    /* check if the string lengths are the same */
+    /* Make sure the other arg exists. */
+    if (!value) return ucBool_false;
+
+    /* Check if the string lengths are the same. */
     len = ucTok_get_length(p);
-    if (strlen(value) != len) return ucBool_FALSE;
+    if (strlen(value) != len) return ucBool_false;
 
-    /* check for character equality */
+    /* Check for character equality. */
     for (i = 0; i < len; i++) {
         if (p[i] != value[i]) {
-            return ucBool_FALSE;
+            return ucBool_false;
         }
     }
 
     /* if we got here, then the strings are equal */
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 ucBool ucTok_is_integer(ucTok *p) {
     const char *str = ucTok_get_value(p);
 
     /* Handle NULL values. */
-    if (NULL == str) return ucBool_FALSE;
+    if (NULL == str) return ucBool_false;
 
     /* Handle negative numbers. */
     if (*str == '-') ++str;
 
     /* Handle empty string or just "-". */
-    if (!*str) return ucBool_FALSE;
+    if (!*str) return ucBool_false;
 
     /* Check for non-digit chars in the rest of the stirng. */
     while (*str) {
-        if (!isdigit(*str)) return ucBool_FALSE;
+        if (!isdigit(*str)) return ucBool_false;
         ++str;
     }
 
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 ucBool ucTok_try_parse_integer(ucTok *p, int *value) {
@@ -80,9 +78,9 @@ ucBool ucTok_try_parse_integer(ucTok *p, int *value) {
         if (value) {
             *value = atoi(ucTok_get_value(p));
         }
-        return ucBool_TRUE;
+        return ucBool_true;
     }
-    return ucBool_FALSE;
+    return ucBool_false;
 }
 
 int ucTok_parse_integer(ucTok *p) {
@@ -96,23 +94,23 @@ ucBool ucTok_is_numeric(ucTok *p) {
     ucBool dec_found;
 
     /* check if p is NULL */
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     
     /* get the length of the string */
     len = ucTok_get_length(p);
     
     /* numbers need to have at least 1 character */
-    if (len < 1) return ucBool_FALSE;
+    if (len < 1) return ucBool_false;
     
     /* we are allowed to start with a '-' or '.' for negative numbers and decimals */
     if ((p[0] == '-') || (p[0] == '.')) {
         
         /* but we need more than 1 char if we do */
-        if (len < 2) return ucBool_FALSE;
+        if (len < 2) return ucBool_false;
     }
 
     // initialize vars
-    dec_found = ucBool_FALSE;
+    dec_found = ucBool_false;
 
     /* loop through the chars */
     for (i = 0; i < len; i++) {
@@ -121,24 +119,24 @@ ucBool ucTok_is_numeric(ucTok *p) {
         
             /* allow a dash only at the beginning */
             case '-':
-                if (i != 0) return ucBool_FALSE;
+                if (i != 0) return ucBool_false;
                 break;
                 
             /* allow only 1 dot */
             case '.':
-                if (dec_found) return ucBool_FALSE;
-                dec_found = ucBool_TRUE;
+                if (dec_found) return ucBool_false;
+                dec_found = ucBool_true;
                 break;
                 
             /* everything else has to be a number */
             default:
-                if (is_char_digit(p[i]) == ucBool_FALSE) return ucBool_FALSE;
+                if (is_char_digit(p[i]) == ucBool_false) return ucBool_false;
                 break;
         }
     }
     
     /* if we got here, it's a number */
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 ucBool ucTok_try_parse_numeric(ucTok *p, double *value) {
@@ -146,9 +144,9 @@ ucBool ucTok_try_parse_numeric(ucTok *p, double *value) {
         if (value) {
             *value = atof(ucTok_get_value(p));
         }
-        return ucBool_TRUE;
+        return ucBool_true;
     }
-    return ucBool_FALSE;
+    return ucBool_false;
 }
 
 double ucTok_parse_numeric(ucTok *p) {
@@ -158,45 +156,49 @@ double ucTok_parse_numeric(ucTok *p) {
 }
 
 ucBool ucTok_is_boolean(ucTok *p) {
-    int i, len;
-    const char *b[] = { ucTok_BOOLEAN_FALSE, ucTok_BOOLEAN_TRUE };
-    if (NULL == p) return ucBool_FALSE;
+    static const char *b[] = { ucTok_BOOLEAN_FALSE, ucTok_BOOLEAN_TRUE };
+    int i;
+    int len;
+
     len = sizeof(b) / sizeof(b[0]);
     for (i = 0; i < len; i++) {
         if (ucTok_equals(p, b[i])) {
-            return ucBool_TRUE;
+            return ucBool_true;
         }
     }
-    return ucBool_FALSE;
+    return ucBool_false;
 }
 
 ucBool ucTok_try_parse_boolean(ucTok *p, ucBool *value) {
-    int i, len;
-    const char *t[] = { ucTok_BOOLEAN_TRUE };
-    const char *f[] = { ucTok_BOOLEAN_FALSE };
+    static const char *t[] = { ucTok_BOOLEAN_TRUE };
+    static const char *f[] = { ucTok_BOOLEAN_FALSE };
+    int i;
+    int len;
+
     len = sizeof(t) / sizeof(t[0]);
     for (i = 0; i < len; i++) {
         if (ucTok_equals(p, t[i])) {
             if (value) {
-                *value = ucBool_TRUE;
+                *value = ucBool_true;
             }
-            return ucBool_TRUE;
+            return ucBool_true;
         }
     }
+
     len = sizeof(f) / sizeof(f[0]);
     for (i = 0; i < len; i++) {
         if (ucTok_equals(p, f[i])) {
             if (value) {
-                *value = ucBool_FALSE;
+                *value = ucBool_false;
             }
-            return ucBool_TRUE;
+            return ucBool_true;
         }
     }
-    return ucBool_FALSE;
+    return ucBool_false;
 }
 
 ucBool ucTok_parse_boolean(ucTok *p) {
-    ucBool value = ucBool_FALSE;
+    ucBool value = ucBool_false;
     ucTok_try_parse_boolean(p, &value);
     return value;
 }
@@ -205,22 +207,22 @@ ucBool ucTok_is_switch(ucTok* p) {
     int len = 0;
 
     /* check for a null pointer */
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     
     /* get the length so we can use it */
     len = ucTok_get_length(p);
     
     /* check for at least 2 characters (one '-' and at least another char) */
-    if (len < 2) return ucBool_FALSE;
+    if (len < 2) return ucBool_false;
     
     /* check if it starts with a '-' */
-    if (p[0] != '-') return ucBool_FALSE;
+    if (p[0] != '-') return ucBool_false;
     
     /* check if this is a numeric argument (negative numbers aren't switches) */
-    if (ucTok_is_numeric(p)) return ucBool_FALSE;
+    if (ucTok_is_numeric(p)) return ucBool_false;
 
     /* ok, it's a switch */
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 ucTok *ucTok_get_next(ucTok *p) {

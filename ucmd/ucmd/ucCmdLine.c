@@ -9,7 +9,7 @@ ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
     p->command_acknowledgment = NULL;
     p->transmit = NULL;
     p->transmit_state = NULL;
-    p->is_quiet = ucBool_FALSE;
+    p->is_quiet = ucBool_false;
     p->is_canceled = NULL;
     p->is_canceled_state = NULL;
     p->handle_invalid_command = NULL;
@@ -87,8 +87,8 @@ ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
 }
 
 ucBool ucCmdLine_is_canceled(ucCmdLine *p) {
-    if (NULL == p) return ucBool_FALSE;
-    if (NULL == p->is_canceled) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
+    if (NULL == p->is_canceled) return ucBool_false;
     return p->is_canceled(p->is_canceled_state);
 }
 
@@ -128,7 +128,7 @@ void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {
 }
 
 ucBool ucCmdLine_get_is_quiet(ucCmdLine *p) {
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     return p->is_quiet;
 }
 
@@ -153,8 +153,8 @@ void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine *p) {
 }
 
 ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_command) {
-    if (NULL == p) return ucBool_FALSE;
-    if (NULL == p->handle_invalid_command) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
+    if (NULL == p->handle_invalid_command) return ucBool_false;
     return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
 }
 

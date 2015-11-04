@@ -52,7 +52,7 @@ ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p) {
 
 ucCmdLineOpt *ucCmdLineOpt_init(ucCmdLineOpt *p, ucCmdLineOpt_Func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next) {
     if (NULL == p) return NULL;
-    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_TRUE, arg_opt)) return NULL;
+    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_true, arg_opt)) return NULL;
     p->func = func;
     p->state = state;
     p->switch_opt = switch_opt;
@@ -234,7 +234,7 @@ static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *inv
 }
 
 const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
-    ucBool invalid_command_handled = ucBool_FALSE;
+    ucBool invalid_command_handled = ucBool_false;
     const char *response = internal_process(p, cmd, &invalid_command_handled);
     if (invalid_command_handled) {
         return response;

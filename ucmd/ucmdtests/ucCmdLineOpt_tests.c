@@ -16,7 +16,7 @@ static const char *uart_func_two(ucCmdLine *p, void *state) {
 
 static void *handle_invalid_command_1_state;
 static const char *handle_invalid_command_1_invalid_command;
-static ucBool handle_invalid_command_1_return = ucBool_FALSE;
+static ucBool handle_invalid_command_1_return = ucBool_false;
 static ucBool handle_invalid_command_1(const char *invalid_command, void *state) {
     handle_invalid_command_1_state = state;
     handle_invalid_command_1_invalid_command = invalid_command;
@@ -46,7 +46,7 @@ static ucTestErr ucCmdLineOpt_create_creates_structure(ucTestGroup *p) {
     ucTRUE(NULL != ptr);
     ucTRUE(uart_func_one == ucCmdLineOpt_get_func(ptr));
     ucTRUE(&state == ucCmdLineOpt_get_state(ptr));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
 
     arg_opt = ucArgOptOwner_get_arg_opt((ucArgOptOwner*)ptr);
     ucTRUE(ucOpt_get_name((ucOpt*)arg_opt));
@@ -265,7 +265,7 @@ static ucTestErr ucCmdLineOpt_process_handles_invalid_commands(ucTestGroup *p) {
     ucCmdLine_set_handle_invalid_command_state(cmd, &state);
     ucCmdLine_set_cmd_tok(cmd, "noopt\0\n");
 
-    handle_invalid_command_1_return = ucBool_TRUE;
+    handle_invalid_command_1_return = ucBool_true;
     err = ucCmdLineOpt_process(opt, cmd);
     ucTRUE(NULL == err);
     ucTRUE(handle_invalid_command_1_state == &state);

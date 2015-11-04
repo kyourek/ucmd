@@ -2,7 +2,7 @@
 #include "ucmd_internal.h"
 
 static ucBool is_char_white_space(char c) {
-    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_TRUE : ucBool_FALSE;
+    return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_true : ucBool_false;
 }
 
 static char is_char_a_quote(char c) {

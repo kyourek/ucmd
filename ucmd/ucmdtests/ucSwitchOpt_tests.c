@@ -22,7 +22,7 @@ static ucTestErr ucSwitchOpt_create_creates_switch_opt(ucTestGroup *p) {
     ucTRUE(ucOpt_get_name((ucOpt*)s1));
     ucTRUE(ucOpt_get_desc((ucOpt*)s1));
     ucTRUE(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)s1));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)s1));
     ucTRUE(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);
@@ -44,7 +44,7 @@ static ucTestErr ucSwitchOpt_create_required_creates_switch_opt(ucTestGroup *p) 
     ucTRUE(ucOpt_get_name((ucOpt*)s1));
     ucTRUE(ucOpt_get_desc((ucOpt*)s1));
     ucTRUE(a == ucArgOptOwner_get_arg_opt((ucArgOptOwner*)s1));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)s1));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)s1));
     ucTRUE(s2 == ucSwitchOpt_get_next(s1));
 
     ucArgOpt_destroy(a);

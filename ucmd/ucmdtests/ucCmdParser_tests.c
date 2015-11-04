@@ -14,35 +14,35 @@ static ucTestErr ucCmdParser_parse_parses_command_value(ucTestGroup *p) {
     char cmd[20] = "command_name";
     ucCmdTok *t = parse_cmd(cmd);
     ucTRUE(NULL != t);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)t, cmd));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)t, cmd));
     ucPASS();
 }
 
 static ucTestErr ucCmdParser_parse_parses_short_argument(ucTestGroup *p) {
     char cmd[24] = "command short_arg";
     ucCmdTok *t = parse_cmd(cmd);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "short_arg"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "short_arg"));
     ucPASS();
 }
 
 static ucTestErr ucCmdParser_parse_parses_long_argument(ucTestGroup *p) {
     char cmd[31] = "command \"long argument\"";
     ucCmdTok *t = parse_cmd(cmd);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
     ucPASS();
 }
 
 static ucTestErr ucCmdParser_parse_parses_single_quotes(ucTestGroup *p) {
     char cmd[47] = "command 'long argument'";
     ucCmdTok *t = parse_cmd(cmd);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
     ucPASS();
 }
 
 static ucTestErr ucCmdParser_parse_parses_switch(ucTestGroup *p) {
     char cmd[19] = "command -switch";
     ucCmdTok *t = parse_cmd(cmd);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-switch"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-switch"));
     ucPASS();
 }
 
@@ -50,7 +50,7 @@ static ucTestErr ucCmdParser_parse_parses_numeric_argument(ucTestGroup *p) {
     char cmd[38] = "command -12.34";
     ucCmdTok *t = parse_cmd(cmd);
     ucTRUE(NULL == ucCmdTok_get_switch(t));
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "-12.34"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "-12.34"));
     ucPASS();
 }
 
@@ -58,7 +58,7 @@ static ucTestErr ucCmdParser_parses_non_numeric_switch(ucTestGroup *p) {
     char cmd[23] = "command -32.4.0";
     ucCmdTok *t = parse_cmd(cmd);
     ucTRUE(NULL == ucCmdTok_get_arg(t));
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-32.4.0"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-32.4.0"));
     ucPASS();
 }
 
@@ -74,7 +74,7 @@ static ucTestErr ucCmdParser_parse_arguments_parsed_in_correct_order(ucTestGroup
     arg = ucCmdTok_get_arg(t); 
     while (arg) {
         sprintf(buf, "arg%d", i);
-        ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, buf));
+        ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, buf));
         arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
@@ -94,7 +94,7 @@ static ucTestErr ucCmdParser_parse_switches_parsed_in_correct_order(ucTestGroup 
     i = 1;
     while (swtch) {
         sprintf(buf, "-sw%d", i);
-        ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)swtch, buf));
+        ucTRUE(ucBool_true == ucTok_equals((ucTok*)swtch, buf));
         swtch = ucSwitchTok_get_next(swtch);
         if (swtch) i++;
     }
@@ -117,7 +117,7 @@ static ucTestErr ucCmdParser_parse_parses_switch_arguments_in_correct_order(ucTe
     i = 1;
     while (arg) {
         sprintf(buf, "arg%d", i);
-        ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, buf));
+        ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, buf));
         arg = ucArgTok_get_next(arg);
         if (arg) i++;
     }
@@ -143,7 +143,7 @@ static ucTestErr ucCmdParser_parse_parses_command(ucTestGroup *p) {
     ucCmdTok *t = parse_cmd(cmd);
 
     ucTRUE(NULL != t);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)t, "somecmd"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)t, "somecmd"));
     ucTRUE(3 == ucArgTok_count(ucCmdTok_get_arg(t)));
     ucTRUE(2 == ucSwitchTok_count(ucCmdTok_get_switch(t)));
 
@@ -151,9 +151,9 @@ static ucTestErr ucCmdParser_parse_parses_command(ucTestGroup *p) {
     ucTRUE(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "this is a long argument"));
-        if (i == 1) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "shortarg"));
-        if (i == 2) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "-73.452"));
+        if (i == 0) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "this is a long argument"));
+        if (i == 1) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "shortarg"));
+        if (i == 2) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "-73.452"));
         if (i == 3) ucFAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
@@ -163,36 +163,36 @@ static ucTestErr ucCmdParser_parse_parses_command(ucTestGroup *p) {
     ucTRUE(swtch != NULL);
     i = 0; 
     while(swtch) {
-        if (i == 0) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)swtch, "-s1"));
-        if (i == 1) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)swtch, "-s2"));
+        if (i == 0) ucTRUE(ucBool_true == ucTok_equals((ucTok*)swtch, "-s1"));
+        if (i == 1) ucTRUE(ucBool_true == ucTok_equals((ucTok*)swtch, "-s2"));
         if (i == 2) ucFAIL();
         i++; 
         swtch = ucSwitchTok_get_next(swtch);
     }
 
     swtch = ucCmdTok_get_switch(t);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)swtch, "-s1"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)swtch, "-s1"));
     arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     ucTRUE(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "sarg1"));
-        if (i == 1) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "sarg2"));
-        if (i == 2) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "sarg3"));
+        if (i == 0) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "sarg1"));
+        if (i == 1) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "sarg2"));
+        if (i == 2) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "sarg3"));
         if (i == 3) ucFAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
     }
 
     swtch = ucSwitchTok_get_next(swtch);
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)swtch, "-s2"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)swtch, "-s2"));
     arg = ucArgTokOwner_get_arg((ucArgTokOwner*)swtch);
     ucTRUE(arg != NULL);
     i = 0; 
     while(arg) {
-        if (i == 0) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "sarg3"));
-        if (i == 1) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "long switch argument"));
-        if (i == 2) ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "-12.43"));
+        if (i == 0) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "sarg3"));
+        if (i == 1) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "long switch argument"));
+        if (i == 2) ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "-12.43"));
         if (i == 3) ucFAIL();
         i++; 
         arg = ucArgTok_get_next(arg);
@@ -211,7 +211,7 @@ static ucTestErr ucCmdParser_parse_allows_empty_double_quotes(ucTestGroup *p) {
     swtch = ucCmdTok_get_switch(t);
     arg = ucSwitchTok_get_arg(swtch);
 
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "\"\""));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "\"\""));
 
     ucPASS();
 }
@@ -223,7 +223,7 @@ static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
 
     arg = ucCmdTok_get_arg(t);
 
-    ucTRUE(ucBool_TRUE == ucTok_equals((ucTok*)arg, "''"));
+    ucTRUE(ucBool_true == ucTok_equals((ucTok*)arg, "''"));
 
     ucPASS();
 }

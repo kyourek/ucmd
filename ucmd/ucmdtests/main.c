@@ -7,7 +7,7 @@ static void print_func(const char *str, void *state) {
 
 static ucBool exit_func(void *state) {
     getchar();
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 int main (int argc, const char * argv[]) {

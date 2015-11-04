@@ -5,11 +5,11 @@
 static ucTestErr ucArgOpt_is_numeric_returns_is_numeric(ucTestGroup *p) {
     ucArgOpt o;
     
-    o.is_numeric = ucBool_FALSE;
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_numeric(&o));
+    o.is_numeric = ucBool_false;
+    ucTRUE(ucBool_false == ucArgOpt_is_numeric(&o));
 
-    o.is_numeric = ucBool_TRUE;
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(&o));
+    o.is_numeric = ucBool_true;
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(&o));
 
     ucPASS();
 }
@@ -37,8 +37,8 @@ static ucTestErr ucArgOpt_create_creates_arg_opt(ucTestGroup *p) {
     ucTRUE(ucOpt_get_name((ucOpt*)ptr));
     ucTRUE(ucOpt_get_desc((ucOpt*)ptr));
     ucTRUE(&a == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_false == ucArgOpt_is_numeric(ptr));
     ucTRUE(0 == ucArgOpt_get_min_tok_count(ptr));
     ucTRUE(1 == ucArgOpt_get_max_tok_count(ptr));
 
@@ -57,8 +57,8 @@ static ucTestErr ucArgOpt_create_multiple_creates_arg_opt(ucTestGroup *p) {
     ucTRUE(0 == strcmp(name, ucOpt_get_name((ucOpt*)ptr)));
     ucTRUE(0 == strcmp(desc, ucOpt_get_desc((ucOpt*)ptr)));
     ucTRUE(NULL == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_false == ucArgOpt_is_numeric(ptr));
     ucTRUE(min_tok_count == ucArgOpt_get_min_tok_count(ptr));
     ucTRUE(max_tok_count == ucArgOpt_get_max_tok_count(ptr));
 
@@ -66,7 +66,7 @@ static ucTestErr ucArgOpt_create_multiple_creates_arg_opt(ucTestGroup *p) {
 
     ptr = ucArgOpt_create_multiple(name, desc, 0, max_tok_count);
 
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
 
     ucArgOpt_destroy(ptr);
 
@@ -82,8 +82,8 @@ static ucTestErr ucArgOpt_create_required_creates_arg_opt(ucTestGroup *p) {
     ucTRUE(ucOpt_get_name((ucOpt*)ptr));
     ucTRUE(ucOpt_get_desc((ucOpt*)ptr));
     ucTRUE(&a == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_false == ucArgOpt_is_numeric(ptr));
     ucTRUE(1 == ucArgOpt_get_min_tok_count(ptr));
     ucTRUE(1 == ucArgOpt_get_max_tok_count(ptr));
 
@@ -102,8 +102,8 @@ static ucTestErr ucArgOpt_create_multiple_numeric_creates_arg_opt(ucTestGroup *p
     
     ucTRUE(0 == strcmp(desc, ucOpt_get_desc((ucOpt*)ptr)));
     ucTRUE(NULL == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(ptr));
     ucTRUE(min_tok_count == ucArgOpt_get_min_tok_count(ptr));
     ucTRUE(max_tok_count == ucArgOpt_get_max_tok_count(ptr));
     ucTRUE(numeric_min == ucArgOpt_get_numeric_min(ptr));
@@ -113,7 +113,7 @@ static ucTestErr ucArgOpt_create_multiple_numeric_creates_arg_opt(ucTestGroup *p
 
     ptr = ucArgOpt_create_multiple_numeric(desc, 0, max_tok_count, numeric_min, numeric_max);
 
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
 
     ucArgOpt_destroy(ptr);
 
@@ -129,8 +129,8 @@ static ucTestErr ucArgOpt_create_numeric_creates_arg_opt(ucTestGroup *p) {
     ucTRUE(ucOpt_get_name((ucOpt*)ptr));
     ucTRUE(ucOpt_get_desc((ucOpt*)ptr));
     ucTRUE(&a == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(ptr));
     ucTRUE(-5.678 == ucArgOpt_get_numeric_min(ptr));
     ucTRUE(12.34 == ucArgOpt_get_numeric_max(ptr));
     ucTRUE(0 == ucArgOpt_get_min_tok_count(ptr));
@@ -150,8 +150,8 @@ static ucTestErr ucArgOpt_create_required_numeric_creates_arg_opt(ucTestGroup *p
     ucTRUE(ucOpt_get_name((ucOpt*)ptr));
     ucTRUE(ucOpt_get_desc((ucOpt*)ptr));
     ucTRUE(&a == ucArgOpt_get_next(ptr));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)ptr));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(ptr));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(ptr));
     ucTRUE(100.436 == ucArgOpt_get_numeric_min(ptr));
     ucTRUE(567.890 == ucArgOpt_get_numeric_max(ptr));
     ucTRUE(1 == ucArgOpt_get_min_tok_count(ptr));
@@ -336,10 +336,10 @@ static ucTestErr ucArgOpt_create_boolean__creates_boolean_option(ucTestGroup *p)
     ucTRUE(a2 = ucArgOpt_get_next(a1));
     ucTRUE(0 == strcmp("<boolean>", ucOpt_get_name((ucOpt*)a2)));
     ucTRUE(0 == strcmp("<boolean>", ucOpt_get_name((ucOpt*)a1)));
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)a2));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)a1));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_boolean(a2));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_boolean(a1));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)a2));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)a1));
+    ucTRUE(ucBool_true == ucArgOpt_is_boolean(a2));
+    ucTRUE(ucBool_true == ucArgOpt_is_boolean(a1));
     ucArgOpt_destroy(a2);
     ucArgOpt_destroy(a1);
     ucPASS();
@@ -414,18 +414,18 @@ static ucTestErr ucArgOpt_create_integer__creates_option(ucTestGroup *p) {
     ucTRUE(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a3)));
     ucTRUE(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a2)));
     ucTRUE(0 == strcmp("<integer>", ucOpt_get_name((ucOpt*)a1)));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)a3));
-    ucTRUE(ucBool_FALSE == ucOpt_is_required((ucOpt*)a2));
-    ucTRUE(ucBool_TRUE == ucOpt_is_required((ucOpt*)a1));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_integer(a3));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_integer(a2));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_integer(a1));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(a3));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(a2));
-    ucTRUE(ucBool_TRUE == ucArgOpt_is_numeric(a1));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_boolean(a3));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_boolean(a2));
-    ucTRUE(ucBool_FALSE == ucArgOpt_is_boolean(a1));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)a3));
+    ucTRUE(ucBool_false == ucOpt_is_required((ucOpt*)a2));
+    ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)a1));
+    ucTRUE(ucBool_true == ucArgOpt_is_integer(a3));
+    ucTRUE(ucBool_true == ucArgOpt_is_integer(a2));
+    ucTRUE(ucBool_true == ucArgOpt_is_integer(a1));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(a3));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(a2));
+    ucTRUE(ucBool_true == ucArgOpt_is_numeric(a1));
+    ucTRUE(ucBool_false == ucArgOpt_is_boolean(a3));
+    ucTRUE(ucBool_false == ucArgOpt_is_boolean(a2));
+    ucTRUE(ucBool_false == ucArgOpt_is_boolean(a1));
     ucTRUE(-2500 == ucArgOpt_get_numeric_min(a3));
     ucTRUE(1500 == ucArgOpt_get_numeric_max(a3));
     ucTRUE(0 == ucArgOpt_get_numeric_min(a2));

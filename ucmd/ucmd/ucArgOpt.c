@@ -139,17 +139,17 @@ int ucArgOpt_get_max_tok_count(ucArgOpt *p) {
 }
 
 ucBool ucArgOpt_is_boolean(ucArgOpt *p) {
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     return p->is_boolean;
 }
 
 ucBool ucArgOpt_is_numeric(ucArgOpt *p) {
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     return p->is_numeric;
 }
 
 ucBool ucArgOpt_is_integer(ucArgOpt *p) {
-    if (NULL == p) return ucBool_FALSE;
+    if (NULL == p) return ucBool_false;
     return p->is_integer;
 }
 
@@ -186,47 +186,47 @@ ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool 
 }
 
 ucArgOpt *ucArgOpt_create(const char *name, const char *desc, ucArgOpt *next) {
-    return create(name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
+    return create(name, desc, ucBool_false, 0, 1, ucBool_false, ucBool_false, ucBool_false, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_multiple(const char *name, const char *desc, int min_tok_count, int max_tok_count) {
-    return create(name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, ucBool_FALSE, ucBool_FALSE, 0, 0, NULL);
+    return create(name, desc, min_tok_count > 0 ? ucBool_true : ucBool_false, min_tok_count, max_tok_count, ucBool_false, ucBool_false, ucBool_false, 0, 0, NULL);
 }
 
 ucArgOpt *ucArgOpt_create_required(const char *name, const char *desc, ucArgOpt *next) {
-    return create(name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
+    return create(name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_false, ucBool_false, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next) {
-    return create(boolean_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_TRUE, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
+    return create(boolean_arg_name, desc, ucBool_false, 0, 1, ucBool_true, ucBool_false, ucBool_false, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next) {
-    return create(boolean_arg_name, desc, ucBool_TRUE, 0, 1, ucBool_TRUE, ucBool_FALSE, ucBool_FALSE, 0, 0, next);
+    return create(boolean_arg_name, desc, ucBool_true, 0, 1, ucBool_true, ucBool_false, ucBool_false, 0, 0, next);
 }
 
 ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(numeric_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, ucBool_TRUE, ucBool_FALSE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, ucBool_false, 0, 1, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, next);
 }
 
 ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max) {
-    return create(numeric_arg_name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, ucBool_TRUE, ucBool_FALSE, numeric_min, numeric_max, NULL);
+    return create(numeric_arg_name, desc, min_tok_count > 0 ? ucBool_true : ucBool_false, min_tok_count, max_tok_count, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, NULL);
 }
 
 ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(numeric_arg_name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, ucBool_TRUE, ucBool_FALSE, numeric_min, numeric_max, next);
+    return create(numeric_arg_name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, next);
 }
 
 ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(integer_arg_name, desc, ucBool_FALSE, 0, 1, ucBool_FALSE, ucBool_TRUE, ucBool_TRUE, numeric_min, numeric_max, next);
+    return create(integer_arg_name, desc, ucBool_false, 0, 1, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, next);
 }
 
 ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max) {
-    return create(integer_arg_name, desc, min_tok_count > 0 ? ucBool_TRUE : ucBool_FALSE, min_tok_count, max_tok_count, ucBool_FALSE, ucBool_TRUE, ucBool_TRUE, numeric_min, numeric_max, NULL);
+    return create(integer_arg_name, desc, min_tok_count > 0 ? ucBool_true : ucBool_false, min_tok_count, max_tok_count, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, NULL);
 }
 
 ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return create(integer_arg_name, desc, ucBool_TRUE, 1, 1, ucBool_FALSE, ucBool_TRUE, ucBool_TRUE, numeric_min, numeric_max, next);
+    return create(integer_arg_name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, next);
 }
 
 const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {

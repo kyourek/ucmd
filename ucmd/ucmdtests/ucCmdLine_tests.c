@@ -22,19 +22,19 @@ static void transmit_2(const char *response, void *state) {
 }
 
 static void *is_canceled_1_state;
-static ucBool is_canceled_1_returned_value = ucBool_FALSE;
+static ucBool is_canceled_1_returned_value = ucBool_false;
 static ucBool is_canceled_1(void *state) {
     is_canceled_1_state = state;
     return is_canceled_1_returned_value;
 }
 
 static ucBool is_canceled_2(void *state) {
-    return ucBool_TRUE;
+    return ucBool_true;
 }
 
 static void *handle_invalid_command_1_state;
 static const char *handle_invalid_command_1_invalid_command;
-static ucBool handle_invalid_command_1_return = ucBool_FALSE;
+static ucBool handle_invalid_command_1_return = ucBool_false;
 static ucBool handle_invalid_command_1(const char *invalid_command, void *state) {
     handle_invalid_command_1_state = state;
     handle_invalid_command_1_invalid_command = invalid_command;
@@ -136,7 +136,7 @@ static ucTestErr ucCmdLine_get_transmit_returns_transmit(ucTestGroup *p) {
 
 static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
     ucCmdLine c;
-    c.is_quiet = ucBool_FALSE;
+    c.is_quiet = ucBool_false;
     c.transmit = transmit_1;
 
     transmit_1_response = NULL;
@@ -165,11 +165,11 @@ static ucTestErr ucCmdLine_is_canceled_calls_is_canceled(ucTestGroup *p) {
     ucCmdLine c;
     c.is_canceled = is_canceled_1;
 
-    is_canceled_1_returned_value = ucBool_TRUE;
-    ucTRUE(ucBool_TRUE == ucCmdLine_is_canceled(&c));
+    is_canceled_1_returned_value = ucBool_true;
+    ucTRUE(ucBool_true == ucCmdLine_is_canceled(&c));
 
-    is_canceled_1_returned_value = ucBool_FALSE;
-    ucTRUE(ucBool_FALSE == ucCmdLine_is_canceled(&c));
+    is_canceled_1_returned_value = ucBool_false;
+    ucTRUE(ucBool_false == ucCmdLine_is_canceled(&c));
 
     ucPASS();
 }
@@ -260,10 +260,10 @@ static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_instance();
     
     ucBool prev_val = ucCmdLine_get_is_quiet(ptr);
-    ucTRUE(ucBool_FALSE == prev_val);
+    ucTRUE(ucBool_false == prev_val);
 
-    ucCmdLine_set_is_quiet(ptr, ucBool_TRUE);
-    ucTRUE(ucCmdLine_get_is_quiet(ptr) == ucBool_TRUE);
+    ucCmdLine_set_is_quiet(ptr, ucBool_true);
+    ucTRUE(ucCmdLine_get_is_quiet(ptr) == ucBool_true);
 
     ucCmdLine_set_is_quiet(ptr, prev_val);
     ucTRUE(ucCmdLine_get_is_quiet(ptr) == prev_val);
@@ -275,7 +275,7 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
     ucCmdLine *ptr = ucCmdLine_instance();
     ucBool pre_val = ucCmdLine_get_is_quiet(ptr);
 
-    ucCmdLine_set_is_quiet(ptr, ucBool_TRUE);
+    ucCmdLine_set_is_quiet(ptr, ucBool_true);
     ucCmdLine_set_transmit(ptr, transmit_1);
 
     transmit_1_response = NULL;
@@ -293,11 +293,11 @@ static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup 
     ucCmdLine_set_handle_invalid_command(ptr, handle_invalid_command_1);
     ucCmdLine_set_handle_invalid_command_state(ptr, &state);
 
-    handle_invalid_command_1_return = ucBool_TRUE;
+    handle_invalid_command_1_return = ucBool_true;
     ret_val = ucCmdLine_handle_invalid_command(ptr, "n-a");
     ucTRUE(handle_invalid_command_1_state == &state);
     ucTRUE(0 == strcmp("n-a", handle_invalid_command_1_invalid_command));
-    ucTRUE(ucBool_TRUE == ret_val);
+    ucTRUE(ucBool_true == ret_val);
 
     ucPASS();
 }
