@@ -1,8 +1,5 @@
 #include "ucmd_internal.h"
 
-const char *ucOpt_validation_err_invalid_argument_prefix = "Invalid argument: ";
-const char *ucOpt_validation_err_invalid_switch_argument_prefix = "Invalid switch argument: ";
-
 const char *ucOpt_get_name(ucOpt *p) {
     if (NULL == p) return NULL;
     return p->name;

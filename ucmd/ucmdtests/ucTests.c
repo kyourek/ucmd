@@ -28,6 +28,7 @@ static ucTestGroup **ucTests_get_groups_va(ucTestGroup *group, ...) {
 static ucTestGroup **ucTests_get_groups(void) {
     return ucTests_get_groups_va(
         ucArgOpt_tests_get_group(),
+        ucArgOptOwner_tests_get_group(),
         ucArgTokOwner_tests_get_group(),
         ucArgTok_tests_get_group(),
         ucBool_tests_get_group(),

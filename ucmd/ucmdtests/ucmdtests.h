@@ -87,6 +87,7 @@ uc_EXPORTED void                                ucTest_set_print_state(ucTest*, 
             ucTestGroup**                       groups; };
 
 uc_EXPORTED ucTestGroup*                        ucArgOpt_tests_get_group(void);
+uc_EXPORTED ucTestGroup*                        ucArgOptOwner_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                        ucArgTok_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                        ucArgTokOwner_tests_get_group(void);
 uc_EXPORTED ucTestGroup*                        ucBool_tests_get_group(void);

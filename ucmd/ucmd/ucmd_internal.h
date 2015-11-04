@@ -26,10 +26,6 @@
 #include    <assert.h>
 #include    "ucmd.h"
 
-extern      const char*                         ucOpt_validation_err_invalid_argument_prefix;
-extern      const char*                         ucOpt_validation_err_invalid_switch_prefix;
-extern      const char*                         ucOpt_validation_err_invalid_switch_argument_prefix;
-
             struct                              ucCmdParser {
             ucCmdTok*                           (*parse)(ucCmdParser *p, char *cmd); };
 
