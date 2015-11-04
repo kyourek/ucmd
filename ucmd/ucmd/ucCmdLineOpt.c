@@ -47,17 +47,17 @@ ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt *p) {
     return p->switch_opt;
 }
 
-ucCmdLineOpt *ucCmdLineOpt_init(ucCmdLineOpt *p, ucCmdLineOpt_Func *func, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next) {
+ucCmdLineOpt *ucCmdLineOpt_init(ucCmdLineOpt *p, ucCmdLineOpt_WorkFunc *work, void* state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next) {
     assert(p);
     assert(ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, ucBool_true, arg_opt));
-    p->func = func;
+    p->work = work;
     p->state = state;
     p->switch_opt = switch_opt;
     p->next = next;
     return p;
 }
 
-ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_Func *func, void *state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next) {
+ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_WorkFunc *func, void *state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next) {
     return ucCmdLineOpt_init(ucInstance_create(), func, state, name, desc, arg_opt, switch_opt, next);
 }
 
@@ -72,9 +72,9 @@ ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt* p, const char *name) {
     return NULL;
 }
 
-ucCmdLineOpt_Func *ucCmdLineOpt_get_func(ucCmdLineOpt *p) {
+ucCmdLineOpt_WorkFunc *ucCmdLineOpt_get_work(ucCmdLineOpt *p) {
     assert(p);
-    return p->func;
+    return p->work;
 }
 
 void *ucCmdLineOpt_get_state(ucCmdLineOpt *p) {
@@ -85,36 +85,35 @@ void *ucCmdLineOpt_get_state(ucCmdLineOpt *p) {
 void ucCmdLineOpt_send_usage(ucCmdLineOpt *p, ucCmdLine *cmd) {
     ucSwitchOpt *switch_opt;
 
-    /* start the usage string with the name of the command */
+    /* Start the usage string with the name of the command. */
     const char *response = ucCmdLine_format_response(cmd, "%s", ucOpt_get_name((ucOpt*)p));
 
-    /* add each available argument option of the command
-       to the usage string */
+    /* Add each available argument option of the command to
+    the usage string. */
     response = add_arg_opts_to_usage_response(ucCmdLineOpt_get_arg_opt(p), cmd, response);
 
-    /* loop through each available switch option */
+    /* Loop through each available switch option. */
     switch_opt = ucCmdLineOpt_get_switch_opt(p);
-    while (NULL != switch_opt) {
+    while (switch_opt) {
 
-        /* add it to the usage string */
+        /* Add it to the usage string. */
         response = add_opt_to_usage_response((ucOpt*)switch_opt, cmd, response);
 
-        /* also add each of the switch's argument options to the
-           usage string */
+        /* Also add each of the switch's argument options to
+        the usage string. */
         response = add_arg_opts_to_usage_response(ucSwitchOpt_get_arg_opt(switch_opt), cmd, response);
 
-        /* go to the next switch */
+        /* Go to the next switch. */
         switch_opt = ucSwitchOpt_get_next(switch_opt);
     }
 
-    /* send the completed usage string */
+    /* Send the completed usage string. */
     ucCmdLine_respond(cmd, response);
 }
 
 void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd) {
     static const char *single_tab = "\t";
-    static const char *double_tab = "\t\t";
-
+    static const char *double_tab = "\t" "\t";
     ucSwitchOpt *switch_opt;
 
     ucCmdLineOpt_send_usage(p, cmd);
@@ -123,7 +122,7 @@ void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd) {
     send_arg_opts_help(ucCmdLineOpt_get_arg_opt(p), cmd, single_tab);    
 
     switch_opt = ucCmdLineOpt_get_switch_opt(p);
-    while (NULL != switch_opt) {
+    while (switch_opt) {
         ucOpt_send_help((ucOpt*)switch_opt, cmd, single_tab);
         send_arg_opts_help(ucSwitchOpt_get_arg_opt(switch_opt), cmd, double_tab);
         switch_opt = ucSwitchOpt_get_next(switch_opt);
@@ -131,7 +130,6 @@ void ucCmdLineOpt_send_help(ucCmdLineOpt *p, ucCmdLine *cmd) {
 }
 
 const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) {
-    static const char *invalid_switch = "Invalid switch: ";
     ucArgTok *arg_tok;
     ucCmdTok *cmd_tok;
     ucSwitchOpt *switch_opt, *found_switch_opt, *next_switch_opt;
@@ -142,43 +140,43 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
     arg_tok = ucCmdTok_get_arg(cmd_tok);
 
     validation = ucArgOptOwner_format_validation_err((ucArgOptOwner*)p, cmd, arg_tok, NULL);
-    if (NULL != validation) return validation;
+    if (validation) return validation;
 
     switch_tok = ucCmdTok_get_switch(cmd_tok);
     switch_opt = ucCmdLineOpt_get_switch_opt(p);
 
-    if (NULL == switch_opt) {
-        if (NULL != switch_tok) {
-            return ucCmdLine_format_response(cmd, "%sno switch options exist for command \"%s\".", invalid_switch, ucTok_get_value((ucTok*)cmd_tok));
+    if (!switch_opt) {
+        if (switch_tok) {
+            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No switch options exist for command \"%s\".", ucTok_get_value((ucTok*)cmd_tok));
         }
         return NULL;
     }
 
     next_switch_tok = switch_tok;
 
-    while (NULL != next_switch_tok) {
+    while (next_switch_tok) {
         found_switch_opt = ucSwitchOpt_find(switch_opt, ucTok_get_value((ucTok*)next_switch_tok));
-        if (NULL == found_switch_opt) {
-            return ucCmdLine_format_response(cmd, "%sno option exists for switch \"%s\".", invalid_switch, ucTok_get_value(next_switch_tok));
+        if (!found_switch_opt) {
+            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No option exists for switch \"%s\".", ucTok_get_value(next_switch_tok));
         }
         next_switch_tok = ucSwitchTok_get_next(next_switch_tok);
     }
 
     next_switch_opt = switch_opt;
 
-    while (NULL != next_switch_opt) {
+    while (next_switch_opt) {
         switch_name = ucOpt_get_name((ucOpt*)next_switch_opt);
         found_switch_tok = ucSwitchTok_find(switch_tok, switch_name);
 
         if (ucOpt_is_required((ucOpt*)next_switch_opt)) {
-            if (NULL == found_switch_tok) {
-                return ucCmdLine_format_response(cmd, "%sthe switch \"%s\" is required.", invalid_switch, switch_name);
+            if (!found_switch_tok) {
+                return ucCmdLine_format_response(cmd, ucOpt_INVALID "the switch \"%s\" is required.", switch_name);
             }
         }
 
-        if (NULL != found_switch_tok) {
+        if (found_switch_tok) {
             validation = ucSwitchOpt_format_validation_err(next_switch_opt, cmd, found_switch_tok);
-            if (NULL != validation) return validation;
+            if (validation) return validation;
         }
 
         next_switch_opt = ucSwitchOpt_get_next(next_switch_opt);
@@ -190,7 +188,7 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
 static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *invalid_command_handled) {
     ucCmdTok *cmd_tok;
     ucCmdLineOpt *opt;
-    ucCmdLineOpt_Func *func;
+    ucCmdLineOpt_WorkFunc *work;
     const char *cmd_value;
     const char *validation;
 
@@ -201,7 +199,7 @@ static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *inv
     the one that matches the name of the command. */
     cmd_value = ucTok_get_value((ucTok*)cmd_tok);
     opt = ucCmdLineOpt_find_by_name(p, cmd_value);
-    if (NULL == opt) {
+    if (!opt) {
 
         /* The command is invalid (meaning it doesn't exist).
         Try to handle it. */
@@ -217,24 +215,32 @@ static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *inv
     ucCmdLine_acknowledge_command(cmd);
 
     /* Check to see if the command is unknown. */
-    if (NULL == opt) return ucCmdLine_format_response(cmd, "Invalid command: no option found for \"%s\"", cmd_value);
+    if (!opt) return ucCmdLine_format_response(
+        cmd, 
+        ucOpt_INVALID "No command option found for \"%s\"", 
+        cmd_value);
 
     /* Validate the command structure against the option.
     If validation fails, then return the validation result. */
     validation = ucCmdLineOpt_format_validation_err(opt, cmd);
     if (validation) return validation;
 
-    /* Get the function callback from the command option. */
-    func = ucCmdLineOpt_get_func(opt);
-    if (NULL == func) return "Invalid function: null pointer";
+    /* Get the function callback from the command option
+    and make sure it exists. */
+    work = ucCmdLineOpt_get_work(opt);
+    if (!work) return ucCmdLine_format_response(
+        cmd,
+        "No work found for command \"%s\"",
+        cmd_value);
 
-    /* Invoke the callback. */
-    return func(cmd, ucCmdLineOpt_get_state(opt));
+    /* Invoke the callback and return the result. */
+    return work(cmd, ucCmdLineOpt_get_state(opt));
 }
 
 const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
     ucBool invalid_command_handled = ucBool_false;
     const char *response = internal_process(p, cmd, &invalid_command_handled);
+    
     if (invalid_command_handled) {
         return response;
     }

@@ -27,8 +27,7 @@ const char *ucTok_get_value(ucTok *p) {
 }
 
 ucBool ucTok_equals(ucTok *p, const char *value) {
-    int i;
-    int len;
+    int i, len;
 
     assert(p);
 
@@ -91,9 +90,7 @@ int ucTok_parse_integer(ucTok *p) {
 }
 
 ucBool ucTok_is_numeric(ucTok *p) {
-    int i;
-    int len;
-    int dec_found;
+    int i, len, dec_found;
 
     assert(p);
 
@@ -159,8 +156,7 @@ double ucTok_parse_numeric(ucTok *p) {
 
 ucBool ucTok_is_boolean(ucTok *p) {
     static const char *b[] = { ucTok_BOOLEAN_FALSE, ucTok_BOOLEAN_TRUE };
-    int i;
-    int len;
+    int i, len;
 
     len = sizeof(b) / sizeof(b[0]);
     for (i = 0; i < len; i++) {
@@ -174,8 +170,7 @@ ucBool ucTok_is_boolean(ucTok *p) {
 ucBool ucTok_try_parse_boolean(ucTok *p, ucBool *value) {
     static const char *t[] = { ucTok_BOOLEAN_TRUE };
     static const char *f[] = { ucTok_BOOLEAN_FALSE };
-    int i;
-    int len;
+    int i, len;
 
     len = sizeof(t) / sizeof(t[0]);
     for (i = 0; i < len; i++) {

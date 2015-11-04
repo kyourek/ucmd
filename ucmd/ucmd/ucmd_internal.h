@@ -77,10 +77,10 @@ uc_EXPORTED ucCmdLine*                          ucCmdLine_init(ucCmdLine*);
             ucBool                              is_quiet; };
 
 uc_EXPORTED const char*                         ucCmdLineOpt_format_validation_err(ucCmdLineOpt*, ucCmdLine *cmd);
-uc_EXPORTED ucCmdLineOpt*                       ucCmdLineOpt_init(ucCmdLineOpt*, ucCmdLineOpt_Func *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next);
+uc_EXPORTED ucCmdLineOpt*                       ucCmdLineOpt_init(ucCmdLineOpt*, ucCmdLineOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next);
             struct                              ucCmdLineOpt {
             ucArgOptOwner                       base;
-            ucCmdLineOpt_Func*                  func;
+            ucCmdLineOpt_WorkFunc*              work;
             void*                               state;
             ucSwitchOpt*                        switch_opt;
             ucCmdLineOpt*                       next; };

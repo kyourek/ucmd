@@ -44,7 +44,7 @@ static ucTestErr ucCmdLineOpt_create_creates_structure(ucTestGroup *p) {
     );
 
     ucTRUE(NULL != ptr);
-    ucTRUE(uart_func_one == ucCmdLineOpt_get_func(ptr));
+    ucTRUE(uart_func_one == ucCmdLineOpt_get_work(ptr));
     ucTRUE(&state == ucCmdLineOpt_get_state(ptr));
     ucTRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
 
@@ -284,9 +284,19 @@ static ucTestErr ucCmdLineOpt_process_does_not_handle_invalid_command(ucTestGrou
     ucCmdLine_set_cmd_tok(cmd, "noopt\0\n");
 
     err = ucCmdLineOpt_process(opt, cmd);
-    ucTRUE(0 == strcmp(err, "Invalid command: no option found for \"noopt\""));
+    ucTRUE(0 == strcmp(err, "Invalid: No command option found for \"noopt\""));
 
     ucCmdLineOpt_destroy_chain(opt);
+    ucPASS();
+}
+
+static ucTestErr ucCmdLineOpt_process_responds_correctly_if_no_work_exists(ucTestGroup *p) {
+    const char *response;
+    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
+    ucCmdLine_set_cmd_tok(cmd, "opt\0\n");
+    response = ucCmdLineOpt_process(opt, cmd);
+    ucTRUE(0 == strcmp(response, "No work found for command \"opt\""));
     ucPASS();
 }
 
@@ -303,6 +313,7 @@ ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
         ucCmdLineOpt_format_validation_err_catches_required_switch,
         ucCmdLineOpt_process_handles_invalid_commands,
         ucCmdLineOpt_process_does_not_handle_invalid_command,
+        ucCmdLineOpt_process_responds_correctly_if_no_work_exists,
         ucCmdLineOpt_send_usage__uses_boolean_argument_name,
         NULL
     };

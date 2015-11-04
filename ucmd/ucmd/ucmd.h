@@ -987,13 +987,13 @@ typedef struct ucCmdLineOpt ucCmdLineOpt;
  * Returns:
  *   A message that can be used to respond to the command.
  */
-typedef const char *(ucCmdLineOpt_Func)(ucCmdLine *cmd, void *state);
+typedef const char *(ucCmdLineOpt_WorkFunc)(ucCmdLine *cmd, void *state);
 
 /*
  * Summary:
  *   Creates a new command option.
  * Parameters:
- *   func: A pointer to the function that is called when this command is invoked or selected.
+ *   work: A pointer to the function that is called when this command is invoked or selected.
  *   state: A pointer that gets passed to the function to maintain state.
  *   name: The name of the command.
  *   desc: The description of the command.
@@ -1003,7 +1003,7 @@ typedef const char *(ucCmdLineOpt_Func)(ucCmdLine *cmd, void *state);
  * Returns:
  *   A pointer to the newly created command option.
  */
-uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_Func *func, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next);
+uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_WorkFunc *work, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next);
 
 /*
  * Summary:
@@ -1049,7 +1049,7 @@ uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt*, const char *n
  * Returns:
  *   A pointer to the function invoked when the command option is processed.
  */
-uc_EXPORTED ucCmdLineOpt_Func *ucCmdLineOpt_get_func(ucCmdLineOpt*);
+uc_EXPORTED ucCmdLineOpt_WorkFunc *ucCmdLineOpt_get_work(ucCmdLineOpt*);
 
 /*
  * Summary:
