@@ -2,6 +2,19 @@
 #include <string.h>
 #include "ucmdtests.h"
 
+static ucCmdLine *cmd_line;
+
+static ucTestErr before_each_test(ucTestGroup *p) {
+    cmd_line = ucCmdLine_create();
+    assert(cmd_line);
+    ucPASS();
+}
+
+static ucTestErr after_each_test(ucTestGroup *p) {
+    ucCmdLine_destroy(cmd_line);
+    ucPASS();
+}
+
 static ucTestErr ucArgOpt_is_numeric_returns_is_numeric(ucTestGroup *p) {
     ucArgOpt o;
     
@@ -223,7 +236,7 @@ static ucTestErr ucArgOpt_destroy_chain_releases_all_instances(ucTestGroup *p) {
 
 static ucTestErr ucArgOpt_format_validation_err_catches_numeric_err(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "non-num", NULL);
@@ -238,7 +251,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_numeric_err(ucTestGroup 
 
 static ucTestErr ucArgOpt_format_validation_err_catches_out_of_range_numeric(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -5.4, +2.1, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "-5.5", NULL);
@@ -259,7 +272,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_out_of_range_numeric(ucT
 
 static ucTestErr ucArgOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("arg", NULL, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, NULL, NULL);
@@ -274,7 +287,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_required_arg(ucTestGroup
 
 static ucTestErr ucArgOpt_format_validation_err_catches_not_enough_tokens(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -287,7 +300,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_not_enough_tokens(ucTest
 
 static ucTestErr ucArgOpt_format_validation_err_catches_too_many_tokens(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0arg4\0arg5\0arg6\0\n", NULL);
@@ -300,7 +313,7 @@ static ucTestErr ucArgOpt_format_validation_err_catches_too_many_tokens(ucTestGr
 
 static ucTestErr ucArgOpt_format_validation_err_allows_correct_number_of_tokens(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 3, 3);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -313,7 +326,7 @@ static ucTestErr ucArgOpt_format_validation_err_allows_correct_number_of_tokens(
 
 static ucTestErr ucArgOpt_format_validation_err_catches_multiple_numbers(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple_numeric(NULL, 2, 8, -100, +100);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0" "4.789" "\0" "notnum" "\0" "91.23" "\0\n", NULL);
@@ -347,7 +360,7 @@ static ucTestErr ucArgOpt_create_boolean__creates_boolean_option(ucTestGroup *p)
 
 static ucTestErr ucArgOpt_format_validation_err__catches_boolean_errors(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0\n", NULL);
@@ -363,7 +376,7 @@ static ucTestErr ucArgOpt_format_validation_err__catches_boolean_errors(ucTestGr
 
 #define ucArgOpt_format_validation_err__ALLOWS_BOOLEAN(VALUE)                   \
     const char *err;                                                            \
-    ucCmdLine *cmd = ucCmdLine_instance();                                  \
+    ucCmdLine *cmd = cmd_line;                                  \
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);                           \
     err = ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL);           \
     ucTRUE(NULL == err);                                                 \
@@ -442,7 +455,7 @@ static ucTestErr ucArgOpt_create_integer__creates_option(ucTestGroup *p) {
 }
 
 static ucTestErr ucArgOpt_format_validation_err__catches_integer_errors(ucTestGroup *p) {
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
     ucTRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "3.1" "\0\n", NULL));
     ucTRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL));
@@ -453,7 +466,7 @@ static ucTestErr ucArgOpt_format_validation_err__catches_integer_errors(ucTestGr
 }
 
 static ucTestErr ucArgOpt_format_validation_err__allows_valid_integers(ucTestGroup *p) {
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
     ucTRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-5" "\0\n", NULL));
     ucTRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-1" "\0\n", NULL));
@@ -501,5 +514,5 @@ ucTestGroup *ucArgOpt_tests_get_group(void) {
         NULL
     };
 
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
 }

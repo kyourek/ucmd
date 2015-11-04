@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "ucmd_internal.h"
+
+ucInstance_INIT(ucCmdLineApp, ucCmdLineApp_COUNT);
 
 typedef struct {
     ucCmdLineApp *app;
@@ -129,13 +129,19 @@ ucCmdLineApp *ucCmdLineApp_init(ucCmdLineApp *p, ucCmdParser *cmd_parser, ucCmdL
     return p;
 }
 
-ucCmdLineApp *ucCmdLineApp_get_instance(void) {
-    static ucCmdLineApp instance = { 0 };
-    static ucCmdLineApp *pointer = NULL;
-    if (pointer == NULL) {
-        pointer = ucCmdLineApp_init(&instance, ucCmdParser_instance(), ucCmdLine_instance());
+ucCmdLineApp *ucCmdLineApp_create(void) {
+    return ucCmdLineApp_init(
+        ucInstance_create(),
+        ucCmdParser_create(),
+        ucCmdLine_create());
+}
+
+void ucCmdLineApp_destroy(ucCmdLineApp *p) {
+    if (p) {
+        ucCmdLine_destroy(p->cmd);
+        ucCmdParser_destroy(p->cmd_parser);
     }
-    return pointer;
+    ucInstance_destroy(p);
 }
 
 char *ucCmdLineApp_receive(ucCmdLineApp *p) {

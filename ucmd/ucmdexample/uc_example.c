@@ -65,7 +65,7 @@ void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *rece
             NULL)),
         NULL);
 
-    ucCmdLineApp *app = ucCmdLineApp_get_instance();
+    ucCmdLineApp *app = ucCmdLineApp_create();
     ucCmdLine *cmd = ucCmdLineApp_get_cmd(app);
 
     ucCmdLine_set_transmit(cmd, transmit);

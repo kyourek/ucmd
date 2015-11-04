@@ -45,6 +45,46 @@
 #define ucOpt_INVALID "Invalid: "
 #endif
 
+#ifndef ucCmdParser_CMD_TERMINATOR
+/** @brief The character that terminates command strings.
+ *
+ *  This character must exist in each command string, and it signals the end of
+ *  the command. Usually, a line-feed (LF) is a good choice, as Enter (or Return)
+ *  will complete the command.
+ */
+#define ucCmdParser_CMD_TERMINATOR '\n'
+#endif
+
+#ifndef ucCmdParser_COUNT
+/** @brief The number of instances of ucCmdParser available to the program.
+ *
+ *  When static memory allocation is used, this number defines the number of
+ *  instances of type ucCmdParser that can be created. Since only one parser
+ *  is required for an application, this number is typically 1.
+ */
+#define ucCmdParser_COUNT 1
+#endif
+
+#ifndef ucCmdLine_COUNT
+/** @brief The number of instances of ucCmdLine available to the program.
+ *
+ *  When static memory allocation is used, this number defines the number of
+ *  instances of type ucCmdLine that can be created. Since only one of these
+ *  objects is required for an application, this number is typically 1.
+ */
+#define ucCmdLine_COUNT 1
+#endif
+
+#ifndef ucCmdLineApp_COUNT
+/** @brief The number of instances of ucCmdLineApp available to the program.
+ *
+ *  When static memory allocation is used, this number defines the number of
+ *  instances of type ucCmdLineApp that can be created. Since only one of these
+ *  objects is required for an application, this number is typically 1.
+ */
+#define ucCmdLineApp_COUNT 1
+#endif
+
 /* Sets the size of the command buffer when using
    the command-line application framework. All
    entered commands must have a size equal to or
@@ -561,13 +601,8 @@ uc_EXPORTED void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine*);
 
 uc_EXPORTED size_t ucCmdLine_get_response_size_max(ucCmdLine*);
 
-/*
- * Summary:
- *   Gets a static, default instance of the command structure.
- * Returns:
- *   The static, default instance of the command structure.
- */
-uc_EXPORTED ucCmdLine *ucCmdLine_instance(void);
+uc_EXPORTED ucCmdLine *ucCmdLine_create(void);
+uc_EXPORTED void ucCmdLine_destroy(ucCmdLine*);
 
 /*
  * Summary:
@@ -934,18 +969,8 @@ uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt*);
  */
 typedef struct ucCmdParser ucCmdParser;
 
-uc_EXPORTED char ucCmdParser_get_cmd_terminator(ucCmdParser*);
-
-uc_EXPORTED void ucCmdParser_set_cmd_terminator(ucCmdParser*, char);
-
-/*
- * Summary:
- *   Gets a static, default instance of the parser.
- * Returns:
- *   The static, default instance of the parser, or NULL
- *   if an error occurred.
- */
-uc_EXPORTED ucCmdParser *ucCmdParser_instance(void);
+uc_EXPORTED ucCmdParser *ucCmdParser_create(void);
+uc_EXPORTED void ucCmdParser_destroy(ucCmdParser *p);
 
 /*
  * Summary:
@@ -1134,13 +1159,8 @@ uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp*);
  */ 
 uc_EXPORTED void ucCmdLineApp_run(ucCmdLineApp*, ucCmdLineOpt *cmd_opt);
 
-/*
- * Summary:
- *   Gets a static, default instance of the application.
- * Returns:
- *   The static, default instance of the application.
- */
-uc_EXPORTED ucCmdLineApp *ucCmdLineApp_get_instance(void);
+uc_EXPORTED ucCmdLineApp *ucCmdLineApp_create(void);
+uc_EXPORTED void ucCmdLineApp_destroy(ucCmdLineApp *p);
 
 /*
  * Summary:

@@ -2,6 +2,19 @@
 #include <string.h>
 #include "ucmdtests.h"
 
+static ucCmdLine *cmd_line;
+
+static ucTestErr before_each_test(ucTestGroup *p) {
+    cmd_line = ucCmdLine_create();
+    assert(cmd_line);
+    ucPASS();
+}
+
+static ucTestErr after_each_test(ucTestGroup *p) {
+    ucCmdLine_destroy(cmd_line);
+    ucPASS();
+}
+
 static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {
     ucSwitchOpt o1;
     ucSwitchOpt o2;
@@ -119,7 +132,7 @@ static ucTestErr ucSwitchOpt_destroy_chain_releases_all_instances(ucTestGroup *p
 
 static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
@@ -134,7 +147,7 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTes
 
 static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("a", NULL, NULL);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -151,7 +164,7 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGr
 
 static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_instance();
+    ucCmdLine *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("a", NULL, 0, 3);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -182,5 +195,5 @@ ucTestGroup *ucSwitchOpt_tests_get_group(void) {
         NULL
     };
 
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
 }

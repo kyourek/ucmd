@@ -2,12 +2,24 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
+static ucCmdParser *subject;
+
 static ucCmdParser *get_cmd_parser(void) {
-    return ucCmdParser_instance();
+    return subject;
 }
 
 static ucCmdTok *parse_cmd(char *cmd) {
     return ucCmdParser_parse(get_cmd_parser(), cmd);
+}
+
+static ucTestErr before_each_test(ucTestGroup *p) {
+    subject = ucCmdParser_create();
+    return 0;
+}
+
+static ucTestErr after_each_test(ucTestGroup *p) {
+    ucCmdParser_destroy(subject);
+    return 0;
 }
 
 static ucTestErr ucCmdParser_parse_parses_command_value(ucTestGroup *p) {
@@ -228,29 +240,9 @@ static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
     ucPASS();
 }
 
-static ucTestErr ucCmdParser_get_cmd_terminator_default_is_line_feed(ucTestGroup *p) {
-    ucCmdParser *subject = ucCmdParser_init(ucCmdParser_instance());
-    ucTRUE('\n' == ucCmdParser_get_cmd_terminator(subject));
-    ucPASS();
-}
-
-static ucTestErr ucCmdParser_set_cmd_terminator_sets_value(ucTestGroup *p) {
-    int i, len;
-    char values[] = { '\r', '\n', '\x007' };
-    ucCmdParser *subject = ucCmdParser_init(ucCmdParser_instance());
-    len = sizeof(values) / sizeof(values[0]);
-    for (i = 0; i < len; i++) {
-        ucCmdParser_set_cmd_terminator(subject, values[i]);
-        ucTRUE(values[i] == ucCmdParser_get_cmd_terminator(subject));
-    }
-    ucCmdParser_init(ucCmdParser_instance());
-    ucPASS();
-}
-
 ucTestGroup *ucCmdParser_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
-        ucCmdParser_get_cmd_terminator_default_is_line_feed,
         ucCmdParser_parse_parses_command_value,
         ucCmdParser_parse_parses_short_argument,
         ucCmdParser_parse_parses_long_argument,
@@ -265,9 +257,8 @@ ucTestGroup *ucCmdParser_tests_get_group(void) {
         ucCmdParser_parse_parses_trailing_quotes,
         ucCmdParser_parse_allows_empty_double_quotes,
         ucCmdParser_parse_allows_empty_single_quotes,
-        ucCmdParser_set_cmd_terminator_sets_value,
         NULL
     };
 
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
+    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
 }

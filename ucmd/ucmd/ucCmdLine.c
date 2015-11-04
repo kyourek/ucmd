@@ -3,8 +3,10 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
+ucInstance_INIT(ucCmdLine, ucCmdLine_COUNT);
+
 ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     p->cmd_tok = NULL;
     p->command_acknowledgment = NULL;
     p->transmit = NULL;
@@ -18,13 +20,12 @@ ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
     return p;
 }
 
-ucCmdLine *ucCmdLine_instance(void) {
-    static ucCmdLine instance = { 0 };
-    static ucCmdLine *pointer = NULL;
-    if (pointer == NULL) {
-        pointer = ucCmdLine_init(&instance);
-    }
-    return pointer;
+ucCmdLine *ucCmdLine_create(void) {
+    return ucCmdLine_init(ucInstance_create());
+}
+
+void ucCmdLine_destroy(ucCmdLine *p) {
+    ucInstance_destroy(p);
 }
 
 ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine *p) {

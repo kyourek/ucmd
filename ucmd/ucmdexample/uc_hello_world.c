@@ -200,7 +200,7 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
 
     /* This ucCmdLineApp instance is a singleton that
     is available to run a command-line app. */
-    ucCmdLineApp *app = ucCmdLineApp_get_instance();
+    ucCmdLineApp *app = ucCmdLineApp_create();
 
     /* Gets the ucCmdLine used by the app to send
     responses back to the user. */
