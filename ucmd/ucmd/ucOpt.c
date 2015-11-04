@@ -31,7 +31,7 @@ void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix) {
 }
 
 ucOpt *ucOpt_init(ucOpt *p, const char *name, const char *desc, ucBool is_required) {
-    if (NULL == p) return NULL;
+    assert(p);
     p->name = name;
     p->desc = desc;
     p->is_required = is_required;
