@@ -23,10 +23,9 @@
 #ifndef     UCMD_INTERNAL_H
 #define     UCMD_INTERNAL_H
 
+#include    <assert.h>
 #include    "ucmd.h"
 
-extern      const char                          uc_cmd_terminator;
-extern      const char                          ucTok_separator;
 extern      const char*                         ucOpt_validation_err_invalid_argument_prefix;
 extern      const char*                         ucOpt_validation_err_invalid_switch_prefix;
 extern      const char*                         ucOpt_validation_err_invalid_switch_argument_prefix;

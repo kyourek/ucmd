@@ -190,7 +190,7 @@ ucCmdLineApp *ucCmdLineApp_get_instance(void) {
     static ucCmdLineApp instance = { 0 };
     static ucCmdLineApp *pointer = NULL;
     if (pointer == NULL) {
-        pointer = ucCmdLineApp_init(&instance, ucCmdParser_get_instance(), ucCmdLine_get_instance());
+        pointer = ucCmdLineApp_init(&instance, ucCmdParser_get_instance(), ucCmdLine_instance());
     }
     return pointer;
 }

@@ -2,7 +2,6 @@
 #include "ucmd_internal.h"
 
 static ucBool is_char_white_space(char c) {
-    /* The native isspace function in ctype.h was giving some weird behavior in the uVision simulator. */
     return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) ? ucBool_TRUE : ucBool_FALSE;
 }
 
@@ -13,8 +12,8 @@ static char is_char_a_quote(char c) {
 }
 
 static void remove_cmd_char(char *cmd, int index) {
-    if (NULL == cmd) return;
-    while (cmd[index] != uc_cmd_terminator) {
+    assert(cmd);
+    while ('\n' != cmd[index]) {
         cmd[index] = cmd[index + 1];
         index++;
     }
@@ -24,53 +23,53 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
     int i, j, len;
     char quote, current_quote;
 
-    if (NULL == cmd) return NULL;
+    assert(cmd);
 
-    /* get the length of the whole command */
+    /* Get the length of the whole command. */
     len = strlen(cmd);
 
-    /* replace any command-terminating characters in the string with a space */
+    /* Replace any command-terminating characters in the string with a space. */
     for (i = 0; i < len; i++) {
-        if (cmd[i] == uc_cmd_terminator) {
+        if ('\n' == cmd[i]) {
             cmd[i] = ' ';
         }
     }
 
-    /* append a command terminator */
-    cmd[len + 1] = uc_cmd_terminator;
+    /* Append a command terminator. */
+    cmd[len + 1] = '\n';
 
-    /* loop through each character in the command */
+    /* Loop through each character in the command. */
     i = 0;
     current_quote = 0;
-    while (cmd[i] != uc_cmd_terminator) {
+    while ('\n' != cmd[i]) {
 
-        /* check if this command character is a quote */
+        /* Check if this command character is a quote. */
         quote = is_char_a_quote(cmd[i]);
         if (quote) {
 
-            /* check if this is our current quote */
+            /* Check if this is our current quote. */
             if (quote == current_quote) {
 
-                /* remove the quote only if this is
-                   not an empty quote */
+                /* Remove the quote only if this is
+                not an empty quote. */
                 if ((0 < i) && (current_quote != cmd[i - 1])) {
                     cmd[i] = ' ';
                 }
 
-                /* the quoted item is finished */
+                /* The quoted item is finished. */
                 current_quote = 0;
             }
             else {
 
-                /* check if we're NOT in a quote */
+                /* Check if we're NOT in a quote. */
                 if (!current_quote) {
 
-                    /* we've started a quote */
+                    /* We've started a quote. */
                     current_quote = quote;
 
-                    /* remove the quote character 
-                       only if this is not an empty
-                       quote */
+                    /* Remove the quote character 
+                    only if this is not an empty
+                    quote. */
                     if (current_quote != cmd[i + 1]) {
                         remove_cmd_char(cmd, i);
                     }
@@ -78,16 +77,16 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
             }
         }
 
-        /* check if we're not in a quoted string */
+        /* Check if we're not in a quoted string. */
         if (!current_quote) {
 
-            /* check if we're in a token separator */
+            /* Check if we're in a token separator. */
             if (is_char_white_space(cmd[i])) {
 
-                /* separate this token */
-                cmd[i] = ucTok_separator;
+                /* Separate this token. */
+                cmd[i] = '\0';
 
-                /* remove any remaining white space */
+                /* Remove any remaining white space. */
                 j = i + 1;
                 while (is_char_white_space(cmd[j])) {
                     remove_cmd_char(cmd, j);
@@ -95,11 +94,11 @@ static ucCmdTok *parse(ucCmdParser *p, char *cmd) {
             }
         }
 
-        /* go to the next character */
+        /* Go to the next character. */
         i++;
     }
 
-    /* we're done parsing */
+    /* We're done parsing. */
     return (ucCmdTok*)cmd;
 }
 

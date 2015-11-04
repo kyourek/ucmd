@@ -119,7 +119,7 @@ static ucTestErr ucSwitchOpt_destroy_chain_releases_all_instances(ucTestGroup *p
 
 static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
@@ -134,7 +134,7 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_switch(ucTes
 
 static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucArgOpt *a = ucArgOpt_create_required("a", NULL, NULL);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -151,7 +151,7 @@ static ucTestErr ucSwitchOpt_format_validation_err_catches_required_arg(ucTestGr
 
 static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucArgOpt *a = ucArgOpt_create_multiple("a", NULL, 0, 3);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 

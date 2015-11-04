@@ -18,7 +18,7 @@ ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
     return p;
 }
 
-ucCmdLine *ucCmdLine_get_instance(void) {
+ucCmdLine *ucCmdLine_instance(void) {
     static ucCmdLine instance = { 0 };
     static ucCmdLine *pointer = NULL;
     if (pointer == NULL) {

@@ -11,7 +11,6 @@ static ucTestErr ucTok_get_length_returns_string_length(ucTestGroup *p) {
 
 static ucTestErr ucTok_get_length_returns_zero_for_empty_token(ucTestGroup *p) {
     ucTRUE(0 == ucTok_get_length((ucTok*)""));
-    ucTRUE(0 == ucTok_get_length((ucTok*)NULL));
     ucPASS();
 }
 
@@ -119,16 +118,6 @@ static ucTestErr ucTok_get_next_returns_next_token(ucTestGroup *p) {
     ucTRUE(ucTok_equals(ucTok_get_next((ucTok*)"t1\0t2"), "t2"));
     ucTRUE(ucTok_equals(ucTok_get_next((ucTok*)"t1\0-s1\0t2"), "-s1"));
     ucTRUE(ucTok_equals(ucTok_get_next((ucTok*)"a1\0\na2"), NULL));
-    ucPASS();
-}
-
-static ucTestErr ucTok_count_counts_tokens(ucTestGroup *p) {
-    ucTRUE(0 == ucTok_count((ucTok*)NULL));
-    ucTRUE(0 == ucTok_count((ucTok*)"\n"));
-    ucTRUE(0 == ucTok_count((ucTok*)"\0\0\0\n"));
-    ucTRUE(1 == ucTok_count((ucTok*)"a1\0\n"));
-    ucTRUE(1 == ucTok_count((ucTok*)"-s1\0\n"));
-    ucTRUE(3 == ucTok_count((ucTok*)"tok en\0a1\0-s1\0\nNA"));
     ucPASS();
 }
 
@@ -410,7 +399,6 @@ ucTestGroup *ucTok_tests_get_group(void) {
         ucTok_is_switch_returns_true_for_switches,
         ucTok_is_switch_returns_false_for_non_switches,
         ucTok_get_next_returns_next_token,
-        ucTok_count_counts_tokens,
         ucTok_try_parse_numeric__does_not_parse_null,
         ucTok_try_parse_numeric__does_not_parse_string,
         ucTok_try_parse_numeric__does_not_parse_invalid_number,

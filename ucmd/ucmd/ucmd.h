@@ -201,14 +201,6 @@ uc_EXPORTED ucTok *ucTok_get_next(ucTok*);
 
 /*
  * Summary:
- *   Counts the number of tokens in the linked list.
- * Returns:
- *   The number of tokens in the list.
- */
-uc_EXPORTED int ucTok_count(ucTok*);
-
-/*
- * Summary:
  *   Gets the value of the token.
  * Returns:
  *   The string value of the token.
@@ -578,7 +570,7 @@ uc_EXPORTED size_t ucCmdLine_get_response_size_max(ucCmdLine*);
  * Returns:
  *   The static, default instance of the command structure.
  */
-uc_EXPORTED ucCmdLine *ucCmdLine_get_instance(void);
+uc_EXPORTED ucCmdLine *ucCmdLine_instance(void);
 
 /*
  * Summary:

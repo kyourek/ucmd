@@ -10,7 +10,7 @@ static char *receive_1(char *buf, size_t buf_size, void *state) {
 static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
 
 static ucCmdLineApp *init_subject(void) {
-    return ucCmdLineApp_init(ucCmdLineApp_get_instance(), ucCmdParser_get_instance(), ucCmdLine_init(ucCmdLine_get_instance()));
+    return ucCmdLineApp_init(ucCmdLineApp_get_instance(), ucCmdParser_get_instance(), ucCmdLine_init(ucCmdLine_instance()));
 }
 
 static ucTestErr ucCmdLineApp_get_instance_is_not_null(ucTestGroup *p) {

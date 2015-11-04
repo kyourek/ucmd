@@ -3,7 +3,6 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
-const char ucTok_separator = '\0';
 const char uc_cmd_terminator = '\n';
 
 static ucBool is_char_digit(char c) {
@@ -22,7 +21,7 @@ int ucTok_get_length(ucTok *p) {
     int length;
     if (NULL == p) return 0;
 
-    for (length = 0; *p != ucTok_separator; length++, p++);
+    for (length = 0; *p; length++, p++);
 
     return length;
 }
@@ -228,58 +227,38 @@ ucBool ucTok_is_switch(ucTok* p) {
 
 ucTok *ucTok_get_next(ucTok *p) {
     int i;
-    if (NULL == p) return NULL;
 
-    /* loop until we've hit the max length */
+    assert(p);
+
+    /* Loop until we've hit the max length. */
     i = 0;
     while (ucTok_LENGTH_MAX > ++i) {
 
-        /* check if the previous character was a separator */
-        if (ucTok_separator == p[i - 1]) {
+        /* Check if the previous character was a separator. */
+        if ('\0' == p[i - 1]) {
 
-            /* check if this character is the terminator */
-            if (uc_cmd_terminator == p[i]) {
+            /* Check if this character is the terminator. */
+            if ('\n' == p[i]) {
 
-                /* it is, so no more tokens exist */
+                /* It is, so no more tokens exist. */
                 return NULL;
             }
 
-            /* make sure this character isn't another separator */
-            if (ucTok_separator == p[i]) {
+            /* Make sure this character isn't another separator. */
+            if ('\0' == p[i]) {
                 continue;
             }
 
-            /* the previous character was a separator,
-               and this character is NOT the terminator,
-               OR another separator, so this character is 
-               the start of a new token */
+            /* The previous character was a separator,
+            and this character is NOT the terminator
+            NOR another separator, so this character is 
+            the start of a new token. */
             return (ucTok*)&p[i];
         }
     }
 
-    /* the max length was exceeded,
-       which probably means something
-       went wrong. */
+    /* The max length was exceeded,
+    which probably means something
+    went wrong. */
     return NULL;
-}
-
-int ucTok_count(ucTok *p) {
-    int count;
-
-    /* make sure we have a pointer */
-    if (NULL == p) return 0;
-
-    /* if the first character is the terminator, then we have no tokens */
-    if (p[0] == uc_cmd_terminator) return 0;
-
-    /* start off the count according to whether or not
-       we're starting at a token */
-    count = ucTok_separator == p[0] ? -1 : 0;
-
-    /* count the tokens in the chain */
-    while (NULL != p) {
-        count++;
-        p = ucTok_get_next(p);
-    }
-    return count;
 }

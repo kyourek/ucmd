@@ -77,7 +77,7 @@ static ucTestErr ucCmdLineOpt_process_calls_func(ucTestGroup *p) {
     ucCmdLine *cmd;
     ucCmdLineOpt *cmd_opt;
 
-    cmd = ucCmdLine_get_instance();
+    cmd = ucCmdLine_instance();
     cmd_opt = ucCmdLineOpt_create(uart_func_two, NULL, "uart_func", "The UART function.", NULL, NULL, NULL);
     ucCmdLine_set_cmd_tok(cmd, "uart_func\0\n");
      
@@ -163,7 +163,7 @@ static ucTestErr ucCmdLineOpt_destroy_chain_releases_all_instances(ucTestGroup *
 
 static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup *p) {
     const char *expected;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLine_TransmitFunc *prev_transmit_func = ucCmdLine_get_transmit(cmd);
 
     ucCmdLineOpt *cmd_opt = 
@@ -200,7 +200,7 @@ static ucTestErr ucCmdLineOpt_send_usage_responds_with_usage_string(ucTestGroup 
 
 static ucTestErr ucCmdLineOpt_send_usage__uses_boolean_argument_name(ucTestGroup *p) {
     const char *expected;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLine_TransmitFunc *prev_transmit_func = ucCmdLine_get_transmit(cmd);
 
     ucCmdLineOpt *cmd_opt =
@@ -223,7 +223,7 @@ static ucTestErr ucCmdLineOpt_send_usage__uses_boolean_argument_name(ucTestGroup
 
 static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_arg(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, ucArgOpt_create_required("a", NULL, NULL), NULL, NULL);
 
     ucCmdLine_set_cmd_tok(cmd, "opt\0\n");
@@ -240,7 +240,7 @@ static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_arg(ucTestG
 
 static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_switch(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, ucSwitchOpt_create_required("-s", NULL, NULL, NULL), NULL);
 
     ucCmdLine_set_cmd_tok(cmd, "opt\0-z\0\n");
@@ -258,7 +258,7 @@ static ucTestErr ucCmdLineOpt_format_validation_err_catches_required_switch(ucTe
 static ucTestErr ucCmdLineOpt_process_handles_invalid_commands(ucTestGroup *p) {
     int state;
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
 
     ucCmdLine_set_handle_invalid_command(cmd, handle_invalid_command_1);
@@ -277,7 +277,7 @@ static ucTestErr ucCmdLineOpt_process_handles_invalid_commands(ucTestGroup *p) {
 
 static ucTestErr ucCmdLineOpt_process_does_not_handle_invalid_command(ucTestGroup *p) {
     const char *err;
-    ucCmdLine *cmd = ucCmdLine_get_instance();
+    ucCmdLine *cmd = ucCmdLine_instance();
     ucCmdLineOpt *opt = ucCmdLineOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
 
     ucCmdLine_set_handle_invalid_command(cmd, NULL);
