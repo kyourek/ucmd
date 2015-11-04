@@ -85,7 +85,6 @@ static ucTestErr ucTok_is_numeric_returns_false_for_non_numbers(ucTestGroup *p) 
     ucTRUE(ucBool_false == ucTok_is_numeric((ucTok*)"1234_"));
     ucTRUE(ucBool_false == ucTok_is_numeric((ucTok*)"1_234"));
     ucTRUE(ucBool_false == ucTok_is_numeric((ucTok*)c1));
-    ucTRUE(ucBool_false == ucTok_is_numeric((ucTok*)NULL));
     ucPASS();
 }
 
@@ -106,7 +105,6 @@ static ucTestErr ucTok_is_switch_returns_false_for_non_switches(ucTestGroup *p) 
     ucTRUE(ucBool_false == ucTok_is_switch((ucTok*)"-1"));
     ucTRUE(ucBool_false == ucTok_is_switch((ucTok*)"-1.234"));
     ucTRUE(ucBool_false == ucTok_is_switch((ucTok*)a1));
-    ucTRUE(ucBool_false == ucTok_is_switch((ucTok*)NULL));
     ucPASS();
 }
 
@@ -129,10 +127,6 @@ static ucTestErr ucTok_try_parse_numeric__test(ucTestGroup *p, const char *s, uc
         ucTRUE(actual == expected);
     }
     ucPASS();
-}
-
-static ucTestErr ucTok_try_parse_numeric__does_not_parse_null(ucTestGroup *p) {
-    return ucTok_try_parse_numeric__test(p, NULL, ucBool_false);
 }
 
 static ucTestErr ucTok_try_parse_numeric__does_not_parse_string(ucTestGroup *p) {
@@ -387,7 +381,6 @@ ucTestGroup *ucTok_tests_get_group(void) {
         ucTok_is_switch_returns_false_for_non_switches,
         ucTok_get_next_returns_next_token,
         ucTok_get_next_returns_null_if_line_is_terminated,
-        ucTok_try_parse_numeric__does_not_parse_null,
         ucTok_try_parse_numeric__does_not_parse_string,
         ucTok_try_parse_numeric__does_not_parse_invalid_number,
         ucTok_try_parse_numeric__parses_number,
