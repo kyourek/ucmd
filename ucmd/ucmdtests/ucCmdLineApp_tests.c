@@ -145,10 +145,9 @@ static ucTestErr ucCmdLineApp_receive_uses_state(ucTestGroup *p) {
 }
 
 static ucTestErr ucCmdLineApp_get_cmd_str_size_max_gets_size(ucTestGroup *p) {
-    ucCmdLineApp *ptr = ucCmdLineApp_get_instance();
-    size_t size = ucCmdLineApp_get_cmd_str_size_max(ptr);
+    ucCmdLineApp *subject = ucCmdLineApp_get_instance();
+    size_t size = ucCmdLineApp_get_cmd_str_size_max(subject);
     ucTRUE((ucCmdLineApp_CMD_STR_SIZE) == size);
-    ucTRUE(0 == ucCmdLineApp_get_cmd_str_size_max(NULL));
     ucPASS();
 }
 

@@ -137,19 +137,6 @@
 #define NULL ((void*)0)
 #endif
 
-/*
- * Summary:
- *   Definition for the type returned
- *   by functions that use an error code.
- */
-typedef int ucErr;
-
-/*
- * Summary:
- *   Defines the value that represents no error.
- */
-#define ucErr_NONE 0
-
 /** @brief Boolean type definition.
  *
  *  This definition is used to increase the readability of the source by replacing
@@ -1144,10 +1131,8 @@ uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp*);
  *   Runs the application with the given options.
  * Parameters:
  *   cmd_opt: A pointer to the first command option for the app.
- * Returns:
- *   An error code, if one occurred.
  */ 
-uc_EXPORTED ucErr ucCmdLineApp_run(ucCmdLineApp*, ucCmdLineOpt *cmd_opt);
+uc_EXPORTED void ucCmdLineApp_run(ucCmdLineApp*, ucCmdLineOpt *cmd_opt);
 
 /*
  * Summary:

@@ -92,7 +92,6 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             ucCmdParser*                        cmd_parser;
             ucCmdLineApp_ReceiveFunc*           receive;
             void*                               receive_state;
-            ucErr                               (*run)(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt);
             const char*                         help_command;
             const char*                         quit_command;
             const char*                         escape_response;            
