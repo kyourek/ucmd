@@ -5,27 +5,26 @@ ucArgTok *ucSwitchTok_get_arg(ucSwitchTok *p) {
 }
 
 ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok *p) {
-    ucTok *tok;
-    if (NULL == p) return NULL;
-    tok = ucTok_get_next((ucTok*)p);
-    while (NULL != tok) {
-        if (ucTok_is_switch(tok)) return (ucSwitchTok*)tok;
-        tok = ucTok_get_next((ucTok*)tok);
+    ucTok *tok = ucTok_get_next((ucTok*)p);
+    while (tok) {
+        if (ucTok_is_switch(tok)) {
+            return (ucSwitchTok*)tok;
+        }
+        tok = ucTok_get_next(tok);
     }
     return NULL;
 }
 
 int ucSwitchTok_count(ucSwitchTok* p) {
-    int count = 0;
-    while (NULL != p) {
-        count++;
-        p = ucSwitchTok_get_next(p);
-    }
+    int count;
+    assert(p);
+    for (count = 0; p; count++, p = ucSwitchTok_get_next(p));
     return count;
 }
 
 ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value) {
-    while (NULL != p) {
+    assert(p);
+    while (p) {
         if (ucTok_equals((ucTok*)p, switch_value)) {
             return p;
         }
