@@ -67,29 +67,19 @@ static void copy_name(const char *source, char *dest) {
 }
 
 static const char *name(ucCmdLine *cmd, void *state) {
-
     AppState *my_state;
-    ucCmdTok *cmd_tok;
     ucArgTok *name_arg;
-    ucSwitchTok *root_switch, *first_name_switch, *last_name_switch;
 
     my_state = (AppState*)state;
     if (!my_state) return "Oops... NULL pointer!";
 
-    cmd_tok = ucCmdLine_get_cmd_tok(cmd);
-    root_switch = ucCmdTok_get_switch(cmd_tok);
-
-    first_name_switch = ucSwitchTok_find(root_switch, "-first");
-    if (first_name_switch) {
-
-        name_arg = ucSwitchTok_get_arg(first_name_switch);
+    if (ucCmdLine_find_switch(cmd, "-first")) {
+        name_arg = ucCmdLine_get_switch_arg(cmd, "-first");
         copy_name(ucTok_get_value(name_arg), my_state->first_name);
     }
 
-    last_name_switch = ucSwitchTok_find(root_switch, "-last");
-    if (last_name_switch) {
-
-        name_arg = ucSwitchTok_get_arg(last_name_switch);
+    if (ucCmdLine_find_switch(cmd, "-last")) {
+        name_arg = ucCmdLine_get_switch_arg(cmd, "-last");
         copy_name(ucTok_get_value(name_arg), my_state->last_name);
     }
 

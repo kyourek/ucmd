@@ -224,3 +224,10 @@ ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine *p, const char *switch_name) {
     }
     return NULL;
 }
+
+ucSwitchTok *ucCmdLine_find_switch(ucCmdLine *p, const char *switch_name) {
+    ucSwitchTok *switch_tok = ucCmdLine_get_switch(p);
+    return switch_tok
+        ? ucSwitchTok_find(switch_tok, switch_name)
+        : NULL;
+}

@@ -419,10 +419,28 @@ static ucTestErr ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist(
     ucPASS();
 }
 
+static ucTestErr ucCmdLine_find_switch_returns_switch_if_it_exists(ucTestGroup *p) {
+    char c[30] = "cmd argz -s1 argb -s2 c";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(ucTok_equals(ucCmdLine_find_switch(subject, "-s2"), "-s2"));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_find_switch_returns_null_if_it_does_not_exist(ucTestGroup *p) {
+    char c[30] = "cmd argz -s1 argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(NULL == ucCmdLine_find_switch(subject, "-s2"));
+    ucPASS();
+}
+
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
         ucCmdLine_create_does_not_return_null,
+        ucCmdLine_find_switch_returns_null_if_it_does_not_exist,
+        ucCmdLine_find_switch_returns_switch_if_it_exists,
+        ucCmdLine_format_response_sets_response_string,
+        ucCmdLine_format_response_va_sets_response_string,
         ucCmdLine_get_arg_returns_arg_tok,
         ucCmdLine_get_arg_returns_null_if_no_arg_exists,
         ucCmdLine_get_cmd_toks_returns_toks,
@@ -435,8 +453,6 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist,
         ucCmdLine_get_switch_returns_null_if_no_switch_exists,
         ucCmdLine_get_switch_returns_switch_tok,
-        ucCmdLine_format_response_sets_response_string,
-        ucCmdLine_format_response_va_sets_response_string,
         ucCmdLine_set_transmit_sets_transmit,
         ucCmdLine_get_transmit_returns_transmit,
         ucCmdLine_respond_uses_transmit,

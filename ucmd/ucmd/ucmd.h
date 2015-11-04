@@ -507,6 +507,8 @@ uc_EXPORTED ucSwitchTok *ucCmdLine_get_switch(ucCmdLine*);
 
 uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
 
+uc_EXPORTED ucSwitchTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
+
 /*
  * Summary:
  *   Sets the command token for the structure.
