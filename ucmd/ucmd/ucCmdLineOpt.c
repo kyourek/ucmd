@@ -254,12 +254,25 @@ void ucCmdLineOpt_destroy(ucCmdLineOpt *p) {
 }
 
 void ucCmdLineOpt_destroy_chain(ucCmdLineOpt *p) {
-    ucCmdLineOpt *next = p;
-    while (NULL != next) {
+    ucArgOpt *arg;
+    ucSwitchOpt *sw;
+    ucCmdLineOpt *next;
+    assert(p);
+    next = p;
+    while (next) {
         p = next;
         next = ucCmdLineOpt_get_next(p);
-        ucArgOpt_destroy_chain(ucCmdLineOpt_get_arg_opt(p));
-        ucSwitchOpt_destroy_chain(ucCmdLineOpt_get_switch_opt(p));
+        
+        arg = ucCmdLineOpt_get_arg_opt(p);
+        if (arg) {
+            ucArgOpt_destroy_chain(arg);
+        }
+
+        sw = ucCmdLineOpt_get_switch_opt(p);
+        if (sw) {
+            ucSwitchOpt_destroy_chain(sw);
+        }
+
         ucCmdLineOpt_destroy(p);
     }
 }

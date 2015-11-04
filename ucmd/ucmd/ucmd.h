@@ -35,6 +35,16 @@
 #include    <stdarg.h>
 #include    <stddef.h>
 
+#ifndef ucOpt_INVALID
+/** @brief The response prefix for notifications about invalid command options.
+ *
+ *  This prefix will be placed immediately before the description of the invalid
+ *  option. It can be used when parsing a response to a command to determine the
+ *  command's validity.
+ */
+#define ucOpt_INVALID "Invalid: "
+#endif
+
 /* Sets the size of the command buffer when using
    the command-line application framework. All
    entered commands must have a size equal to or

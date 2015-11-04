@@ -8,12 +8,13 @@ ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt *p) {
 }
 
 ucSwitchOpt *ucSwitchOpt_get_next(ucSwitchOpt *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->next;
 }
 
 ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt *p, const char *name) {
-    while (NULL != p) {
+    assert(p);
+    while (p) {
         if (0 == strcmp(ucOpt_get_name((ucOpt*)p), name)) {
             return p;
         }
@@ -23,9 +24,8 @@ ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt *p, const char *name) {
 }
 
 ucSwitchOpt *ucSwitchOpt_init(ucSwitchOpt *p, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, ucSwitchOpt *next) {
-    if (NULL == p) return NULL;
-    if (NULL == ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, is_required, arg_opt)) return NULL;
-
+    assert(p);
+    assert(ucArgOptOwner_init((ucArgOptOwner*)p, name, desc, is_required, arg_opt));
     p->next = next;
     return p;
 }
@@ -43,30 +43,35 @@ void ucSwitchOpt_destroy(ucSwitchOpt *p) {
 }
 
 void ucSwitchOpt_destroy_chain(ucSwitchOpt *p) {
-    ucSwitchOpt *next = p;
-    while (NULL != next) {
+    ucArgOpt *arg;
+    ucSwitchOpt *next;
+    assert(p);
+    next = p;
+    while (next) {
         p = next;
         next = ucSwitchOpt_get_next(p);
-        ucArgOpt_destroy_chain(ucSwitchOpt_get_arg_opt(p));
+        arg = ucSwitchOpt_get_arg_opt(p);
+        if (arg) {
+            ucArgOpt_destroy_chain(arg);
+        }
         ucSwitchOpt_destroy(p);
     }
 }
 
 const char *ucSwitchOpt_format_validation_err(ucSwitchOpt *p, ucCmdLine *cmd, ucSwitchTok *switch_tok) {
-
-    /* check if the switch option is required */
+    /* Check if the switch option is required,
+    and then if it is missing. If it is required,
+    but not present, send the error. */
     if (ucOpt_is_required((ucOpt*)p)) {
-
-        /* check if the switch token is missing */
-        if (NULL == switch_tok) {
-
-            /* the switch is required, but it is not
-               present, so send the error */
-            return ucCmdLine_format_response(cmd, "%sthe switch \"%s\" is required.", ucOpt_validation_err_invalid_switch_prefix, ucOpt_get_name((ucOpt*)p));
+        if (!switch_tok) {
+            return ucCmdLine_format_response(
+                cmd, 
+                ucOpt_INVALID "The switch \"%s\" is required.",
+                ucOpt_get_name((ucOpt*)p));
         }
     }
 
-    /* return the result of the argument validation */
+    /* Return the result of the argument validation. */
     return ucArgOptOwner_format_validation_err(
         (ucArgOptOwner*)p, 
         cmd, 
