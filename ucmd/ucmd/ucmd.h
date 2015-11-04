@@ -22,7 +22,7 @@
 
 /** @file ucmd.h
  *  @date 16 October 2015
- *  @version 1.9
+ *  @version 2.0.0-alpha
  *  @brief Public declarations for the ucmd library and framework.
  *  @see https://github.com/kyourek/ucmd
  *
