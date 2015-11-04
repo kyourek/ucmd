@@ -1,10 +1,10 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
-ucMemoryManager_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
+ucInstance_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
 
 static ucCmdLineOpt *create_cmd_line_opt(void) {
-    return ucMemoryManager_create();
+    return ucInstance_create();
 }
 
 static const char *add_opt_to_usage_response(ucOpt *opt, ucCmdLine *cmd, const char *response) {
@@ -250,7 +250,7 @@ const char *ucCmdLineOpt_process(ucCmdLineOpt* p, ucCmdLine *cmd) {
 }
 
 void ucCmdLineOpt_destroy(ucCmdLineOpt *p) {
-    ucMemoryManager_destroy(p);
+    ucInstance_destroy(p);
 }
 
 void ucCmdLineOpt_destroy_chain(ucCmdLineOpt *p) {

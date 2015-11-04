@@ -5,10 +5,10 @@ static const char *boolean_arg_name = "<boolean>";
 static const char *integer_arg_name = "<integer>";
 static const char *numeric_arg_name = "<numeric>";
 
-ucMemoryManager_INIT(ucArgOpt, ucArgOpt_COUNT);
+ucInstance_INIT(ucArgOpt, ucArgOpt_COUNT);
 
 static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next) {
-    return ucArgOpt_init(ucMemoryManager_create(), name, desc, is_required, min_tok_count, max_tok_count, is_boolean, is_numeric, is_integer, numeric_min, numeric_max, next);
+    return ucArgOpt_init(ucInstance_create(), name, desc, is_required, min_tok_count, max_tok_count, is_boolean, is_numeric, is_integer, numeric_min, numeric_max, next);
 }
 
 static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name, const char *prefix) {
@@ -273,7 +273,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok
 }
 
 void ucArgOpt_destroy(ucArgOpt *p) {
-    ucMemoryManager_destroy(p);
+    ucInstance_destroy(p);
 }
 
 void ucArgOpt_destroy_chain(ucArgOpt *p) {

@@ -1,11 +1,7 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
-ucMemoryManager_INIT(ucSwitchOpt, ucSwitchOpt_COUNT);
-
-static ucSwitchOpt *create_switch_opt(void) {
-    return ucMemoryManager_create();
-}
+ucInstance_INIT(ucSwitchOpt, ucSwitchOpt_COUNT);
 
 ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt *p) {
     return ucArgOptOwner_get_arg_opt((ucArgOptOwner*)p);
@@ -35,15 +31,15 @@ ucSwitchOpt *ucSwitchOpt_init(ucSwitchOpt *p, const char *name, const char *desc
 }
 
 ucSwitchOpt *ucSwitchOpt_create(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next) {
-    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_false, arg_opt, next);
+    return ucSwitchOpt_init(ucInstance_create(), name, desc, ucBool_false, arg_opt, next);
 }
 
 ucSwitchOpt *ucSwitchOpt_create_required(const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *next) {
-    return ucSwitchOpt_init(create_switch_opt(), name, desc, ucBool_true, arg_opt, next);
+    return ucSwitchOpt_init(ucInstance_create(), name, desc, ucBool_true, arg_opt, next);
 }
 
 void ucSwitchOpt_destroy(ucSwitchOpt *p) {
-    ucMemoryManager_destroy(p);
+    ucInstance_destroy(p);
 }
 
 void ucSwitchOpt_destroy_chain(ucSwitchOpt *p) {

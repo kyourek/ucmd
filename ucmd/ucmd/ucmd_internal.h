@@ -117,19 +117,19 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
  *          create function until instances are released
  *          using the destroy function.
  */
-#define ucMemoryManager_INIT(TYPE, COUNT)                                           \
-    typedef struct ucMemoryManager_Instance {                                       \
-        TYPE inst;                                                                  \
+#define ucInstance_INIT(TYPE, COUNT)                                                \
+    typedef struct {                                                                \
         char used;                                                                  \
-    } ucMemoryManager_Instance;                                                     \
+        TYPE inst;                                                                  \
+    } ucInstance;                                                                   \
                                                                                     \
-    static ucMemoryManager_Instance ucMemoryManager_Instances[COUNT] = { 0 };       \
+    static ucInstance ucInstance_array[COUNT] = { 0 };                              \
                                                                                     \
-    static TYPE *ucMemoryManager_create(void) {                                     \
+    static TYPE *ucInstance_create(void) {                                          \
         int i;                                                                      \
-        ucMemoryManager_Instance *inst;                                             \
+        ucInstance *inst;                                                           \
         for (i = 0; i < COUNT; i++) {                                               \
-            inst = &ucMemoryManager_Instances[i];                                   \
+            inst = &ucInstance_array[i];                                            \
             if (inst->used == 0) {                                                  \
                 inst->used = 1;                                                     \
                 return &inst->inst;                                                 \
@@ -138,11 +138,11 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
         return NULL;                                                                \
     }                                                                               \
                                                                                     \
-    static void ucMemoryManager_destroy(TYPE *p) {                                  \
+    static void ucInstance_destroy(TYPE *p) {                                       \
         int i;                                                                      \
-        ucMemoryManager_Instance *inst;                                             \
+        ucInstance *inst;                                                           \
         for (i = 0; i < COUNT; i++) {                                               \
-            inst = &ucMemoryManager_Instances[i];                                   \
+            inst = &ucInstance_array[i];                                            \
             if (p == (&inst->inst)) {                                               \
                 inst->used = 0;                                                     \
             }                                                                       \
