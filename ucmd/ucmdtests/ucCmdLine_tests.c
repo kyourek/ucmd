@@ -106,7 +106,7 @@ static ucTestErr ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null(ucTestGro
     ucPASS();
 }
 
-static ucTestErr ucCmdLine_get_instance_is_not_null(ucTestGroup *p) {
+static ucTestErr ucCmdLine_create_does_not_return_null(ucTestGroup *p) {
     ucTRUE(NULL != subject);
     ucPASS();
 }
@@ -370,15 +370,71 @@ static ucTestErr ucCmdLine_get_command_acknoledgment_returns_set_value(ucTestGro
     ucPASS();
 }
 
+static ucTestErr ucCmdLine_get_arg_returns_arg_tok(ucTestGroup *p) {
+    char c[20] = "cmd argz -s argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(uc_str_eq("argz", ucCmdLine_get_arg(subject)));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_arg_returns_null_if_no_arg_exists(ucTestGroup *p) {
+    char c[15] = "cmd -s argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(NULL == ucCmdLine_get_arg(subject));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_switch_returns_switch_tok(ucTestGroup *p) {
+    char c[20] = "cmd argz -s argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(uc_str_eq("-s", ucCmdLine_get_switch(subject)));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_switch_returns_null_if_no_switch_exists(ucTestGroup *p) {
+    char c[20] = "cmd argz argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(NULL == ucCmdLine_get_switch(subject));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_switch_arg_returns_arg_tok_of_switch(ucTestGroup *p) {
+    char c[30] = "cmd argz -s1 argb -s2 argc";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(uc_str_eq("argc", ucCmdLine_get_switch_arg(subject, "-s2")));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist(ucTestGroup *p) {
+    char c[30] = "cmd argz -s1 argb -s2";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(NULL == ucCmdLine_get_switch_arg(subject, "-s2"));
+    ucPASS();
+}
+
+static ucTestErr ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist(ucTestGroup *p) {
+    char c[30] = "cmd argz -s1 argb";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    ucTRUE(NULL == ucCmdLine_get_switch_arg(subject, "-s2"));
+    ucPASS();
+}
+
 ucTestGroup *ucCmdLine_tests_get_group(void) {
     static ucTestGroup group;
     static ucTestGroup_TestFunc *tests[] = {
+        ucCmdLine_create_does_not_return_null,
+        ucCmdLine_get_arg_returns_arg_tok,
+        ucCmdLine_get_arg_returns_null_if_no_arg_exists,
         ucCmdLine_get_cmd_toks_returns_toks,
         ucCmdLine_get_cmd_toks_sets_null_tok_values,
         ucCmdLine_set_cmd_tok_sets_cmd_tok,
         ucCmdLine_get_cmd_tok_returns_cmd_tok,
         ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null,
-        ucCmdLine_get_instance_is_not_null,
+        ucCmdLine_get_switch_arg_returns_arg_tok_of_switch,
+        ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist,
+        ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist,
+        ucCmdLine_get_switch_returns_null_if_no_switch_exists,
+        ucCmdLine_get_switch_returns_switch_tok,
         ucCmdLine_format_response_sets_response_string,
         ucCmdLine_format_response_va_sets_response_string,
         ucCmdLine_set_transmit_sets_transmit,

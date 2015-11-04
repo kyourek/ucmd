@@ -199,3 +199,28 @@ void ucCmdLine_terminate_response(ucCmdLine *p) {
         ucCmdLine_respond(p, response_terminator);
     }
 }
+
+ucArgTok *ucCmdLine_get_arg(ucCmdLine *p) {
+    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(p);
+    return cmd_tok
+        ? ucCmdTok_get_arg(cmd_tok)
+        : NULL;
+}
+
+ucSwitchTok *ucCmdLine_get_switch(ucCmdLine *p) {
+    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(p);
+    return cmd_tok
+        ? ucCmdTok_get_switch(cmd_tok)
+        : NULL;
+}
+
+ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine *p, const char *switch_name) {
+    ucSwitchTok *switch_tok = ucCmdLine_get_switch(p);
+    if (switch_tok) {
+        switch_tok = ucSwitchTok_find(switch_tok, switch_name);
+        if (switch_tok) {
+            return ucSwitchTok_get_arg(switch_tok);
+        }
+    }
+    return NULL;
+}

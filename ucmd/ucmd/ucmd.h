@@ -338,22 +338,22 @@ uc_EXPORTED int ucSwitchTok_count(ucSwitchTok*);
  * Summary:
  *   Finds the switch with the specified value.
  * Parameters:
- *   switch_value: The value of the switch to be found.
+ *   switch_name: The value of the switch to be found.
  * Returns:
  *   The switch with the specified value, or NULL if none exist.
  */
-uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok*, const char *switch_value);
+uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok*, const char *switch_name);
 
 /*
  * Summary:
  *   Gets a value indicating whether or not a value exists in the switch list.
  * Parameters:
- *   switch_value: The value of the switch to be found.
+ *   switch_name: The value of the switch to be found.
  * Returns:
  *   ucBool_true if a switch with the given value was found in the list. Otherwise,
  *   ucBool_false.
  */
-uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok*, const char *switch_value);
+uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok*, const char *switch_name);
 
 /*
  * Summary:
@@ -500,6 +500,12 @@ typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command,
  *   A pointer to the command token of the structure.
  */
 uc_EXPORTED ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine*);
+
+uc_EXPORTED ucArgTok *ucCmdLine_get_arg(ucCmdLine*);
+
+uc_EXPORTED ucSwitchTok *ucCmdLine_get_switch(ucCmdLine*);
+
+uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
 
 /*
  * Summary:

@@ -75,4 +75,7 @@ void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *rece
     ucCmdLineApp_set_receive(app, receive);
 
     ucCmdLineApp_run(app, commands);
+
+    ucCmdLineApp_destroy(app);
+    ucCmdLineOpt_destroy_chain(commands);
 }

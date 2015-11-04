@@ -22,10 +22,10 @@ int ucSwitchTok_count(ucSwitchTok* p) {
     return count;
 }
 
-ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value) {
+ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_name) {
     assert(p);
     while (p) {
-        if (ucTok_equals(p, switch_value)) {
+        if (ucTok_equals(p, switch_name)) {
             return p;
         }
         p = ucSwitchTok_get_next(p);
@@ -33,6 +33,6 @@ ucSwitchTok *ucSwitchTok_find(ucSwitchTok *p, const char *switch_value) {
     return NULL;
 }
 
-ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_value) {
-    return NULL == ucSwitchTok_find(p, switch_value) ? ucBool_false : ucBool_true;
+ucBool ucSwitchTok_contains(ucSwitchTok* p, const char *switch_name) {
+    return NULL == ucSwitchTok_find(p, switch_name) ? ucBool_false : ucBool_true;
 }

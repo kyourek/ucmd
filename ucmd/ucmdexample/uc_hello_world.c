@@ -213,7 +213,12 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
     ucCmdLine_set_transmit(cmd, transmit);
     ucCmdLineApp_set_receive(app, receive);
 
-    /* starts the command-line app. The app will exit
+    /* Starts the command-line app. The app will exit
     when it receives the 'quit' command. */
     ucCmdLineApp_run(app, commands);
+
+    /* Clean up the resources that were explicitly
+    created. */
+    ucCmdLineApp_destroy(app);
+    ucCmdLineOpt_destroy_chain(commands);
 }

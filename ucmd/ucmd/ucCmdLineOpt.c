@@ -165,7 +165,9 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
 
     while (next_switch_opt) {
         switch_name = ucOpt_get_name((ucOpt*)next_switch_opt);
-        found_switch_tok = ucSwitchTok_find(switch_tok, switch_name);
+        found_switch_tok = switch_tok 
+            ? ucSwitchTok_find(switch_tok, switch_name) 
+            : NULL;
 
         if (ucOpt_is_required((ucOpt*)next_switch_opt)) {
             if (!found_switch_tok) {
