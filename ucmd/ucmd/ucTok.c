@@ -3,8 +3,6 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
-const char uc_cmd_terminator = '\n';
-
 static ucBool is_char_digit(char c) {
     /* The native isdigit function in ctype.h was giving some weird behavior in the uVision simulator. */
     static const char *digits = "0123456789";
