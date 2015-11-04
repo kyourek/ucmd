@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 #include "ucmd_internal.h"
 
@@ -29,29 +28,27 @@ void ucCmdLine_destroy(ucCmdLine *p) {
 }
 
 ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->cmd_tok;
 }
 
 void ucCmdLine_set_cmd_tok(ucCmdLine *p, ucCmdTok *value) {
-    if (NULL == p) return;
+    assert(p);
     p->cmd_tok = value;
 }
 
 ucCmdLineToks *ucCmdLine_get_cmd_toks(ucCmdLine *p, ucCmdLineToks *buffer) {
-    if (NULL == p) return NULL;
-    if (NULL == buffer) return NULL;
-
-    buffer->cmd_tok = ucCmdLine_get_cmd_tok(p);
-    buffer->arg_tok = ucCmdTok_get_arg(buffer->cmd_tok);
-    buffer->switch_tok = ucCmdTok_get_switch(buffer->cmd_tok);
-
+    assert(p);
+    if (buffer) {
+        buffer->cmd_tok = ucCmdLine_get_cmd_tok(p);
+        buffer->arg_tok = ucCmdTok_get_arg(buffer->cmd_tok);
+        buffer->switch_tok = ucCmdTok_get_switch(buffer->cmd_tok);
+    }
     return buffer;
 }
 
 const char *ucCmdLine_format_response_va(ucCmdLine *p, const char *format, va_list arg_list) {
-    if (NULL == p) return NULL;
-
+    assert(p);
 	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
 	   TODO: There's probably a better-performing way to handle that, though. */
 	vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list);
@@ -71,116 +68,121 @@ const char *ucCmdLine_format_response(ucCmdLine *p, const char *format, ...) {
 }
 
 void ucCmdLine_respond(ucCmdLine *p, const char *response) {
-    if (NULL == p) return;
-    if (NULL == p->transmit) return;
+    assert(p);
     if (p->is_quiet) return;
-    p->transmit(response, p->transmit_state);
+    if (p->transmit) {
+        p->transmit(response, p->transmit_state);
+    }
 }
 
 void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_TransmitFunc *value) {
-    if (NULL == p) return;
+    assert(p);
     p->transmit = value;
 }
 
 ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->transmit;
 }
 
 ucBool ucCmdLine_is_canceled(ucCmdLine *p) {
-    if (NULL == p) return ucBool_false;
-    if (NULL == p->is_canceled) return ucBool_false;
-    return p->is_canceled(p->is_canceled_state);
+    assert(p);
+    if (p->is_canceled) {
+        return p->is_canceled(p->is_canceled_state);
+    }
+    return ucBool_false;
 }
 
 void ucCmdLine_set_is_canceled(ucCmdLine *p, ucCmdLine_IsCanceledFunc *value) {
-    if (NULL == p) return;
+    assert(p);
     p->is_canceled = value;
 }
 
 ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->is_canceled;
 }
 
 void *ucCmdLine_get_transmit_state(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->transmit_state;
 }
 
-uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
-    if (NULL == p) return;
+void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
+    assert(p);
     p->transmit_state = value;
 }
 
 void *ucCmdLine_get_is_canceled_state(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->is_canceled_state;
 }
 
 void ucCmdLine_set_is_canceled_state(ucCmdLine *p, void *value) {
-    if (NULL == p) return;
+    assert(p);
     p->is_canceled_state = value;
 }
 
 void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {
-    if (NULL == p) return;
+    assert(p);
     p->is_quiet = value;
 }
 
 ucBool ucCmdLine_get_is_quiet(ucCmdLine *p) {
-    if (NULL == p) return ucBool_false;
+    assert(p);
     return p->is_quiet;
 }
 
 void ucCmdLine_set_handle_invalid_command(ucCmdLine *p, ucCmdLine_HandleInvalidCommandFunc *value) {
-    if (NULL == p) return;
+    assert(p);
     p->handle_invalid_command = value;
 }
 
 ucCmdLine_HandleInvalidCommandFunc *ucCmdLine_get_handle_invalid_command(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->handle_invalid_command;
 }
 
 void ucCmdLine_set_handle_invalid_command_state(ucCmdLine *p, void *value) {
-    if (NULL == p) return;
+    assert(p);
     p->handle_invalid_command_state = value;
 }
 
 void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->handle_invalid_command_state;
 }
 
 ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_command) {
-    if (NULL == p) return ucBool_false;
-    if (NULL == p->handle_invalid_command) return ucBool_false;
-    return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
+    assert(p);
+    if (p->handle_invalid_command) {
+        return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
+    }
+    return ucBool_false;
 }
 
 size_t ucCmdLine_get_response_size_max(ucCmdLine *p) {
-    if (NULL == p) return 0;
+    assert(p);
     return sizeof(p->response);
 }
 
 void ucCmdLine_set_response_terminator(ucCmdLine *p, const char *value) {
-    if (NULL == p) return;
+    assert(p);
     p->response_terminator = value;
 }
 
 const char *ucCmdLine_get_response_terminator(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->response_terminator;
 }
 
 void ucCmdLine_set_command_acknowledgment(ucCmdLine *p, const char *value) {
-    if (NULL == p) return;
+    assert(p);
     p->command_acknowledgment = value;
 }
 
 const char *ucCmdLine_get_command_acknowledgment(ucCmdLine *p) {
-    if (NULL == p) return NULL;
+    assert(p);
     return p->command_acknowledgment;
 }
 

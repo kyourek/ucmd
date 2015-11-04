@@ -25,6 +25,7 @@
     <ClCompile Include="..\..\..\ucmd\ucCmdLineToks.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdParser.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdTok.c" />
+    <ClCompile Include="..\..\..\ucmd\ucmd.c" />
     <ClCompile Include="..\..\..\ucmd\ucOpt.c" />
     <ClCompile Include="..\..\..\ucmd\ucSwitchOpt.c" />
     <ClCompile Include="..\..\..\ucmd\ucSwitchTok.c" />

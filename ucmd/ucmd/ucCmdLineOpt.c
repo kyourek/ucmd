@@ -1,4 +1,3 @@
-#include <string.h>
 #include "ucmd_internal.h"
 
 ucInstance_INIT(ucCmdLineOpt, ucCmdLineOpt_COUNT);
@@ -64,7 +63,7 @@ ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_WorkFunc *func, void *state, cons
 ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt* p, const char *name) {
     assert(p);
     while (p) {
-        if (0 == strcmp(name, ucOpt_get_name((ucOpt*)p))) {
+        if (uc_str_eq(name, ucOpt_get_name((ucOpt*)p))) {
             return p;
         }
         p = ucCmdLineOpt_get_next(p);

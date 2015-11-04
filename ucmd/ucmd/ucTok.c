@@ -3,17 +3,6 @@
 #include <string.h>
 #include "ucmd_internal.h"
 
-static ucBool is_char_digit(char c) {
-    static const char *digits = "0123456789";
-    const char *d;
-    for (d = digits; *d; d++) {
-        if (*d == c) {
-            return ucBool_true;
-        }
-    }
-    return ucBool_false;
-}
-
 int ucTok_get_length(ucTok *p) {
     int length;
     assert(p);
@@ -129,7 +118,7 @@ ucBool ucTok_is_numeric(ucTok *p) {
                 
             /* Everything else has to be a number. */
             default:
-                if (!is_char_digit(p[i])) return ucBool_false;
+                if (!isdigit(p[i])) return ucBool_false;
                 break;
         }
     }

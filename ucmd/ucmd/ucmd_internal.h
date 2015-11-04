@@ -29,6 +29,8 @@
             struct                              ucCmdParser {
             char                                placeholder; };
 
+uc_EXPORTED ucBool                              uc_str_eq(const char *s1, const char *s2);
+
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
             struct                              ucOpt {
             const char*                         name;

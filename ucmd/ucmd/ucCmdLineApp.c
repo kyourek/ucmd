@@ -1,4 +1,3 @@
-#include <string.h>
 #include "ucmd_internal.h"
 
 ucInstance_INIT(ucCmdLineApp, ucCmdLineApp_COUNT);
@@ -201,8 +200,8 @@ void ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
         if (response) {
 
             /* Check if the response is the escape response. */
-            if (0 == strcmp(response, ucCmdLineApp_get_escape_response(p))) {
-
+            if (uc_str_eq(response, ucCmdLineApp_get_escape_response(p))) {
+                
                 /* We've been signaled to quit the app. */
                 break;
             }

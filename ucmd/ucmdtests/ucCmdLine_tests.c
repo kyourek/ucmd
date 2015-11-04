@@ -101,6 +101,11 @@ static ucTestErr ucCmdLine_get_cmd_toks_sets_null_tok_values(ucTestGroup *p) {
     ucPASS();
 }
 
+static ucTestErr ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null(ucTestGroup *p) {
+    ucTRUE(NULL == ucCmdLine_get_cmd_toks(subject, NULL));
+    ucPASS();
+}
+
 static ucTestErr ucCmdLine_get_instance_is_not_null(ucTestGroup *p) {
     ucTRUE(NULL != subject);
     ucPASS();
@@ -322,7 +327,6 @@ static ucTestErr ucCmdLine_get_response_size_max_returns_size(ucTestGroup *p) {
     ucCmdLine *ptr = subject;
     size_t size = ucCmdLine_get_response_size_max(ptr);
     ucTRUE(ucCmdLine_RESPONSE_SIZE == size);
-    ucTRUE(0 == ucCmdLine_get_response_size_max(NULL));
     ucPASS();
 }
 
@@ -373,6 +377,7 @@ ucTestGroup *ucCmdLine_tests_get_group(void) {
         ucCmdLine_get_cmd_toks_sets_null_tok_values,
         ucCmdLine_set_cmd_tok_sets_cmd_tok,
         ucCmdLine_get_cmd_tok_returns_cmd_tok,
+        ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null,
         ucCmdLine_get_instance_is_not_null,
         ucCmdLine_format_response_sets_response_string,
         ucCmdLine_format_response_va_sets_response_string,
