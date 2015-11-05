@@ -35,7 +35,7 @@
 #define     uc_PASS                                     return 0; }
 #define     uc_TRUE(EXPRESSION)                         do { if (!(EXPRESSION)) { return -1; } } while (0)
 
-#define uc_TEST_GROUP(NAME, SETUP, ...)                 \
+#define     uc_TEST_GROUP(NAME, SETUP, ...)             \
     static                                              \
     ucTestGroup_TestFunc*                               \
     ucTestGroup_TestFunc_ ## NAME[] = {                 \
@@ -48,83 +48,69 @@
         ucTestGroup_TestFunc_ ## NAME,                  \
         SETUP,                                          \
         NULL,                                           \
+        NULL,                                           \
         NULL };                                         \
     ucTestGroup*                                        \
-    ucTestGroup_ ## NAME = &ucTestGroup_ ## NAME ## _s; \
+    ucTestGroup_ ## NAME = &                            \
+    ucTestGroup_ ## NAME ## _s;                         \
 
 #define     uc_TEST_RUNNER(NAME, ...)                   \
-    static ucTestRunner uc_test_runner(void) {          \
-        static ucTestRunner test_runner;                \
-        static ucTestGroup *group[] = {                 \
-            __VA_ARGS__,                                \
-            NULL };                                     \
-        return ucTestRunner_init                        \
-            &test_runner,                               \
-            #NAME,                                      \
-            group);                                     \
-    }                                                   \
-    ucTestRunner* ucTestRunner_ ## NAME(void) {         \
-        return uc_test_runner();                        \
-    }                                                   \
+    static                                              \
+    ucTestGroup**                                       \
+    ucTestGroup_ ## NAME[] = {                          \
+        __VA_ARGS__,                                    \
+        NULL };                                         \
+    static                                              \
+    ucTestRunner                                        \
+    ucTestRunner_s = {                                  \
+        #NAME,                                          \
+        NULL,                                           \
+        ucTestGroup_ ## NAME,                           \
+        NULL,                                           \
+        NULL,                                           \
+        0,                                              \
+        0 };                                            \
+    ucTestRunner*                                       \
+    ucTestRunner_instance = &                           \
+    ucTestRunner_s;                                     \
 
-typedef     struct ucTest                               ucTest;
 typedef     int                                         ucTestErr;
 typedef     struct ucTestGroup                          ucTestGroup;
 typedef     struct ucTestRunner                         ucTestRunner;
-typedef     struct ucTestState                          ucTestState;
-
-uc_EXPORTED int                                         ucTestState_get_run_group_count(ucTestState*);
-uc_EXPORTED int                                         ucTestState_get_run_group_test_count(ucTestState*);
-uc_EXPORTED int                                         ucTestState_get_run_test_count(ucTestState*);
-uc_EXPORTED ucTestState*                                ucTestState_init(ucTestState*);
-uc_EXPORTED void                                        ucTestState_reset(ucTestState*);
-uc_EXPORTED void                                        ucTestState_set_run_group_count(ucTestState*, int value);
-uc_EXPORTED void                                        ucTestState_set_run_group_test_count(ucTestState*, int value);
-uc_EXPORTED void                                        ucTestState_set_run_test_count(ucTestState*, int value);
-            struct                                      ucTestState {
-            int                                         run_test_count;
-            int                                         run_group_count;
-            int                                         run_group_test_count; };
 
 typedef     int                                         (ucTestGroup_TestFunc)(ucTestGroup*);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_init(ucTestGroup*);
 uc_EXPORTED const char*                                 ucTestGroup_get_name(ucTestGroup*);
-uc_EXPORTED int                                         ucTestGroup_run(ucTestGroup*, ucTestState *state);
+uc_EXPORTED ucTestRunner*                               ucTestGroup_get_test_runner(ucTestGroup*);
+uc_EXPORTED int                                         ucTestGroup_run(ucTestGroup*);
 uc_EXPORTED void                                        ucTestGroup_set_name(ucTestGroup*, const char*);
 uc_EXPORTED void                                        ucTestGroup_set_setup(ucTestGroup*, ucTestGroup_TestFunc*);
 uc_EXPORTED void                                        ucTestGroup_set_test(ucTestGroup*, ucTestGroup_TestFunc**);
+uc_EXPORTED void                                        ucTestGroup_set_test_runner(ucTestGroup*, ucTestRunner*);
 uc_EXPORTED void                                        ucTestGroup_setup_test(ucTestGroup*, ucTestGroup_TestFunc *prior, ucTestGroup_TestFunc *after);
             struct                                      ucTestGroup {
             const char*                                 name;            
             ucTestGroup_TestFunc**                      test;
             ucTestGroup_TestFunc*                       setup;
             ucTestGroup_TestFunc*                       prior;
-            ucTestGroup_TestFunc*                       after; };
+            ucTestGroup_TestFunc*                       after;
+            ucTestRunner*                               test_runner; };
 
-typedef     void                                        (ucTest_PrintFunc)(const char *str, void *state);
-typedef     ucBool                                      (ucTest_ExitFunc)(void* state);
-uc_EXPORTED ucTestGroup**                               ucTest_get_groups(ucTest*);
-uc_EXPORTED const char*                                 ucTest_get_label(ucTest*);
-uc_EXPORTED ucTestState*                                ucTest_get_state(ucTest*);
-uc_EXPORTED ucTest*                                     ucTest_init(ucTest*, const char *label, ucTestGroup **groups);
-uc_EXPORTED ucTestErr                                   ucTest_run(ucTest*);
-uc_EXPORTED void                                        ucTest_set_exit_func(ucTest*, ucTest_ExitFunc *value);
-uc_EXPORTED void                                        ucTest_set_exit_state(ucTest*, void *value);
-uc_EXPORTED void                                        ucTest_set_print_func(ucTest*, ucTest_PrintFunc *value);
-uc_EXPORTED void                                        ucTest_set_print_state(ucTest*, void *value);
-            struct                                      ucTest {
-            const char*                                 label;
-            ucTestState                                 state;
-            ucTest_PrintFunc*                           print_func;
-            void*                                       print_state;
-            ucTest_ExitFunc*                            exit_func;
-            void*                                       exit_state;
-            ucTestGroup**                               groups; };
-
-uc_EXPORTED ucTestRunner*                               ucTestRunner_init(ucTestRunner*, const char *name, ucTestGroup **group);
+typedef     void                                        ucTestRunner_CloseFunc(void *state);
+typedef     void                                        ucTestRunner_PrintFunc(const char *format, va_list va, void *state);
+uc_EXPORTED void                                        ucTestRunner_inc_test_count(ucTestRunner*, ucBool test_passed);
+uc_EXPORTED ucTestRunner*                               ucTestRunner_instance;
+uc_EXPORTED void                                        ucTestRunner_print(ucTestRunner*, const char *format, va_list va);
+uc_EXPORTED void                                        ucTestRunner_run(ucTestRunner*);
+uc_EXPORTED void                                        ucTestRunner_set_close(ucTestRunner*, ucTestRunner_CloseFunc*);
+uc_EXPORTED void                                        ucTestRunner_set_print(ucTestRunner*, ucTestRunner_PrintFunc*);
             struct                                      ucTestRunner {
             const char*                                 name;
-            ucTestGroup**                               group; };
+            void*                                       state;
+            ucTestGroup***                              group; 
+            ucTestRunner_PrintFunc*                     print;
+            ucTestRunner_CloseFunc*                     close;
+            int                                         passed_test_count;
+            int                                         failed_test_count; };
 
 uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOpt;
 uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOptOwner;
@@ -141,7 +127,5 @@ uc_EXPORTED ucTestGroup*                                ucTestGroup_ucOpt;
 uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchOpt;
 uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchTok;
 uc_EXPORTED ucTestGroup*                                ucTestGroup_ucTok;
-
-uc_EXPORTED ucTest*                                     ucTests_get_test(void);
 
 #endif

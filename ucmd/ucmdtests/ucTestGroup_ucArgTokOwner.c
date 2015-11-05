@@ -14,5 +14,5 @@ static ucTestErr ucArgTokOwner_get_arg_returns_null(ucTestGroup *p) {
 }
 
 uc_TEST_GROUP(ucArgTokOwner, NULL,
-        ucArgTokOwner_get_arg_returns_first_arg,
-        ucArgTokOwner_get_arg_returns_null)
+    ucArgTokOwner_get_arg_returns_first_arg,
+    ucArgTokOwner_get_arg_returns_null)

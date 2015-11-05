@@ -66,7 +66,7 @@ ucTestErr ucTest_run(ucTest *p) {
     err = 0;
     for (; *groups; groups++) {
 
-        err = ucTestGroup_run(*groups, state);
+        err = ucTestGroup_run(*groups);
         if (err) {
 
             sprintf(str, "Group %d failed.\n", ucTestState_get_run_group_count(state));

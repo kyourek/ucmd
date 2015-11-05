@@ -19,16 +19,7 @@
     <ClCompile Include="..\..\..\ucmdtests\main.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTest.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestState.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTests.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOpt.c">
