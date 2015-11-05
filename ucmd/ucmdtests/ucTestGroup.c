@@ -22,14 +22,34 @@ static int after(ucTestGroup *p) {
         : 0;
 }
 
-ucTestGroup *ucTestGroup_init(ucTestGroup *p, const char *name, ucTestGroup_TestFunc *setup, ucTestGroup_TestFunc **test) {
+ucTestGroup *ucTestGroup_init(ucTestGroup *p) {
     assert(p);
-    p->name = name;
-    p->test = test;
-    p->setup = setup;
+    p->name = NULL;
+    p->test = NULL;
+    p->setup = NULL;
     p->prior = NULL;
     p->after = NULL;
     return p;
+}
+
+void ucTestGroup_set_name(ucTestGroup *p, const char *value) {
+    assert(p);
+    p->name = value;
+}
+
+const char *ucTestGroup_get_name(ucTestGroup *p) {
+    assert(p);
+    return p->name;
+}
+
+void ucTestGroup_set_setup(ucTestGroup *p, ucTestGroup_TestFunc *value) {
+    assert(p);
+    p->setup = value;
+}
+
+void ucTestGroup_set_test(ucTestGroup *p, ucTestGroup_TestFunc **value) {
+    assert(p);
+    p->test = value;
 }
 
 void ucTestGroup_setup_test(ucTestGroup *p, ucTestGroup_TestFunc *prior, ucTestGroup_TestFunc *after) {

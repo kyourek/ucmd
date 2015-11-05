@@ -46,3 +46,10 @@ void ucTestState_reset(ucTestState *p) {
     p->run_group_count = 0;
     p->run_group_test_count = 0;
 }
+
+ucTestRunner *ucTestRunner_init(ucTestRunner *p, const char *name, ucTestGroup **group) {
+    assert(p);
+    p->name = name;
+    p->group = group;
+    return p;
+}
