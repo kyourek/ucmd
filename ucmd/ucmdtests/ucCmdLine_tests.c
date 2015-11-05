@@ -4,21 +4,6 @@
 
 static ucCmdLine *subject;
 
-static ucTestErr before_each_test(ucTestGroup *p) {
-    subject = ucCmdLine_create();
-    assert(subject);
-    ucPASS();
-}
-
-static ucTestErr after_each_test(ucTestGroup *p) {
-    ucCmdLine_destroy(subject);
-    ucPASS();
-}
-
-static ucCmdLine *init_subject(void) {
-    return ucCmdLine_init(subject);
-}
-
 static ucCmdTok *parse_cmd(char *cmd) {
     ucCmdParser *cmd_parser = ucCmdParser_create();
     ucCmdTok *cmd_tok = ucCmdParser_parse(cmd_parser, cmd);
@@ -56,23 +41,34 @@ static ucBool handle_invalid_command_1(const char *invalid_command, void *state)
     return handle_invalid_command_1_return;
 }
 
-static ucTestErr ucCmdLine_get_cmd_tok_returns_cmd_tok(ucTestGroup *p) {
+uc_TEST(prior)
+    subject = ucCmdLine_create();
+    assert(subject);
+uc_PASS
+
+uc_TEST(after)
+    ucCmdLine_destroy(subject);
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
+
+uc_TEST(ucCmdLine_get_cmd_tok_returns_cmd_tok)
     ucCmdLine c;
     ucCmdTok *t = "token";
     c.cmd_tok = t;
     ucTRUE(t == ucCmdLine_get_cmd_tok(&c));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_cmd_tok_sets_cmd_tok(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_cmd_tok_sets_cmd_tok)
     ucCmdLine c;
     ucCmdTok *t = "cmd_tok";
     ucCmdLine_set_cmd_tok(&c, t);
     ucTRUE(t == c.cmd_tok);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_cmd_toks_returns_toks(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_cmd_toks_returns_toks)
     ucCmdLineToks toks = { 0 };
     ucCmdLine *cmd = subject;
     char c[30] = "cmd arg -s";
@@ -83,10 +79,9 @@ static ucTestErr ucCmdLine_get_cmd_toks_returns_toks(ucTestGroup *p) {
     ucTRUE(ucTok_equals(toks.cmd_tok, "cmd"));
     ucTRUE(ucTok_equals(toks.arg_tok, "arg"));
     ucTRUE(ucTok_equals(toks.switch_tok, "-s"));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_cmd_toks_sets_null_tok_values(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_cmd_toks_sets_null_tok_values)
     ucCmdLineToks toks = { 0 };
     ucCmdLine *cmd = subject;
     char c[12] = "command";
@@ -97,27 +92,23 @@ static ucTestErr ucCmdLine_get_cmd_toks_sets_null_tok_values(ucTestGroup *p) {
     ucTRUE(ucTok_equals(toks.cmd_tok, "command"));
     ucTRUE(NULL == toks.arg_tok);
     ucTRUE(NULL == toks.switch_tok);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null)
     ucTRUE(NULL == ucCmdLine_get_cmd_toks(subject, NULL));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_create_does_not_return_null(ucTestGroup *p) {
+uc_TEST(ucCmdLine_create_does_not_return_null)
     ucTRUE(NULL != subject);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_format_response_sets_response_string(ucTestGroup *p) {
+uc_TEST(ucCmdLine_format_response_sets_response_string)
     char expected[50];
     ucCmdLine *ptr = subject;
     ucCmdLine_format_response(ptr, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     sprintf(expected, "formatted %s %d %3.2f fin", "string", 10, 5.1234);
     ucTRUE(0 == strcmp(ptr->response, expected));
-    ucPASS();
-}
+uc_PASS
 
 static const char *ucCmdLine_format_response_va_sets_response_string_helper(ucCmdLine *p, const char *format, ...) {
     va_list arg_list;
@@ -128,7 +119,7 @@ static const char *ucCmdLine_format_response_va_sets_response_string_helper(ucCm
     return response;
 }
 
-static ucTestErr ucCmdLine_format_response_va_sets_response_string(ucTestGroup *p) {
+uc_TEST(ucCmdLine_format_response_va_sets_response_string)
     char expected[50];
     const char *actual;
     ucCmdLine *ptr = subject;
@@ -137,24 +128,21 @@ static ucTestErr ucCmdLine_format_response_va_sets_response_string(ucTestGroup *
     sprintf(expected, "This %d is %s formatted.", 1, "well");
     ucTRUE(0 == strcmp(actual, expected));
     ucTRUE(0 == strcmp(ptr->response, expected));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_transmit_sets_transmit(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_transmit_sets_transmit)
     ucCmdLine c;
     ucCmdLine_set_transmit(&c, transmit_1);
     ucTRUE(transmit_1 == c.transmit);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_transmit_returns_transmit(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_transmit_returns_transmit)
     ucCmdLine c;
     c.transmit = transmit_2;
     ucTRUE(transmit_2 == ucCmdLine_get_transmit(&c));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
+uc_TEST(ucCmdLine_respond_uses_transmit)
     ucCmdLine c;
     c.is_quiet = ucBool_false;
     c.transmit = transmit_1;
@@ -163,25 +151,21 @@ static ucTestErr ucCmdLine_respond_uses_transmit(ucTestGroup *p) {
     c.transmit = transmit_1;
     ucCmdLine_respond(&c, "expected response");
     ucTRUE(0 == strcmp(transmit_1_response, "expected response"));
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucCmdLine_get_is_canceled_returns_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_is_canceled_returns_value)
     ucCmdLine c;
     c.is_canceled = is_canceled_1;
     ucTRUE(is_canceled_1 == ucCmdLine_get_is_canceled(&c));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_is_canceled_sets_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_is_canceled_sets_value)
     ucCmdLine c;
     ucCmdLine_set_is_canceled(&c, is_canceled_2);
     ucTRUE(is_canceled_2 == c.is_canceled);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_is_canceled_calls_is_canceled(ucTestGroup *p) {
+uc_TEST(ucCmdLine_is_canceled_calls_is_canceled)
     ucCmdLine c;
     c.is_canceled = is_canceled_1;
 
@@ -190,11 +174,9 @@ static ucTestErr ucCmdLine_is_canceled_calls_is_canceled(ucTestGroup *p) {
 
     is_canceled_1_returned_value = ucBool_false;
     ucTRUE(ucBool_false == ucCmdLine_is_canceled(&c));
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucCmdLine_set_transmit_state_sets_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_transmit_state_sets_value)
     int state;
     ucCmdLine *ptr = subject;
     void *prev_value = ptr->transmit_state;
@@ -203,10 +185,9 @@ static ucTestErr ucCmdLine_set_transmit_state_sets_value(ucTestGroup *p) {
     ucTRUE(&state == ptr->transmit_state);
 
     ptr->transmit_state = prev_value;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_transmit_state_gets_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_transmit_state_gets_value)
     char *state = "state";
     ucCmdLine *ptr = subject;
     void *prev_value = ptr->transmit_state;
@@ -215,10 +196,9 @@ static ucTestErr ucCmdLine_get_transmit_state_gets_value(ucTestGroup *p) {
     ucTRUE(&state == ucCmdLine_get_transmit_state(ptr));
 
     ptr->transmit_state = prev_value;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
+uc_TEST(ucCmdLine_transmit_uses_state)
     double state;
     ucCmdLine *ptr = subject;
     ucCmdLine_TransmitFunc *prev_func = ptr->transmit;
@@ -233,10 +213,9 @@ static ucTestErr ucCmdLine_transmit_uses_state(ucTestGroup *p) {
 
     ptr->transmit = prev_func;
     ptr->transmit_state = prev_state;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_is_canceled_state_sets_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_is_canceled_state_sets_value)
     int state;
     ucCmdLine *ptr = subject;
     void *prev_value = ptr->is_canceled_state;
@@ -245,10 +224,9 @@ static ucTestErr ucCmdLine_set_is_canceled_state_sets_value(ucTestGroup *p) {
     ucTRUE(&state == ptr->is_canceled_state);
 
     ptr->is_canceled_state = prev_value;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_is_canceled_state_returns_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_is_canceled_state_returns_value)
     char *state = "st";
     ucCmdLine *ptr = subject;
     void *prev_value = ptr->is_canceled_state;
@@ -257,10 +235,9 @@ static ucTestErr ucCmdLine_get_is_canceled_state_returns_value(ucTestGroup *p) {
     ucTRUE(&state == ucCmdLine_get_is_canceled_state(ptr));
 
     ptr->is_canceled_state = prev_value;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_is_canceled_uses_state(ucTestGroup *p) {
+uc_TEST(ucCmdLine_is_canceled_uses_state)
     double state;
     ucCmdLine *ptr = subject;
     void *prev_value = ptr->is_canceled_state;
@@ -273,10 +250,9 @@ static ucTestErr ucCmdLine_is_canceled_uses_state(ucTestGroup *p) {
     ucTRUE(&state == is_canceled_1_state);
 
     ptr->is_canceled_state = prev_value;
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_is_quiet_sets_value)
     ucCmdLine *ptr = subject;
     
     ucBool prev_val = ucCmdLine_get_is_quiet(ptr);
@@ -287,11 +263,9 @@ static ucTestErr ucCmdLine_set_is_quiet_sets_value(ucTestGroup *p) {
 
     ucCmdLine_set_is_quiet(ptr, prev_val);
     ucTRUE(ucCmdLine_get_is_quiet(ptr) == prev_val);
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
+uc_TEST(ucCmdLine_respond_does_nothing_if_is_quiet)
     ucCmdLine *ptr = subject;
     ucBool pre_val = ucCmdLine_get_is_quiet(ptr);
 
@@ -303,10 +277,9 @@ static ucTestErr ucCmdLine_respond_does_nothing_if_is_quiet(ucTestGroup *p) {
     ucTRUE(NULL == transmit_1_response);
 
     ucCmdLine_set_is_quiet(ptr, pre_val);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup *p) {
+uc_TEST(ucCmdLine_set_handle_invalid_command_sets_callback)
     int state;
     ucBool ret_val;
     ucCmdLine *ptr = subject;
@@ -318,25 +291,19 @@ static ucTestErr ucCmdLine_set_handle_invalid_command_sets_callback(ucTestGroup 
     ucTRUE(handle_invalid_command_1_state == &state);
     ucTRUE(0 == strcmp("n-a", handle_invalid_command_1_invalid_command));
     ucTRUE(ucBool_true == ret_val);
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucCmdLine_get_response_size_max_returns_size(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_response_size_max_returns_size)
     ucCmdLine *ptr = subject;
     size_t size = ucCmdLine_get_response_size_max(ptr);
     ucTRUE(ucCmdLine_RESPONSE_SIZE == size);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_response_terminator_is_initially_null(ucTestGroup *p) {
-    ucCmdLine *subject = init_subject();
+uc_TEST(ucCmdLine_get_response_terminator_is_initially_null)
     ucTRUE(NULL == ucCmdLine_get_response_terminator(subject));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_response_terminator_returns_set_value(ucTestGroup *p) {
-    ucCmdLine *subject = init_subject();
+uc_TEST(ucCmdLine_get_response_terminator_returns_set_value)
     const char *expected, *actual, *values[] = { "EOT", "\x1b", "We're DONE!" };
     int i;
     for (i = 0; i < 3; i++) {
@@ -346,17 +313,13 @@ static ucTestErr ucCmdLine_get_response_terminator_returns_set_value(ucTestGroup
         ucTRUE(0 == strcmp(expected, actual));
         ucTRUE(expected == actual);
     }
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_command_acknowledgment_is_initially_null(ucTestGroup *p) {
-    ucCmdLine *subject = init_subject();
+uc_TEST(ucCmdLine_get_command_acknowledgment_is_initially_null)
     ucTRUE(NULL == ucCmdLine_get_command_acknowledgment(subject));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_command_acknoledgment_returns_set_value(ucTestGroup *p) {
-    ucCmdLine *subject = init_subject();
+uc_TEST(ucCmdLine_get_command_acknoledgment_returns_set_value)
     const char *expected, *actual, *values[] = { "Got it!", "\x1b", "***" };
     int i;
     for (i = 0; i < 3; i++) {
@@ -366,114 +329,104 @@ static ucTestErr ucCmdLine_get_command_acknoledgment_returns_set_value(ucTestGro
         ucTRUE(0 == strcmp(expected, actual));
         ucTRUE(expected == actual);
     }
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_arg_returns_arg_tok(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_arg_returns_arg_tok)
     char c[20] = "cmd argz -s argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(uc_STR_EQ("argz", ucCmdLine_get_arg(subject)));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_arg_returns_null_if_no_arg_exists(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_arg_returns_null_if_no_arg_exists)
     char c[15] = "cmd -s argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(NULL == ucCmdLine_get_arg(subject));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_switch_returns_switch_tok(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_switch_returns_switch_tok)
     char c[20] = "cmd argz -s argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(uc_STR_EQ("-s", ucCmdLine_get_switch(subject)));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_switch_returns_null_if_no_switch_exists(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_switch_returns_null_if_no_switch_exists)
     char c[20] = "cmd argz argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(NULL == ucCmdLine_get_switch(subject));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_switch_arg_returns_arg_tok_of_switch(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_switch_arg_returns_arg_tok_of_switch)
     char c[30] = "cmd argz -s1 argb -s2 argc";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(uc_STR_EQ("argc", ucCmdLine_get_switch_arg(subject, "-s2")));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist)
     char c[30] = "cmd argz -s1 argb -s2";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(NULL == ucCmdLine_get_switch_arg(subject, "-s2"));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist(ucTestGroup *p) {
+uc_TEST(ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist)
     char c[30] = "cmd argz -s1 argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(NULL == ucCmdLine_get_switch_arg(subject, "-s2"));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_find_switch_returns_switch_if_it_exists(ucTestGroup *p) {
+uc_TEST(ucCmdLine_find_switch_returns_switch_if_it_exists)
     char c[30] = "cmd argz -s1 argb -s2 c";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(ucTok_equals(ucCmdLine_find_switch(subject, "-s2"), "-s2"));
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr ucCmdLine_find_switch_returns_null_if_it_does_not_exist(ucTestGroup *p) {
+uc_TEST(ucCmdLine_find_switch_returns_null_if_it_does_not_exist)
     char c[30] = "cmd argz -s1 argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
     ucTRUE(NULL == ucCmdLine_find_switch(subject, "-s2"));
-    ucPASS();
-}
+uc_PASS
 
-ucTestGroup *ucCmdLine_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdLine_create_does_not_return_null,
-        ucCmdLine_find_switch_returns_null_if_it_does_not_exist,
-        ucCmdLine_find_switch_returns_switch_if_it_exists,
-        ucCmdLine_format_response_sets_response_string,
-        ucCmdLine_format_response_va_sets_response_string,
-        ucCmdLine_get_arg_returns_arg_tok,
-        ucCmdLine_get_arg_returns_null_if_no_arg_exists,
-        ucCmdLine_get_cmd_toks_returns_toks,
-        ucCmdLine_get_cmd_toks_sets_null_tok_values,
-        ucCmdLine_set_cmd_tok_sets_cmd_tok,
-        ucCmdLine_get_cmd_tok_returns_cmd_tok,
-        ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null,
-        ucCmdLine_get_switch_arg_returns_arg_tok_of_switch,
-        ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist,
-        ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist,
-        ucCmdLine_get_switch_returns_null_if_no_switch_exists,
-        ucCmdLine_get_switch_returns_switch_tok,
-        ucCmdLine_set_transmit_sets_transmit,
-        ucCmdLine_get_transmit_returns_transmit,
-        ucCmdLine_respond_uses_transmit,
-        ucCmdLine_get_is_canceled_returns_value,
-        ucCmdLine_set_is_canceled_sets_value,
-        ucCmdLine_is_canceled_calls_is_canceled,
-        ucCmdLine_set_transmit_state_sets_value,
-        ucCmdLine_get_transmit_state_gets_value,
-        ucCmdLine_transmit_uses_state,
-        ucCmdLine_set_is_canceled_state_sets_value,
-        ucCmdLine_get_is_canceled_state_returns_value,
-        ucCmdLine_is_canceled_uses_state,
-        ucCmdLine_set_is_quiet_sets_value,
-        ucCmdLine_respond_does_nothing_if_is_quiet,
-        ucCmdLine_set_handle_invalid_command_sets_callback,
-        ucCmdLine_get_response_size_max_returns_size,
-        ucCmdLine_get_response_terminator_is_initially_null,
-        ucCmdLine_get_response_terminator_returns_set_value,
-        ucCmdLine_get_command_acknowledgment_is_initially_null,
-        ucCmdLine_get_command_acknoledgment_returns_set_value,
-        NULL
-    };
+uc_TEST(ucCmdLine_get_switch_arg_d_returns_argument_as_integer)
+    char c[30] = "cmd argz -s1 argb -s2 42";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(42 == ucCmdLine_get_switch_arg_d(subject, "-s2", -1));
+uc_PASS
 
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+uc_TEST_GROUP(ucCmdLine, setup,
+    ucCmdLine_create_does_not_return_null,
+    ucCmdLine_find_switch_returns_null_if_it_does_not_exist,
+    ucCmdLine_find_switch_returns_switch_if_it_exists,
+    ucCmdLine_format_response_sets_response_string,
+    ucCmdLine_format_response_va_sets_response_string,
+    ucCmdLine_get_arg_returns_arg_tok,
+    ucCmdLine_get_arg_returns_null_if_no_arg_exists,
+    ucCmdLine_get_cmd_toks_returns_toks,
+    ucCmdLine_get_cmd_toks_sets_null_tok_values,
+    ucCmdLine_set_cmd_tok_sets_cmd_tok,
+    ucCmdLine_get_cmd_tok_returns_cmd_tok,
+    ucCmdLine_get_cmd_toks_returns_null_if_buffer_is_null,
+    ucCmdLine_get_switch_arg_returns_arg_tok_of_switch,
+    ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist,
+    ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist,
+    ucCmdLine_get_switch_arg_d_returns_argument_as_integer,
+    ucCmdLine_get_switch_returns_null_if_no_switch_exists,
+    ucCmdLine_get_switch_returns_switch_tok,
+    ucCmdLine_set_transmit_sets_transmit,
+    ucCmdLine_get_transmit_returns_transmit,
+    ucCmdLine_respond_uses_transmit,
+    ucCmdLine_get_is_canceled_returns_value,
+    ucCmdLine_set_is_canceled_sets_value,
+    ucCmdLine_is_canceled_calls_is_canceled,
+    ucCmdLine_set_transmit_state_sets_value,
+    ucCmdLine_get_transmit_state_gets_value,
+    ucCmdLine_transmit_uses_state,
+    ucCmdLine_set_is_canceled_state_sets_value,
+    ucCmdLine_get_is_canceled_state_returns_value,
+    ucCmdLine_is_canceled_uses_state,
+    ucCmdLine_set_is_quiet_sets_value,
+    ucCmdLine_respond_does_nothing_if_is_quiet,
+    ucCmdLine_set_handle_invalid_command_sets_callback,
+    ucCmdLine_get_response_size_max_returns_size,
+    ucCmdLine_get_response_terminator_is_initially_null,
+    ucCmdLine_get_response_terminator_returns_set_value,
+    ucCmdLine_get_command_acknowledgment_is_initially_null,
+    ucCmdLine_get_command_acknoledgment_returns_set_value)

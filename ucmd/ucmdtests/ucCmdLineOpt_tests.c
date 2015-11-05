@@ -2,16 +2,18 @@
 
 static ucCmdLine *cmd_line;
 
-static ucTestErr before_each_test(ucTestGroup *p) {
+uc_TEST(prior)
     cmd_line = ucCmdLine_create();
     assert(cmd_line);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr after_each_test(ucTestGroup *p) {
+uc_TEST(after)
     ucCmdLine_destroy(cmd_line);
-    ucPASS();
-}
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
 
 static const char *transmit_func_one_response = NULL;
 static void transmit_func_one(const char *response, void *state) {
@@ -312,23 +314,16 @@ static ucTestErr ucCmdLineOpt_process_responds_correctly_if_no_work_exists(ucTes
     ucPASS();
 }
 
-ucTestGroup *ucCmdLineOpt_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdLineOpt_create_creates_structure,
-        ucCmdLineOpt_process_calls_func,
-        ucCmdLineOpt_create_creates_different_instances,
-        ucCmdLineOpt_destroy_releases_instance,
-        ucCmdLineOpt_destroy_chain_releases_all_instances,
-        ucCmdLineOpt_send_usage_responds_with_usage_string,
-        ucCmdLineOpt_format_validation_err_catches_required_arg,
-        ucCmdLineOpt_format_validation_err_catches_required_switch,
-        ucCmdLineOpt_process_handles_invalid_commands,
-        ucCmdLineOpt_process_does_not_handle_invalid_command,
-        ucCmdLineOpt_process_responds_correctly_if_no_work_exists,
-        ucCmdLineOpt_send_usage__uses_boolean_argument_name,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+uc_TEST_GROUP(ucCmdLineOpt, setup,
+    ucCmdLineOpt_create_creates_structure,
+    ucCmdLineOpt_process_calls_func,
+    ucCmdLineOpt_create_creates_different_instances,
+    ucCmdLineOpt_destroy_releases_instance,
+    ucCmdLineOpt_destroy_chain_releases_all_instances,
+    ucCmdLineOpt_send_usage_responds_with_usage_string,
+    ucCmdLineOpt_format_validation_err_catches_required_arg,
+    ucCmdLineOpt_format_validation_err_catches_required_switch,
+    ucCmdLineOpt_process_handles_invalid_commands,
+    ucCmdLineOpt_process_does_not_handle_invalid_command,
+    ucCmdLineOpt_process_responds_correctly_if_no_work_exists,
+    ucCmdLineOpt_send_usage__uses_boolean_argument_name)

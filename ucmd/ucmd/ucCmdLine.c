@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "ucmd_internal.h"
 
 ucInstance_INIT(ucCmdLine, ucCmdLine_COUNT);
@@ -222,6 +223,16 @@ ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine *p, const char *switch_name) {
         }
     }
     return NULL;
+}
+
+int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value) {
+    ucArgTok *arg_tok = ucCmdLine_get_switch_arg(p, switch_name);
+    if (arg_tok) {
+        if (ucTok_is_integer(arg_tok)) {
+            return atoi(arg_tok);
+        }
+    }
+    return default_value;
 }
 
 ucSwitchTok *ucCmdLine_find_switch(ucCmdLine *p, const char *switch_name) {

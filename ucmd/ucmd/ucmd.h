@@ -85,99 +85,105 @@
 #define ucCmdLineApp_COUNT 1
 #endif
 
-/* Sets the size of the command buffer when using
-   the command-line application framework. All
-   entered commands must have a size equal to or
-   less than this buffer's size. */
 #ifndef ucCmdLineApp_CMD_STR_SIZE
+/** @brief The size of the command buffer when using the command-line application framework.
+ *
+ *  All entered commands must have a size equal to or less than this buffer's size.
+ */
 #define ucCmdLineApp_CMD_STR_SIZE 200
 #endif
 
-/* Sets the size of the command response buffer.
-   All response strings must have a size equal to
-   or less than the size of this buffer to avoid
-   truncation. */
 #ifndef ucCmdLine_RESPONSE_SIZE
+/** @brief The size of the command response buffer.
+ *
+ *  All response strings must have a size equal to or less than the size of this buffer to 
+ *  avoid truncation.
+ */
 #define ucCmdLine_RESPONSE_SIZE 200
 #endif
 
-/* Sets the number of available command options.
-   The number of created command options must be
-   equal to or less than this number. */
 #ifndef ucCmdLineOpt_COUNT
+/** @brief The number of command options that may be created.
+ *
+ *  The number of created command options must be equal to or less than this number.
+ */
 #define ucCmdLineOpt_COUNT 10
 #endif
 
-/* Sets the number of available switch options.
-   The number of created switch options must be
-   equal to or less than this number. */
 #ifndef ucSwitchOpt_COUNT
+/** @brief The number of switch options that may be created.
+ *
+ *  The number of created switch options must be equal to or less than this number.
+ */
 #define ucSwitchOpt_COUNT 50
 #endif
 
-/* Sets the number of available argument options.
-   This is the total number of options available
-   to commands and switches, combined. */
 #ifndef ucArgOpt_COUNT
+/** @brief The number of argument options that may be created.
+ *
+ *  This is the total number of options available to commands and switches, combined.
+ */
 #define ucArgOpt_COUNT 50
 #endif
 
-/* Sets the maximum expected length of a single
-   token in a command line. */
 #ifndef ucTok_LENGTH_MAX
+/** @brief The maximum expected length of a single token in a command line.
+ *
+ */
 #define ucTok_LENGTH_MAX ucCmdLineApp_CMD_STR_SIZE
 #endif
 
 #ifndef ucTok_BOOLEAN_TRUE
+/** @brief Strings that are evaluated as truthy boolean values.
+ *
+ *  Any of these strings may be entered in a command to satisfy a boolean argument.
+ *  When entered, each will be evaluated as true.
+ */
 #define ucTok_BOOLEAN_TRUE "1", "on", "yes", "true"
 #endif
 
 #ifndef ucTok_BOOLEAN_FALSE
+/** @brief Strings that are evaluated as falsey boolean values.
+ *
+ *  Any of these strings may be entered in a command to satisfy a boolean argument.
+ *  When entered, each will be evaluated as false.
+ */
 #define ucTok_BOOLEAN_FALSE "0", "off", "no", "false"
 #endif
 
-#ifndef ucArgOpt_NUMERIC
-/** @brief Defines the type of numeric arguments.
- *
- *  When numeric argument options are created, this type is used when
- *  dealing with the options' data (such as minimum value and maximum
- *  value). Unless space or speed is critical, double is a good choice.
- */
-#define ucArgOpt_NUMERIC double
-#endif
-
-/* Include this def when using the library with another
-   program on Windows.
-   Exported functions will be decorated with dllimport
-   to make them available to external programs. */
 #ifdef uc_DECLSPEC_DLLIMPORT
+/** @brief Include this def when using the library with another program on Windows.
+ *  
+ *  When defined, exported functions will be decorated with dllimport to make them
+ *  available to external programs. 
+ */
 #define uc_EXPORTED uc_EXTERN_C __declspec(dllimport)
 #endif
 
-/* Include this def when compiling this program on
-   Windows.
-   Exported functions will be decorated with dllexport
-   to make them available to external programs. */
 #ifdef uc_DECLSPEC_DLLEXPORT
+/** @brief Include this def when compiling this program on Windows.
+ *
+ *  When defined, exported functions will be decorated with dllexport to make them
+ *  available to external programs.
+ */
 #define uc_EXPORTED uc_EXTERN_C __declspec(dllexport)
 #endif
 
-/* Prepend extern "C" if we're in a C++
-   compiler. */
 #ifdef __cplusplus
+/** Prepend extern "C" if a C++ compiler is used. */
 #define uc_EXTERN_C extern "C"
 #else
+/** Empty if a C compiler is used. */
 #define uc_EXTERN_C
 #endif
 
-/* Default to setting uc_EXPORTED to the result
-   of our extern "C" check. */
 #ifndef uc_EXPORTED
+/** Default to setting uc_EXPORTED to the result of our extern "C" check. */
 #define uc_EXPORTED uc_EXTERN_C
 #endif
 
-/* Define NULL, if it hasn't been defined. */
 #ifndef NULL
+/** Define NULL, if it hasn't been defined already. */
 #define NULL ((void*)0)
 #endif
 
@@ -187,19 +193,18 @@
  *  integer representations of boolean values with the more familiar "true" and
  *  "false" values. 
  */
-typedef enum ucBool {
+typedef enum {
     ucBool_false = 0,               /**< Falsey value. */
     ucBool_true = !ucBool_false     /**< Truthy value. */
 } ucBool;
 
-/*
- * Summary:
- *   Base structure for tokenized values in a command.
+/** @brief Base type for tokenized values in a command.
+ *
  */
 typedef const char ucTok;
 
 /** @brief Gets the length of the token.
- *  @returns The number of characters in the token. 
+ *  @returns The number of characters in the token.
  */
 uc_EXPORTED int ucTok_get_length(ucTok*);
 
@@ -510,6 +515,8 @@ uc_EXPORTED ucArgTok *ucCmdLine_get_arg(ucCmdLine*);
 uc_EXPORTED ucSwitchTok *ucCmdLine_get_switch(ucCmdLine*);
 
 uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
+uc_EXPORTED int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value);
+
 
 uc_EXPORTED ucSwitchTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
 
@@ -756,7 +763,7 @@ uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt*);
  * Returns:
  *   The minimum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC ucArgOpt_get_numeric_min(ucArgOpt*);
+uc_EXPORTED double ucArgOpt_get_numeric_min(ucArgOpt*);
 
 /*
  * Summary:
@@ -764,7 +771,7 @@ uc_EXPORTED ucArgOpt_NUMERIC ucArgOpt_get_numeric_min(ucArgOpt*);
  * Returns:
  *   The maximum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC ucArgOpt_get_numeric_max(ucArgOpt*);
+uc_EXPORTED double ucArgOpt_get_numeric_max(ucArgOpt*);
 
 /*
  * Summary:
@@ -808,9 +815,9 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required(const char *name, const char *des
 
 uc_EXPORTED ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next);
 uc_EXPORTED ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_integer(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next);
 
 /*
  * Summary:
@@ -824,7 +831,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOp
  * Returns:
  *   A pointer to the newly created argument option.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next);
 
 /*
  * Summary:
@@ -838,7 +845,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC
  * Returns:
  *   A pointer to the newly created argument option.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max);
 
 /*
  * Summary:
@@ -853,7 +860,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min
  *   A pointer to the newly created argument option. The option will have its
  *   'required' property set to true.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next);
 
 /*
  * Summary:

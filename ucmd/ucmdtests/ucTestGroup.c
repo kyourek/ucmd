@@ -1,96 +1,65 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
-ucTestErr ucTestGroup_before_all_tests(ucTestGroup *p) {
-    if (NULL == p) return -1;
-    if (NULL == p->before_all_tests) return -2;
-    return p->before_all_tests(p);
+static int setup(ucTestGroup *p) {
+    assert(p);
+    return p->setup
+        ? p->setup(p)
+        : 0;
 }
 
-ucTestErr ucTestGroup_base_before_all_tests(ucTestGroup *p) {
-    ucPASS();
+static int prior(ucTestGroup *p) {
+    assert(p);
+    return p->prior
+        ? p->prior(p)
+        : 0;
 }
 
-ucTestErr ucTestGroup_after_all_tests(ucTestGroup *p) {
-    if (NULL == p) return -1;
-    if (NULL == p->after_all_tests) return -2;
-    return p->after_all_tests(p);
+static int after(ucTestGroup *p) {
+    assert(p);
+    return p->after
+        ? p->after(p)
+        : 0;
 }
 
-ucTestErr ucTestGroup_base_after_all_tests(ucTestGroup *p) {
-    ucPASS();
-}
-
-ucTestErr ucTestGroup_before_each_test(ucTestGroup *p) {
-    if (NULL == p) return -1;
-    if (NULL == p->before_each_test) return -2;
-    return p->before_each_test(p);
-}
-
-ucTestErr ucTestGroup_base_before_each_test(ucTestGroup *p) {
-    ucPASS();
-}
-
-ucTestErr ucTestGroup_after_each_test(ucTestGroup *p) {
-    if (NULL == p) return -1;
-    if (NULL == p->after_each_test) return -2;
-    return p->after_each_test(p);
-}
-
-ucTestErr ucTestGroup_base_after_each_test(ucTestGroup *p) {
-    ucPASS();
-}
-
-ucTestGroup_TestFunc **ucTestGroup_get_tests(ucTestGroup *p) {
-    if (NULL == p) return NULL;
-    return p->tests;
-}
-
-ucTestGroup *ucTestGroup_init(
-    ucTestGroup *p, 
-    ucTestGroup_CallbackFunc *before_all_tests, 
-    ucTestGroup_CallbackFunc *after_all_tests, 
-    ucTestGroup_CallbackFunc *before_each_test, 
-    ucTestGroup_CallbackFunc *after_each_test,
-    ucTestGroup_TestFunc **tests
-) {
-    static ucTestGroup_TestFunc *base_tests[] = { NULL };
-
-    if (NULL == p) return NULL;
-
-    p->tests = NULL == tests ? base_tests : tests;
-    p->before_all_tests = NULL == before_all_tests ? ucTestGroup_base_before_all_tests : before_all_tests;
-    p->after_all_tests = NULL == after_all_tests ? ucTestGroup_base_after_all_tests : after_all_tests;
-    p->before_each_test = NULL == before_each_test ? ucTestGroup_base_before_each_test : before_each_test;
-    p->after_each_test = NULL == after_each_test ? ucTestGroup_base_after_each_test : after_each_test;
-
+ucTestGroup *ucTestGroup_init(ucTestGroup *p, const char *name, ucTestGroup_TestFunc *setup, ucTestGroup_TestFunc **test) {
+    assert(p);
+    p->name = name;
+    p->test = test;
+    p->setup = setup;
+    p->prior = NULL;
+    p->after = NULL;
     return p;
 }
 
+void ucTestGroup_setup_test(ucTestGroup *p, ucTestGroup_TestFunc *prior, ucTestGroup_TestFunc *after) {
+    assert(p);
+    p->prior = prior;
+    p->after = after;
+}
+
 ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
-    
     ucTestErr err, callback_err;
     ucTestGroup_TestFunc **tests;
 
-    if (NULL == p) return -1;
+    assert(p);
 
-    tests = ucTestGroup_get_tests(p);
-    if (NULL == tests) return -2;
+    tests = p->test;
+
+    callback_err = setup(p);
+    if (callback_err) return callback_err;
 
     ucTestState_set_run_group_test_count(state, 0);
-
-    callback_err = ucTestGroup_before_all_tests(p);
-    if (callback_err) return callback_err;
 
     err = 0;
     for (; *tests; tests++) {
 
-        callback_err = ucTestGroup_before_each_test(p);
+        callback_err = prior(p);
         if (callback_err) return callback_err;
 
         err = (*tests)(p);
 
-        callback_err = ucTestGroup_after_each_test(p);
+        callback_err = after(p);
         if (callback_err) return callback_err;
 
         if (err) break;
@@ -99,12 +68,9 @@ ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
         ucTestState_set_run_group_test_count(state, ucTestState_get_run_group_test_count(state) + 1);
     }
 
-    callback_err = ucTestGroup_after_all_tests(p);
-    if (callback_err) return callback_err;
-
     if (err) return err;
 
     ucTestState_set_run_group_count(state, ucTestState_get_run_group_count(state) + 1);
 
-    ucPASS();
+    return 0;
 }

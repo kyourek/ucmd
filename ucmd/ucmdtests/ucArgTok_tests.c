@@ -50,19 +50,12 @@ static ucTestErr ucArgTok_contains__returns_false_when_not_contained(ucTestGroup
     ucPASS();
 }
 
-ucTestGroup *ucArgTok_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucArgTok_get_next__returns_next,
-        ucArgTok_count__counts_arguments,
-        ucArgTok_find__finds_argument,
-        ucArgTok_find__returns_null_if_no_argument_match,
-        ucArgTok_contains__returns_true_when_contained,
-        ucArgTok_contains__returns_false_when_not_contained,
-        ucArgTok_get_next__returns_null_when_followed_by_switch,
-        ucArgTok_get_next__returns_null_when_followed_by_terminator,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucArgTok, NULL,
+    ucArgTok_get_next__returns_next,
+    ucArgTok_count__counts_arguments,
+    ucArgTok_find__finds_argument,
+    ucArgTok_find__returns_null_if_no_argument_match,
+    ucArgTok_contains__returns_true_when_contained,
+    ucArgTok_contains__returns_false_when_not_contained,
+    ucArgTok_get_next__returns_null_when_followed_by_switch,
+    ucArgTok_get_next__returns_null_when_followed_by_terminator)

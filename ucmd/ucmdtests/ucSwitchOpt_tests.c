@@ -3,16 +3,18 @@
 
 static ucCmdLine *cmd_line;
 
-static ucTestErr before_each_test(ucTestGroup *p) {
+uc_TEST(prior)
     cmd_line = ucCmdLine_create();
     assert(cmd_line);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr after_each_test(ucTestGroup *p) {
+uc_TEST(after)
     ucCmdLine_destroy(cmd_line);
-    ucPASS();
-}
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
 
 static ucTestErr ucSwitchOpt_get_next_returns_next(ucTestGroup *p) {
     ucSwitchOpt o1;
@@ -179,20 +181,13 @@ static ucTestErr ucSwitchOpt_format_validation_err_allows_multiple_arguments(ucT
     ucPASS();
 }
 
-ucTestGroup *ucSwitchOpt_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucSwitchOpt_get_next_returns_next,
-        ucSwitchOpt_create_creates_switch_opt,
-        ucSwitchOpt_create_required_creates_switch_opt,
-        ucSwitchOpt_create_creates_different_instances,
-        ucSwitchOpt_destroy_releases_instance,
-        ucSwitchOpt_destroy_chain_releases_all_instances,
-        ucSwitchOpt_format_validation_err_catches_required_switch,
-        ucSwitchOpt_format_validation_err_catches_required_arg,
-        ucSwitchOpt_format_validation_err_allows_multiple_arguments,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+uc_TEST_GROUP(ucSwitchOpt, setup,
+    ucSwitchOpt_get_next_returns_next,
+    ucSwitchOpt_create_creates_switch_opt,
+    ucSwitchOpt_create_required_creates_switch_opt,
+    ucSwitchOpt_create_creates_different_instances,
+    ucSwitchOpt_destroy_releases_instance,
+    ucSwitchOpt_destroy_chain_releases_all_instances,
+    ucSwitchOpt_format_validation_err_catches_required_switch,
+    ucSwitchOpt_format_validation_err_catches_required_arg,
+    ucSwitchOpt_format_validation_err_allows_multiple_arguments)

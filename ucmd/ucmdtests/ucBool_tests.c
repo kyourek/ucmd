@@ -39,15 +39,8 @@ static ucTestErr uc_false_is_opposite_of_uc_true(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucBool_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        uc_true_causes_if_statement,
-        uc_false_avoids_if_statement,
-        uc_true_is_opposite_of_uc_false,
-        uc_false_is_opposite_of_uc_true,
-        NULL
-    };
-    
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucBool, NULL,
+    uc_true_causes_if_statement,
+    uc_false_avoids_if_statement,
+    uc_true_is_opposite_of_uc_false,
+    uc_false_is_opposite_of_uc_true)

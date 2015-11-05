@@ -40,14 +40,7 @@ static ucTestErr ucCmdLineToks_get_switch_tok_returns_value(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucCmdLineToks_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdLineToks_get_cmd_tok_returns_value,
-        ucCmdLineToks_get_arg_tok_returns_value,
-        ucCmdLineToks_get_switch_tok_returns_value,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucCmdLineToks, NULL,
+    ucCmdLineToks_get_cmd_tok_returns_value,
+    ucCmdLineToks_get_arg_tok_returns_value,
+    ucCmdLineToks_get_switch_tok_returns_value)

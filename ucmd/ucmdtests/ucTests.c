@@ -27,21 +27,21 @@ static ucTestGroup **ucTests_get_groups_va(ucTestGroup *group, ...) {
 
 static ucTestGroup **ucTests_get_groups(void) {
     return ucTests_get_groups_va(
-        ucArgOpt_tests_get_group(),
-        ucArgOptOwner_tests_get_group(),
-        ucArgTokOwner_tests_get_group(),
-        ucArgTok_tests_get_group(),
-        ucBool_tests_get_group(),
-        ucCmdParser_tests_get_group(),
-        ucCmdTok_tests_get_group(),
-        ucOpt_tests_get_group(),
-        ucSwitchOpt_tests_get_group(),
-        ucSwitchTok_tests_get_group(),
-        ucTok_tests_get_group(),
-        ucCmdLineApp_tests_get_group(),
-        ucCmdLineOpt_tests_get_group(),
-        ucCmdLine_tests_get_group(),
-        ucCmdLineToks_tests_get_group(),
+        ucTestGroup_ucArgOpt(),
+        ucTestGroup_ucArgOptOwner(),
+        ucTestGroup_ucArgTokOwner(),
+        ucTestGroup_ucArgTok(),
+        ucTestGroup_ucBool(),
+        ucTestGroup_ucCmdParser(),
+        ucTestGroup_ucCmdTok(),
+        ucTestGroup_ucOpt(),
+        ucTestGroup_ucSwitchOpt(),
+        ucTestGroup_ucSwitchTok(),
+        ucTestGroup_ucTok(),
+        ucTestGroup_ucCmdLineApp(),
+        ucTestGroup_ucCmdLineOpt(),
+        ucTestGroup_ucCmdLine(),
+        ucTestGroup_ucCmdLineToks(),
         NULL
     );
 }

@@ -7,7 +7,7 @@ static const char *numeric_arg_name = "<numeric>";
 
 ucInstance_INIT(ucArgOpt, ucArgOpt_COUNT);
 
-static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, double numeric_min, double numeric_max, ucArgOpt *next) {
     return ucArgOpt_init(
         ucInstance_create(), 
         name, 
@@ -209,12 +209,12 @@ ucBool ucArgOpt_is_integer(ucArgOpt *p) {
     return p->is_integer;
 }
 
-ucArgOpt_NUMERIC ucArgOpt_get_numeric_min(ucArgOpt *p) {
+double ucArgOpt_get_numeric_min(ucArgOpt *p) {
     assert(p);
     return p->numeric_min;
 }
 
-ucArgOpt_NUMERIC ucArgOpt_get_numeric_max(ucArgOpt* p) {
+double ucArgOpt_get_numeric_max(ucArgOpt* p) {
     assert(p);
     return p->numeric_max;
 }
@@ -224,7 +224,7 @@ ucArgOpt *ucArgOpt_get_next(ucArgOpt* p) {
     return p->next;
 }
 
-ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_init(ucArgOpt *p, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, double numeric_min, double numeric_max, ucArgOpt *next) {
     assert(p);
     assert(ucOpt_init((ucOpt*)p, name, desc, is_required));
 
@@ -260,27 +260,27 @@ ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next) {
     return create(boolean_arg_name, desc, ucBool_true, 0, 1, ucBool_true, ucBool_false, ucBool_false, 0, 0, next);
 }
 
-ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_create_numeric(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next) {
     return create(numeric_arg_name, desc, ucBool_false, 0, 1, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, next);
 }
 
-ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max) {
+ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max) {
     return create(numeric_arg_name, desc, min_tok_count > 0 ? ucBool_true : ucBool_false, min_tok_count, max_tok_count, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, NULL);
 }
 
-ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next) {
     return create(numeric_arg_name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_true, ucBool_false, numeric_min, numeric_max, next);
 }
 
-ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_create_integer(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next) {
     return create(integer_arg_name, desc, ucBool_false, 0, 1, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, next);
 }
 
-ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max) {
+ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, double numeric_min, double numeric_max) {
     return create(integer_arg_name, desc, min_tok_count > 0 ? ucBool_true : ucBool_false, min_tok_count, max_tok_count, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, NULL);
 }
 
-ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next) {
+ucArgOpt *ucArgOpt_create_required_integer(const char *desc, double numeric_min, double numeric_max, ucArgOpt *next) {
     return create(integer_arg_name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, next);
 }
 

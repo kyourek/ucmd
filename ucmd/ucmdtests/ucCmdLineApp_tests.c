@@ -12,17 +12,19 @@ static char *receive_1(char *buf, size_t buf_size, void *state) {
 
 static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
 
-static ucTestErr before_each_test(ucTestGroup *p) {
+uc_TEST(prior)
     subject = ucCmdLineApp_create();
     cmd_line = ucCmdLineApp_get_cmd(subject);
     cmd_parser = ucCmdLineApp_get_cmd_parser(subject);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr after_each_test(ucTestGroup *p) {
+uc_TEST(after)
     ucCmdLineApp_destroy(subject);
-    ucPASS();
-}
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
 
 static ucTestErr ucCmdLineApp_set_receive_sets_receive(ucTestGroup *p) {
     ucCmdLineApp_set_receive(subject, receive_1);
@@ -245,30 +247,23 @@ static ucTestErr ucCmdLineApp_run_sends_command_acknowledgment_dashes(ucTestGrou
     return ucCmdLineApp_run_sends_command_acknowledgment(p, "----");
 }
 
-ucTestGroup *ucCmdLineApp_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdLineApp_set_receive_sets_receive,
-        ucCmdLineApp_get_receive_returns_receive,
-        ucCmdLineApp_set_help_command_sets_value,
-        ucCmdLineApp_get_help_command_returns_value,
-        ucCmdLineApp_set_quit_command_sets_value,
-        ucCmdLineApp_get_quit_command_returns_value,
-        ucCmdLineApp_get_cmd_returns_value,
-        ucCmdLineApp_set_cmd_sets_value,
-        ucCmdLineApp_get_cmd_parser_is_not_null,
-        ucCmdLineApp_get_escape_response_returns_value,
-        ucCmdLineApp_set_escape_response_sets_value,
-        ucCmdLineApp_set_receive_state_sets_value,
-        ucCmdLineApp_get_receive_state_gets_value,
-        ucCmdLineApp_receive_uses_state,
-        ucCmdLineApp_get_cmd_str_size_max_gets_size,
-        ucCmdLineApp_run_ends_when_quit_is_received,
-        ucCmdLineApp_run_sends_response_terminator_after_command_completion,
-        ucCmdLineApp_run_sends_command_acknowledgment_here_we_go,
-        ucCmdLineApp_run_sends_command_acknowledgment_dashes,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+uc_TEST_GROUP(ucCmdLineApp, setup,
+    ucCmdLineApp_set_receive_sets_receive,
+    ucCmdLineApp_get_receive_returns_receive,
+    ucCmdLineApp_set_help_command_sets_value,
+    ucCmdLineApp_get_help_command_returns_value,
+    ucCmdLineApp_set_quit_command_sets_value,
+    ucCmdLineApp_get_quit_command_returns_value,
+    ucCmdLineApp_get_cmd_returns_value,
+    ucCmdLineApp_set_cmd_sets_value,
+    ucCmdLineApp_get_cmd_parser_is_not_null,
+    ucCmdLineApp_get_escape_response_returns_value,
+    ucCmdLineApp_set_escape_response_sets_value,
+    ucCmdLineApp_set_receive_state_sets_value,
+    ucCmdLineApp_get_receive_state_gets_value,
+    ucCmdLineApp_receive_uses_state,
+    ucCmdLineApp_get_cmd_str_size_max_gets_size,
+    ucCmdLineApp_run_ends_when_quit_is_received,
+    ucCmdLineApp_run_sends_response_terminator_after_command_completion,
+    ucCmdLineApp_run_sends_command_acknowledgment_here_we_go,
+    ucCmdLineApp_run_sends_command_acknowledgment_dashes)

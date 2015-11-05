@@ -24,15 +24,8 @@ static ucTestErr ucCmdTok_get_switch_returns_null_if_no_switch(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucCmdTok_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdTok_get_arg_gets_arg,
-        ucCmdTok_get_arg_returns_null_if_followed_by_switch,
-        ucCmdTok_get_switch_gets_first_switch,
-        ucCmdTok_get_switch_returns_null_if_no_switch,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucCmdTok, NULL,
+    ucCmdTok_get_arg_gets_arg,
+    ucCmdTok_get_arg_returns_null_if_followed_by_switch,
+    ucCmdTok_get_switch_gets_first_switch,
+    ucCmdTok_get_switch_returns_null_if_no_switch)

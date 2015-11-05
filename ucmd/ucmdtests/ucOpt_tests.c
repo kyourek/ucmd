@@ -43,15 +43,8 @@ static ucTestErr ucOpt_is_required_returns_is_required(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucOpt_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucOpt_get_name_returns_name,
-        ucOpt_get_desc_returns_description,
-        ucOpt_init_initializes_structure,
-        ucOpt_is_required_returns_is_required,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucOpt, NULL,
+    ucOpt_get_name_returns_name,
+    ucOpt_get_desc_returns_description,
+    ucOpt_init_initializes_structure,
+    ucOpt_is_required_returns_is_required)

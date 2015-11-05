@@ -64,21 +64,14 @@ static ucTestErr ucSwitchTok_get_arg_returns_null(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucSwitchTok_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucSwitchTok_get_next_returns_next_switch,
-        ucSwitchTok_get_next_returns_null,
-        ucSwitchTok_get_arg_is_initially_null,
-        ucSwitchTok_count_counts_switches,
-        ucSwitchTok_contains_returns_true_if_contained,
-        ucSwitchTok_contains_returns_false_if_not_contained,
-        ucSwitchTok_find_finds_switch,
-        ucSwitchTok_find_returns_null,
-        ucSwitchTok_get_arg_gets_first_arg,
-        ucSwitchTok_get_arg_returns_null,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucSwitchTok, NULL,
+    ucSwitchTok_get_next_returns_next_switch,
+    ucSwitchTok_get_next_returns_null,
+    ucSwitchTok_get_arg_is_initially_null,
+    ucSwitchTok_count_counts_switches,
+    ucSwitchTok_contains_returns_true_if_contained,
+    ucSwitchTok_contains_returns_false_if_not_contained,
+    ucSwitchTok_find_finds_switch,
+    ucSwitchTok_find_returns_null,
+    ucSwitchTok_get_arg_gets_first_arg,
+    ucSwitchTok_get_arg_returns_null)

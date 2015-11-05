@@ -12,15 +12,17 @@ static ucCmdTok *parse_cmd(char *cmd) {
     return ucCmdParser_parse(get_cmd_parser(), cmd);
 }
 
-static ucTestErr before_each_test(ucTestGroup *p) {
+uc_TEST(prior)
     subject = ucCmdParser_create();
-    return 0;
-}
+uc_PASS
 
-static ucTestErr after_each_test(ucTestGroup *p) {
+uc_TEST(after)
     ucCmdParser_destroy(subject);
-    return 0;
-}
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
 
 static ucTestErr ucCmdParser_parse_parses_command_value(ucTestGroup *p) {
     char cmd[20] = "command_name";
@@ -240,25 +242,18 @@ static ucTestErr ucCmdParser_parse_allows_empty_single_quotes(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucCmdParser_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        ucCmdParser_parse_parses_command_value,
-        ucCmdParser_parse_parses_short_argument,
-        ucCmdParser_parse_parses_long_argument,
-        ucCmdParser_parse_parses_single_quotes,
-        ucCmdParser_parse_parses_switch,
-        ucCmdParser_parse_parses_numeric_argument,
-        ucCmdParser_parses_non_numeric_switch,
-        ucCmdParser_parse_arguments_parsed_in_correct_order,
-        ucCmdParser_parse_switches_parsed_in_correct_order,
-        ucCmdParser_parse_parses_switch_arguments_in_correct_order,
-        ucCmdParser_parse_parses_command,
-        ucCmdParser_parse_parses_trailing_quotes,
-        ucCmdParser_parse_allows_empty_double_quotes,
-        ucCmdParser_parse_allows_empty_single_quotes,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+uc_TEST_GROUP(ucCmdParser, setup,
+    ucCmdParser_parse_parses_command_value,
+    ucCmdParser_parse_parses_short_argument,
+    ucCmdParser_parse_parses_long_argument,
+    ucCmdParser_parse_parses_single_quotes,
+    ucCmdParser_parse_parses_switch,
+    ucCmdParser_parse_parses_numeric_argument,
+    ucCmdParser_parses_non_numeric_switch,
+    ucCmdParser_parse_arguments_parsed_in_correct_order,
+    ucCmdParser_parse_switches_parsed_in_correct_order,
+    ucCmdParser_parse_parses_switch_arguments_in_correct_order,
+    ucCmdParser_parse_parses_command,
+    ucCmdParser_parse_parses_trailing_quotes,
+    ucCmdParser_parse_allows_empty_double_quotes,
+    ucCmdParser_parse_allows_empty_single_quotes)

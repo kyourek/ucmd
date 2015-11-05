@@ -27,8 +27,14 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd
 
             /* The option does NOT exist, but the token DOES, so there's an error. */
             return switch_name
-                ? ucCmdLine_format_response(cmd, ucOpt_INVALID "No argument options exist for switch \"%s\".", switch_name)
-                : ucCmdLine_format_response(cmd, ucOpt_INVALID "No argument options exist for command \"%s\".", ucTok_get_value(ucCmdLine_get_cmd_tok(cmd)));
+                ? ucCmdLine_format_response(
+                    cmd, 
+                    ucOpt_INVALID "No argument options exist for switch \"%s\".", 
+                    switch_name)
+                : ucCmdLine_format_response(
+                    cmd, 
+                    ucOpt_INVALID "No argument options exist for command \"%s\".", 
+                    ucTok_get_value(ucCmdLine_get_cmd_tok(cmd)));
         }
 
         /* Neither the option nor the token exist, so no error here. */
@@ -59,8 +65,15 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd
 
             /* We have remaining tokens but no arguments for them, so there's an error. */
             return switch_name
-                ? ucCmdLine_format_response(cmd, ucOpt_INVALID "No option exists for \"%s\" argument \"%s\".", switch_name, ucTok_get_value(arg_tok))
-                : ucCmdLine_format_response(cmd, ucOpt_INVALID "No option exists for argument \"%s\".", ucTok_get_value(arg_tok));
+                ? ucCmdLine_format_response(
+                    cmd, 
+                    ucOpt_INVALID "No option exists for \"%s\" argument \"%s\".", 
+                    switch_name, 
+                    ucTok_get_value(arg_tok))
+                : ucCmdLine_format_response(
+                    cmd, 
+                    ucOpt_INVALID "No option exists for argument \"%s\".", 
+                    ucTok_get_value(arg_tok));
         }
     }
 

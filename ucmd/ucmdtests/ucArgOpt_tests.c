@@ -3,16 +3,18 @@
 
 static ucCmdLine *cmd_line;
 
-static ucTestErr before_each_test(ucTestGroup *p) {
+uc_TEST(prior)
     cmd_line = ucCmdLine_create();
     assert(cmd_line);
-    ucPASS();
-}
+uc_PASS
 
-static ucTestErr after_each_test(ucTestGroup *p) {
+uc_TEST(after)
     ucCmdLine_destroy(cmd_line);
-    ucPASS();
-}
+uc_PASS
+
+uc_TEST(setup)
+    ucTestGroup_setup_test(p, prior, after);
+uc_PASS
 
 static ucTestErr ucArgOpt_is_numeric_returns_is_numeric(ucTestGroup *p) {
     ucArgOpt o;
@@ -475,9 +477,7 @@ static ucTestErr ucArgOpt_format_validation_err__allows_valid_integers(ucTestGro
     ucPASS();
 }
 
-ucTestGroup *ucArgOpt_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
+uc_TEST_GROUP(ucArgOpt, setup,
         ucArgOpt_is_numeric_returns_is_numeric,
         ucArgOpt_get_numeric_min_returns_value,
         ucArgOpt_get_numeric_max_returns_value,
@@ -509,9 +509,4 @@ ucTestGroup *ucArgOpt_tests_get_group(void) {
         ucArgOpt_format_validation_err__allows_boolean_false,
         ucArgOpt_create_integer__creates_option,
         ucArgOpt_format_validation_err__catches_integer_errors,
-        ucArgOpt_format_validation_err__allows_valid_integers,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, before_each_test, after_each_test, tests);
-}
+        ucArgOpt_format_validation_err__allows_valid_integers)

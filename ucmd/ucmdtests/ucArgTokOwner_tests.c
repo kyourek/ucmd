@@ -13,13 +13,6 @@ static ucTestErr ucArgTokOwner_get_arg_returns_null(ucTestGroup *p) {
     ucPASS();
 }
 
-ucTestGroup *ucArgTokOwner_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
+uc_TEST_GROUP(ucArgTokOwner, NULL,
         ucArgTokOwner_get_arg_returns_first_arg,
-        ucArgTokOwner_get_arg_returns_null,
-        NULL
-    };
-
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+        ucArgTokOwner_get_arg_returns_null)

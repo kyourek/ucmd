@@ -1,10 +1,6 @@
 #include "ucmdtests.h"
 
-ucTestGroup *ucArgOptOwner_tests_get_group(void) {
-    static ucTestGroup group;
-    static ucTestGroup_TestFunc *tests[] = {
-        NULL
-    };
+uc_TEST(pass)
+uc_PASS
 
-    return ucTestGroup_init(&group, NULL, NULL, NULL, NULL, tests);
-}
+uc_TEST_GROUP(ucArgOptOwner, NULL, pass)
