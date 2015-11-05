@@ -40,11 +40,11 @@ void ucTestGroup_setup_test(ucTestGroup *p, ucTestGroup_TestFunc *prior, ucTestG
 
 ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
     ucTestErr err, callback_err;
-    ucTestGroup_TestFunc **tests;
+    ucTestGroup_TestFunc **test;
 
     assert(p);
 
-    tests = p->test;
+    test = p->test;
 
     callback_err = setup(p);
     if (callback_err) return callback_err;
@@ -52,12 +52,12 @@ ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
     ucTestState_set_run_group_test_count(state, 0);
 
     err = 0;
-    for (; *tests; tests++) {
+    for (; *test; test++) {
 
         callback_err = prior(p);
         if (callback_err) return callback_err;
 
-        err = (*tests)(p);
+        err = (*test)(p);
 
         callback_err = after(p);
         if (callback_err) return callback_err;
