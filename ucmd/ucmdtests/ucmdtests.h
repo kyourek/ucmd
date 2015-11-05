@@ -28,32 +28,29 @@
 #include    "ucmd.h"
 #include    "ucmd_internal.h"
 
-#ifndef     ucTestGroup_COUNT
-#define     ucTestGroup_COUNT                           20
-#endif
-
 #define     ucFAIL()                                    do { return -1; } while (0)
 #define     ucPASS()                                    do { return -0; } while (0)
 #define     ucTRUE(TRUE)                                do { if (!(TRUE)) { printf("%s\n", #TRUE); return -1; } } while (0)
 #define     uc_TEST(NAME)                               static int NAME(ucTestGroup *p) {
 #define     uc_PASS                                     return 0; }
 #define     uc_TRUE(EXPRESSION)                         do { if (!(EXPRESSION)) { return -1; } } while (0)
-#define     uc_TEST_GROUP_TEST(NAME)                    { #NAME, NAME }
-#define     uc_TEST_GROUP(NAME, SETUP, ...)             \
-    static ucTestGroup *uc_test_group(void) {           \
-        static ucTestGroup test_group;                  \
-        static ucTestGroup_TestFunc *test[] = {         \
-            __VA_ARGS__,                                \
-            NULL };                                     \
-        ucTestGroup_init(&test_group);                  \
-        ucTestGroup_set_test(&test_group, test);        \
-        ucTestGroup_set_name(&test_group, #NAME);       \
-        ucTestGroup_set_setup(&test_group, SETUP);      \
-        return &test_group;                             \
-    }                                                   \
-    ucTestGroup* ucTestGroup_ ## NAME(void) {           \
-        return uc_test_group();                         \
-    }                                                   \
+
+#define uc_TEST_GROUP(NAME, SETUP, ...)                 \
+    static                                              \
+    ucTestGroup_TestFunc*                               \
+    ucTestGroup_TestFunc_ ## NAME[] = {                 \
+        __VA_ARGS__,                                    \
+        NULL };                                         \
+    static                                              \
+    ucTestGroup                                         \
+    ucTestGroup_ ## NAME ## _s = {                      \
+        #NAME,                                          \
+        ucTestGroup_TestFunc_ ## NAME,                  \
+        SETUP,                                          \
+        NULL,                                           \
+        NULL };                                         \
+    ucTestGroup*                                        \
+    ucTestGroup_ ## NAME = &ucTestGroup_ ## NAME ## _s; \
 
 #define     uc_TEST_RUNNER(NAME, ...)                   \
     static ucTestRunner uc_test_runner(void) {          \
@@ -73,7 +70,6 @@
 typedef     struct ucTest                               ucTest;
 typedef     int                                         ucTestErr;
 typedef     struct ucTestGroup                          ucTestGroup;
-typedef     struct ucTestGroup_Test                     ucTestGroup_Test;
 typedef     struct ucTestRunner                         ucTestRunner;
 typedef     struct ucTestState                          ucTestState;
 
@@ -99,15 +95,11 @@ uc_EXPORTED void                                        ucTestGroup_set_setup(uc
 uc_EXPORTED void                                        ucTestGroup_set_test(ucTestGroup*, ucTestGroup_TestFunc**);
 uc_EXPORTED void                                        ucTestGroup_setup_test(ucTestGroup*, ucTestGroup_TestFunc *prior, ucTestGroup_TestFunc *after);
             struct                                      ucTestGroup {
-            const char*                                 name;
+            const char*                                 name;            
             ucTestGroup_TestFunc**                      test;
             ucTestGroup_TestFunc*                       setup;
             ucTestGroup_TestFunc*                       prior;
             ucTestGroup_TestFunc*                       after; };
-
-            struct                                      ucTestGroup_Test {
-            const char*                                 name;
-            ucTestGroup_TestFunc*                       work; };
 
 typedef     void                                        (ucTest_PrintFunc)(const char *str, void *state);
 typedef     ucBool                                      (ucTest_ExitFunc)(void* state);
@@ -134,21 +126,21 @@ uc_EXPORTED ucTestRunner*                               ucTestRunner_init(ucTest
             const char*                                 name;
             ucTestGroup**                               group; };
 
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOpt(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOptOwner(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgTok(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgTokOwner(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucBool(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLine(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineApp(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineOpt(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineToks(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdParser(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdTok(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucOpt(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchOpt(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchTok(void);
-uc_EXPORTED ucTestGroup*                                ucTestGroup_ucTok(void);
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOpt;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgOptOwner;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgTok;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucArgTokOwner;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucBool;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLine;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineApp;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineOpt;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdLineToks;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdParser;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucCmdTok;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucOpt;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchOpt;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucSwitchTok;
+uc_EXPORTED ucTestGroup*                                ucTestGroup_ucTok;
 
 uc_EXPORTED ucTest*                                     ucTests_get_test(void);
 

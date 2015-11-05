@@ -391,6 +391,21 @@ uc_TEST(ucCmdLine_get_switch_arg_d_returns_argument_as_integer)
     uc_TRUE(42 == ucCmdLine_get_switch_arg_d(subject, "-s2", -1));
 uc_PASS
 
+static                                              
+ucTestGroup_TestFunc*
+junk1[] = { 
+    ucCmdLine_create_does_not_return_null,
+    ucCmdLine_find_switch_returns_null_if_it_does_not_exist,
+    NULL };                                         
+ucTestGroup                                        
+junk2 = {                            
+    "ucCmdLine",                                          
+    junk1,                  
+    NULL,                                          
+    NULL,                                           
+    NULL                                            
+};       
+
 uc_TEST_GROUP(ucCmdLine, setup,
     ucCmdLine_create_does_not_return_null,
     ucCmdLine_find_switch_returns_null_if_it_does_not_exist,

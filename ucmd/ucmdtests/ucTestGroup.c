@@ -64,15 +64,13 @@ ucTestErr ucTestGroup_run(ucTestGroup *p, ucTestState *state) {
 
     assert(p);
 
-    test = p->test;
-
     callback_err = setup(p);
     if (callback_err) return callback_err;
 
     ucTestState_set_run_group_test_count(state, 0);
 
     err = 0;
-    for (; *test; test++) {
+    for (test = p->test; *test; test++) {
 
         callback_err = prior(p);
         if (callback_err) return callback_err;

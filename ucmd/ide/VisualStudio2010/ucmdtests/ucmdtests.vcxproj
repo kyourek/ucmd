@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchTok.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTest.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestRunner.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestRunner_ucmd.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestState.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucTok.c" />

@@ -1,5 +1,5 @@
 #include "ucmdtests.h"
 
-static void junk(void) {
-
+ucTestRunner *ucTestRunner_ucmd(void) {
+    return NULL;
 }
