@@ -86,24 +86,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmdtests\main.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucArgOptOwner_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucArgOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucArgTokOwner_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucArgTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucBool_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineApp_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineToks_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLine_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdParser_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdTok_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucSwitchOpt_tests.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucSwitchTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOptOwner.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTokOwner.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTok.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucBool.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineApp.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineToks.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLine.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdParser.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdTok.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchTok.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTest.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestState.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucTok_tests.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucTok.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTests.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

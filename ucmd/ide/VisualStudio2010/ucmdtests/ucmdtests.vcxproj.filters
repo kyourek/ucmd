@@ -19,45 +19,6 @@
     <ClCompile Include="..\..\..\ucmdtests\main.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucArgOpt_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucArgTok_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucArgTokOwner_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucBool_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLine_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineApp_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineOpt_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdLineToks_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdParser_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucCmdTok_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucOpt_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucSwitchOpt_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucSwitchTok_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTest.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -67,13 +28,52 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestState.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTok_tests.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTests.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucArgOptOwner_tests.c">
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOptOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTokOwner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucBool.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLine.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineApp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineToks.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdParser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchTok.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucTok.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
