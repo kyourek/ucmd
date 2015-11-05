@@ -24,12 +24,11 @@
 #define     UCMD_INTERNAL_H
 
 #include    <assert.h>
+#include    <string.h>
 #include    "ucmd.h"
 
             struct                              ucCmdParser {
             char                                placeholder; };
-
-uc_EXPORTED ucBool                              uc_str_eq(const char *s1, const char *s2);
 
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
             struct                              ucOpt {
@@ -38,14 +37,14 @@ uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *n
             ucBool                              is_required; };
 
 uc_EXPORTED const char*                         ucArgOpt_format_validation_err(ucArgOpt*, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name);
-uc_EXPORTED ucArgOpt*                           ucArgOpt_init(ucArgOpt*, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt*                           ucArgOpt_init(ucArgOpt*, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
             struct                              ucArgOpt {
             ucOpt                               base;
             ucBool                              is_boolean;
             ucBool                              is_numeric;
             ucBool                              is_integer;
-            ucArgOpt_NUMERIC_TYPE               numeric_min;
-            ucArgOpt_NUMERIC_TYPE               numeric_max;
+            ucArgOpt_NUMERIC                    numeric_min;
+            ucArgOpt_NUMERIC                    numeric_max;
             int                                 max_tok_count;
             int                                 min_tok_count;
             ucArgOpt*                           next; };            
@@ -98,6 +97,13 @@ uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineAp
             const char*                         quit_command;
             const char*                         escape_response;            
             char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE + 1]; };
+
+/** @brief Determines if two strings are equal.
+ *
+ *  This macro results in a truthy value if the string arguments are equal. It
+ *  results in a falsey value if they are unequal.
+ */
+#define     uc_STR_EQ(S1, S2)                   (((S1) == (S2)) ? ucBool_true : ((!(S1)) || (!(S2))) ? ucBool_false : (0 == strcmp((S1), (S2))) ? ucBool_true : ucBool_false)
 
 /* 
  * Summary:

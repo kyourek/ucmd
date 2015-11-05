@@ -14,7 +14,7 @@ ucSwitchOpt *ucSwitchOpt_get_next(ucSwitchOpt *p) {
 ucSwitchOpt *ucSwitchOpt_find(ucSwitchOpt *p, const char *name) {
     assert(p);
     while (p) {
-        if (uc_str_eq(ucOpt_get_name((ucOpt*)p), name)) {
+        if (uc_STR_EQ(ucOpt_get_name((ucOpt*)p), name)) {
             return p;
         }
         p = ucSwitchOpt_get_next(p);

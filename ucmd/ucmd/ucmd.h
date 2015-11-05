@@ -136,10 +136,14 @@
 #define ucTok_BOOLEAN_FALSE "0", "off", "no", "false"
 #endif
 
-/* Sets the numeric type of numeric argument
-   options. */
-#ifndef ucArgOpt_NUMERIC_TYPE
-#define ucArgOpt_NUMERIC_TYPE double
+#ifndef ucArgOpt_NUMERIC
+/** @brief Defines the type of numeric arguments.
+ *
+ *  When numeric argument options are created, this type is used when
+ *  dealing with the options' data (such as minimum value and maximum
+ *  value). Unless space or speed is critical, double is a good choice.
+ */
+#define ucArgOpt_NUMERIC double
 #endif
 
 /* Include this def when using the library with another
@@ -752,7 +756,7 @@ uc_EXPORTED ucBool ucArgOpt_is_numeric(ucArgOpt*);
  * Returns:
  *   The minimum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_min(ucArgOpt*);
+uc_EXPORTED ucArgOpt_NUMERIC ucArgOpt_get_numeric_min(ucArgOpt*);
 
 /*
  * Summary:
@@ -760,7 +764,7 @@ uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_min(ucArgOpt*);
  * Returns:
  *   The maximum numeric value of the argument.
  */
-uc_EXPORTED ucArgOpt_NUMERIC_TYPE ucArgOpt_get_numeric_max(ucArgOpt*);
+uc_EXPORTED ucArgOpt_NUMERIC ucArgOpt_get_numeric_max(ucArgOpt*);
 
 /*
  * Summary:
@@ -804,9 +808,9 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required(const char *name, const char *des
 
 uc_EXPORTED ucArgOpt *ucArgOpt_create_boolean(const char *desc, ucArgOpt *next);
 uc_EXPORTED ucArgOpt *ucArgOpt_create_required_boolean(const char *desc, ucArgOpt *next);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max);
-uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_integer(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
 
 /*
  * Summary:
@@ -820,7 +824,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_required_integer(const char *desc, ucArgOp
  * Returns:
  *   A pointer to the newly created argument option.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
 
 /*
  * Summary:
@@ -834,7 +838,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_numeric(const char *desc, ucArgOpt_NUMERIC
  * Returns:
  *   A pointer to the newly created argument option.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min_tok_count, int max_tok_count, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max);
 
 /*
  * Summary:
@@ -849,7 +853,7 @@ uc_EXPORTED ucArgOpt *ucArgOpt_create_multiple_numeric(const char *desc, int min
  *   A pointer to the newly created argument option. The option will have its
  *   'required' property set to true.
  */
-uc_EXPORTED ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC_TYPE numeric_min, ucArgOpt_NUMERIC_TYPE numeric_max, ucArgOpt *next);
+uc_EXPORTED ucArgOpt *ucArgOpt_create_required_numeric(const char *desc, ucArgOpt_NUMERIC numeric_min, ucArgOpt_NUMERIC numeric_max, ucArgOpt *next);
 
 /*
  * Summary:

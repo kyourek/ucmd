@@ -1,4 +1,3 @@
-#include <string.h>
 #include "ucmdtests.h"
 
 static ucTestErr ucCmdTok_get_arg_gets_arg(ucTestGroup *p) {

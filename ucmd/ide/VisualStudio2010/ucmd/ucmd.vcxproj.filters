@@ -61,8 +61,5 @@
     <ClCompile Include="..\..\..\ucmd\ucArgOpt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucmd.c">
-      <Filter>source</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

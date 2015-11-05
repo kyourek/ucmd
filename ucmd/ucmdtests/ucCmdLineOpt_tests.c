@@ -1,4 +1,3 @@
-#include <string.h>
 #include "ucmdtests.h"
 
 static ucCmdLine *cmd_line;

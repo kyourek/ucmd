@@ -200,7 +200,7 @@ void ucCmdLineApp_run(ucCmdLineApp *p, ucCmdLineOpt *cmd_opt) {
         if (response) {
 
             /* Check if the response is the escape response. */
-            if (uc_str_eq(response, ucCmdLineApp_get_escape_response(p))) {
+            if (uc_STR_EQ(response, ucCmdLineApp_get_escape_response(p))) {
                 
                 /* We've been signaled to quit the app. */
                 break;

@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "ucmdtests.h"
 
 static ucTestErr ucTok_get_length_returns_string_length(ucTestGroup *p) {

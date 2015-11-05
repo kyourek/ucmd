@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
 #include "ucmdtests.h"
 
 static ucCmdLine *subject;
@@ -373,7 +372,7 @@ static ucTestErr ucCmdLine_get_command_acknoledgment_returns_set_value(ucTestGro
 static ucTestErr ucCmdLine_get_arg_returns_arg_tok(ucTestGroup *p) {
     char c[20] = "cmd argz -s argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
-    ucTRUE(uc_str_eq("argz", ucCmdLine_get_arg(subject)));
+    ucTRUE(uc_STR_EQ("argz", ucCmdLine_get_arg(subject)));
     ucPASS();
 }
 
@@ -387,7 +386,7 @@ static ucTestErr ucCmdLine_get_arg_returns_null_if_no_arg_exists(ucTestGroup *p)
 static ucTestErr ucCmdLine_get_switch_returns_switch_tok(ucTestGroup *p) {
     char c[20] = "cmd argz -s argb";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
-    ucTRUE(uc_str_eq("-s", ucCmdLine_get_switch(subject)));
+    ucTRUE(uc_STR_EQ("-s", ucCmdLine_get_switch(subject)));
     ucPASS();
 }
 
@@ -401,7 +400,7 @@ static ucTestErr ucCmdLine_get_switch_returns_null_if_no_switch_exists(ucTestGro
 static ucTestErr ucCmdLine_get_switch_arg_returns_arg_tok_of_switch(ucTestGroup *p) {
     char c[30] = "cmd argz -s1 argb -s2 argc";
     ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
-    ucTRUE(uc_str_eq("argc", ucCmdLine_get_switch_arg(subject, "-s2")));
+    ucTRUE(uc_STR_EQ("argc", ucCmdLine_get_switch_arg(subject, "-s2")));
     ucPASS();
 }
 

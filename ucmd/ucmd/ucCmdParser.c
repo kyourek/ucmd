@@ -1,4 +1,3 @@
-#include <string.h>
 #include "ucmd_internal.h"
 
 ucInstance_INIT(ucCmdParser, ucCmdParser_COUNT);

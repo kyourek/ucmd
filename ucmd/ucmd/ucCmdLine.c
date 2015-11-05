@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include "ucmd_internal.h"
 
 ucInstance_INIT(ucCmdLine, ucCmdLine_COUNT);

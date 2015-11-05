@@ -1,6 +1,5 @@
 #include <ctype.h>
 #include <stdlib.h>
-#include <string.h>
 #include "ucmd_internal.h"
 
 int ucTok_get_length(ucTok *p) {
