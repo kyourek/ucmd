@@ -397,20 +397,58 @@ uc_TEST(ucCmdLine_get_switch_arg_d_returns_default_value_if_argument_is_not_an_i
     uc_TRUE(-386 == ucCmdLine_get_switch_arg_d(subject, "-s2", -386));
 uc_PASS
 
-static                                              
-ucTestGroup_TestFunc*
-junk1[] = { 
-    ucCmdLine_create_does_not_return_null,
-    ucCmdLine_find_switch_returns_null_if_it_does_not_exist,
-    NULL };                                         
-ucTestGroup                                        
-junk2 = {                            
-    "ucCmdLine",                                          
-    junk1,                  
-    NULL,                                          
-    NULL,                                           
-    NULL                                            
-};       
+uc_TEST(ucCmdLine_get_switch_arg_f_returns_argument_as_double)
+    char c[30] = "cmd argz -s1 argb -s2 42.1";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(42.1 == ucCmdLine_get_switch_arg_f(subject, "-s2", -1));
+uc_PASS
+
+uc_TEST(ucCmdLine_get_switch_arg_f_returns_default_value_if_argument_is_not_numeric)
+    char c[30] = "cmd argz -s1 argb -s2 4.2.1";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(-1.1 == ucCmdLine_get_switch_arg_f(subject, "-s2", -1.1));
+uc_PASS
+
+uc_TEST(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, const char *a, ucBool b)
+    char c[35];
+    sprintf(c, "cmd argz -s1 %s -s2 4.2.1", a);
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(b == ucCmdLine_get_switch_arg_b(subject, "-s1", !b));
+uc_PASS
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, true, "true", ucBool_true)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, false, "false", ucBool_false)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, yes, "yes", ucBool_true)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, no, "no", ucBool_false)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, 1, "1", ucBool_true)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, 0, "0", ucBool_false)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, on, "on", ucBool_true)
+uc_CASE(ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test, off, "off", ucBool_false)
+
+uc_TEST(ucCmdLine_get_switch_arg_b_returns_default_value_if_argument_is_not_boolean)
+    char c[35];
+    sprintf(c, "cmd argz -s1 %s -s2 4.2.1", "tru");
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(ucBool_true == ucCmdLine_get_switch_arg_b(subject, "-s1", ucBool_true));
+    uc_TRUE(ucBool_false == ucCmdLine_get_switch_arg_b(subject, "-s1", ucBool_false));
+uc_PASS
+
+uc_TEST(ucCmdLine_get_switch_arg_x_b_test, const char *command, const char *switch_name, int arg_index, ucBool expected)
+    char c[35];
+    sprintf(c, "%s", command);
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(expected == ucCmdLine_get_switch_arg_x_b(subject, switch_name, arg_index, !expected));
+uc_PASS
+uc_CASE(ucCmdLine_get_switch_arg_x_b_test, yes, "do -some -thing cool yes", "-thing", 1, ucBool_true)
+uc_CASE(ucCmdLine_get_switch_arg_x_b_test, off, "do -some -thing cool yes off", "-thing", 2, ucBool_false)
+uc_CASE(ucCmdLine_get_switch_arg_x_b_test, 1, "do -some 1 -thing cool yes", "-some", 0, ucBool_true)
+
+uc_TEST(ucCmdLine_get_switch_arg_x_returns_arg_at_index)
+    char c[40] = "this -is -the command that was sent";
+    ucCmdLine_set_cmd_tok(subject, parse_cmd(c));
+    uc_TRUE(uc_STR_EQ("command", ucCmdLine_get_switch_arg_x(subject, "-the", 0)));
+    uc_TRUE(uc_STR_EQ("that", ucCmdLine_get_switch_arg_x(subject, "-the", 1)));
+    uc_TRUE(NULL == ucCmdLine_get_switch_arg_x(subject, "-the", 4));
+uc_PASS
 
 uc_TEST_GROUP(ucCmdLine, setup,
     ucCmdLine_create_does_not_return_null,
@@ -428,8 +466,23 @@ uc_TEST_GROUP(ucCmdLine, setup,
     ucCmdLine_get_switch_arg_returns_arg_tok_of_switch,
     ucCmdLine_get_switch_arg_returns_null_if_arg_does_not_exist,
     ucCmdLine_get_switch_arg_returns_null_if_switch_does_not_exist,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_true,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_false,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_yes,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_no,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_1,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_0,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_on,
+    ucCmdLine_get_switch_arg_b_returns_argument_as_boolean_test_off,
+    ucCmdLine_get_switch_arg_b_returns_default_value_if_argument_is_not_boolean,
     ucCmdLine_get_switch_arg_d_returns_argument_as_integer,
     ucCmdLine_get_switch_arg_d_returns_default_value_if_argument_is_not_an_integer,
+    ucCmdLine_get_switch_arg_f_returns_argument_as_double,
+    ucCmdLine_get_switch_arg_f_returns_default_value_if_argument_is_not_numeric,
+    ucCmdLine_get_switch_arg_x_b_test_1,
+    ucCmdLine_get_switch_arg_x_b_test_off,
+    ucCmdLine_get_switch_arg_x_b_test_yes,
+    ucCmdLine_get_switch_arg_x_returns_arg_at_index,
     ucCmdLine_get_switch_returns_null_if_no_switch_exists,
     ucCmdLine_get_switch_returns_switch_tok,
     ucCmdLine_set_transmit_sets_transmit,

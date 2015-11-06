@@ -270,6 +270,8 @@ typedef const char ucArgTok;
  */
 uc_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok*);
 
+uc_EXPORTED ucArgTok *ucArgTok_get_index(ucArgTok*, int index);
+
 /*
  * Summary:
  *   Counts the number of arguments in the linked list.
@@ -516,6 +518,11 @@ uc_EXPORTED ucSwitchTok *ucCmdLine_get_switch(ucCmdLine*);
 
 uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
 uc_EXPORTED int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value);
+uc_EXPORTED double ucCmdLine_get_switch_arg_f(ucCmdLine *p, const char *switch_name, double default_value);
+
+uc_EXPORTED ucBool ucCmdLine_get_switch_arg_b(ucCmdLine *p, const char *switch_name, ucBool default_value);
+uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index);
+uc_EXPORTED ucBool ucCmdLine_get_switch_arg_x_b(ucCmdLine *p, const char *switch_name, int arg_index, ucBool default_value);
 
 uc_EXPORTED ucSwitchTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
 

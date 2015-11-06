@@ -14,6 +14,12 @@ int ucArgTok_count(ucArgTok* p) {
     return count;
 }
 
+ucArgTok *ucArgTok_get_index(ucArgTok *p, int index) {
+    assert(p);
+    for (; p && index; p = ucArgTok_get_next(p), index--);
+    return p;
+}
+
 ucArgTok *ucArgTok_find(ucArgTok *p, const char *arg_value) {
     assert(p);
     while (p) {

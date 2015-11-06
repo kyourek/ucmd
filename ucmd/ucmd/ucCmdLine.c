@@ -225,11 +225,46 @@ ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine *p, const char *switch_name) {
     return NULL;
 }
 
+ucArgTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index) {
+    ucArgTok *arg_tok = ucCmdLine_get_switch_arg(p, switch_name);
+    if (arg_tok) {
+        arg_tok = ucArgTok_get_index(arg_tok, arg_index);
+    }
+    return arg_tok;
+}
+
 int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value) {
     ucArgTok *arg_tok = ucCmdLine_get_switch_arg(p, switch_name);
     if (arg_tok) {
         if (ucTok_is_integer(arg_tok)) {
             return atoi(arg_tok);
+        }
+    }
+    return default_value;
+}
+
+double ucCmdLine_get_switch_arg_f(ucCmdLine *p, const char *switch_name, double default_value) {
+    ucArgTok *arg_tok = ucCmdLine_get_switch_arg(p, switch_name);
+    if (arg_tok) {
+        if (ucTok_is_numeric(arg_tok)) {
+            return atof(arg_tok);
+        }
+    }
+    return default_value;
+}
+
+ucBool ucCmdLine_get_switch_arg_b(ucCmdLine *p, const char *switch_name, ucBool default_value) {
+    return ucCmdLine_get_switch_arg_x_b(p, switch_name, 0, default_value);
+}
+
+ucBool ucCmdLine_get_switch_arg_x_b(ucCmdLine *p, const char *switch_name, int arg_index, ucBool default_value) {
+    ucArgTok *arg_tok = ucCmdLine_get_switch_arg(p, switch_name);
+    if (arg_tok) {
+        arg_tok = ucArgTok_get_index(arg_tok, arg_index);
+        if (arg_tok) {
+            if (ucTok_is_boolean(arg_tok)) {
+                return ucTok_parse_boolean(arg_tok);
+            }
         }
     }
     return default_value;
