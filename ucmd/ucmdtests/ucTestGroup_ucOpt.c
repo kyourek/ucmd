@@ -1,47 +1,41 @@
 #include "ucmdtests.h"
 
-static ucTestErr ucOpt_get_name_returns_name(ucTestGroup *p) {
+uc_TEST(ucOpt_get_name_returns_name)
     ucOpt o;
 
     o.name = "name 1";
-    ucTRUE(ucOpt_get_name(&o));
+    uc_TRUE(ucOpt_get_name(&o));
 
     o.name = "two NAME";
-    ucTRUE(ucOpt_get_name(&o));
+    uc_TRUE(ucOpt_get_name(&o));
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucOpt_get_desc_returns_description(ucTestGroup *p) {
+uc_TEST(ucOpt_get_desc_returns_description)
     ucOpt o;
 
     o.desc = "description one";
-    ucTRUE(ucOpt_get_desc(&o));
+    uc_TRUE(ucOpt_get_desc(&o));
 
     o.desc = "2 desc";
-    ucTRUE(ucOpt_get_desc(&o));
+    uc_TRUE(ucOpt_get_desc(&o));
+uc_PASS
 
-    ucPASS();
-}
-
-static ucTestErr ucOpt_init_initializes_structure(ucTestGroup *p) {
+uc_TEST(ucOpt_init_initializes_structure)
     ucOpt o;
     ucOpt *ptr = ucOpt_init(&o, "my_command_name", "Description of command.", ucBool_true);
-    ucTRUE(ptr == (&o));
-    ucTRUE(ucOpt_get_name(ptr));
-    ucTRUE(ucOpt_get_desc(ptr));
-    ucTRUE(ucBool_true == ucOpt_is_required(ptr));
-    ucPASS();
-}
+    uc_TRUE(ptr == (&o));
+    uc_TRUE(ucOpt_get_name(ptr));
+    uc_TRUE(ucOpt_get_desc(ptr));
+    uc_TRUE(ucBool_true == ucOpt_is_required(ptr));
+uc_PASS
 
-static ucTestErr ucOpt_is_required_returns_is_required(ucTestGroup *p) {
+uc_TEST(ucOpt_is_required_returns_is_required)
     ucOpt o;
     o.is_required = ucBool_true;
-    ucTRUE(ucBool_true == ucOpt_is_required(&o));
+    uc_TRUE(ucBool_true == ucOpt_is_required(&o));
     o.is_required = ucBool_false;
-    ucTRUE(ucBool_false == ucOpt_is_required(&o));
-    ucPASS();
-}
+    uc_TRUE(ucBool_false == ucOpt_is_required(&o));
+uc_PASS
 
 uc_TEST_GROUP(ucOpt, NULL,
     ucOpt_get_name_returns_name,
