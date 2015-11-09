@@ -101,11 +101,6 @@ const char *ucCmdLineApp_get_help_command(ucCmdLineApp *p) {
     return p->help_command;
 }
 
-void ucCmdLineApp_set_cmd(ucCmdLineApp *p, ucCmdLine *value) {
-    assert(p);
-    p->cmd = value;
-}
-
 ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp *p) {
     assert(p);
     return p->cmd;

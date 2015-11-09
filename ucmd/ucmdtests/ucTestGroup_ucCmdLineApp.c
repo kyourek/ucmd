@@ -66,11 +66,6 @@ uc_TEST(ucCmdLineApp_get_cmd_returns_value)
     uc_TRUE(cmd_line == ucCmdLineApp_get_cmd(subject));
 uc_PASS
 
-uc_TEST(ucCmdLineApp_set_cmd_sets_value)
-    ucCmdLineApp_set_cmd(subject, cmd_line);
-    uc_TRUE(cmd_line == subject->cmd);
-uc_PASS
-
 uc_TEST(ucCmdLineApp_get_cmd_parser_is_not_null)
     uc_TRUE(NULL != ucCmdLineApp_get_cmd_parser(subject));
 uc_PASS
@@ -236,7 +231,6 @@ uc_TEST_GROUP(ucCmdLineApp, setup,
     ucCmdLineApp_set_quit_command_sets_value,
     ucCmdLineApp_get_quit_command_returns_value,
     ucCmdLineApp_get_cmd_returns_value,
-    ucCmdLineApp_set_cmd_sets_value,
     ucCmdLineApp_get_cmd_parser_is_not_null,
     ucCmdLineApp_get_escape_response_returns_value,
     ucCmdLineApp_set_escape_response_sets_value,

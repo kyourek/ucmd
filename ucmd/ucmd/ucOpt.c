@@ -16,11 +16,9 @@ ucBool ucOpt_is_required(ucOpt *p) {
 }
 
 void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix) {
-    static const char *required_format = "%s%s: %s";
-    static const char *optional_format = "%s[%s]: %s";
     const char *format = ucOpt_is_required(p) 
-        ? required_format 
-        : optional_format;
+        ? "%s%s: %s" 
+        : "%s[%s]: %s";
     ucCmdLine_respond(cmd, ucCmdLine_format_response(
         cmd,
         format,

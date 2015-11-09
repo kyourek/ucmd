@@ -30,6 +30,7 @@
 typedef     struct ucArgOptOwner                ucArgOptOwner;
 typedef     const char                          ucArgTok;
 typedef     const char                          ucArgTokOwner;
+typedef     struct ucCmdParser                  ucCmdParser;
 typedef     const char                          ucCmdTok;
 typedef     const char                          ucSwitchTok;
 
@@ -70,6 +71,10 @@ uc_EXPORTED ucArgTok*                           ucArgTok_find(ucArgTok*, const c
 uc_EXPORTED ucBool                              ucArgTok_contains(ucArgTok*, const char *arg_value);
 
 uc_EXPORTED ucArgTok*                           ucArgTokOwner_get_arg(ucArgTokOwner*);
+
+uc_EXPORTED ucCmdParser*                        ucCmdParser_create(void);
+uc_EXPORTED void                                ucCmdParser_destroy(ucCmdParser *p);
+uc_EXPORTED ucCmdTok*                           ucCmdParser_parse(ucCmdParser*, char *cmd);
 
 uc_EXPORTED ucArgTok*                           ucCmdTok_get_arg(ucCmdTok*);
 uc_EXPORTED ucSwitchTok*                        ucCmdTok_get_switch(ucCmdTok*);
@@ -117,6 +122,7 @@ uc_EXPORTED void                                ucCmdLineOpt_send_usage(ucCmdLin
             ucSwitchOpt*                        switch_opt;
             ucCmdLineOpt*                       next; };
 
+uc_EXPORTED ucCmdParser*                        ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
 uc_EXPORTED ucCmdLineApp*                       ucCmdLineApp_init(ucCmdLineApp*, ucCmdParser*, ucCmdLine*);
 uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineApp*);
             struct                              ucCmdLineApp {

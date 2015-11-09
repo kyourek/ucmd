@@ -740,28 +740,6 @@ uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt*);
 
 /*
  * Summary:
- *   Type that can be used to parse command lines.
- *   The result of the parse can be used as the command
- *   token for a command structure.
- */
-typedef struct ucCmdParser ucCmdParser;
-
-uc_EXPORTED ucCmdParser *ucCmdParser_create(void);
-uc_EXPORTED void ucCmdParser_destroy(ucCmdParser *p);
-
-/*
- * Summary:
- *   Parses a command so that it can be used as a command token.
- * Parameters:
- *   cmd: The command string to be parsed. This string is mutated.
- * Returns:
- *   A pointer to the command token that was parsed, or NULL if an
- *   error occurred.
- */
-uc_EXPORTED ucTok *ucCmdParser_parse(ucCmdParser*, char *cmd);
-
-/*
- * Summary:
  *   A command option. This type is a child of the
  *   base option type.
  */
@@ -977,27 +955,11 @@ uc_EXPORTED const char *ucCmdLineApp_get_help_command(ucCmdLineApp*);
 
 /*
  * Summary:
- *   Sets the command structure that the application uses.
- * Parameters:
- *   value: The command structure to be used by the application.
- */
-uc_EXPORTED void ucCmdLineApp_set_cmd(ucCmdLineApp*, ucCmdLine *value);
-
-/*
- * Summary:
  *   Gets the command structure used by the application.
  * Returns:
  *   A pointer to the command structure used by the application.
  */
 uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
-
-/*
- * Summary:
- *   Gets the command parser used by the application.
- * Returns:
- *   A pointer to the command parser used by the application.
- */
-uc_EXPORTED ucCmdParser *ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
 
 /*
  * Summary:
