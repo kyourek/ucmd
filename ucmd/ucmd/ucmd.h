@@ -204,19 +204,23 @@ typedef enum {
 typedef const char ucTok;
 
 /** @brief Gets the length of the token.
+ *  @param[in]  p   The token in question.
  *  @returns The number of characters in the token.
  */
-uc_EXPORTED int ucTok_get_length(ucTok*);
+uc_EXPORTED int ucTok_get_length(ucTok* p);
 
-/*
- * Summary:
- *   Determines whether or not the given token equals the value.
- * Parameters:
- *   value: The value against which the token is checked for equality.
- * Returns:
- *   ucBool_true if the token value equals the given value. Otherwise, ucBool_false.
+/** @brief Determines whether or not the given token is considered a switch.
+ *  @param[in]  p   The token in question.
+ *  @returns Boolean true if the token is a switch. Otherwise, false.
  */
-uc_EXPORTED ucBool ucTok_equals(ucTok*, const char *value);
+uc_EXPORTED ucBool ucTok_is_switch(ucTok* p);
+
+/** @brief Determines whether or not the given token equals the value.
+ *  @param[in]  p       The token in question.
+ *  @param[in]  value   The value to which the token in question is compared.
+ *  @returns Boolean true if the given value equals the given token. Otherwise, false.
+ */
+uc_EXPORTED ucBool ucTok_equals(ucTok* p, const char *value);
 
 uc_EXPORTED ucBool ucTok_is_integer(ucTok *p);
 uc_EXPORTED ucBool ucTok_try_parse_integer(ucTok *p, int *value);
@@ -227,14 +231,6 @@ uc_EXPORTED double ucTok_parse_numeric(ucTok*);
 uc_EXPORTED ucBool ucTok_is_boolean(ucTok*);
 uc_EXPORTED ucBool ucTok_try_parse_boolean(ucTok*, ucBool *value);
 uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*);
-
-/*
- * Summary:
- *   Determines whether or not the given token is considered a switch.
- * Returns:
- *   ucBool_true if the token is a switch. Otherwise, ucBool_false.
- */
-uc_EXPORTED ucBool ucTok_is_switch(ucTok*);
 
 /*
  * Summary:
