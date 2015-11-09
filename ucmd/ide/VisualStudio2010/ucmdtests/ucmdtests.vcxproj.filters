@@ -37,15 +37,6 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucBool.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLine.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineApp.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineOpt.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdParser.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -68,6 +59,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestRunner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmd.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdApp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdOpt.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

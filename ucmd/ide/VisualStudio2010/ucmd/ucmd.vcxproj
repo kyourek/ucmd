@@ -19,9 +19,9 @@
     <ClCompile Include="..\..\..\ucmd\ucArgOptOwner.c" />
     <ClCompile Include="..\..\..\ucmd\ucArgTok.c" />
     <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c" />
-    <ClCompile Include="..\..\..\ucmd\ucCmdLine.c" />
-    <ClCompile Include="..\..\..\ucmd\ucCmdLineApp.c" />
-    <ClCompile Include="..\..\..\ucmd\ucCmdLineOpt.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmd.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdApp.c" />
+    <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdParser.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdTok.c" />
     <ClCompile Include="..\..\..\ucmd\ucOpt.c" />

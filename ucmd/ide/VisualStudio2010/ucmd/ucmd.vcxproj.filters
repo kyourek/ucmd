@@ -37,15 +37,6 @@
     <ClCompile Include="..\..\..\ucmd\ucCmdParser.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdLineOpt.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdLineApp.c">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdLine.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -56,6 +47,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucArgOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\ucCmd.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\ucCmdApp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
