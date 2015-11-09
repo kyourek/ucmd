@@ -67,7 +67,7 @@ ucCmdTok *ucCmd_get_cmd(ucCmd *p) {
     return p->cmd_tok;
 }
 
-void ucCmd_set_cmd_tok(ucCmd *p, ucCmdTok *value) {
+void ucCmd_set_cmd(ucCmd *p, ucCmdTok *value) {
     assert(p);
     p->cmd_tok = value;
 }

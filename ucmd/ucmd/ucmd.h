@@ -321,7 +321,7 @@ uc_EXPORTED ucTok *ucCmd_find_switch(ucCmd*, const char *switch_name);
  * Parameters:
  *   value: The command token.
  */
-uc_EXPORTED void ucCmd_set_cmd_tok(ucCmd*, ucTok *value);
+uc_EXPORTED void ucCmd_set_cmd(ucCmd*, ucTok *value);
 
 /*
  * Summary:

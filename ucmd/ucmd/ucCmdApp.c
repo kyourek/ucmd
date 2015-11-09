@@ -186,7 +186,7 @@ void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
         cmd_tok = ucCmdParser_parse(ucCmdApp_get_cmd_parser(p), command);
 
         /* Set the command's parsed command token. */
-        ucCmd_set_cmd_tok(cmd, cmd_tok);
+        ucCmd_set_cmd(cmd, cmd_tok);
 
         /* Process the command. */
         response = ucCmdOpt_process(help_opt, cmd);
