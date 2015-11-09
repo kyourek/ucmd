@@ -62,7 +62,7 @@ void ucCmd_destroy(ucCmd *p) {
     ucInstance_destroy(p);
 }
 
-ucCmdTok *ucCmd_get_cmd_tok(ucCmd *p) {
+ucCmdTok *ucCmd_get_cmd(ucCmd *p) {
     assert(p);
     return p->cmd_tok;
 }
@@ -226,14 +226,14 @@ void ucCmd_terminate_response(ucCmd *p) {
 }
 
 ucArgTok *ucCmd_get_arg(ucCmd *p) {
-    ucCmdTok *cmd_tok = ucCmd_get_cmd_tok(p);
+    ucCmdTok *cmd_tok = ucCmd_get_cmd(p);
     return cmd_tok
         ? ucCmdTok_get_arg(cmd_tok)
         : NULL;
 }
 
 ucSwitchTok *ucCmd_get_switch(ucCmd *p) {
-    ucCmdTok *cmd_tok = ucCmd_get_cmd_tok(p);
+    ucCmdTok *cmd_tok = ucCmd_get_cmd(p);
     return cmd_tok
         ? ucCmdTok_get_switch(cmd_tok)
         : NULL;
@@ -287,29 +287,29 @@ ucBool ucCmd_get_switch_arg_x_b(ucCmd *p, const char *switch_name, int arg_index
 }
 
 ucArgTok *ucCmd_get_arg_x(ucCmd *p, int arg_index) {
-    return get_arg_x(ucCmd_get_cmd_tok(p), arg_index);
+    return get_arg_x(ucCmd_get_cmd(p), arg_index);
 }
 
 ucBool ucCmd_get_arg_b(ucCmd *p, ucBool default_value) {
-    return get_arg_x_b(ucCmd_get_cmd_tok(p), 0, default_value);
+    return get_arg_x_b(ucCmd_get_cmd(p), 0, default_value);
 }
 
 int ucCmd_get_arg_d(ucCmd *p, int default_value) {
-    return get_arg_x_d(ucCmd_get_cmd_tok(p), 0, default_value);
+    return get_arg_x_d(ucCmd_get_cmd(p), 0, default_value);
 }
 
 double ucCmd_get_arg_f(ucCmd *p, double default_value) {
-    return get_arg_x_f(ucCmd_get_cmd_tok(p), 0, default_value);
+    return get_arg_x_f(ucCmd_get_cmd(p), 0, default_value);
 }
 
 ucBool ucCmd_get_arg_x_b(ucCmd *p, int arg_index, ucBool default_value) {
-    return get_arg_x_b(ucCmd_get_cmd_tok(p), arg_index, default_value);
+    return get_arg_x_b(ucCmd_get_cmd(p), arg_index, default_value);
 }
 
 int ucCmd_get_arg_x_d(ucCmd *p, int arg_index, int default_value) {
-    return get_arg_x_d(ucCmd_get_cmd_tok(p), arg_index, default_value);
+    return get_arg_x_d(ucCmd_get_cmd(p), arg_index, default_value);
 }
 
 double ucCmd_get_arg_x_f(ucCmd *p, int arg_index, double default_value) {
-    return get_arg_x_f(ucCmd_get_cmd_tok(p), arg_index, default_value);
+    return get_arg_x_f(ucCmd_get_cmd(p), arg_index, default_value);
 }

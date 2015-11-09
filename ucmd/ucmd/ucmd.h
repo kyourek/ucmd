@@ -289,7 +289,7 @@ typedef ucBool (ucCmd_HandleInvalidCommandFunc)(const char *invalid_command, voi
  * Returns:
  *   A pointer to the command token of the structure.
  */
-uc_EXPORTED ucTok *ucCmd_get_cmd_tok(ucCmd*);
+uc_EXPORTED ucTok *ucCmd_get_cmd(ucCmd*);
 
 uc_EXPORTED ucTok *ucCmd_get_arg(ucCmd*);
 uc_EXPORTED ucBool ucCmd_get_arg_b(ucCmd*, ucBool default_value);

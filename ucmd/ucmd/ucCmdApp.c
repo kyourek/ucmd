@@ -25,7 +25,7 @@ static const char *help(ucCmd *cmd, void *state) {
     assert(s);
 
     cmd_opt = s->cmd_opt;
-    arg_tok = ucCmdTok_get_arg(ucCmd_get_cmd_tok(cmd));
+    arg_tok = ucCmdTok_get_arg(ucCmd_get_cmd(cmd));
     if (arg_tok) {
         cmd_opt = ucCmdOpt_find_by_name(cmd_opt, arg_tok);
         if (cmd_opt) {

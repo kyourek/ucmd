@@ -59,11 +59,11 @@ uc_TEST(setup)
     ucTestGroup_setup_test(p, prior, after);
 uc_PASS
 
-uc_TEST(ucCmd_get_cmd_tok_returns_cmd_tok)
+uc_TEST(ucCmd_get_cmd_returns_cmd_tok)
     ucCmd c;
     ucCmdTok *t = "token";
     c.cmd_tok = t;
-    uc_TRUE(t == ucCmd_get_cmd_tok(&c));
+    uc_TRUE(t == ucCmd_get_cmd(&c));
 uc_PASS
 
 uc_TEST(ucCmd_set_cmd_tok_sets_cmd_tok)
@@ -663,7 +663,7 @@ uc_TEST_GROUP(ucCmd, setup,
     ucCmd_get_arg_x_f_returns_default_value_if_arg_is_not_numeric,
     ucCmd_get_arg_x_f_returns_default_value_if_arg_does_not_exist,
     ucCmd_set_cmd_tok_sets_cmd_tok,
-    ucCmd_get_cmd_tok_returns_cmd_tok,
+    ucCmd_get_cmd_returns_cmd_tok,
     ucCmd_get_switch_arg_returns_arg_tok_of_switch,
     ucCmd_get_switch_arg_returns_null_if_arg_does_not_exist,
     ucCmd_get_switch_arg_returns_null_if_switch_does_not_exist,
