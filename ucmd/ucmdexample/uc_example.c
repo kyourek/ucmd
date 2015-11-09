@@ -2,32 +2,29 @@
 #include "ucmdexample.h"
 
 static const char *cmd(ucCmdLine *cmd, void *state) {
-    ucCmdTok *cmd_tok;
-    ucArgTok *arg_tok;
-    ucSwitchTok *switch_tok;
-
-    cmd_tok = ucCmdLine_get_cmd_tok(cmd);
+    int i, j;
+    ucTok *arg_tok, *switch_tok;
     
-    arg_tok = ucCmdTok_get_arg(cmd_tok);
+    i = 0;
+    arg_tok = ucCmdLine_get_arg(cmd);
     while (arg_tok) {
-
         ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", ucTok_get_value((ucTok*)arg_tok)));
-        arg_tok = ucArgTok_get_next(arg_tok);
+        arg_tok = ucCmdLine_get_arg_x(cmd, ++i);
     }
 
-    switch_tok = ucCmdTok_get_switch(cmd_tok);
+    i = 0;
+    switch_tok = ucCmdLine_get_switch(cmd);
     while (switch_tok) {
-
         ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found switch: %s", ucTok_get_value((ucTok*)switch_tok)));
 
-        arg_tok = ucSwitchTok_get_arg(switch_tok);
+        j = 0;
+        arg_tok = ucCmdLine_get_switch_arg(cmd, switch_tok);
         while (arg_tok) {
-
             ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", ucTok_get_value((ucTok*)arg_tok)));
-            arg_tok = ucArgTok_get_next(arg_tok);
+            arg_tok = ucCmdLine_get_switch_arg_x(cmd, switch_tok, ++j);
         }
 
-        switch_tok = ucSwitchTok_get_next(switch_tok);
+        switch_tok = ucCmdLine_get_switch_x(cmd, ++i);
     }
 
     return NULL;

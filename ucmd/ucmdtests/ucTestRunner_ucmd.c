@@ -14,5 +14,4 @@ uc_TEST_RUNNER(ucmd,
     &ucTestGroup_ucTok,
     &ucTestGroup_ucCmdLineApp,
     &ucTestGroup_ucCmdLineOpt,
-    &ucTestGroup_ucCmdLine,
-    &ucTestGroup_ucCmdLineToks)
+    &ucTestGroup_ucCmdLine)

@@ -3,6 +3,7 @@
 
 static void print_func(const char *format, va_list va, void *state) {
     vprintf(format, va);
+    printf("%s", "\n");
 }
 
 static void close_func(void *state) {

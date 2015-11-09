@@ -31,6 +31,10 @@ void ucTestRunner_set_close(ucTestRunner *p, ucTestRunner_CloseFunc *value) {
     p->close = value;
 }
 
+void ucTestRunner_fail_true(ucTestRunner *p, const char *true) {
+    print(p, "Not true: %s", true);
+}
+
 int ucTestRunner_run_group(ucTestRunner *p, ucTestGroup *group) {
     int err;
     ucTestGroup_TestFunc **tests;
@@ -69,15 +73,15 @@ int ucTestRunner_run(ucTestRunner *p) {
     
     assert(p);
     
-    print(p, "Running %s tests...\n", p->name);
+    print(p, "Running %s tests...", p->name);
 
     for (groups = p->group; *groups; groups++) {
         err = ucTestRunner_run_group(p, **groups);
     }
 
-    print(p, "%d tests run\n", (p->failed_test + p->passed_test));
-    print(p, "%d tests passed\n", p->passed_test);
-    print(p, "%d tests failed\n", p->failed_test);
+    print(p, "%d tests run", (p->failed_test + p->passed_test));
+    print(p, "%d tests passed", p->passed_test);
+    print(p, "%d tests failed", p->failed_test);
     close(p);
 
     return -(p->failed_test);

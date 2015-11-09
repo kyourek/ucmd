@@ -67,8 +67,8 @@ static void copy_name(const char *source, char *dest) {
 }
 
 static const char *name(ucCmdLine *cmd, void *state) {
+    ucTok *name_arg;
     AppState *my_state;
-    ucArgTok *name_arg;
 
     my_state = (AppState*)state;
     if (!my_state) return "Oops... NULL pointer!";
@@ -80,7 +80,7 @@ static const char *name(ucCmdLine *cmd, void *state) {
 
     if (ucCmdLine_find_switch(cmd, "-last")) {
         name_arg = ucCmdLine_get_switch_arg(cmd, "-last");
-        copy_name(ucTok_get_value(name_arg), my_state->last_name);
+        copy_name(name_arg, my_state->last_name);
     }
 
     return ucCmdLine_format_response(
@@ -91,12 +91,11 @@ static const char *name(ucCmdLine *cmd, void *state) {
 }
 
 static const char *say(ucCmdLine *cmd, void *state) {
-    AppState *my_state = (struct AppState*)state;
+    ucTok *phrase; 
+    AppState *my_state;
 
-    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(cmd);
-    ucArgTok *arg_tok = ucCmdTok_get_arg(cmd_tok);
-
-    const char *phrase = ucTok_get_value(arg_tok);
+    phrase = ucCmdLine_get_arg(cmd);
+    my_state = (struct AppState*)state;
 
     ucCmdLine_respond(cmd, ucCmdLine_format_response(
         cmd,

@@ -30,7 +30,16 @@
 
 #define     uc_PASS                                 return 0; }
 #define     uc_FAIL()                               do { return -1; } while (0)
-#define     uc_TRUE(EXPRESSION)                     do { if (!(EXPRESSION)) { return -1; } } while (0)
+
+#define     uc_TRUE(EXPRESSION)                     \
+    do {                                            \
+        if (!(EXPRESSION)) {                        \
+            ucTestRunner_fail_true(                 \
+                ucTestRunner_instance,              \
+                #EXPRESSION);                       \
+            return -1;                              \
+        }                                           \
+    } while (0)                                     \
 
 #define     uc_TEST(NAME, ...)                      \
     static                                          \
@@ -99,6 +108,7 @@ uc_EXPORTED void                                    ucTestGroup_setup_test(ucTes
 
 typedef     void                                    ucTestRunner_CloseFunc(void *state);
 typedef     void                                    ucTestRunner_PrintFunc(const char *format, va_list va, void *state);
+uc_EXPORTED void                                    ucTestRunner_fail_true(ucTestRunner*, const char *assertion);
 uc_EXPORTED ucTestRunner*                           ucTestRunner_instance;
 uc_EXPORTED int                                     ucTestRunner_run(ucTestRunner*);
 uc_EXPORTED void                                    ucTestRunner_set_close(ucTestRunner*, ucTestRunner_CloseFunc*);
@@ -120,7 +130,6 @@ uc_EXPORTED ucTestGroup*                            ucTestGroup_ucBool;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdLine;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdLineApp;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdLineOpt;
-uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdLineToks;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdParser;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdTok;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucOpt;

@@ -27,10 +27,17 @@
 #include    <string.h>
 #include    "ucmd.h"
 
+typedef     struct ucArgOptOwner                ucArgOptOwner;
+typedef     const char                          ucArgTok;
+typedef     const char                          ucArgTokOwner;
+typedef     const char                          ucCmdTok;
+typedef     const char                          ucSwitchTok;
+
             struct                              ucCmdParser {
             char                                placeholder; };
 
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
+uc_EXPORTED void                                ucOpt_send_help(ucOpt*, ucCmdLine *cmd, const char *prefix);
             struct                              ucOpt {
             const char*                         name;
             const char*                         desc;
@@ -50,10 +57,22 @@ uc_EXPORTED ucArgOpt*                           ucArgOpt_init(ucArgOpt*, const c
             ucArgOpt*                           next; };            
 
 uc_EXPORTED const char*                         ucArgOptOwner_format_validation_err(ucArgOptOwner*, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name);
+uc_EXPORTED ucArgOpt*                           ucArgOptOwner_get_arg_opt(ucArgOptOwner*);
 uc_EXPORTED ucArgOptOwner*                      ucArgOptOwner_init(ucArgOptOwner*, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt);
             struct                              ucArgOptOwner {
             ucOpt                               base;
             ucArgOpt*                           arg_opt; };
+
+uc_EXPORTED ucArgTok*                           ucArgTok_get_next(ucArgTok*);
+uc_EXPORTED ucArgTok*                           ucArgTok_get_index(ucArgTok*, int index);
+uc_EXPORTED int                                 ucArgTok_count(ucArgTok*);
+uc_EXPORTED ucArgTok*                           ucArgTok_find(ucArgTok*, const char *arg_value);
+uc_EXPORTED ucBool                              ucArgTok_contains(ucArgTok*, const char *arg_value);
+
+uc_EXPORTED ucArgTok*                           ucArgTokOwner_get_arg(ucArgTokOwner*);
+
+uc_EXPORTED ucArgTok*                           ucCmdTok_get_arg(ucCmdTok*);
+uc_EXPORTED ucSwitchTok*                        ucCmdTok_get_switch(ucCmdTok*);
 
 uc_EXPORTED const char*                         ucSwitchOpt_format_validation_err(ucSwitchOpt*, ucCmdLine *cmd, ucSwitchTok *switch_tok);
 uc_EXPORTED ucSwitchOpt*                        ucSwitchOpt_init(ucSwitchOpt*, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, ucSwitchOpt *next);
@@ -61,8 +80,17 @@ uc_EXPORTED ucSwitchOpt*                        ucSwitchOpt_init(ucSwitchOpt*, c
             ucArgOptOwner                       base;
             ucSwitchOpt*                        next; };
 
+uc_EXPORTED ucSwitchTok*                        ucSwitchTok_get_index(ucSwitchTok*, int index);
+uc_EXPORTED ucSwitchTok*                        ucSwitchTok_get_next(ucSwitchTok*);
+uc_EXPORTED int                                 ucSwitchTok_count(ucSwitchTok*);
+uc_EXPORTED ucSwitchTok*                        ucSwitchTok_find(ucSwitchTok*, const char *switch_name);
+uc_EXPORTED ucBool                              ucSwitchTok_contains(ucSwitchTok*, const char *switch_name);
+uc_EXPORTED ucArgTok*                           ucSwitchTok_get_arg(ucSwitchTok*);
+
+uc_EXPORTED void                                ucCmdLine_acknowledge_command(ucCmdLine*);
 uc_EXPORTED ucBool                              ucCmdLine_handle_invalid_command(ucCmdLine*, const char *invalid_command);
 uc_EXPORTED ucCmdLine*                          ucCmdLine_init(ucCmdLine*);
+uc_EXPORTED void                                ucCmdLine_terminate_response(ucCmdLine*);
             struct                              ucCmdLine {
             ucCmdTok*                           cmd_tok;
             ucCmdLine_TransmitFunc*             transmit;
@@ -79,6 +107,9 @@ uc_EXPORTED ucCmdLine*                          ucCmdLine_init(ucCmdLine*);
 
 uc_EXPORTED const char*                         ucCmdLineOpt_format_validation_err(ucCmdLineOpt*, ucCmdLine *cmd);
 uc_EXPORTED ucCmdLineOpt*                       ucCmdLineOpt_init(ucCmdLineOpt*, ucCmdLineOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next);
+uc_EXPORTED const char*                         ucCmdLineOpt_process(ucCmdLineOpt*, ucCmdLine *cmd);
+uc_EXPORTED void                                ucCmdLineOpt_send_help(ucCmdLineOpt*, ucCmdLine *cmd);
+uc_EXPORTED void                                ucCmdLineOpt_send_usage(ucCmdLineOpt*, ucCmdLine *cmd);
             struct                              ucCmdLineOpt {
             ucArgOptOwner                       base;
             ucCmdLineOpt_WorkFunc*              work;

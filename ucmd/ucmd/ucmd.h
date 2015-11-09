@@ -255,215 +255,6 @@ uc_EXPORTED const char *ucTok_get_value(ucTok*);
 
 /*
  * Summary:
- *   An argument token. This type is a child of the
- *   base token type. All functions that take an 
- *   instance of the base type can be used with an 
- *   instance of this type.
- */
-typedef const char ucArgTok;
-
-/*
- * Summary:
- *   Gets the next argument after the given argument.
- * Returns:
- *   The next argument in the list.
- */
-uc_EXPORTED ucArgTok *ucArgTok_get_next(ucArgTok*);
-
-uc_EXPORTED ucArgTok *ucArgTok_get_index(ucArgTok*, int index);
-
-/*
- * Summary:
- *   Counts the number of arguments in the linked list.
- * Returns:
- *   The number of arguments in the list.
- */
-uc_EXPORTED int ucArgTok_count(ucArgTok*);
-
-/*
- * Summary:
- *   Finds the argument in the list with the specified value.
- * Parameters:
- *   arg_value: The value of the argument to find.
- * Returns:
- *   The argument with the specified value, or NULL if none exists.
- */
-uc_EXPORTED ucArgTok *ucArgTok_find(ucArgTok*, const char *arg_value);
-
-/*
- * Summary:
- *   Gets a value indicating whether or not the value exists in
- *   the argument list.
- * Parameters:
- *   arg_value: The value of the argument to be found.
- * Returns:
- *   ucBool_true if an argument token with the given value is found.
- *   Otherwise, ucBool_false.
- */
-uc_EXPORTED ucBool ucArgTok_contains(ucArgTok*, const char *arg_value);
-
-/*
- * Summary:
- *   Type definition for tokens (i.e. switch and command tokens)
- *   that contain arguments. This type is a child of the base
- *   token type. All functions that take an instance of the base
- *   type can be used with an instance of this type.
- */
-typedef const char ucArgTokOwner;
-
-/*
- * Summary
- *   Gets the first argument that belongs to the given owner.
- * Returns:
- *   The first argument that belongs to the owner, or NULL if
- *   no arguments exist.
- */
-uc_EXPORTED ucArgTok *ucArgTokOwner_get_arg(ucArgTokOwner*);
-
-/*
- * Summary:
- *   A switch token. This type is a child of the
- *   base token type. All functions that take an 
- *   instance of the base type can be used with an 
- *   instance of this type.
- */
-typedef const char ucSwitchTok;
-
-/*
- * Summary:
- *   Gets the next switch token after the given token.
- * Returns:
- *   The next switch token after the given token.
- */
-uc_EXPORTED ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok*);
-
-/*
- * Summary:
- *   Counts the number of switches in the linked list.
- * Returns:
- *   The number of switches in the list.
- */
-uc_EXPORTED int ucSwitchTok_count(ucSwitchTok*);
-
-/*
- * Summary:
- *   Finds the switch with the specified value.
- * Parameters:
- *   switch_name: The value of the switch to be found.
- * Returns:
- *   The switch with the specified value, or NULL if none exist.
- */
-uc_EXPORTED ucSwitchTok *ucSwitchTok_find(ucSwitchTok*, const char *switch_name);
-
-/*
- * Summary:
- *   Gets a value indicating whether or not a value exists in the switch list.
- * Parameters:
- *   switch_name: The value of the switch to be found.
- * Returns:
- *   ucBool_true if a switch with the given value was found in the list. Otherwise,
- *   ucBool_false.
- */
-uc_EXPORTED ucBool ucSwitchTok_contains(ucSwitchTok*, const char *switch_name);
-
-/*
- * Summary:
- *   Gets the first argument token of the switch.
- * Returns:
- *   A pointer to the first argument of the switch, or NULL
- *   if no arguments exist.
- */
-uc_EXPORTED ucArgTok *ucSwitchTok_get_arg(ucSwitchTok*);
-
-/*
- * Summary:
- *   Type definition for a command token. This is
- *   the first token (the command part) in a list
- *   of tokens. This type is a child of the base
- *   token type. All functions that take an instance
- *   of the base type can be used with an instance
- *   of this type.
- */
-typedef const char ucCmdTok;
-
-/*
- * Summary:
- *   Gets the first argument of the command.
- * Returns:
- *   A pointer to the first argument token, or NULL if no arguments
- *   exist for the command.
- */
-uc_EXPORTED ucArgTok *ucCmdTok_get_arg(ucCmdTok*);
-
-/*
- * Summary:
- *   Gets the first switch of the command.
- * Returns:
- *   A pointer to the first switch token of the command, or NULL
- *   if no switches exist.
- */
-uc_EXPORTED ucSwitchTok *ucCmdTok_get_switch(ucCmdTok*);
-
-/*
- * Summary:
- *   A group of tokens that represent the first
- *   of each token type in a command.
- */
-typedef struct ucCmdLineToks {
-
-    /*
-     * Summary:
-     *   The command token of the command. This token's
-     *   value is the invoked command.
-     */
-    ucCmdTok *cmd_tok;
-
-    /*
-     * Summary:
-     *   The command's first argument token, or
-     *   NULL if no arguments exist.
-     */
-    ucArgTok *arg_tok;
-
-    /*
-     * Summary:
-     *   The command's first switch token, or
-     *   NULL if no switches exist.
-     */
-    ucSwitchTok *switch_tok;
-
-} ucCmdLineToks;
-
-/*
- * Summary:
- *   Gets the command token of the command. This token's
- *   value is the invoked command.
- * Returns:
- *   A pointer to the command token.
- */
-uc_EXPORTED ucCmdTok *ucCmdLineToks_get_cmd_tok(ucCmdLineToks*);
-
-/*
- * Summary:
- *   The command's first argument token, or
- *   NULL if no arguments exist.
- * Returns:
- *   A pointer to the argument token, or NULL if no argument
- *   tokens exist.
- */
-uc_EXPORTED ucArgTok *ucCmdLineToks_get_arg_tok(ucCmdLineToks*);
-
-/*
- * Summary:
- *   The command's first switch token, or
- *   NULL if no switches exist.
- * Returns:
- *   A pointer to the switch token, or NULL if no switch tokens exist.
- */
-uc_EXPORTED ucSwitchTok *ucCmdLineToks_get_switch_tok(ucCmdLineToks*);
-
-/*
- * Summary:
  *   A command structure. This structure consists
  *   of the parsed command and the ability to respond.
  */
@@ -510,21 +301,31 @@ typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command,
  * Returns:
  *   A pointer to the command token of the structure.
  */
-uc_EXPORTED ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine*);
+uc_EXPORTED ucTok *ucCmdLine_get_cmd_tok(ucCmdLine*);
 
-uc_EXPORTED ucArgTok *ucCmdLine_get_arg(ucCmdLine*);
+uc_EXPORTED ucTok *ucCmdLine_get_arg(ucCmdLine*);
+uc_EXPORTED ucBool ucCmdLine_get_arg_b(ucCmdLine*, ucBool default_value);
+uc_EXPORTED int ucCmdLine_get_arg_d(ucCmdLine*, int default_value);
+uc_EXPORTED double ucCmdLine_get_arg_f(ucCmdLine*, double default_value);
+uc_EXPORTED ucTok *ucCmdLine_get_arg_x(ucCmdLine*, int arg_index);
+uc_EXPORTED ucBool ucCmdLine_get_arg_x_b(ucCmdLine*, int arg_index, ucBool default_value);
+uc_EXPORTED int ucCmdLine_get_arg_x_d(ucCmdLine*, int arg_index, int default_value);
+uc_EXPORTED double ucCmdLine_get_arg_x_f(ucCmdLine*, int arg_index, double default_value);
 
-uc_EXPORTED ucSwitchTok *ucCmdLine_get_switch(ucCmdLine*);
+uc_EXPORTED ucTok *ucCmdLine_get_switch(ucCmdLine*);
+uc_EXPORTED ucTok *ucCmdLine_get_switch_x(ucCmdLine*, int switch_index);
 
-uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
+uc_EXPORTED ucTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
 uc_EXPORTED int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value);
+uc_EXPORTED int ucCmdLine_get_switch_arg_x_d(ucCmdLine *p, const char *switch_name, int arg_index, int default_value);
 uc_EXPORTED double ucCmdLine_get_switch_arg_f(ucCmdLine *p, const char *switch_name, double default_value);
+uc_EXPORTED double ucCmdLine_get_switch_arg_x_f(ucCmdLine *p, const char *switch_name, int arg_index, double default_value);
 
 uc_EXPORTED ucBool ucCmdLine_get_switch_arg_b(ucCmdLine *p, const char *switch_name, ucBool default_value);
-uc_EXPORTED ucArgTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index);
+uc_EXPORTED ucTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index);
 uc_EXPORTED ucBool ucCmdLine_get_switch_arg_x_b(ucCmdLine *p, const char *switch_name, int arg_index, ucBool default_value);
 
-uc_EXPORTED ucSwitchTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
+uc_EXPORTED ucTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
 
 /*
  * Summary:
@@ -532,17 +333,7 @@ uc_EXPORTED ucSwitchTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_na
  * Parameters:
  *   value: The command token.
  */
-uc_EXPORTED void ucCmdLine_set_cmd_tok(ucCmdLine*, ucCmdTok *value);
-
-/*
- * Summary:
- *   Fills the buffer with the specified tokens of the command structure.
- * Parameters:
- *   buffer: A pointer to the token structure whose properties will be set per the command.
- * Returns:
- *   A pointer to the buffer.
- */
-uc_EXPORTED ucCmdLineToks *ucCmdLine_get_cmd_toks(ucCmdLine*, ucCmdLineToks *buffer);
+uc_EXPORTED void ucCmdLine_set_cmd_tok(ucCmdLine*, ucTok *value);
 
 /*
  * Summary:
@@ -679,12 +470,12 @@ uc_EXPORTED void ucCmdLine_set_is_quiet(ucCmdLine*, ucBool value);
  */
 uc_EXPORTED ucBool ucCmdLine_get_is_quiet(ucCmdLine*);
 
-uc_EXPORTED void            ucCmdLine_acknowledge_command(ucCmdLine*);
+
 uc_EXPORTED const char*     ucCmdLine_get_command_acknowledgment(ucCmdLine*);
 uc_EXPORTED const char*     ucCmdLine_get_response_terminator(ucCmdLine*);
 uc_EXPORTED void            ucCmdLine_set_response_terminator(ucCmdLine*, const char *value);
 uc_EXPORTED void            ucCmdLine_set_command_acknowledgment(ucCmdLine*, const char *value);
-uc_EXPORTED void            ucCmdLine_terminate_response(ucCmdLine*);
+
 
 /*
  * Summary:
@@ -716,17 +507,6 @@ uc_EXPORTED const char *ucOpt_get_desc(ucOpt*);
  *   ucBool_true if the option is required. Otherwise, ucBool_false.
  */
 uc_EXPORTED ucBool ucOpt_is_required(ucOpt*);
-
-/*
- * Summary:
- *   Uses the provided command structure to send help information
- *   for this option.
- * Parameters:
- *   cmd: A pointer to the command structure used to respond
- *        with the help information.
- *   prefix: A string used to prefix the help information.
- */
-uc_EXPORTED void ucOpt_send_help(ucOpt*, ucCmdLine *cmd, const char *prefix);
 
 /*
  * Summary:
@@ -892,22 +672,6 @@ uc_EXPORTED void ucArgOpt_destroy_chain(ucArgOpt*);
 
 /*
  * Summary:
- *   Base structure for options (switches and commands)
- *   that contain argument options. This type is a child
- *   of the base option type.
- */
-typedef struct ucArgOptOwner ucArgOptOwner;
-
-/*
- * Summary:
- *   Gets the first argument option of the given option owner.
- * Returns:
- *   A pointer to the first argument option of the given option owner.
- */
-uc_EXPORTED ucArgOpt *ucArgOptOwner_get_arg_opt(ucArgOptOwner*);
-
-/*
- * Summary:
  *   A command switch option. This type is a child
  *   of the base option type.
  */
@@ -1006,7 +770,7 @@ uc_EXPORTED void ucCmdParser_destroy(ucCmdParser *p);
  *   A pointer to the command token that was parsed, or NULL if an
  *   error occurred.
  */
-uc_EXPORTED ucCmdTok *ucCmdParser_parse(ucCmdParser*, char *cmd);
+uc_EXPORTED ucTok *ucCmdParser_parse(ucCmdParser*, char *cmd);
 
 /*
  * Summary:
@@ -1110,34 +874,6 @@ uc_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt*);
  *   and switch-argument options is also released.
  */
 uc_EXPORTED void ucCmdLineOpt_destroy_chain(ucCmdLineOpt*);
-
-/*
- * Summary:
- *   Invokes the function of the command option that matches the command structure.
- * Parameters:
- *   cmd: The command structure whose option is invoked.
- * Returns:
- *   The response to the command.
- */
-uc_EXPORTED const char *ucCmdLineOpt_process(ucCmdLineOpt*, ucCmdLine *cmd);
-
-/*
- * Summary:
- *   Uses the provided command structure to respond with a usage string 
- *   for this command option.
- * Parameters:
- *   cmd: The command structure used to respond with the usage string.
- */
-uc_EXPORTED void ucCmdLineOpt_send_usage(ucCmdLineOpt*, ucCmdLine *cmd);
-
-/*
- * Summary:
- *   Uses the provided command structure to respond with help information
- *   for the this command option.
- * Parameters:
- *   cmd: The command structure used to respond with the help information.
- */
-uc_EXPORTED void ucCmdLineOpt_send_help(ucCmdLineOpt*, ucCmdLine *cmd);
 
 /*
  * Summary:

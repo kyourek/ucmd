@@ -15,6 +15,12 @@ ucSwitchTok *ucSwitchTok_get_next(ucSwitchTok *p) {
     return NULL;
 }
 
+ucSwitchTok *ucSwitchTok_get_index(ucSwitchTok *p, int index) {
+    assert(p);
+    for (; p && index; p = ucSwitchTok_get_next(p), index--);
+    return p;
+}
+
 int ucSwitchTok_count(ucSwitchTok* p) {
     int count;
     assert(p);

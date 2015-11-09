@@ -46,9 +46,6 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineOpt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdLineToks.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdParser.c">
       <Filter>source</Filter>
     </ClCompile>

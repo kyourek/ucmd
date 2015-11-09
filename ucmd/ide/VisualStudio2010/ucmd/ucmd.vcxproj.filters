@@ -37,9 +37,6 @@
     <ClCompile Include="..\..\..\ucmd\ucCmdParser.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdLineToks.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucCmdLineOpt.c">
       <Filter>source</Filter>
     </ClCompile>
