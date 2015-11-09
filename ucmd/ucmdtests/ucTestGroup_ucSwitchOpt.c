@@ -1,15 +1,15 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
-static ucCmdLine *cmd_line;
+static ucCmd *cmd_line;
 
 uc_TEST(prior)
-    cmd_line = ucCmdLine_create();
+    cmd_line = ucCmd_create();
     assert(cmd_line);
 uc_PASS
 
 uc_TEST(after)
-    ucCmdLine_destroy(cmd_line);
+    ucCmd_destroy(cmd_line);
 uc_PASS
 
 uc_TEST(setup)
@@ -122,7 +122,7 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_catches_required_switch)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
@@ -136,7 +136,7 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_catches_required_arg)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("a", NULL, NULL);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -152,7 +152,7 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_allows_multiple_arguments)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("a", NULL, 0, 3);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 

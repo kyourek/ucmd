@@ -1,39 +1,39 @@
 #include <stddef.h>
 #include "ucmdexample.h"
 
-static const char *cmd(ucCmdLine *cmd, void *state) {
+static const char *cmd(ucCmd *cmd, void *state) {
     int i, j;
     ucTok *arg_tok, *switch_tok;
     
     i = 0;
-    arg_tok = ucCmdLine_get_arg(cmd);
+    arg_tok = ucCmd_get_arg(cmd);
     while (arg_tok) {
-        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", arg_tok));
-        arg_tok = ucCmdLine_get_arg_x(cmd, ++i);
+        ucCmd_respond(cmd, ucCmd_format_response(cmd, "Found argument: %s", arg_tok));
+        arg_tok = ucCmd_get_arg_x(cmd, ++i);
     }
 
     i = 0;
-    switch_tok = ucCmdLine_get_switch(cmd);
+    switch_tok = ucCmd_get_switch(cmd);
     while (switch_tok) {
-        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found switch: %s", switch_tok));
+        ucCmd_respond(cmd, ucCmd_format_response(cmd, "Found switch: %s", switch_tok));
 
         j = 0;
-        arg_tok = ucCmdLine_get_switch_arg(cmd, switch_tok);
+        arg_tok = ucCmd_get_switch_arg(cmd, switch_tok);
         while (arg_tok) {
-            ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", arg_tok));
-            arg_tok = ucCmdLine_get_switch_arg_x(cmd, switch_tok, ++j);
+            ucCmd_respond(cmd, ucCmd_format_response(cmd, "Found argument: %s", arg_tok));
+            arg_tok = ucCmd_get_switch_arg_x(cmd, switch_tok, ++j);
         }
 
-        switch_tok = ucCmdLine_get_switch_x(cmd, ++i);
+        switch_tok = ucCmd_get_switch_x(cmd, ++i);
     }
 
     return NULL;
 }
 
-void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *receive) {
+void uc_example(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive) {
 
-    ucCmdLineOpt *commands = 
-        ucCmdLineOpt_create(
+    ucCmdOpt *commands = 
+        ucCmdOpt_create(
             cmd,
             NULL,
             "cmd",
@@ -62,17 +62,17 @@ void uc_example(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *rece
             NULL)),
         NULL);
 
-    ucCmdLineApp *app = ucCmdLineApp_create();
-    ucCmdLine *cmd = ucCmdLineApp_get_cmd(app);
+    ucCmdApp *app = ucCmdApp_create();
+    ucCmd *cmd = ucCmdApp_get_cmd(app);
 
-    ucCmdLine_set_transmit(cmd, transmit);
-    ucCmdLine_set_command_acknowledgment(cmd, "\\\\\\\\\\\\\\");
-    ucCmdLine_set_response_terminator(cmd, "///////");
+    ucCmd_set_transmit(cmd, transmit);
+    ucCmd_set_command_acknowledgment(cmd, "\\\\\\\\\\\\\\");
+    ucCmd_set_response_terminator(cmd, "///////");
 
-    ucCmdLineApp_set_receive(app, receive);
+    ucCmdApp_set_receive(app, receive);
 
-    ucCmdLineApp_run(app, commands);
+    ucCmdApp_run(app, commands);
 
-    ucCmdLineApp_destroy(app);
-    ucCmdLineOpt_destroy_chain(commands);
+    ucCmdApp_destroy(app);
+    ucCmdOpt_destroy_chain(commands);
 }

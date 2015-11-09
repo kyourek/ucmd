@@ -65,49 +65,49 @@
 #define ucCmdParser_COUNT 1
 #endif
 
-#ifndef ucCmdLine_COUNT
-/** @brief The number of instances of ucCmdLine available to the program.
+#ifndef ucCmd_COUNT
+/** @brief The number of instances of ucCmd available to the program.
  *
  *  When static memory allocation is used, this number defines the number of
- *  instances of type ucCmdLine that can be created. Since only one of these
+ *  instances of type ucCmd that can be created. Since only one of these
  *  objects is required for an application, this number is typically 1.
  */
-#define ucCmdLine_COUNT 1
+#define ucCmd_COUNT 1
 #endif
 
-#ifndef ucCmdLineApp_COUNT
-/** @brief The number of instances of ucCmdLineApp available to the program.
+#ifndef ucCmdApp_COUNT
+/** @brief The number of instances of ucCmdApp available to the program.
  *
  *  When static memory allocation is used, this number defines the number of
- *  instances of type ucCmdLineApp that can be created. Since only one of these
+ *  instances of type ucCmdApp that can be created. Since only one of these
  *  objects is required for an application, this number is typically 1.
  */
-#define ucCmdLineApp_COUNT 1
+#define ucCmdApp_COUNT 1
 #endif
 
-#ifndef ucCmdLineApp_CMD_STR_SIZE
+#ifndef ucCmdApp_CMD_STR_SIZE
 /** @brief The size of the command buffer when using the command-line application framework.
  *
  *  All entered commands must have a size equal to or less than this buffer's size.
  */
-#define ucCmdLineApp_CMD_STR_SIZE 200
+#define ucCmdApp_CMD_STR_SIZE 200
 #endif
 
-#ifndef ucCmdLine_RESPONSE_SIZE
+#ifndef ucCmd_RESPONSE_SIZE
 /** @brief The size of the command response buffer.
  *
  *  All response strings must have a size equal to or less than the size of this buffer to 
  *  avoid truncation.
  */
-#define ucCmdLine_RESPONSE_SIZE 200
+#define ucCmd_RESPONSE_SIZE 200
 #endif
 
-#ifndef ucCmdLineOpt_COUNT
+#ifndef ucCmdOpt_COUNT
 /** @brief The number of command options that may be created.
  *
  *  The number of created command options must be equal to or less than this number.
  */
-#define ucCmdLineOpt_COUNT 10
+#define ucCmdOpt_COUNT 10
 #endif
 
 #ifndef ucSwitchOpt_COUNT
@@ -130,7 +130,7 @@
 /** @brief The maximum expected length of a single token in a command line.
  *
  */
-#define ucTok_LENGTH_MAX ucCmdLineApp_CMD_STR_SIZE
+#define ucTok_LENGTH_MAX ucCmdApp_CMD_STR_SIZE
 #endif
 
 #ifndef ucTok_BOOLEAN_TRUE
@@ -246,7 +246,7 @@ uc_EXPORTED ucTok *ucTok_get_next(ucTok*);
  *   A command structure. This structure consists
  *   of the parsed command and the ability to respond.
  */
-typedef struct ucCmdLine ucCmdLine;
+typedef struct ucCmd ucCmd;
 
 /*
  * Summary:
@@ -256,7 +256,7 @@ typedef struct ucCmdLine ucCmdLine;
  *   response: The string to be transmitted.
  *   state: A stateful object.
  */
-typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
+typedef void (ucCmd_TransmitFunc)(const char *response, void *state);
 
 /*
  * Summary:
@@ -267,7 +267,7 @@ typedef void (ucCmdLine_TransmitFunc)(const char *response, void *state);
  * Returns:
  *   ucBool_true if the command has been canceled. Otherwise, ucBool_false.
  */
-typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
+typedef ucBool (ucCmd_IsCanceledFunc)(void *state);
 
 /*
  * Summary:
@@ -281,7 +281,7 @@ typedef ucBool (ucCmdLine_IsCanceledFunc)(void *state);
  * Returns:
  *   ucBool_true if the invalid command was handeled. Otherwise, ucBool_false.
  */
-typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command, void *state);
+typedef ucBool (ucCmd_HandleInvalidCommandFunc)(const char *invalid_command, void *state);
 
 /*
  * Summary:
@@ -289,31 +289,31 @@ typedef ucBool (ucCmdLine_HandleInvalidCommandFunc)(const char *invalid_command,
  * Returns:
  *   A pointer to the command token of the structure.
  */
-uc_EXPORTED ucTok *ucCmdLine_get_cmd_tok(ucCmdLine*);
+uc_EXPORTED ucTok *ucCmd_get_cmd_tok(ucCmd*);
 
-uc_EXPORTED ucTok *ucCmdLine_get_arg(ucCmdLine*);
-uc_EXPORTED ucBool ucCmdLine_get_arg_b(ucCmdLine*, ucBool default_value);
-uc_EXPORTED int ucCmdLine_get_arg_d(ucCmdLine*, int default_value);
-uc_EXPORTED double ucCmdLine_get_arg_f(ucCmdLine*, double default_value);
-uc_EXPORTED ucTok *ucCmdLine_get_arg_x(ucCmdLine*, int arg_index);
-uc_EXPORTED ucBool ucCmdLine_get_arg_x_b(ucCmdLine*, int arg_index, ucBool default_value);
-uc_EXPORTED int ucCmdLine_get_arg_x_d(ucCmdLine*, int arg_index, int default_value);
-uc_EXPORTED double ucCmdLine_get_arg_x_f(ucCmdLine*, int arg_index, double default_value);
+uc_EXPORTED ucTok *ucCmd_get_arg(ucCmd*);
+uc_EXPORTED ucBool ucCmd_get_arg_b(ucCmd*, ucBool default_value);
+uc_EXPORTED int ucCmd_get_arg_d(ucCmd*, int default_value);
+uc_EXPORTED double ucCmd_get_arg_f(ucCmd*, double default_value);
+uc_EXPORTED ucTok *ucCmd_get_arg_x(ucCmd*, int arg_index);
+uc_EXPORTED ucBool ucCmd_get_arg_x_b(ucCmd*, int arg_index, ucBool default_value);
+uc_EXPORTED int ucCmd_get_arg_x_d(ucCmd*, int arg_index, int default_value);
+uc_EXPORTED double ucCmd_get_arg_x_f(ucCmd*, int arg_index, double default_value);
 
-uc_EXPORTED ucTok *ucCmdLine_get_switch(ucCmdLine*);
-uc_EXPORTED ucTok *ucCmdLine_get_switch_x(ucCmdLine*, int switch_index);
+uc_EXPORTED ucTok *ucCmd_get_switch(ucCmd*);
+uc_EXPORTED ucTok *ucCmd_get_switch_x(ucCmd*, int switch_index);
 
-uc_EXPORTED ucTok *ucCmdLine_get_switch_arg(ucCmdLine*, const char *switch_name);
-uc_EXPORTED int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value);
-uc_EXPORTED int ucCmdLine_get_switch_arg_x_d(ucCmdLine *p, const char *switch_name, int arg_index, int default_value);
-uc_EXPORTED double ucCmdLine_get_switch_arg_f(ucCmdLine *p, const char *switch_name, double default_value);
-uc_EXPORTED double ucCmdLine_get_switch_arg_x_f(ucCmdLine *p, const char *switch_name, int arg_index, double default_value);
+uc_EXPORTED ucTok *ucCmd_get_switch_arg(ucCmd*, const char *switch_name);
+uc_EXPORTED int ucCmd_get_switch_arg_d(ucCmd *p, const char *switch_name, int default_value);
+uc_EXPORTED int ucCmd_get_switch_arg_x_d(ucCmd *p, const char *switch_name, int arg_index, int default_value);
+uc_EXPORTED double ucCmd_get_switch_arg_f(ucCmd *p, const char *switch_name, double default_value);
+uc_EXPORTED double ucCmd_get_switch_arg_x_f(ucCmd *p, const char *switch_name, int arg_index, double default_value);
 
-uc_EXPORTED ucBool ucCmdLine_get_switch_arg_b(ucCmdLine *p, const char *switch_name, ucBool default_value);
-uc_EXPORTED ucTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index);
-uc_EXPORTED ucBool ucCmdLine_get_switch_arg_x_b(ucCmdLine *p, const char *switch_name, int arg_index, ucBool default_value);
+uc_EXPORTED ucBool ucCmd_get_switch_arg_b(ucCmd *p, const char *switch_name, ucBool default_value);
+uc_EXPORTED ucTok *ucCmd_get_switch_arg_x(ucCmd *p, const char *switch_name, int arg_index);
+uc_EXPORTED ucBool ucCmd_get_switch_arg_x_b(ucCmd *p, const char *switch_name, int arg_index, ucBool default_value);
 
-uc_EXPORTED ucTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
+uc_EXPORTED ucTok *ucCmd_find_switch(ucCmd*, const char *switch_name);
 
 /*
  * Summary:
@@ -321,7 +321,7 @@ uc_EXPORTED ucTok *ucCmdLine_find_switch(ucCmdLine*, const char *switch_name);
  * Parameters:
  *   value: The command token.
  */
-uc_EXPORTED void ucCmdLine_set_cmd_tok(ucCmdLine*, ucTok *value);
+uc_EXPORTED void ucCmd_set_cmd_tok(ucCmd*, ucTok *value);
 
 /*
  * Summary:
@@ -329,7 +329,7 @@ uc_EXPORTED void ucCmdLine_set_cmd_tok(ucCmdLine*, ucTok *value);
  * Parameters:
  *   value: A pointer to the function used to transmit responses.
  */
-uc_EXPORTED void ucCmdLine_set_transmit(ucCmdLine*, ucCmdLine_TransmitFunc *value);
+uc_EXPORTED void ucCmd_set_transmit(ucCmd*, ucCmd_TransmitFunc *value);
 
 /*
  * Summary:
@@ -337,7 +337,7 @@ uc_EXPORTED void ucCmdLine_set_transmit(ucCmdLine*, ucCmdLine_TransmitFunc *valu
  * Returns:
  *   A pointer to the function used by the structure to transmit responses.
  */
-uc_EXPORTED ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine*);
+uc_EXPORTED ucCmd_TransmitFunc *ucCmd_get_transmit(ucCmd*);
 
 /*
  * Summary:
@@ -345,7 +345,7 @@ uc_EXPORTED ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine*);
  * Returns:
  *   A pointer to the stateful object passed to the command's transmit function.
  */
-uc_EXPORTED void *ucCmdLine_get_transmit_state(ucCmdLine*);
+uc_EXPORTED void *ucCmd_get_transmit_state(ucCmd*);
 
 /*
  * Summary:
@@ -353,7 +353,7 @@ uc_EXPORTED void *ucCmdLine_get_transmit_state(ucCmdLine*);
  * Parameters:
  *   value: A pointer to the stateful object that is passed to the command's transmit function.
  */
-uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine*, void *value);
+uc_EXPORTED void ucCmd_set_transmit_state(ucCmd*, void *value);
 
 /*
  * Summary:
@@ -361,7 +361,7 @@ uc_EXPORTED void ucCmdLine_set_transmit_state(ucCmdLine*, void *value);
  * Returns:
  *   ucBool_true if the command has been canceled. Otherwise, ucBool_false.
  */
-uc_EXPORTED ucBool ucCmdLine_is_canceled(ucCmdLine*);
+uc_EXPORTED ucBool ucCmd_is_canceled(ucCmd*);
 
 /*
  * Summary:
@@ -369,7 +369,7 @@ uc_EXPORTED ucBool ucCmdLine_is_canceled(ucCmdLine*);
  * Parameters:
  *   value: A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED void ucCmdLine_set_is_canceled(ucCmdLine*, ucCmdLine_IsCanceledFunc *value);
+uc_EXPORTED void ucCmd_set_is_canceled(ucCmd*, ucCmd_IsCanceledFunc *value);
 
 /*
  * Summary:
@@ -377,7 +377,7 @@ uc_EXPORTED void ucCmdLine_set_is_canceled(ucCmdLine*, ucCmdLine_IsCanceledFunc 
  * Returns:
  *   A pointer to the function used to check for cancellation.
  */
-uc_EXPORTED ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine*);
+uc_EXPORTED ucCmd_IsCanceledFunc *ucCmd_get_is_canceled(ucCmd*);
 
 /*
  * Summary:
@@ -385,7 +385,7 @@ uc_EXPORTED ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine*);
  * Returns:
  *   A pointer to the stateful object passed to the command's cancellation function.
  */
-uc_EXPORTED void *ucCmdLine_get_is_canceled_state(ucCmdLine*);
+uc_EXPORTED void *ucCmd_get_is_canceled_state(ucCmd*);
 
 /*
  * Summary:
@@ -393,20 +393,20 @@ uc_EXPORTED void *ucCmdLine_get_is_canceled_state(ucCmdLine*);
  * Parameters:
  *   value: The stateful object passed to the command's cancellation function.
  */
-uc_EXPORTED void ucCmdLine_set_is_canceled_state(ucCmdLine*, void *value);
+uc_EXPORTED void ucCmd_set_is_canceled_state(ucCmd*, void *value);
 
-uc_EXPORTED void ucCmdLine_set_handle_invalid_command(ucCmdLine*, ucCmdLine_HandleInvalidCommandFunc *value);
+uc_EXPORTED void ucCmd_set_handle_invalid_command(ucCmd*, ucCmd_HandleInvalidCommandFunc *value);
 
-uc_EXPORTED ucCmdLine_HandleInvalidCommandFunc *ucCmdLine_get_handle_invalid_command(ucCmdLine*);
+uc_EXPORTED ucCmd_HandleInvalidCommandFunc *ucCmd_get_handle_invalid_command(ucCmd*);
 
-uc_EXPORTED void ucCmdLine_set_handle_invalid_command_state(ucCmdLine*, void *value);
+uc_EXPORTED void ucCmd_set_handle_invalid_command_state(ucCmd*, void *value);
 
-uc_EXPORTED void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine*);
+uc_EXPORTED void *ucCmd_get_handle_invalid_command_state(ucCmd*);
 
-uc_EXPORTED size_t ucCmdLine_get_response_size_max(ucCmdLine*);
+uc_EXPORTED size_t ucCmd_get_response_size_max(ucCmd*);
 
-uc_EXPORTED ucCmdLine *ucCmdLine_create(void);
-uc_EXPORTED void ucCmdLine_destroy(ucCmdLine*);
+uc_EXPORTED ucCmd *ucCmd_create(void);
+uc_EXPORTED void ucCmd_destroy(ucCmd*);
 
 /*
  * Summary:
@@ -417,7 +417,7 @@ uc_EXPORTED void ucCmdLine_destroy(ucCmdLine*);
  * Returns:
  *   The formatted string.
  */
-uc_EXPORTED const char *ucCmdLine_format_response(ucCmdLine*, const char *format, ...);
+uc_EXPORTED const char *ucCmd_format_response(ucCmd*, const char *format, ...);
 
 /*
  * Summary:
@@ -428,7 +428,7 @@ uc_EXPORTED const char *ucCmdLine_format_response(ucCmdLine*, const char *format
  * Returns:
  *   The formatted string.
  */
-uc_EXPORTED const char *ucCmdLine_format_response_va(ucCmdLine*, const char *format, va_list arg_list);
+uc_EXPORTED const char *ucCmd_format_response_va(ucCmd*, const char *format, va_list arg_list);
 
 /*
  * Summary
@@ -436,7 +436,7 @@ uc_EXPORTED const char *ucCmdLine_format_response_va(ucCmdLine*, const char *for
  * Parameters:
  *   response: The response string.
  */
-uc_EXPORTED void ucCmdLine_respond(ucCmdLine*, const char *response);
+uc_EXPORTED void ucCmd_respond(ucCmd*, const char *response);
 
 /*
  * Summary:
@@ -446,7 +446,7 @@ uc_EXPORTED void ucCmdLine_respond(ucCmdLine*, const char *response);
  *   value: A boolean true value if the command structure should not send
  *          any response strings. Otherwise, false.
  */
-uc_EXPORTED void ucCmdLine_set_is_quiet(ucCmdLine*, ucBool value);
+uc_EXPORTED void ucCmd_set_is_quiet(ucCmd*, ucBool value);
 
 /*
  * Summary:
@@ -456,13 +456,13 @@ uc_EXPORTED void ucCmdLine_set_is_quiet(ucCmdLine*, ucBool value);
  *   A boolean true value if the command structure is not sending any
  *   response strings. Otherwise, false.
  */
-uc_EXPORTED ucBool ucCmdLine_get_is_quiet(ucCmdLine*);
+uc_EXPORTED ucBool ucCmd_get_is_quiet(ucCmd*);
 
 
-uc_EXPORTED const char*     ucCmdLine_get_command_acknowledgment(ucCmdLine*);
-uc_EXPORTED const char*     ucCmdLine_get_response_terminator(ucCmdLine*);
-uc_EXPORTED void            ucCmdLine_set_response_terminator(ucCmdLine*, const char *value);
-uc_EXPORTED void            ucCmdLine_set_command_acknowledgment(ucCmdLine*, const char *value);
+uc_EXPORTED const char*     ucCmd_get_command_acknowledgment(ucCmd*);
+uc_EXPORTED const char*     ucCmd_get_response_terminator(ucCmd*);
+uc_EXPORTED void            ucCmd_set_response_terminator(ucCmd*, const char *value);
+uc_EXPORTED void            ucCmd_set_command_acknowledgment(ucCmd*, const char *value);
 
 
 /*
@@ -743,7 +743,7 @@ uc_EXPORTED void ucSwitchOpt_destroy_chain(ucSwitchOpt*);
  *   A command option. This type is a child of the
  *   base option type.
  */
-typedef struct ucCmdLineOpt ucCmdLineOpt;
+typedef struct ucCmdOpt ucCmdOpt;
 
 /*
  * Summary:
@@ -754,7 +754,7 @@ typedef struct ucCmdLineOpt ucCmdLineOpt;
  * Returns:
  *   A message that can be used to respond to the command.
  */
-typedef const char *(ucCmdLineOpt_WorkFunc)(ucCmdLine *cmd, void *state);
+typedef const char *(ucCmdOpt_WorkFunc)(ucCmd *cmd, void *state);
 
 /*
  * Summary:
@@ -770,7 +770,7 @@ typedef const char *(ucCmdLineOpt_WorkFunc)(ucCmdLine *cmd, void *state);
  * Returns:
  *   A pointer to the newly created command option.
  */
-uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_WorkFunc *work, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt* next);
+uc_EXPORTED ucCmdOpt *ucCmdOpt_create(ucCmdOpt_WorkFunc *work, void *state, const char *name, const char *desc, ucArgOpt *arg_opt, ucSwitchOpt *switch_opt, ucCmdOpt* next);
 
 /*
  * Summary:
@@ -778,7 +778,7 @@ uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_create(ucCmdLineOpt_WorkFunc *work, void 
  * Returns:
  *   A pointer to the next command option.
  */
-uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt*);
+uc_EXPORTED ucCmdOpt *ucCmdOpt_get_next(ucCmdOpt*);
 
 /*
  * Summary:
@@ -787,7 +787,7 @@ uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_get_next(ucCmdLineOpt*);
  *   A pointer to the first argument option of the command,
  *   or NULL if no argument options exist.
  */
-uc_EXPORTED ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt*);
+uc_EXPORTED ucArgOpt *ucCmdOpt_get_arg_opt(ucCmdOpt*);
 
 /*
  * Summary:
@@ -796,7 +796,7 @@ uc_EXPORTED ucArgOpt *ucCmdLineOpt_get_arg_opt(ucCmdLineOpt*);
  *   A pointer to the first switch option of the command option,
  *   or NULL if no switch options exist.
  */
-uc_EXPORTED ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt*);
+uc_EXPORTED ucSwitchOpt *ucCmdOpt_get_switch_opt(ucCmdOpt*);
 
 /*
  * Summary:
@@ -807,7 +807,7 @@ uc_EXPORTED ucSwitchOpt *ucCmdLineOpt_get_switch_opt(ucCmdLineOpt*);
  *   A pointer to the command option that matches the given name, or NULL
  *   if no option is found.
  */
-uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt*, const char *name);
+uc_EXPORTED ucCmdOpt *ucCmdOpt_find_by_name(ucCmdOpt*, const char *name);
 
 /*
  * Summary:
@@ -816,7 +816,7 @@ uc_EXPORTED ucCmdLineOpt *ucCmdLineOpt_find_by_name(ucCmdLineOpt*, const char *n
  * Returns:
  *   A pointer to the function invoked when the command option is processed.
  */
-uc_EXPORTED ucCmdLineOpt_WorkFunc *ucCmdLineOpt_get_work(ucCmdLineOpt*);
+uc_EXPORTED ucCmdOpt_WorkFunc *ucCmdOpt_get_work(ucCmdOpt*);
 
 /*
  * Summary:
@@ -825,13 +825,13 @@ uc_EXPORTED ucCmdLineOpt_WorkFunc *ucCmdLineOpt_get_work(ucCmdLineOpt*);
  * Returns:
  *   A pointer to the command option's state.
  */
-uc_EXPORTED void *ucCmdLineOpt_get_state(ucCmdLineOpt*);
+uc_EXPORTED void *ucCmdOpt_get_state(ucCmdOpt*);
 
 /*
  * Summary:
  *   Releases memory used by the command option.
  */
-uc_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt*);
+uc_EXPORTED void ucCmdOpt_destroy(ucCmdOpt*);
 
 /*
  * Summary:
@@ -839,13 +839,13 @@ uc_EXPORTED void ucCmdLineOpt_destroy(ucCmdLineOpt*);
  *   in the list. All memory used by any argument options, switch options,
  *   and switch-argument options is also released.
  */
-uc_EXPORTED void ucCmdLineOpt_destroy_chain(ucCmdLineOpt*);
+uc_EXPORTED void ucCmdOpt_destroy_chain(ucCmdOpt*);
 
 /*
  * Summary:
  *   An application that runs with a set of command options.
  */
-typedef struct ucCmdLineApp ucCmdLineApp;
+typedef struct ucCmdApp ucCmdApp;
 
 /*
  * Summary:
@@ -858,7 +858,7 @@ typedef struct ucCmdLineApp ucCmdLineApp;
  * Returns:
  *   The data that was received.
  */
-typedef char *(ucCmdLineApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
+typedef char *(ucCmdApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
 
 /*
  * Summary:
@@ -867,7 +867,7 @@ typedef char *(ucCmdLineApp_ReceiveFunc)(char *buf, size_t buf_size, void *state
  *   value: The escape string that, when returned in a response,
  *          causes the app to exit.
  */
-uc_EXPORTED void ucCmdLineApp_set_escape_response(ucCmdLineApp*, const char *value);
+uc_EXPORTED void ucCmdApp_set_escape_response(ucCmdApp*, const char *value);
 
 /*
  * Summary:
@@ -876,7 +876,7 @@ uc_EXPORTED void ucCmdLineApp_set_escape_response(ucCmdLineApp*, const char *val
  *   The escape string that, when returned in a response,
  *   causes the app to exit.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp*);
+uc_EXPORTED const char *ucCmdApp_get_escape_response(ucCmdApp*);
 
 /*
  * Summary:
@@ -884,10 +884,10 @@ uc_EXPORTED const char *ucCmdLineApp_get_escape_response(ucCmdLineApp*);
  * Parameters:
  *   cmd_opt: A pointer to the first command option for the app.
  */ 
-uc_EXPORTED void ucCmdLineApp_run(ucCmdLineApp*, ucCmdLineOpt *cmd_opt);
+uc_EXPORTED void ucCmdApp_run(ucCmdApp*, ucCmdOpt *cmd_opt);
 
-uc_EXPORTED ucCmdLineApp *ucCmdLineApp_create(void);
-uc_EXPORTED void ucCmdLineApp_destroy(ucCmdLineApp *p);
+uc_EXPORTED ucCmdApp *ucCmdApp_create(void);
+uc_EXPORTED void ucCmdApp_destroy(ucCmdApp *p);
 
 /*
  * Summary:
@@ -895,7 +895,7 @@ uc_EXPORTED void ucCmdLineApp_destroy(ucCmdLineApp *p);
  * Parameters:
  *   value: A pointer to the function used to receive data.
  */
-uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp*, ucCmdLineApp_ReceiveFunc *value);
+uc_EXPORTED void ucCmdApp_set_receive(ucCmdApp*, ucCmdApp_ReceiveFunc *value);
 
 /*
  * Summary:
@@ -903,7 +903,7 @@ uc_EXPORTED void ucCmdLineApp_set_receive(ucCmdLineApp*, ucCmdLineApp_ReceiveFun
  * Returns:
  *   A pointer to the function used to receive data.
  */ 
-uc_EXPORTED ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp*);
+uc_EXPORTED ucCmdApp_ReceiveFunc *ucCmdApp_get_receive(ucCmdApp*);
 
 /*
  * Summary:
@@ -911,7 +911,7 @@ uc_EXPORTED ucCmdLineApp_ReceiveFunc *ucCmdLineApp_get_receive(ucCmdLineApp*);
  * Returns:
  *   A pointer to the stateful object passed to the application's receive function.
  */
-uc_EXPORTED void *ucCmdLineApp_get_receive_state(ucCmdLineApp*);
+uc_EXPORTED void *ucCmdApp_get_receive_state(ucCmdApp*);
 
 /*
  * Summary:
@@ -919,7 +919,7 @@ uc_EXPORTED void *ucCmdLineApp_get_receive_state(ucCmdLineApp*);
  * Parameters:
  *   value: The stateful object passed to the application's receive function.
  */
-uc_EXPORTED void ucCmdLineApp_set_receive_state(ucCmdLineApp*, void *value);
+uc_EXPORTED void ucCmdApp_set_receive_state(ucCmdApp*, void *value);
 
 /*
  * Summary:
@@ -927,7 +927,7 @@ uc_EXPORTED void ucCmdLineApp_set_receive_state(ucCmdLineApp*, void *value);
  * Parameters:
  *   value: The value of the command that quits the application.
  */
-uc_EXPORTED void ucCmdLineApp_set_quit_command(ucCmdLineApp*, const char *value);
+uc_EXPORTED void ucCmdApp_set_quit_command(ucCmdApp*, const char *value);
 
 /*
  * Summary:
@@ -935,7 +935,7 @@ uc_EXPORTED void ucCmdLineApp_set_quit_command(ucCmdLineApp*, const char *value)
  * Returns:
  *   The value of the command that quits the application.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_quit_command(ucCmdLineApp*);
+uc_EXPORTED const char *ucCmdApp_get_quit_command(ucCmdApp*);
 
 /*
  * Summary:
@@ -943,7 +943,7 @@ uc_EXPORTED const char *ucCmdLineApp_get_quit_command(ucCmdLineApp*);
  * Parameters:
  *   value: The value of the command that shows help information.
  */
-uc_EXPORTED void ucCmdLineApp_set_help_command(ucCmdLineApp*, const char *value);
+uc_EXPORTED void ucCmdApp_set_help_command(ucCmdApp*, const char *value);
 
 /*
  * Summary:
@@ -951,7 +951,7 @@ uc_EXPORTED void ucCmdLineApp_set_help_command(ucCmdLineApp*, const char *value)
  * Returns:
  *   The value of the command that shows help information.
  */
-uc_EXPORTED const char *ucCmdLineApp_get_help_command(ucCmdLineApp*);
+uc_EXPORTED const char *ucCmdApp_get_help_command(ucCmdApp*);
 
 /*
  * Summary:
@@ -959,7 +959,7 @@ uc_EXPORTED const char *ucCmdLineApp_get_help_command(ucCmdLineApp*);
  * Returns:
  *   A pointer to the command structure used by the application.
  */
-uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
+uc_EXPORTED ucCmd *ucCmdApp_get_cmd(ucCmdApp*);
 
 /*
  * Summary:
@@ -967,6 +967,6 @@ uc_EXPORTED ucCmdLine *ucCmdLineApp_get_cmd(ucCmdLineApp*);
  * Returns:
  *   The size of the command-string buffer.
  */
-uc_EXPORTED size_t ucCmdLineApp_get_cmd_str_size_max(ucCmdLineApp *p);
+uc_EXPORTED size_t ucCmdApp_get_cmd_str_size_max(ucCmdApp *p);
 
 #endif

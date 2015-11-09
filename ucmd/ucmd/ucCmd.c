@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucCmdLine, ucCmdLine_COUNT);
+ucInstance_INIT(ucCmd, ucCmd_COUNT);
 
 static ucArgTok *get_arg_x(ucArgTokOwner *owner, int arg_index) {
     ucArgTok *arg_tok = NULL;
@@ -39,7 +39,7 @@ static double get_arg_x_f(ucArgTokOwner *owner, int arg_index, double default_va
     return default_value;
 }
 
-ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
+ucCmd *ucCmd_init(ucCmd *p) {
     assert(p);
     p->cmd_tok = NULL;
     p->command_acknowledgment = NULL;
@@ -54,25 +54,25 @@ ucCmdLine *ucCmdLine_init(ucCmdLine *p) {
     return p;
 }
 
-ucCmdLine *ucCmdLine_create(void) {
-    return ucCmdLine_init(ucInstance_create());
+ucCmd *ucCmd_create(void) {
+    return ucCmd_init(ucInstance_create());
 }
 
-void ucCmdLine_destroy(ucCmdLine *p) {
+void ucCmd_destroy(ucCmd *p) {
     ucInstance_destroy(p);
 }
 
-ucCmdTok *ucCmdLine_get_cmd_tok(ucCmdLine *p) {
+ucCmdTok *ucCmd_get_cmd_tok(ucCmd *p) {
     assert(p);
     return p->cmd_tok;
 }
 
-void ucCmdLine_set_cmd_tok(ucCmdLine *p, ucCmdTok *value) {
+void ucCmd_set_cmd_tok(ucCmd *p, ucCmdTok *value) {
     assert(p);
     p->cmd_tok = value;
 }
 
-const char *ucCmdLine_format_response_va(ucCmdLine *p, const char *format, va_list arg_list) {
+const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_list) {
     assert(p);
 	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
 	   TODO: There's probably a better-performing way to handle that, though. */
@@ -81,18 +81,18 @@ const char *ucCmdLine_format_response_va(ucCmdLine *p, const char *format, va_li
     return p->response;
 }
 
-const char *ucCmdLine_format_response(ucCmdLine *p, const char *format, ...) {
+const char *ucCmd_format_response(ucCmd *p, const char *format, ...) {
     va_list arg_list;
     const char *response;
 
     va_start(arg_list, format);
-    response = ucCmdLine_format_response_va(p, format, arg_list);
+    response = ucCmd_format_response_va(p, format, arg_list);
     va_end(arg_list);
 
     return response;
 }
 
-void ucCmdLine_respond(ucCmdLine *p, const char *response) {
+void ucCmd_respond(ucCmd *p, const char *response) {
     assert(p);
     if (p->is_quiet) return;
     if (p->transmit) {
@@ -100,17 +100,17 @@ void ucCmdLine_respond(ucCmdLine *p, const char *response) {
     }
 }
 
-void ucCmdLine_set_transmit(ucCmdLine *p, ucCmdLine_TransmitFunc *value) {
+void ucCmd_set_transmit(ucCmd *p, ucCmd_TransmitFunc *value) {
     assert(p);
     p->transmit = value;
 }
 
-ucCmdLine_TransmitFunc *ucCmdLine_get_transmit(ucCmdLine *p) {
+ucCmd_TransmitFunc *ucCmd_get_transmit(ucCmd *p) {
     assert(p);
     return p->transmit;
 }
 
-ucBool ucCmdLine_is_canceled(ucCmdLine *p) {
+ucBool ucCmd_is_canceled(ucCmd *p) {
     assert(p);
     if (p->is_canceled) {
         return p->is_canceled(p->is_canceled_state);
@@ -118,67 +118,67 @@ ucBool ucCmdLine_is_canceled(ucCmdLine *p) {
     return ucBool_false;
 }
 
-void ucCmdLine_set_is_canceled(ucCmdLine *p, ucCmdLine_IsCanceledFunc *value) {
+void ucCmd_set_is_canceled(ucCmd *p, ucCmd_IsCanceledFunc *value) {
     assert(p);
     p->is_canceled = value;
 }
 
-ucCmdLine_IsCanceledFunc *ucCmdLine_get_is_canceled(ucCmdLine *p) {
+ucCmd_IsCanceledFunc *ucCmd_get_is_canceled(ucCmd *p) {
     assert(p);
     return p->is_canceled;
 }
 
-void *ucCmdLine_get_transmit_state(ucCmdLine *p) {
+void *ucCmd_get_transmit_state(ucCmd *p) {
     assert(p);
     return p->transmit_state;
 }
 
-void ucCmdLine_set_transmit_state(ucCmdLine *p, void *value) {
+void ucCmd_set_transmit_state(ucCmd *p, void *value) {
     assert(p);
     p->transmit_state = value;
 }
 
-void *ucCmdLine_get_is_canceled_state(ucCmdLine *p) {
+void *ucCmd_get_is_canceled_state(ucCmd *p) {
     assert(p);
     return p->is_canceled_state;
 }
 
-void ucCmdLine_set_is_canceled_state(ucCmdLine *p, void *value) {
+void ucCmd_set_is_canceled_state(ucCmd *p, void *value) {
     assert(p);
     p->is_canceled_state = value;
 }
 
-void ucCmdLine_set_is_quiet(ucCmdLine *p, ucBool value) {
+void ucCmd_set_is_quiet(ucCmd *p, ucBool value) {
     assert(p);
     p->is_quiet = value;
 }
 
-ucBool ucCmdLine_get_is_quiet(ucCmdLine *p) {
+ucBool ucCmd_get_is_quiet(ucCmd *p) {
     assert(p);
     return p->is_quiet;
 }
 
-void ucCmdLine_set_handle_invalid_command(ucCmdLine *p, ucCmdLine_HandleInvalidCommandFunc *value) {
+void ucCmd_set_handle_invalid_command(ucCmd *p, ucCmd_HandleInvalidCommandFunc *value) {
     assert(p);
     p->handle_invalid_command = value;
 }
 
-ucCmdLine_HandleInvalidCommandFunc *ucCmdLine_get_handle_invalid_command(ucCmdLine *p) {
+ucCmd_HandleInvalidCommandFunc *ucCmd_get_handle_invalid_command(ucCmd *p) {
     assert(p);
     return p->handle_invalid_command;
 }
 
-void ucCmdLine_set_handle_invalid_command_state(ucCmdLine *p, void *value) {
+void ucCmd_set_handle_invalid_command_state(ucCmd *p, void *value) {
     assert(p);
     p->handle_invalid_command_state = value;
 }
 
-void *ucCmdLine_get_handle_invalid_command_state(ucCmdLine *p) {
+void *ucCmd_get_handle_invalid_command_state(ucCmd *p) {
     assert(p);
     return p->handle_invalid_command_state;
 }
 
-ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_command) {
+ucBool ucCmd_handle_invalid_command(ucCmd *p, const char *invalid_command) {
     assert(p);
     if (p->handle_invalid_command) {
         return p->handle_invalid_command(invalid_command, p->handle_invalid_command_state);
@@ -186,130 +186,130 @@ ucBool ucCmdLine_handle_invalid_command(ucCmdLine *p, const char *invalid_comman
     return ucBool_false;
 }
 
-size_t ucCmdLine_get_response_size_max(ucCmdLine *p) {
+size_t ucCmd_get_response_size_max(ucCmd *p) {
     assert(p);
     return sizeof(p->response);
 }
 
-void ucCmdLine_set_response_terminator(ucCmdLine *p, const char *value) {
+void ucCmd_set_response_terminator(ucCmd *p, const char *value) {
     assert(p);
     p->response_terminator = value;
 }
 
-const char *ucCmdLine_get_response_terminator(ucCmdLine *p) {
+const char *ucCmd_get_response_terminator(ucCmd *p) {
     assert(p);
     return p->response_terminator;
 }
 
-void ucCmdLine_set_command_acknowledgment(ucCmdLine *p, const char *value) {
+void ucCmd_set_command_acknowledgment(ucCmd *p, const char *value) {
     assert(p);
     p->command_acknowledgment = value;
 }
 
-const char *ucCmdLine_get_command_acknowledgment(ucCmdLine *p) {
+const char *ucCmd_get_command_acknowledgment(ucCmd *p) {
     assert(p);
     return p->command_acknowledgment;
 }
 
-void ucCmdLine_acknowledge_command(ucCmdLine *p) {
-    const char *command_acknowledgment = ucCmdLine_get_command_acknowledgment(p);
+void ucCmd_acknowledge_command(ucCmd *p) {
+    const char *command_acknowledgment = ucCmd_get_command_acknowledgment(p);
     if (command_acknowledgment) {
-        ucCmdLine_respond(p, command_acknowledgment);
+        ucCmd_respond(p, command_acknowledgment);
     }
 }
 
-void ucCmdLine_terminate_response(ucCmdLine *p) {
-    const char *response_terminator = ucCmdLine_get_response_terminator(p);
+void ucCmd_terminate_response(ucCmd *p) {
+    const char *response_terminator = ucCmd_get_response_terminator(p);
     if (response_terminator) {
-        ucCmdLine_respond(p, response_terminator);
+        ucCmd_respond(p, response_terminator);
     }
 }
 
-ucArgTok *ucCmdLine_get_arg(ucCmdLine *p) {
-    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(p);
+ucArgTok *ucCmd_get_arg(ucCmd *p) {
+    ucCmdTok *cmd_tok = ucCmd_get_cmd_tok(p);
     return cmd_tok
         ? ucCmdTok_get_arg(cmd_tok)
         : NULL;
 }
 
-ucSwitchTok *ucCmdLine_get_switch(ucCmdLine *p) {
-    ucCmdTok *cmd_tok = ucCmdLine_get_cmd_tok(p);
+ucSwitchTok *ucCmd_get_switch(ucCmd *p) {
+    ucCmdTok *cmd_tok = ucCmd_get_cmd_tok(p);
     return cmd_tok
         ? ucCmdTok_get_switch(cmd_tok)
         : NULL;
 }
 
-ucSwitchTok *ucCmdLine_get_switch_x(ucCmdLine *p, int switch_index) {
-    ucSwitchTok *switch_tok = ucCmdLine_get_switch(p);
+ucSwitchTok *ucCmd_get_switch_x(ucCmd *p, int switch_index) {
+    ucSwitchTok *switch_tok = ucCmd_get_switch(p);
     if (switch_tok) {
         switch_tok = ucSwitchTok_get_index(switch_tok, switch_index);
     }
     return switch_tok;
 }
 
-ucSwitchTok *ucCmdLine_find_switch(ucCmdLine *p, const char *switch_name) {
-    ucSwitchTok *switch_tok = ucCmdLine_get_switch(p);
+ucSwitchTok *ucCmd_find_switch(ucCmd *p, const char *switch_name) {
+    ucSwitchTok *switch_tok = ucCmd_get_switch(p);
     return switch_tok
         ? ucSwitchTok_find(switch_tok, switch_name)
         : NULL;
 }
 
-ucArgTok *ucCmdLine_get_switch_arg(ucCmdLine *p, const char *switch_name) {
-    return get_arg_x(ucCmdLine_find_switch(p, switch_name), 0);
+ucArgTok *ucCmd_get_switch_arg(ucCmd *p, const char *switch_name) {
+    return get_arg_x(ucCmd_find_switch(p, switch_name), 0);
 }
 
-ucArgTok *ucCmdLine_get_switch_arg_x(ucCmdLine *p, const char *switch_name, int arg_index) {
-    return get_arg_x(ucCmdLine_find_switch(p, switch_name), arg_index);
+ucArgTok *ucCmd_get_switch_arg_x(ucCmd *p, const char *switch_name, int arg_index) {
+    return get_arg_x(ucCmd_find_switch(p, switch_name), arg_index);
 }
 
-int ucCmdLine_get_switch_arg_d(ucCmdLine *p, const char *switch_name, int default_value) {
-    return get_arg_x_d(ucCmdLine_find_switch(p, switch_name), 0, default_value);
+int ucCmd_get_switch_arg_d(ucCmd *p, const char *switch_name, int default_value) {
+    return get_arg_x_d(ucCmd_find_switch(p, switch_name), 0, default_value);
 }
 
-int ucCmdLine_get_switch_arg_x_d(ucCmdLine *p, const char *switch_name, int arg_index, int default_value) {
-    return get_arg_x_d(ucCmdLine_find_switch(p, switch_name), arg_index, default_value);
+int ucCmd_get_switch_arg_x_d(ucCmd *p, const char *switch_name, int arg_index, int default_value) {
+    return get_arg_x_d(ucCmd_find_switch(p, switch_name), arg_index, default_value);
 }
 
-double ucCmdLine_get_switch_arg_f(ucCmdLine *p, const char *switch_name, double default_value) {
-    return get_arg_x_f(ucCmdLine_find_switch(p, switch_name), 0, default_value);
+double ucCmd_get_switch_arg_f(ucCmd *p, const char *switch_name, double default_value) {
+    return get_arg_x_f(ucCmd_find_switch(p, switch_name), 0, default_value);
 }
 
-double ucCmdLine_get_switch_arg_x_f(ucCmdLine *p, const char *switch_name, int arg_index, double default_value) {
-    return get_arg_x_f(ucCmdLine_find_switch(p, switch_name), arg_index, default_value);
+double ucCmd_get_switch_arg_x_f(ucCmd *p, const char *switch_name, int arg_index, double default_value) {
+    return get_arg_x_f(ucCmd_find_switch(p, switch_name), arg_index, default_value);
 }
 
-ucBool ucCmdLine_get_switch_arg_b(ucCmdLine *p, const char *switch_name, ucBool default_value) {
-    return get_arg_x_b(ucCmdLine_find_switch(p, switch_name), 0, default_value);
+ucBool ucCmd_get_switch_arg_b(ucCmd *p, const char *switch_name, ucBool default_value) {
+    return get_arg_x_b(ucCmd_find_switch(p, switch_name), 0, default_value);
 }
 
-ucBool ucCmdLine_get_switch_arg_x_b(ucCmdLine *p, const char *switch_name, int arg_index, ucBool default_value) {
-    return get_arg_x_b(ucCmdLine_find_switch(p, switch_name), arg_index, default_value);
+ucBool ucCmd_get_switch_arg_x_b(ucCmd *p, const char *switch_name, int arg_index, ucBool default_value) {
+    return get_arg_x_b(ucCmd_find_switch(p, switch_name), arg_index, default_value);
 }
 
-ucArgTok *ucCmdLine_get_arg_x(ucCmdLine *p, int arg_index) {
-    return get_arg_x(ucCmdLine_get_cmd_tok(p), arg_index);
+ucArgTok *ucCmd_get_arg_x(ucCmd *p, int arg_index) {
+    return get_arg_x(ucCmd_get_cmd_tok(p), arg_index);
 }
 
-ucBool ucCmdLine_get_arg_b(ucCmdLine *p, ucBool default_value) {
-    return get_arg_x_b(ucCmdLine_get_cmd_tok(p), 0, default_value);
+ucBool ucCmd_get_arg_b(ucCmd *p, ucBool default_value) {
+    return get_arg_x_b(ucCmd_get_cmd_tok(p), 0, default_value);
 }
 
-int ucCmdLine_get_arg_d(ucCmdLine *p, int default_value) {
-    return get_arg_x_d(ucCmdLine_get_cmd_tok(p), 0, default_value);
+int ucCmd_get_arg_d(ucCmd *p, int default_value) {
+    return get_arg_x_d(ucCmd_get_cmd_tok(p), 0, default_value);
 }
 
-double ucCmdLine_get_arg_f(ucCmdLine *p, double default_value) {
-    return get_arg_x_f(ucCmdLine_get_cmd_tok(p), 0, default_value);
+double ucCmd_get_arg_f(ucCmd *p, double default_value) {
+    return get_arg_x_f(ucCmd_get_cmd_tok(p), 0, default_value);
 }
 
-ucBool ucCmdLine_get_arg_x_b(ucCmdLine *p, int arg_index, ucBool default_value) {
-    return get_arg_x_b(ucCmdLine_get_cmd_tok(p), arg_index, default_value);
+ucBool ucCmd_get_arg_x_b(ucCmd *p, int arg_index, ucBool default_value) {
+    return get_arg_x_b(ucCmd_get_cmd_tok(p), arg_index, default_value);
 }
 
-int ucCmdLine_get_arg_x_d(ucCmdLine *p, int arg_index, int default_value) {
-    return get_arg_x_d(ucCmdLine_get_cmd_tok(p), arg_index, default_value);
+int ucCmd_get_arg_x_d(ucCmd *p, int arg_index, int default_value) {
+    return get_arg_x_d(ucCmd_get_cmd_tok(p), arg_index, default_value);
 }
 
-double ucCmdLine_get_arg_x_f(ucCmdLine *p, int arg_index, double default_value) {
-    return get_arg_x_f(ucCmdLine_get_cmd_tok(p), arg_index, default_value);
+double ucCmd_get_arg_x_f(ucCmd *p, int arg_index, double default_value) {
+    return get_arg_x_f(ucCmd_get_cmd_tok(p), arg_index, default_value);
 }

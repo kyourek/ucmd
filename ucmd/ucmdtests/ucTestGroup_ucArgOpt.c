@@ -1,15 +1,15 @@
 #include <float.h>
 #include "ucmdtests.h"
 
-static ucCmdLine *cmd_line;
+static ucCmd *cmd_line;
 
 uc_TEST(prior)
-    cmd_line = ucCmdLine_create();
+    cmd_line = ucCmd_create();
     assert(cmd_line);
 uc_PASS
 
 uc_TEST(after)
-    ucCmdLine_destroy(cmd_line);
+    ucCmd_destroy(cmd_line);
 uc_PASS
 
 uc_TEST(setup)
@@ -215,7 +215,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_numeric_err)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "non-num", NULL);
@@ -229,7 +229,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_out_of_range_numeric)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -5.4, +2.1, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "-5.5", NULL);
@@ -249,7 +249,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_required_arg)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("arg", NULL, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, NULL, NULL);
@@ -263,7 +263,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_not_enough_tokens)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -274,7 +274,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_too_many_tokens)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0arg4\0arg5\0arg6\0\n", NULL);
@@ -285,7 +285,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_allows_correct_number_of_tokens)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 3, 3);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -296,7 +296,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_multiple_numbers)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple_numeric(NULL, 2, 8, -100, +100);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0" "4.789" "\0" "notnum" "\0" "91.23" "\0\n", NULL);
@@ -327,7 +327,7 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_boolean_errors)
     const char *err;
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0\n", NULL);
@@ -340,7 +340,7 @@ uc_TEST(ucArgOpt_format_validation_err_catches_boolean_errors)
 uc_PASS
 
 #define ucArgOpt_format_validation_err_ALLOWS_BOOLEAN(VALUE)                \
-    ucCmdLine *cmd = cmd_line;                                              \
+    ucCmd *cmd = cmd_line;                                              \
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);                       \
     uc_TRUE(!ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL));   \
     uc_TRUE(!ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL));   \
@@ -415,7 +415,7 @@ uc_TEST(ucArgOpt_create_integer_creates_option)
 uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_integer_errors)
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
     uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "3.1" "\0\n", NULL));
     uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL));
@@ -425,7 +425,7 @@ uc_TEST(ucArgOpt_format_validation_err_catches_integer_errors)
 uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_allows_valid_integers)
-    ucCmdLine *cmd = cmd_line;
+    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
     uc_TRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-5" "\0\n", NULL));
     uc_TRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-1" "\0\n", NULL));

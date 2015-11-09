@@ -66,38 +66,38 @@ static void copy_name(const char *source, char *dest) {
     dest[i] = '\0';
 }
 
-static const char *name(ucCmdLine *cmd, void *state) {
+static const char *name(ucCmd *cmd, void *state) {
     ucTok *name_arg;
     AppState *my_state;
 
     my_state = (AppState*)state;
     if (!my_state) return "Oops... NULL pointer!";
 
-    if (ucCmdLine_find_switch(cmd, "-first")) {
-        name_arg = ucCmdLine_get_switch_arg(cmd, "-first");
+    if (ucCmd_find_switch(cmd, "-first")) {
+        name_arg = ucCmd_get_switch_arg(cmd, "-first");
         copy_name(name_arg, my_state->first_name);
     }
 
-    if (ucCmdLine_find_switch(cmd, "-last")) {
-        name_arg = ucCmdLine_get_switch_arg(cmd, "-last");
+    if (ucCmd_find_switch(cmd, "-last")) {
+        name_arg = ucCmd_get_switch_arg(cmd, "-last");
         copy_name(name_arg, my_state->last_name);
     }
 
-    return ucCmdLine_format_response(
+    return ucCmd_format_response(
         cmd, 
         "Name: %s",
         format_name(my_state)
     );
 }
 
-static const char *say(ucCmdLine *cmd, void *state) {
+static const char *say(ucCmd *cmd, void *state) {
     ucTok *phrase; 
     AppState *my_state;
 
-    phrase = ucCmdLine_get_arg(cmd);
+    phrase = ucCmd_get_arg(cmd);
     my_state = (struct AppState*)state;
 
-    ucCmdLine_respond(cmd, ucCmdLine_format_response(
+    ucCmd_respond(cmd, ucCmd_format_response(
         cmd,
         "%s, %s!",
         phrase,
@@ -107,18 +107,18 @@ static const char *say(ucCmdLine *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *receive) {
+void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive) {
     
     /* This is the program's state object that gets
     passed to the various command functions. */
     AppState my_state = { 0 };
 
-    ucCmdLineOpt *commands = 
+    ucCmdOpt *commands = 
 
         /* Creates a command 'name' that
         calls the function 'name'. Its
         purpose is to set the user's name. */
-        ucCmdLineOpt_create(
+        ucCmdOpt_create(
             name,
 
             /* This pointer to the object that maintains
@@ -168,7 +168,7 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
 
         /* Creates another command called 'say'.
         This command will say a phrase to the user. */
-        ucCmdLineOpt_create(
+        ucCmdOpt_create(
             say,
             &my_state,
             "say",
@@ -187,27 +187,27 @@ void uc_hello_world(ucCmdLine_TransmitFunc *transmit, ucCmdLineApp_ReceiveFunc *
         are no more commands. */
         NULL));
 
-    /* This ucCmdLineApp instance is a singleton that
+    /* This ucCmdApp instance is a singleton that
     is available to run a command-line app. */
-    ucCmdLineApp *app = ucCmdLineApp_create();
+    ucCmdApp *app = ucCmdApp_create();
 
-    /* Gets the ucCmdLine used by the app to send
+    /* Gets the ucCmd used by the app to send
     responses back to the user. */
-    ucCmdLine *cmd = ucCmdLineApp_get_cmd(app);
+    ucCmd *cmd = ucCmdApp_get_cmd(app);
 
     /* Sets callback functions on the app and command
     that allow transmission and reception of data. 
     These callbacks will be specific to the platform
     on which the app is running. */
-    ucCmdLine_set_transmit(cmd, transmit);
-    ucCmdLineApp_set_receive(app, receive);
+    ucCmd_set_transmit(cmd, transmit);
+    ucCmdApp_set_receive(app, receive);
 
     /* Starts the command-line app. The app will exit
     when it receives the 'quit' command. */
-    ucCmdLineApp_run(app, commands);
+    ucCmdApp_run(app, commands);
 
     /* Clean up the resources that were explicitly
     created. */
-    ucCmdLineApp_destroy(app);
-    ucCmdLineOpt_destroy_chain(commands);
+    ucCmdApp_destroy(app);
+    ucCmdOpt_destroy_chain(commands);
 }

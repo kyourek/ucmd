@@ -57,13 +57,13 @@ void ucSwitchOpt_destroy_chain(ucSwitchOpt *p) {
     }
 }
 
-const char *ucSwitchOpt_format_validation_err(ucSwitchOpt *p, ucCmdLine *cmd, ucSwitchTok *switch_tok) {
+const char *ucSwitchOpt_format_validation_err(ucSwitchOpt *p, ucCmd *cmd, ucSwitchTok *switch_tok) {
     /* Check if the switch option is required,
     and then if it is missing. If it is required,
     but not present, send the error. */
     if (ucOpt_is_required((ucOpt*)p)) {
         if (!switch_tok) {
-            return ucCmdLine_format_response(
+            return ucCmd_format_response(
                 cmd, 
                 ucOpt_INVALID "The switch \"%s\" is required.",
                 ucOpt_get_name((ucOpt*)p));

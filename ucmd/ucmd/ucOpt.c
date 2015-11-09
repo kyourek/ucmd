@@ -15,11 +15,11 @@ ucBool ucOpt_is_required(ucOpt *p) {
     return p->is_required;
 }
 
-void ucOpt_send_help(ucOpt *p, ucCmdLine *cmd, const char *prefix) {
+void ucOpt_send_help(ucOpt *p, ucCmd *cmd, const char *prefix) {
     const char *format = ucOpt_is_required(p) 
         ? "%s%s: %s" 
         : "%s[%s]: %s";
-    ucCmdLine_respond(cmd, ucCmdLine_format_response(
+    ucCmd_respond(cmd, ucCmd_format_response(
         cmd,
         format,
         prefix,

@@ -38,13 +38,13 @@ typedef     const char                          ucSwitchTok;
             char                                placeholder; };
 
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
-uc_EXPORTED void                                ucOpt_send_help(ucOpt*, ucCmdLine *cmd, const char *prefix);
+uc_EXPORTED void                                ucOpt_send_help(ucOpt*, ucCmd *cmd, const char *prefix);
             struct                              ucOpt {
             const char*                         name;
             const char*                         desc;
             ucBool                              is_required; };
 
-uc_EXPORTED const char*                         ucArgOpt_format_validation_err(ucArgOpt*, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name);
+uc_EXPORTED const char*                         ucArgOpt_format_validation_err(ucArgOpt*, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name);
 uc_EXPORTED ucArgOpt*                           ucArgOpt_init(ucArgOpt*, const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, double numeric_min, double numeric_max, ucArgOpt *next);
             struct                              ucArgOpt {
             ucOpt                               base;
@@ -57,7 +57,7 @@ uc_EXPORTED ucArgOpt*                           ucArgOpt_init(ucArgOpt*, const c
             int                                 min_tok_count;
             ucArgOpt*                           next; };            
 
-uc_EXPORTED const char*                         ucArgOptOwner_format_validation_err(ucArgOptOwner*, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name);
+uc_EXPORTED const char*                         ucArgOptOwner_format_validation_err(ucArgOptOwner*, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name);
 uc_EXPORTED ucArgOpt*                           ucArgOptOwner_get_arg_opt(ucArgOptOwner*);
 uc_EXPORTED ucArgOptOwner*                      ucArgOptOwner_init(ucArgOptOwner*, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt);
             struct                              ucArgOptOwner {
@@ -79,7 +79,7 @@ uc_EXPORTED ucCmdTok*                           ucCmdParser_parse(ucCmdParser*, 
 uc_EXPORTED ucArgTok*                           ucCmdTok_get_arg(ucCmdTok*);
 uc_EXPORTED ucSwitchTok*                        ucCmdTok_get_switch(ucCmdTok*);
 
-uc_EXPORTED const char*                         ucSwitchOpt_format_validation_err(ucSwitchOpt*, ucCmdLine *cmd, ucSwitchTok *switch_tok);
+uc_EXPORTED const char*                         ucSwitchOpt_format_validation_err(ucSwitchOpt*, ucCmd *cmd, ucSwitchTok *switch_tok);
 uc_EXPORTED ucSwitchOpt*                        ucSwitchOpt_init(ucSwitchOpt*, const char *name, const char *desc, ucBool is_required, ucArgOpt *arg_opt, ucSwitchOpt *next);
             struct                              ucSwitchOpt {
             ucArgOptOwner                       base;
@@ -92,48 +92,48 @@ uc_EXPORTED ucSwitchTok*                        ucSwitchTok_find(ucSwitchTok*, c
 uc_EXPORTED ucBool                              ucSwitchTok_contains(ucSwitchTok*, const char *switch_name);
 uc_EXPORTED ucArgTok*                           ucSwitchTok_get_arg(ucSwitchTok*);
 
-uc_EXPORTED void                                ucCmdLine_acknowledge_command(ucCmdLine*);
-uc_EXPORTED ucBool                              ucCmdLine_handle_invalid_command(ucCmdLine*, const char *invalid_command);
-uc_EXPORTED ucCmdLine*                          ucCmdLine_init(ucCmdLine*);
-uc_EXPORTED void                                ucCmdLine_terminate_response(ucCmdLine*);
-            struct                              ucCmdLine {
+uc_EXPORTED void                                ucCmd_acknowledge_command(ucCmd*);
+uc_EXPORTED ucBool                              ucCmd_handle_invalid_command(ucCmd*, const char *invalid_command);
+uc_EXPORTED ucCmd*                          ucCmd_init(ucCmd*);
+uc_EXPORTED void                                ucCmd_terminate_response(ucCmd*);
+            struct                              ucCmd {
             ucCmdTok*                           cmd_tok;
-            ucCmdLine_TransmitFunc*             transmit;
-            ucCmdLine_IsCanceledFunc*           is_canceled;
-            ucCmdLine_HandleInvalidCommandFunc* handle_invalid_command;
+            ucCmd_TransmitFunc*             transmit;
+            ucCmd_IsCanceledFunc*           is_canceled;
+            ucCmd_HandleInvalidCommandFunc* handle_invalid_command;
             void*                               transmit_state;
             void*                               is_canceled_state;
             void*                               handle_invalid_command_state;
             const char*                         response_terminator;
             const char*                         command_acknowledgment;
-            char                                response[ucCmdLine_RESPONSE_SIZE];
-	        char                                response_buffer[ucCmdLine_RESPONSE_SIZE];
+            char                                response[ucCmd_RESPONSE_SIZE];
+	        char                                response_buffer[ucCmd_RESPONSE_SIZE];
             ucBool                              is_quiet; };
 
-uc_EXPORTED const char*                         ucCmdLineOpt_format_validation_err(ucCmdLineOpt*, ucCmdLine *cmd);
-uc_EXPORTED ucCmdLineOpt*                       ucCmdLineOpt_init(ucCmdLineOpt*, ucCmdLineOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdLineOpt *next);
-uc_EXPORTED const char*                         ucCmdLineOpt_process(ucCmdLineOpt*, ucCmdLine *cmd);
-uc_EXPORTED void                                ucCmdLineOpt_send_help(ucCmdLineOpt*, ucCmdLine *cmd);
-uc_EXPORTED void                                ucCmdLineOpt_send_usage(ucCmdLineOpt*, ucCmdLine *cmd);
-            struct                              ucCmdLineOpt {
+uc_EXPORTED const char*                         ucCmdOpt_format_validation_err(ucCmdOpt*, ucCmd *cmd);
+uc_EXPORTED ucCmdOpt*                       ucCmdOpt_init(ucCmdOpt*, ucCmdOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdOpt *next);
+uc_EXPORTED const char*                         ucCmdOpt_process(ucCmdOpt*, ucCmd *cmd);
+uc_EXPORTED void                                ucCmdOpt_send_help(ucCmdOpt*, ucCmd *cmd);
+uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, ucCmd *cmd);
+            struct                              ucCmdOpt {
             ucArgOptOwner                       base;
-            ucCmdLineOpt_WorkFunc*              work;
+            ucCmdOpt_WorkFunc*              work;
             void*                               state;
             ucSwitchOpt*                        switch_opt;
-            ucCmdLineOpt*                       next; };
+            ucCmdOpt*                       next; };
 
-uc_EXPORTED ucCmdParser*                        ucCmdLineApp_get_cmd_parser(ucCmdLineApp*);
-uc_EXPORTED ucCmdLineApp*                       ucCmdLineApp_init(ucCmdLineApp*, ucCmdParser*, ucCmdLine*);
-uc_EXPORTED char*                               ucCmdLineApp_receive(ucCmdLineApp*);
-            struct                              ucCmdLineApp {
-            ucCmdLine*                          cmd;
+uc_EXPORTED ucCmdParser*                        ucCmdApp_get_cmd_parser(ucCmdApp*);
+uc_EXPORTED ucCmdApp*                       ucCmdApp_init(ucCmdApp*, ucCmdParser*, ucCmd*);
+uc_EXPORTED char*                               ucCmdApp_receive(ucCmdApp*);
+            struct                              ucCmdApp {
+            ucCmd*                          cmd;
             ucCmdParser*                        cmd_parser;
-            ucCmdLineApp_ReceiveFunc*           receive;
+            ucCmdApp_ReceiveFunc*           receive;
             void*                               receive_state;
             const char*                         help_command;
             const char*                         quit_command;
             const char*                         escape_response;            
-            char                                cmd_str[ucCmdLineApp_CMD_STR_SIZE + 1]; };
+            char                                cmd_str[ucCmdApp_CMD_STR_SIZE + 1]; };
 
 /** @brief Determines if two strings are equal.
  *  @param [in] S1 The first string to compare.

@@ -23,7 +23,7 @@ static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, 
         next);
 }
 
-static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+static const char *format_is_required_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     /* Check if this argument is required. */
     if (ucOpt_is_required((ucOpt*)p)) {
 
@@ -35,12 +35,12 @@ static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd
             so there's an error here. Return the appropriate error
             message. */
             return switch_name
-                ? ucCmdLine_format_response(
+                ? ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "The argument \"%s\" is required for switch \"%s\".", 
                     ucOpt_get_name((ucOpt*)p), 
                     switch_name)
-                : ucCmdLine_format_response(
+                : ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "The argument \"%s\" is required.", 
                     ucOpt_get_name((ucOpt*)p));
@@ -51,19 +51,19 @@ static const char *format_is_required_validation_err(ucArgOpt *p, ucCmdLine *cmd
     return NULL;
 }
 
-static const char *format_is_boolean_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+static const char *format_is_boolean_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     ucBool is_bool;
     if (ucArgOpt_is_boolean(p)) {
         if (arg_tok) {
             is_bool = ucTok_is_boolean((ucTok*)arg_tok);
             if (!is_bool) {
                 return switch_name
-                    ? ucCmdLine_format_response(
+                    ? ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%s\" is not boolean.", 
                         switch_name, 
                         arg_tok)
-                    : ucCmdLine_format_response(
+                    : ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%s\" is not boolean.", 
                         arg_tok);
@@ -73,7 +73,7 @@ static const char *format_is_boolean_validation_err(ucArgOpt *p, ucCmdLine *cmd,
     return NULL;
 }
 
-static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     ucBool is_num;
     double arg_num;
 
@@ -91,12 +91,12 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                 provided token is not numeric, so return the
                 appropriate error message. */
                 return switch_name
-                    ? ucCmdLine_format_response(
+                    ? ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%s\" is not numeric.", 
                         switch_name, 
                         arg_tok)
-                    : ucCmdLine_format_response(
+                    : ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%s\" is not numeric.", 
                         arg_tok);
@@ -108,13 +108,13 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                 /* The number is below the lower bound, so return the
                    appropriate error message. */
                 return switch_name
-                    ? ucCmdLine_format_response(
+                    ? ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%f\" is above the minimum value of \"%f\".", 
                         switch_name, 
                         arg_num, 
                         ucArgOpt_get_numeric_min(p))
-                    : ucCmdLine_format_response(
+                    : ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%f\" is above the minimum value of \"%f\".", 
                         arg_num, 
@@ -127,13 +127,13 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                 /* The number is above the upper bound, so return the
                 appropriate error message. */
                 return switch_name
-                    ? ucCmdLine_format_response(
+                    ? ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%f\" is below the maximum value of \"%f\".", 
                         switch_name, 
                         arg_num, 
                         ucArgOpt_get_numeric_max(p))
-                    : ucCmdLine_format_response(
+                    : ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%f\" is below the maximum value of \"%f\".", 
                         arg_num, 
@@ -146,17 +146,17 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
     return NULL;
 }
 
-static const char *format_is_integer_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+static const char *format_is_integer_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     if (ucArgOpt_is_integer(p)) {
         if (arg_tok) {
             if (!ucTok_is_integer((ucTok*)arg_tok)) {
                 return switch_name
-                    ? ucCmdLine_format_response(
+                    ? ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The " "\"%s\" " "argument \"%s\" is not an integer.", 
                         switch_name, 
                         arg_tok)
-                    : ucCmdLine_format_response(
+                    : ucCmd_format_response(
                         cmd, 
                         ucOpt_INVALID "The " "argument \"%s\" is not an integer.", 
                         arg_tok);
@@ -166,7 +166,7 @@ static const char *format_is_integer_validation_err(ucArgOpt *p, ucCmdLine *cmd,
     return NULL;
 }
 
-static const char *format_arg_tok_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+static const char *format_arg_tok_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     const char *err;
 
     err = format_is_required_validation_err(p, cmd, arg_tok, switch_name);
@@ -284,7 +284,7 @@ ucArgOpt *ucArgOpt_create_required_integer(const char *desc, double numeric_min,
     return create(integer_arg_name, desc, ucBool_true, 1, 1, ucBool_false, ucBool_true, ucBool_true, numeric_min, numeric_max, next);
 }
 
-const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int tok_count, max_tok_count;
 
     /* Validate the current argument token. */
@@ -307,7 +307,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok
 
                 /* Increment the number of tokens and make sure it is valid. */
                 tok_count++;
-                if (tok_count > max_tok_count) return ucCmdLine_format_response(cmd, ucOpt_INVALID "Too many arguments for %s.", ucOpt_get_name((ucOpt*)p));
+                if (tok_count > max_tok_count) return ucCmd_format_response(cmd, ucOpt_INVALID "Too many arguments for %s.", ucOpt_get_name((ucOpt*)p));
 
                 /* Validate this token. */
                 err = format_arg_tok_validation_err(p, cmd, arg_tok, switch_name);
@@ -316,7 +316,7 @@ const char *ucArgOpt_format_validation_err(ucArgOpt *p, ucCmdLine *cmd, ucArgTok
         }
 
         /* Make sure we have enough tokens. */
-        if (tok_count < ucArgOpt_get_min_tok_count(p)) return ucCmdLine_format_response(cmd, ucOpt_INVALID "Not enough arguments for %s.", ucOpt_get_name((ucOpt*)p));
+        if (tok_count < ucArgOpt_get_min_tok_count(p)) return ucCmd_format_response(cmd, ucOpt_INVALID "Not enough arguments for %s.", ucOpt_get_name((ucOpt*)p));
     }
 
     /* If we got here, then no error was found. */

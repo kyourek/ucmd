@@ -12,7 +12,7 @@ ucArgOptOwner *ucArgOptOwner_init(ucArgOptOwner *p, const char *name, const char
     return p;
 }
 
-const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd, ucArgTok *arg_tok, const char *switch_name) {
+const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, ucArgTok *arg_tok, const char *switch_name) {
     int max_arg_tok_count;
     const char *validation;
 
@@ -27,14 +27,14 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd
 
             /* The option does NOT exist, but the token DOES, so there's an error. */
             return switch_name
-                ? ucCmdLine_format_response(
+                ? ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "No argument options exist for switch \"%s\".", 
                     switch_name)
-                : ucCmdLine_format_response(
+                : ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "No argument options exist for command \"%s\".", 
-                    ucCmdLine_get_cmd_tok(cmd));
+                    ucCmd_get_cmd_tok(cmd));
         }
 
         /* Neither the option nor the token exist, so no error here. */
@@ -65,12 +65,12 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmdLine *cmd
 
             /* We have remaining tokens but no arguments for them, so there's an error. */
             return switch_name
-                ? ucCmdLine_format_response(
+                ? ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "No option exists for \"%s\" argument \"%s\".", 
                     switch_name, 
                     arg_tok)
-                : ucCmdLine_format_response(
+                : ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "No option exists for argument \"%s\".", 
                     arg_tok);
