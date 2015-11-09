@@ -75,7 +75,7 @@ static const char *name(ucCmdLine *cmd, void *state) {
 
     if (ucCmdLine_find_switch(cmd, "-first")) {
         name_arg = ucCmdLine_get_switch_arg(cmd, "-first");
-        copy_name(ucTok_get_value(name_arg), my_state->first_name);
+        copy_name(name_arg, my_state->first_name);
     }
 
     if (ucCmdLine_find_switch(cmd, "-last")) {

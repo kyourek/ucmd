@@ -146,7 +146,7 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
 
     if (!switch_opt) {
         if (switch_tok) {
-            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No switch options exist for command \"%s\".", ucTok_get_value((ucTok*)cmd_tok));
+            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No switch options exist for command \"%s\".", cmd_tok);
         }
         return NULL;
     }
@@ -154,9 +154,9 @@ const char *ucCmdLineOpt_format_validation_err(ucCmdLineOpt *p, ucCmdLine *cmd) 
     next_switch_tok = switch_tok;
 
     while (next_switch_tok) {
-        found_switch_opt = ucSwitchOpt_find(switch_opt, ucTok_get_value((ucTok*)next_switch_tok));
+        found_switch_opt = ucSwitchOpt_find(switch_opt, next_switch_tok);
         if (!found_switch_opt) {
-            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No option exists for switch \"%s\".", ucTok_get_value(next_switch_tok));
+            return ucCmdLine_format_response(cmd, ucOpt_INVALID "No option exists for switch \"%s\".", next_switch_tok);
         }
         next_switch_tok = ucSwitchTok_get_next(next_switch_tok);
     }
@@ -198,7 +198,7 @@ static const char *internal_process(ucCmdLineOpt *p, ucCmdLine *cmd, ucBool *inv
 
     /* Get the command option that we'll process by finding
     the one that matches the name of the command. */
-    cmd_value = ucTok_get_value((ucTok*)cmd_tok);
+    cmd_value = cmd_tok;
     opt = ucCmdLineOpt_find_by_name(p, cmd_value);
     if (!opt) {
 

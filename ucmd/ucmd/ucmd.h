@@ -203,20 +203,20 @@ typedef enum {
  */
 typedef const char ucTok;
 
-/** @brief Gets the length of the token.
+/** @brief Gets the length of the given token.
  *  @param[in]  p   The token in question.
  *  @returns The number of characters in the token.
  */
 uc_EXPORTED int ucTok_get_length(ucTok* p);
 
 /** @brief Determines whether or not the given token is considered a switch.
- *  @param[in]  p   The token in question.
+ *  @param[in]  p   The given token.
  *  @returns Boolean true if the token is a switch. Otherwise, false.
  */
 uc_EXPORTED ucBool ucTok_is_switch(ucTok* p);
 
 /** @brief Determines whether or not the given token equals the value.
- *  @param[in]  p       The token in question.
+ *  @param[in]  p       The given token.
  *  @param[in]  value   The value to which the token in question is compared.
  *  @returns Boolean true if the given value equals the given token. Otherwise, false.
  */
@@ -240,14 +240,6 @@ uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*);
  *   if no further tokens exist.
  */
 uc_EXPORTED ucTok *ucTok_get_next(ucTok*);
-
-/*
- * Summary:
- *   Gets the value of the token.
- * Returns:
- *   The string value of the token.
- */
-uc_EXPORTED const char *ucTok_get_value(ucTok*);
 
 /*
  * Summary:

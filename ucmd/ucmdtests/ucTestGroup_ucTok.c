@@ -17,18 +17,6 @@ uc_TEST(ucTok_get_length_ignores_chars_trailing_separator)
     uc_TRUE(3 == ucTok_get_length(ptr));
 uc_PASS
 
-uc_TEST(ucTok_get_value_returns_string_value)
-    char s[] = { 'g', 'o', 'o', 'd', 'b', 'y', 'e', '\0' };
-    ucTok *ptr = s;
-    uc_TRUE(ucTok_get_value(ptr));
-uc_PASS
-
-uc_TEST(ucTok_get_value_ignores_chars_after_separator)
-    char s[] = { 'g', 'o', 'o', 'd', '\0', 'b', 'y', 'e', '\0' };
-    ucTok *ptr = s;
-    uc_TRUE(ucTok_get_value(ptr));
-uc_PASS
-
 uc_TEST(ucTok_equals_returns_true_if_strings_are_equal)
     char *value1 = "value";
     char value2[] = { 'v', 'a', 'l', 'u', 'e', '\0', 'n', 'a', '\0' };
@@ -221,8 +209,6 @@ uc_TEST_GROUP(ucTok, NULL,
     ucTok_get_length_returns_string_length,
     ucTok_get_length_returns_zero_for_empty_token,
     ucTok_get_length_ignores_chars_trailing_separator,
-    ucTok_get_value_returns_string_value,
-    ucTok_get_value_ignores_chars_after_separator,
     ucTok_equals_returns_true_if_strings_are_equal,
     ucTok_equals_returns_true_for_empty_strings,
     ucTok_equals_returns_false_if_strings_are_different,

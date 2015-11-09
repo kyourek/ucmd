@@ -27,7 +27,7 @@ static const char *help(ucCmdLine *cmd, void *state) {
     cmd_opt = s->cmd_opt;
     arg_tok = ucCmdTok_get_arg(ucCmdLine_get_cmd_tok(cmd));
     if (arg_tok) {
-        cmd_opt = ucCmdLineOpt_find_by_name(cmd_opt, ucTok_get_value(arg_tok));
+        cmd_opt = ucCmdLineOpt_find_by_name(cmd_opt, arg_tok);
         if (cmd_opt) {
             ucCmdLineOpt_send_help(cmd_opt, cmd);
             return NULL;
@@ -35,7 +35,7 @@ static const char *help(ucCmdLine *cmd, void *state) {
         return ucCmdLine_format_response(
             cmd, 
             ucOpt_INVALID "No command option found for \"%s\".", 
-            ucTok_get_value(arg_tok));
+            arg_tok);
     }
 
     ucCmdLine_respond(cmd, "Commands");

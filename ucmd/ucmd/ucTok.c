@@ -9,11 +9,6 @@ int ucTok_get_length(ucTok *p) {
     return length;
 }
 
-const char *ucTok_get_value(ucTok *p) {
-    assert(p);
-    return p;
-}
-
 ucBool ucTok_equals(ucTok *p, const char *value) {
     int i, len;
 
@@ -41,21 +36,18 @@ ucBool ucTok_equals(ucTok *p, const char *value) {
 }
 
 ucBool ucTok_is_integer(ucTok *p) {
-    const char *str = ucTok_get_value(p);
-
-    /* Handle NULL values. */
-    if (!str) return ucBool_false;
+    assert(p);
 
     /* Handle negative numbers. */
-    if (*str == '-') ++str;
+    if (*p == '-') ++p;
 
     /* Handle empty string or just "-". */
-    if (!*str) return ucBool_false;
+    if (!*p) return ucBool_false;
 
     /* Check for non-digit chars in the rest of the stirng. */
-    while (*str) {
-        if (!isdigit(*str)) return ucBool_false;
-        ++str;
+    while (*p) {
+        if (!isdigit(*p)) return ucBool_false;
+        ++p;
     }
 
     return ucBool_true;
@@ -64,7 +56,7 @@ ucBool ucTok_is_integer(ucTok *p) {
 ucBool ucTok_try_parse_integer(ucTok *p, int *value) {
     if (ucTok_is_integer(p)) {
         if (value) {
-            *value = atoi(ucTok_get_value(p));
+            *value = atoi(p);
         }
         return ucBool_true;
     }
@@ -129,7 +121,7 @@ ucBool ucTok_is_numeric(ucTok *p) {
 ucBool ucTok_try_parse_numeric(ucTok *p, double *value) {
     if (ucTok_is_numeric(p)) {
         if (value) {
-            *value = atof(ucTok_get_value(p));
+            *value = atof(p);
         }
         return ucBool_true;
     }

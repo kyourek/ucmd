@@ -62,11 +62,11 @@ static const char *format_is_boolean_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%s\" is not boolean.", 
                         switch_name, 
-                        ucTok_get_value(arg_tok))
+                        arg_tok)
                     : ucCmdLine_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%s\" is not boolean.", 
-                        ucTok_get_value(arg_tok));
+                        arg_tok);
             }
         }
     }
@@ -95,11 +95,11 @@ static const char *format_is_numeric_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                         cmd, 
                         ucOpt_INVALID "The \"%s\" argument \"%s\" is not numeric.", 
                         switch_name, 
-                        ucTok_get_value(arg_tok))
+                        arg_tok)
                     : ucCmdLine_format_response(
                         cmd, 
                         ucOpt_INVALID "The argument \"%s\" is not numeric.", 
-                        ucTok_get_value(arg_tok));
+                        arg_tok);
             }
 
             /* Check that that number is above the lower bound. */
@@ -155,11 +155,11 @@ static const char *format_is_integer_validation_err(ucArgOpt *p, ucCmdLine *cmd,
                         cmd, 
                         ucOpt_INVALID "The " "\"%s\" " "argument \"%s\" is not an integer.", 
                         switch_name, 
-                        ucTok_get_value(arg_tok))
+                        arg_tok)
                     : ucCmdLine_format_response(
                         cmd, 
                         ucOpt_INVALID "The " "argument \"%s\" is not an integer.", 
-                        ucTok_get_value(arg_tok));
+                        arg_tok);
             }
         }
     }

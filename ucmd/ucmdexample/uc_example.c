@@ -8,19 +8,19 @@ static const char *cmd(ucCmdLine *cmd, void *state) {
     i = 0;
     arg_tok = ucCmdLine_get_arg(cmd);
     while (arg_tok) {
-        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", ucTok_get_value((ucTok*)arg_tok)));
+        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", arg_tok));
         arg_tok = ucCmdLine_get_arg_x(cmd, ++i);
     }
 
     i = 0;
     switch_tok = ucCmdLine_get_switch(cmd);
     while (switch_tok) {
-        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found switch: %s", ucTok_get_value((ucTok*)switch_tok)));
+        ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found switch: %s", switch_tok));
 
         j = 0;
         arg_tok = ucCmdLine_get_switch_arg(cmd, switch_tok);
         while (arg_tok) {
-            ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", ucTok_get_value((ucTok*)arg_tok)));
+            ucCmdLine_respond(cmd, ucCmdLine_format_response(cmd, "Found argument: %s", arg_tok));
             arg_tok = ucCmdLine_get_switch_arg_x(cmd, switch_tok, ++j);
         }
 
