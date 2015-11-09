@@ -94,13 +94,13 @@ uc_EXPORTED ucArgTok*                           ucSwitchTok_get_arg(ucSwitchTok*
 
 uc_EXPORTED void                                ucCmd_acknowledge_command(ucCmd*);
 uc_EXPORTED ucBool                              ucCmd_handle_invalid_command(ucCmd*, const char *invalid_command);
-uc_EXPORTED ucCmd*                          ucCmd_init(ucCmd*);
+uc_EXPORTED ucCmd*                              ucCmd_init(ucCmd*);
 uc_EXPORTED void                                ucCmd_terminate_response(ucCmd*);
             struct                              ucCmd {
             ucCmdTok*                           cmd_tok;
-            ucCmd_TransmitFunc*             transmit;
-            ucCmd_IsCanceledFunc*           is_canceled;
-            ucCmd_HandleInvalidCommandFunc* handle_invalid_command;
+            ucCmd_TransmitFunc*                 transmit;
+            ucCmd_IsCanceledFunc*               is_canceled;
+            ucCmd_HandleInvalidCommandFunc*     handle_invalid_command;
             void*                               transmit_state;
             void*                               is_canceled_state;
             void*                               handle_invalid_command_state;
@@ -111,24 +111,24 @@ uc_EXPORTED void                                ucCmd_terminate_response(ucCmd*)
             ucBool                              is_quiet; };
 
 uc_EXPORTED const char*                         ucCmdOpt_format_validation_err(ucCmdOpt*, ucCmd *cmd);
-uc_EXPORTED ucCmdOpt*                       ucCmdOpt_init(ucCmdOpt*, ucCmdOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdOpt *next);
+uc_EXPORTED ucCmdOpt*                           ucCmdOpt_init(ucCmdOpt*, ucCmdOpt_WorkFunc *func, void* state, const char *name, const char *desc, ucArgOpt* arg_opt, ucSwitchOpt *switch_opt, ucCmdOpt *next);
 uc_EXPORTED const char*                         ucCmdOpt_process(ucCmdOpt*, ucCmd *cmd);
 uc_EXPORTED void                                ucCmdOpt_send_help(ucCmdOpt*, ucCmd *cmd);
 uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, ucCmd *cmd);
             struct                              ucCmdOpt {
             ucArgOptOwner                       base;
-            ucCmdOpt_WorkFunc*              work;
+            ucCmdOpt_WorkFunc*                  work;
             void*                               state;
             ucSwitchOpt*                        switch_opt;
-            ucCmdOpt*                       next; };
+            ucCmdOpt*                           next; };
 
 uc_EXPORTED ucCmdParser*                        ucCmdApp_get_cmd_parser(ucCmdApp*);
-uc_EXPORTED ucCmdApp*                       ucCmdApp_init(ucCmdApp*, ucCmdParser*, ucCmd*);
+uc_EXPORTED ucCmdApp*                           ucCmdApp_init(ucCmdApp*, ucCmdParser*, ucCmd*);
 uc_EXPORTED char*                               ucCmdApp_receive(ucCmdApp*);
             struct                              ucCmdApp {
-            ucCmd*                          cmd;
+            ucCmd*                              cmd;
             ucCmdParser*                        cmd_parser;
-            ucCmdApp_ReceiveFunc*           receive;
+            ucCmdApp_ReceiveFunc*               receive;
             void*                               receive_state;
             const char*                         help_command;
             const char*                         quit_command;
