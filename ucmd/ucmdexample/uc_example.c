@@ -3,8 +3,11 @@
 
 static const char *cmd(ucCmd *cmd, void *state) {
     int i, j;
-    ucTok *arg_tok, *switch_tok;
+    ucTok *command_tok, *arg_tok, *switch_tok;
     
+    command_tok = ucCmd_get_command(cmd);
+    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Found command: %s", command_tok));
+
     i = 0;
     arg_tok = ucCmd_get_arg(cmd);
     while (arg_tok) {

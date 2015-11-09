@@ -135,7 +135,7 @@ const char *ucCmdOpt_format_validation_err(ucCmdOpt *p, ucCmd *cmd) {
     ucSwitchTok *switch_tok, *found_switch_tok, *next_switch_tok;
     const char *switch_name, *validation;
 
-    cmd_tok = ucCmd_get_cmd(cmd);
+    cmd_tok = ucCmd_get_command(cmd);
     arg_tok = ucCmdTok_get_arg(cmd_tok);
 
     validation = ucArgOptOwner_format_validation_err((ucArgOptOwner*)p, cmd, arg_tok, NULL);
@@ -194,7 +194,7 @@ static const char *internal_process(ucCmdOpt *p, ucCmd *cmd, ucBool *invalid_com
     const char *validation;
 
     /* Get the command token of the command structure. */
-    cmd_tok = ucCmd_get_cmd(cmd);
+    cmd_tok = ucCmd_get_command(cmd);
 
     /* Get the command option that we'll process by finding
     the one that matches the name of the command. */

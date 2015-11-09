@@ -41,7 +41,7 @@ static double get_arg_x_f(ucArgTokOwner *owner, int arg_index, double default_va
 
 ucCmd *ucCmd_init(ucCmd *p) {
     assert(p);
-    p->cmd_tok = NULL;
+    p->command = NULL;
     p->command_acknowledgment = NULL;
     p->transmit = NULL;
     p->transmit_state = NULL;
@@ -62,14 +62,14 @@ void ucCmd_destroy(ucCmd *p) {
     ucInstance_destroy(p);
 }
 
-ucCmdTok *ucCmd_get_cmd(ucCmd *p) {
+ucCmdTok *ucCmd_get_command(ucCmd *p) {
     assert(p);
-    return p->cmd_tok;
+    return p->command;
 }
 
-void ucCmd_set_cmd(ucCmd *p, ucCmdTok *value) {
+void ucCmd_set_command(ucCmd *p, ucCmdTok *value) {
     assert(p);
-    p->cmd_tok = value;
+    p->command = value;
 }
 
 const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_list) {
@@ -226,14 +226,14 @@ void ucCmd_terminate_response(ucCmd *p) {
 }
 
 ucArgTok *ucCmd_get_arg(ucCmd *p) {
-    ucCmdTok *cmd_tok = ucCmd_get_cmd(p);
+    ucCmdTok *cmd_tok = ucCmd_get_command(p);
     return cmd_tok
         ? ucCmdTok_get_arg(cmd_tok)
         : NULL;
 }
 
 ucSwitchTok *ucCmd_get_switch(ucCmd *p) {
-    ucCmdTok *cmd_tok = ucCmd_get_cmd(p);
+    ucCmdTok *cmd_tok = ucCmd_get_command(p);
     return cmd_tok
         ? ucCmdTok_get_switch(cmd_tok)
         : NULL;
@@ -287,29 +287,29 @@ ucBool ucCmd_get_switch_arg_x_b(ucCmd *p, const char *switch_name, int arg_index
 }
 
 ucArgTok *ucCmd_get_arg_x(ucCmd *p, int arg_index) {
-    return get_arg_x(ucCmd_get_cmd(p), arg_index);
+    return get_arg_x(ucCmd_get_command(p), arg_index);
 }
 
 ucBool ucCmd_get_arg_b(ucCmd *p, ucBool default_value) {
-    return get_arg_x_b(ucCmd_get_cmd(p), 0, default_value);
+    return get_arg_x_b(ucCmd_get_command(p), 0, default_value);
 }
 
 int ucCmd_get_arg_d(ucCmd *p, int default_value) {
-    return get_arg_x_d(ucCmd_get_cmd(p), 0, default_value);
+    return get_arg_x_d(ucCmd_get_command(p), 0, default_value);
 }
 
 double ucCmd_get_arg_f(ucCmd *p, double default_value) {
-    return get_arg_x_f(ucCmd_get_cmd(p), 0, default_value);
+    return get_arg_x_f(ucCmd_get_command(p), 0, default_value);
 }
 
 ucBool ucCmd_get_arg_x_b(ucCmd *p, int arg_index, ucBool default_value) {
-    return get_arg_x_b(ucCmd_get_cmd(p), arg_index, default_value);
+    return get_arg_x_b(ucCmd_get_command(p), arg_index, default_value);
 }
 
 int ucCmd_get_arg_x_d(ucCmd *p, int arg_index, int default_value) {
-    return get_arg_x_d(ucCmd_get_cmd(p), arg_index, default_value);
+    return get_arg_x_d(ucCmd_get_command(p), arg_index, default_value);
 }
 
 double ucCmd_get_arg_x_f(ucCmd *p, int arg_index, double default_value) {
-    return get_arg_x_f(ucCmd_get_cmd(p), arg_index, default_value);
+    return get_arg_x_f(ucCmd_get_command(p), arg_index, default_value);
 }

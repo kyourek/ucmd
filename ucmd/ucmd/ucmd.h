@@ -289,7 +289,7 @@ typedef ucBool (ucCmd_HandleInvalidCommandFunc)(const char *invalid_command, voi
  * Returns:
  *   A pointer to the command token of the structure.
  */
-uc_EXPORTED ucTok *ucCmd_get_cmd(ucCmd*);
+uc_EXPORTED ucTok *ucCmd_get_command(ucCmd*);
 
 uc_EXPORTED ucTok *ucCmd_get_arg(ucCmd*);
 uc_EXPORTED ucBool ucCmd_get_arg_b(ucCmd*, ucBool default_value);
@@ -321,7 +321,7 @@ uc_EXPORTED ucTok *ucCmd_find_switch(ucCmd*, const char *switch_name);
  * Parameters:
  *   value: The command token.
  */
-uc_EXPORTED void ucCmd_set_cmd(ucCmd*, ucTok *value);
+uc_EXPORTED void ucCmd_set_command(ucCmd*, ucTok *value);
 
 /*
  * Summary:

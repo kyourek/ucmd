@@ -91,7 +91,7 @@ uc_TEST(ucCmdOpt_process_calls_func)
 
     cmd = cmd_line;
     cmd_opt = ucCmdOpt_create(uart_func_two, NULL, "uart_func", "The UART function.", NULL, NULL, NULL);
-    ucCmd_set_cmd(cmd, "uart_func\0\n");
+    ucCmd_set_command(cmd, "uart_func\0\n");
      
     uc_TRUE(ucCmdOpt_process(cmd_opt, cmd));
 
@@ -228,11 +228,11 @@ uc_TEST(ucCmdOpt_format_validation_err_catches_required_arg)
     ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, ucArgOpt_create_required("a", NULL, NULL), NULL, NULL);
 
-    ucCmd_set_cmd(cmd, "opt\0\n");
+    ucCmd_set_command(cmd, "opt\0\n");
     err = ucCmdOpt_format_validation_err(opt, cmd);
     uc_TRUE(NULL != err);
 
-    ucCmd_set_cmd(cmd, "opt\0arg\0\n");
+    ucCmd_set_command(cmd, "opt\0arg\0\n");
     err = ucCmdOpt_format_validation_err(opt, cmd);
     uc_TRUE(NULL == err);
 
@@ -244,11 +244,11 @@ uc_TEST(ucCmdOpt_format_validation_err_catches_required_switch)
     ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, ucSwitchOpt_create_required("-s", NULL, NULL, NULL), NULL);
 
-    ucCmd_set_cmd(cmd, "opt\0-z\0\n");
+    ucCmd_set_command(cmd, "opt\0-z\0\n");
     err = ucCmdOpt_format_validation_err(opt, cmd);
     uc_TRUE(NULL != err);
 
-    ucCmd_set_cmd(cmd, "opt\0-s\0\n");
+    ucCmd_set_command(cmd, "opt\0-s\0\n");
     err = ucCmdOpt_format_validation_err(opt, cmd);
     uc_TRUE(NULL == err);
 
@@ -263,7 +263,7 @@ uc_TEST(ucCmdOpt_process_handles_invalid_commands)
 
     ucCmd_set_handle_invalid_command(cmd, handle_invalid_command_1);
     ucCmd_set_handle_invalid_command_state(cmd, &state);
-    ucCmd_set_cmd(cmd, "noopt\0\n");
+    ucCmd_set_command(cmd, "noopt\0\n");
 
     handle_invalid_command_1_return = ucBool_true;
     err = ucCmdOpt_process(opt, cmd);
@@ -280,7 +280,7 @@ uc_TEST(ucCmdOpt_process_does_not_handle_invalid_command)
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
 
     ucCmd_set_handle_invalid_command(cmd, NULL);
-    ucCmd_set_cmd(cmd, "noopt\0\n");
+    ucCmd_set_command(cmd, "noopt\0\n");
 
     err = ucCmdOpt_process(opt, cmd);
     uc_TRUE(0 == strcmp(err, "Invalid: No command option found for \"noopt\""));
@@ -292,7 +292,7 @@ uc_TEST(ucCmdOpt_process_responds_correctly_if_no_work_exists)
     const char *response;
     ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
-    ucCmd_set_cmd(cmd, "opt\0\n");
+    ucCmd_set_command(cmd, "opt\0\n");
     response = ucCmdOpt_process(opt, cmd);
     uc_TRUE(0 == strcmp(response, "No work found for command \"opt\""));
 uc_PASS

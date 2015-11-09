@@ -97,7 +97,7 @@ uc_EXPORTED ucBool                              ucCmd_handle_invalid_command(ucC
 uc_EXPORTED ucCmd*                              ucCmd_init(ucCmd*);
 uc_EXPORTED void                                ucCmd_terminate_response(ucCmd*);
             struct                              ucCmd {
-            ucCmdTok*                           cmd_tok;
+            ucCmdTok*                           command;
             ucCmd_TransmitFunc*                 transmit;
             ucCmd_IsCanceledFunc*               is_canceled;
             ucCmd_HandleInvalidCommandFunc*     handle_invalid_command;

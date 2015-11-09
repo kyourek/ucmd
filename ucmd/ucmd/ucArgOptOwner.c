@@ -34,7 +34,7 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
                 : ucCmd_format_response(
                     cmd, 
                     ucOpt_INVALID "No argument options exist for command \"%s\".", 
-                    ucCmd_get_cmd(cmd));
+                    ucCmd_get_command(cmd));
         }
 
         /* Neither the option nor the token exist, so no error here. */
