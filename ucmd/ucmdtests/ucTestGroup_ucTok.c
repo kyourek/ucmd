@@ -138,27 +138,27 @@ uc_CASE(ucTok_try_parse_boolean_test, parses_false, "false", ucBool_true, ucBool
 uc_CASE(ucTok_try_parse_boolean_test, does_not_parse_invalid_string, "invalid", ucBool_false, ucBool_false)
 uc_CASE(ucTok_try_parse_boolean_test, does_not_parse_numeric, "0.0", ucBool_false, ucBool_false)
 
-uc_TEST(ucTok_parse_numeric_test, const char *s, double expected)
-    uc_TRUE(expected == ucTok_parse_numeric((ucTok*)s));
+uc_TEST(ucTok_parse_numeric_test, const char *s, double expected, double default_value)
+    uc_TRUE(expected == ucTok_parse_numeric((ucTok*)s, default_value));
 uc_PASS
-uc_CASE(ucTok_parse_numeric_test, parses_number, "5.43210", 5.43210)
-uc_CASE(ucTok_parse_numeric_test, does_not_parse_invalid, "invalid", 0)
+uc_CASE(ucTok_parse_numeric_test, parses_number, "5.43210", 5.43210, -1)
+uc_CASE(ucTok_parse_numeric_test, does_not_parse_invalid, "invalid", 22, 22)
 
-uc_TEST(ucTok_parse_boolean_test, const char *s, ucBool expected)
-    uc_TRUE(expected == ucTok_parse_boolean((ucTok*)s));
+uc_TEST(ucTok_parse_boolean_test, const char *s, ucBool expected, ucBool default_value)
+    uc_TRUE(expected == ucTok_parse_boolean((ucTok*)s, default_value));
 uc_PASS
-uc_CASE(ucTok_parse_boolean_test, parses_1, "1", ucBool_true)
-uc_CASE(ucTok_parse_boolean_test, parses_on, "on", ucBool_true)
-uc_CASE(ucTok_parse_boolean_test, parses_yes, "yes", ucBool_true)
-uc_CASE(ucTok_parse_boolean_test, parses_true, "true", ucBool_true)
-uc_CASE(ucTok_parse_boolean_test, parses_0, "0", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, parses_off, "off", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, parses_no, "no", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, parses_false, "false", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, does_not_parses_truthy, "truthy", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, does_not_parses_yup, "yup", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, does_not_parses_bzzz, "bzzz", ucBool_false)
-uc_CASE(ucTok_parse_boolean_test, does_not_parses_1_0, "1.0", ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, parses_1, "1", ucBool_true, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, parses_on, "on", ucBool_true, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, parses_yes, "yes", ucBool_true, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, parses_true, "true", ucBool_true, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, parses_0, "0", ucBool_false, ucBool_true)
+uc_CASE(ucTok_parse_boolean_test, parses_off, "off", ucBool_false, ucBool_true)
+uc_CASE(ucTok_parse_boolean_test, parses_no, "no", ucBool_false, ucBool_true)
+uc_CASE(ucTok_parse_boolean_test, parses_false, "false", ucBool_false, ucBool_true)
+uc_CASE(ucTok_parse_boolean_test, does_not_parses_truthy, "truthy", ucBool_false, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, does_not_parses_yup, "yup", ucBool_false, ucBool_false)
+uc_CASE(ucTok_parse_boolean_test, does_not_parses_bzzz, "bzzz", ucBool_true, ucBool_true)
+uc_CASE(ucTok_parse_boolean_test, does_not_parses_1_0, "1.0", ucBool_false, ucBool_false)
 
 uc_TEST(ucTok_is_integer_test, const char *s, ucBool expected)
     uc_TRUE(expected == ucTok_is_integer((ucTok*)s));
@@ -195,15 +195,14 @@ uc_CASE(ucTok_try_parse_integer_test, returns_true_if_parsed_2, "-211", ucBool_t
 uc_CASE(ucTok_try_parse_integer_test, returns_true_if_parsed_3, "0", ucBool_true, 0)
 uc_CASE(ucTok_try_parse_integer_test, returns_true_if_parsed_4, "1", ucBool_true, 1)
 
-uc_TEST(ucTok_parse_integer_test, const char *s, int i)
-    uc_TRUE(i == ucTok_parse_integer((ucTok*)s));
+uc_TEST(ucTok_parse_integer_test, const char *s, int i, int default_value)
+    uc_TRUE(i == ucTok_parse_integer((ucTok*)s, default_value));
 uc_PASS
-uc_CASE(ucTok_parse_integer_test, returns_0_for_invalid_string_1, "--1", 0)
-uc_CASE(ucTok_parse_integer_test, returns_0_for_invalid_string_2, "2.1", 0)
-
-uc_CASE(ucTok_parse_integer_test, returns_integer_value_1, "1", 1)
-uc_CASE(ucTok_parse_integer_test, returns_integer_value_2, "21", 21)
-uc_CASE(ucTok_parse_integer_test, returns_integer_value_3, "-3294821", -3294821)
+uc_CASE(ucTok_parse_integer_test, returns_default_value_for_invalid_string_1, "--1", 33, 33)
+uc_CASE(ucTok_parse_integer_test, returns_default_value_for_invalid_string_2, "2.1", -5, -5)
+uc_CASE(ucTok_parse_integer_test, returns_integer_value_1, "1", 1, 0)
+uc_CASE(ucTok_parse_integer_test, returns_integer_value_2, "21", 21, -1)
+uc_CASE(ucTok_parse_integer_test, returns_integer_value_3, "-3294821", -3294821, 2)
 
 uc_TEST_GROUP(ucTok, NULL,
     ucTok_get_length_returns_string_length,
@@ -282,8 +281,8 @@ uc_TEST_GROUP(ucTok, NULL,
     ucTok_try_parse_integer_test_returns_true_if_parsed_2,
     ucTok_try_parse_integer_test_returns_true_if_parsed_3,
     ucTok_try_parse_integer_test_returns_true_if_parsed_4,
-    ucTok_parse_integer_test_returns_0_for_invalid_string_1,
-    ucTok_parse_integer_test_returns_0_for_invalid_string_2,
+    ucTok_parse_integer_test_returns_default_value_for_invalid_string_1,
+    ucTok_parse_integer_test_returns_default_value_for_invalid_string_2,
     ucTok_parse_integer_test_returns_integer_value_1,
     ucTok_parse_integer_test_returns_integer_value_2,
     ucTok_parse_integer_test_returns_integer_value_3)

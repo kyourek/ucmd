@@ -187,6 +187,10 @@
 #define NULL ((void*)0)
 #endif
 
+/** @defgroup ucBool Boolean values
+ *  @{
+ */
+
 /** @brief Boolean type definition.
  *
  *  This definition is used to increase the readability of the source by replacing
@@ -198,48 +202,132 @@ typedef enum {
     ucBool_true = !ucBool_false     /**< Truthy value. */
 } ucBool;
 
-/** @brief Base type for tokenized values in a command.
+/** @} */
+
+/** @defgroup ucTok Command-line token
+ *  @{
+ */
+
+/** @brief The type definition for a token in a command.
  *
+ *  Tokens may be one of command, argument, or switch. A pointer to a token is similar
+ *  to a null-terminated string, but it also suggests that other tokens may follow its
+ *  null character. The final token in a chain should contain a terminating character.
  */
 typedef const char ucTok;
 
-/** @brief Gets the length of the given token.
+/** @brief      Gets the length of the given token.
  *  @param[in]  p   The token in question.
- *  @returns The number of characters in the token.
+ *  @returns    The number of characters in the token.
+ *  @see        ucTok
  */
-uc_EXPORTED int ucTok_get_length(ucTok* p);
+uc_EXPORTED int ucTok_get_length(ucTok *p);
 
-/** @brief Determines whether or not the given token is considered a switch.
+/** @brief      Determines whether or not the given token is considered a switch.
  *  @param[in]  p   The given token.
- *  @returns Boolean true if the token is a switch. Otherwise, false.
+ *  @returns    Boolean true if the token is a switch. Otherwise, false.
+ *  @see        ucTok
  */
-uc_EXPORTED ucBool ucTok_is_switch(ucTok* p);
+uc_EXPORTED ucBool ucTok_is_switch(ucTok *p);
 
-/** @brief Determines whether or not the given token equals the value.
+/** @brief      Determines whether or not the given token equals the value.
  *  @param[in]  p       The given token.
  *  @param[in]  value   The value to which the token in question is compared.
- *  @returns Boolean true if the given value equals the given token. Otherwise, false.
+ *  @returns    Boolean true if the given value equals the given token. Otherwise, false.
+ *  @see        ucTok
  */
-uc_EXPORTED ucBool ucTok_equals(ucTok* p, const char *value);
+uc_EXPORTED ucBool ucTok_equals(ucTok *p, const char *value);
 
+/** @brief      Determines whether or not the given token is an integer.
+ *  @param[in]  p   The given token.
+ *  @returns    Boolean true if the given token is an integer. Otherwise, false.
+ *  @see        ucTok
+ */
 uc_EXPORTED ucBool ucTok_is_integer(ucTok *p);
-uc_EXPORTED ucBool ucTok_try_parse_integer(ucTok *p, int *value);
-uc_EXPORTED int ucTok_parse_integer(ucTok *p);
-uc_EXPORTED ucBool ucTok_is_numeric(ucTok*);
-uc_EXPORTED ucBool ucTok_try_parse_numeric(ucTok*, double *value);
-uc_EXPORTED double ucTok_parse_numeric(ucTok*);
-uc_EXPORTED ucBool ucTok_is_boolean(ucTok*);
-uc_EXPORTED ucBool ucTok_try_parse_boolean(ucTok*, ucBool *value);
-uc_EXPORTED ucBool ucTok_parse_boolean(ucTok*);
 
-/*
- * Summary:
- *   Gets the next token in the list.
- * Returns:
- *   A pointer to the token that comes next in the list, or NULL
- *   if no further tokens exist.
+/** @brief      Attempts to parse the given token to an integer value.
+ *  @param[in]  p       The given token.
+ *  @param[out] value   A container for the parsed integer value.
+ *  @returns    Boolean true if the token was successfully parsed. Otherwise, false.
+ *  @see        ucTok
+ *
+ *  If the token cannot be parsed to an integer, @a value is left unchanged.
+ */
+uc_EXPORTED ucBool ucTok_try_parse_integer(ucTok *p, int *value);
+
+/** @brief      Parses the given token to an integer value.
+ *  @param[in]  p               The given token.
+ *  @param[in]  default_value   If the token cannot be parsed to an integer, this value is returned.
+ *  @returns    The integer value of the token, or @a default_value if the token cannot be parsed.
+ *  @see        ucTok
+ */
+uc_EXPORTED int ucTok_parse_integer(ucTok *p, int default_value);
+
+/** @brief      Determines whether or not the given token represents a numeric value.
+ *  @param[in]  p   The given token.
+ *  @returns    Boolean true if the token is numeric. Otherwise, false.
+ *  @see        ucTok
+ */
+uc_EXPORTED ucBool ucTok_is_numeric(ucTok *p);
+
+/** @brief      Attempts to parse the given token to a numeric value.
+ *  @param[in]  p       The given token.
+ *  @param[out] value   A container for the parsed numeric value.
+ *  @returns    Boolean true if the token was successfully parsed. Otherwise, false.
+ *  @see        ucTok
+ *
+ *  If the token cannot be parsed to a numeric value, @a value is left unchanged.
+ */
+uc_EXPORTED ucBool ucTok_try_parse_numeric(ucTok *p, double *value);
+
+/** @brief      Parses the given token to a numeric value.
+ *  @param[in]  p               The given token.
+ *  @param[in]  default_value   If the token cannot be parsed to a numeric value, this value is returned.
+ *  @returns    The numeric value of the token, or @a default_value if the token cannot be parsed.
+ *  @see        ucTok
+ */
+uc_EXPORTED double ucTok_parse_numeric(ucTok *p, double default_value);
+
+/** @brief      Determines whether or not the given token represents a boolean value.
+ *  @param[in]  p   The given token.
+ *  @returns    Boolean true if the token is a boolean. Otherwise, false.
+ *  @see        ucTok
+ *
+ *  Boolean values are those defined by @a ucTok_BOOLEAN_TRUE and @a ucTok_BOOLEAN_FALSE.
+ */
+uc_EXPORTED ucBool ucTok_is_boolean(ucTok *p);
+
+/** @brief      Attempts to parse the given token to a boolean value.
+ *  @param[in]  p       The given token.
+ *  @param[out] value   A container for the parsed boolean value.
+ *  @returns    Boolean true if the token was successfully parsed. Otherwise, false.
+ *  @see        ucTok
+ *
+ *  Boolean values are those defined by @a ucTok_BOOLEAN_TRUE and @a ucTok_BOOLEAN_FALSE.
+ *  If the token cannot be parsed to a boolean value, @a value is left unchanged.
+ */
+uc_EXPORTED ucBool ucTok_try_parse_boolean(ucTok *p, ucBool *value);
+
+/** @brief      Parses the given token to a boolean value.
+ *  @param[in]  p               The given token.
+ *  @param[in]  default_value   If the token cannot be parsed to a boolean value, this value is returned.
+ *  @returns    The boolean value of the token, or @a default_value if the token cannot be parsed.
+ *  @see        ucTok
+ *
+ *  Boolean values are those defined by @a ucTok_BOOLEAN_TRUE and @a ucTok_BOOLEAN_FALSE.
+ */
+uc_EXPORTED ucBool ucTok_parse_boolean(ucTok *p, ucBool default_value);
+
+/** @brief      Gets the token that proceeds from the given token in a command-line chain of tokens.
+ *  @param[in]  p   The given token.
+ *  @returns    The next token in the chain, or a null pointer if no further tokens exist.
+ *
+ *  The returned token's memory location is within the command-line chain. It is not allocated by
+ *  this function and should not be freed by the caller.
  */
 uc_EXPORTED ucTok *ucTok_get_next(ucTok*);
+
+/** @} */
 
 /*
  * Summary:

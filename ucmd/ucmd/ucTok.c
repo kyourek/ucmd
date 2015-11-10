@@ -63,10 +63,9 @@ ucBool ucTok_try_parse_integer(ucTok *p, int *value) {
     return ucBool_false;
 }
 
-int ucTok_parse_integer(ucTok *p) {
-    int value = 0;
-    ucTok_try_parse_integer(p, &value);
-    return value;
+int ucTok_parse_integer(ucTok *p, int default_value) {
+    ucTok_try_parse_integer(p, &default_value);
+    return default_value;
 }
 
 ucBool ucTok_is_numeric(ucTok *p) {
@@ -128,10 +127,9 @@ ucBool ucTok_try_parse_numeric(ucTok *p, double *value) {
     return ucBool_false;
 }
 
-double ucTok_parse_numeric(ucTok *p) {
-    double value = 0;
-    ucTok_try_parse_numeric(p, &value);
-    return value;
+double ucTok_parse_numeric(ucTok *p, double default_value) {
+    ucTok_try_parse_numeric(p, &default_value);
+    return default_value;
 }
 
 ucBool ucTok_is_boolean(ucTok *p) {
@@ -174,10 +172,9 @@ ucBool ucTok_try_parse_boolean(ucTok *p, ucBool *value) {
     return ucBool_false;
 }
 
-ucBool ucTok_parse_boolean(ucTok *p) {
-    ucBool value = ucBool_false;
-    ucTok_try_parse_boolean(p, &value);
-    return value;
+ucBool ucTok_parse_boolean(ucTok *p, ucBool default_value) {
+    ucTok_try_parse_boolean(p, &default_value);
+    return default_value;
 }
 
 ucBool ucTok_is_switch(ucTok* p) {
