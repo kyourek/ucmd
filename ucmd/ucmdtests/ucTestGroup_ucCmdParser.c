@@ -4,12 +4,8 @@
 
 static ucCmdParser *subject;
 
-static ucCmdParser *get_cmd_parser(void) {
-    return subject;
-}
-
 static ucCmdTok *parse_cmd(char *cmd) {
-    return ucCmdParser_parse(get_cmd_parser(), cmd);
+    return ucCmdParser_parse(subject, cmd);
 }
 
 uc_TEST(prior)
