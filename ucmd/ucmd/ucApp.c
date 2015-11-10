@@ -86,9 +86,42 @@ ucCmd *ucApp_get_cmd(ucApp *p) {
     return p->cmd;
 }
 
+void ucApp_set_cmd_opt(ucApp *p, ucCmdOpt *value) {
+    assert(p);
+    p->cmd_opt = value;
+}
+
+ucCmdOpt *ucApp_get_cmd_opt(ucApp *p) {
+    assert(p);
+    return p->cmd_opt;
+}
+
+void ucApp_set_banner(ucApp *p, ucBool value) {
+    assert(p);
+    p->banner = value;
+}
+
+ucBool ucApp_get_banner(ucApp *p) {
+    assert(p);
+    return p->banner;
+}
+
+const char *ucApp_get_name(ucApp *p) {
+    assert(p);
+    return p->name;
+}
+
+void ucApp_set_name(ucApp *p, const char *value) {
+    assert(p);
+    p->name = value;
+}
+
 ucApp *ucApp_init(ucApp *p, ucCmd *cmd) {
     assert(p);
     p->cmd = cmd;
+    p->cmd_opt = NULL;
+    p->name = "ucmd";
+    p->banner = ucBool_true;
     p->help_command = "help";
     p->quit_command = "quit";
     p->escape_response = "\x1b";
@@ -96,9 +129,7 @@ ucApp *ucApp_init(ucApp *p, ucCmd *cmd) {
 }
 
 ucApp *ucApp_create(void) {
-    return ucApp_init(
-        ucInstance_create(),
-        ucCmd_create());
+    return ucApp_init(ucInstance_create(), ucCmd_create());
 }
 
 void ucApp_destroy(ucApp *p) {
@@ -110,16 +141,36 @@ void ucApp_destroy(ucApp *p) {
     }
 }
 
-void ucApp_run(ucApp *p, ucCmdOpt *cmd_opt) {
+void ucApp_run(ucApp *p) {
     const char *response;
     ucCmd *cmd;
     ucCmdOpt *quit_opt, *help_opt;
     HelpState HelpState_s;
     QuitState QuitState_s;
 
-    /* Create options for help and quit. */
-    quit_opt = ucCmdOpt_create(quit, &QuitState_s, ucApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    help_opt = ucCmdOpt_create(help, &HelpState_s, ucApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    /* Create an option to quit the app. */
+    quit_opt = ucCmdOpt_create(
+        quit, 
+        &QuitState_s, 
+        ucApp_get_quit_command(p), 
+        "Exits the command interface.", 
+        NULL, 
+        NULL, 
+        ucApp_get_cmd_opt(p));
+
+    /* Create an option for help. 
+    This will be the first option in the chain. */
+    help_opt = ucCmdOpt_create(
+        help, 
+        &HelpState_s, 
+        ucApp_get_help_command(p), 
+        "Shows command information.", 
+        ucArgOpt_create(
+            "<command>", 
+            "If provided, help is shown for the given command.", 
+            NULL), 
+        NULL, 
+        quit_opt);
 
     /* Set the state used for the help and quit commands. */
     QuitState_s.app = p;
@@ -130,8 +181,11 @@ void ucApp_run(ucApp *p, ucCmdOpt *cmd_opt) {
     cmd = ucApp_get_cmd(p);
 
     /* Show the banner. */
-    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s to quit.", ucApp_get_quit_command(p)));
-    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s for help.", ucApp_get_help_command(p)));
+    if (ucApp_get_banner(p)) {
+        ucCmd_respond(cmd, ucCmd_format_response(cmd, "%s", ucApp_get_name(p)));
+        ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s to quit.", ucApp_get_quit_command(p)));
+        ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s for help.", ucApp_get_help_command(p)));
+    }
 
     /* Loop until quit. */
     for (;;) {

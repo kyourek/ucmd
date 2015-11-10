@@ -79,7 +79,7 @@ uc_TEST(ucApp_run_ends_when_quit_is_received)
     ucCmd *cmd = ucApp_get_cmd(subject);
     ucApp_run_ends_when_quit_is_received_count = 0;
     ucCmd_set_receive(cmd, ucApp_run_ends_when_quit_is_received_receive);
-    ucApp_run(subject, NULL);
+    ucApp_run(subject);
     uc_TRUE(2 == ucApp_run_ends_when_quit_is_received_count);
 uc_PASS
 
@@ -115,7 +115,7 @@ uc_TEST(ucApp_run_sends_response_terminator_after_command_completion)
     ucCmd_set_receive(cmd, ucApp_run_sends_response_terminator_after_command_completion_receive);
 
     ucCmd_set_response_terminator(ucApp_get_cmd(subject), "End of transmission");
-    ucApp_run(subject, NULL);
+    ucApp_run(subject);
     uc_TRUE(0 == ucApp_run_sends_response_terminator_after_command_completion_transmit_error);
 uc_PASS
 
@@ -153,7 +153,7 @@ static int ucApp_run_sends_command_acknowledgment(ucTestGroup *p, const char *co
     ucCmd_set_command_acknowledgment(cmd, command_acknowledgment);
     ucCmd_set_transmit(cmd, ucApp_run_sends_command_acknowledgment_transmit);
     ucCmd_set_receive(cmd, ucApp_run_sends_command_acknowledgment_receive);
-    ucApp_run(subject, NULL);
+    ucApp_run(subject);
     uc_TRUE(0 == ucApp_run_sends_command_acknowledgment_error);
     return 0;
 }
@@ -166,15 +166,79 @@ uc_TEST(ucApp_run_sends_command_acknowledgment_dashes)
     return ucApp_run_sends_command_acknowledgment(p, "----");
 }
 
+uc_TEST(ucApp_set_banner_test, ucBool value)
+    ucApp_set_banner(subject, value);
+    uc_TRUE(value == ucApp_get_banner(subject));
+uc_PASS
+uc_CASE(ucApp_set_banner_test, true, ucBool_true)
+uc_CASE(ucApp_set_banner_test, false, ucBool_false)
+
+uc_TEST(ucApp_get_banner_default_is_true)
+    uc_TRUE(ucBool_true == ucApp_get_banner(subject));
+uc_PASS
+
+uc_TEST(ucApp_set_name_test, const char *value)
+    ucApp_set_name(subject, value);
+    uc_TRUE(value == ucApp_get_name(subject));
+uc_PASS
+uc_CASE(ucApp_set_name_test, garbage, "garbage")
+uc_CASE(ucApp_set_name_test, empty, "")
+
+uc_TEST(ucApp_get_name_default_is_ucmd)
+    uc_TRUE(uc_STR_EQ("ucmd", ucApp_get_name(subject)));
+uc_PASS
+
+static char set_banner_shows_banner_response[3][100] = { 0 };
+static int set_banner_shows_banner_i = 0;
+static char *set_banner_shows_banner_receive(char *buf, size_t buf_size, void *state) {
+    strcpy(buf, "quit\n");
+    return buf;
+}
+static void set_banner_shows_banner_transmit(const char *response, void *state) {
+    strcpy(set_banner_shows_banner_response[set_banner_shows_banner_i++], response);
+}
+uc_TEST(ucApp_set_banner_shows_banner, ucBool banner)
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 100; j++) {
+            set_banner_shows_banner_response[i][j] = '\0';
+        }
+    }
+    ucCmd_set_receive(ucApp_get_cmd(subject), set_banner_shows_banner_receive);
+    ucCmd_set_transmit(ucApp_get_cmd(subject), set_banner_shows_banner_transmit);
+    ucApp_set_banner(subject, banner);
+    ucApp_run(subject);
+    if (banner) {
+        uc_TRUE(uc_STR_EQ("ucmd", set_banner_shows_banner_response[0]));
+        uc_TRUE(uc_STR_EQ("Type quit to quit.", set_banner_shows_banner_response[1]));
+        uc_TRUE(uc_STR_EQ("Type help for help.", set_banner_shows_banner_response[2]));
+    }
+    else {
+        uc_TRUE(uc_STR_EQ("", set_banner_shows_banner_response[0]));
+        uc_TRUE(uc_STR_EQ("", set_banner_shows_banner_response[1]));
+        uc_TRUE(uc_STR_EQ("", set_banner_shows_banner_response[2]));
+    }
+uc_PASS
+uc_CASE(ucApp_set_banner_shows_banner, true, ucBool_true)
+uc_CASE(ucApp_set_banner_shows_banner, false, ucBool_false)
+
 uc_TEST_GROUP(ucApp, setup,
-    ucApp_set_help_command_sets_value,
-    ucApp_get_help_command_returns_value,
-    ucApp_set_quit_command_sets_value,
-    ucApp_get_quit_command_returns_value,
+    ucApp_get_banner_default_is_true,
     ucApp_get_cmd_returns_value,
     ucApp_get_escape_response_returns_value,
-    ucApp_set_escape_response_sets_value,
+    ucApp_get_help_command_returns_value,
+    ucApp_get_name_default_is_ucmd,
+    ucApp_get_quit_command_returns_value,
     ucApp_run_ends_when_quit_is_received,
     ucApp_run_sends_response_terminator_after_command_completion,
     ucApp_run_sends_command_acknowledgment_here_we_go,
-    ucApp_run_sends_command_acknowledgment_dashes)
+    ucApp_run_sends_command_acknowledgment_dashes,    
+    ucApp_set_banner_shows_banner_true,
+    ucApp_set_banner_shows_banner_false,
+    ucApp_set_banner_test_false,
+    ucApp_set_banner_test_true,
+    ucApp_set_escape_response_sets_value,
+    ucApp_set_help_command_sets_value,
+    ucApp_set_name_test_empty,
+    ucApp_set_name_test_garbage,
+    ucApp_set_quit_command_sets_value)

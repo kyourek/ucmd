@@ -73,7 +73,9 @@ void uc_example(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
     ucCmd_set_command_acknowledgment(cmd, "\\\\\\\\\\\\\\");
     ucCmd_set_response_terminator(cmd, "///////");
 
-    ucApp_run(app, commands);
+    ucApp_set_name(app, "Example of ucmd");
+    ucApp_set_cmd_opt(app, commands);
+    ucApp_run(app);
 
     ucApp_destroy(app);
     ucCmdOpt_destroy_chain(commands);

@@ -509,12 +509,10 @@ uc_EXPORTED void ucCmd_set_is_quiet(ucCmd*, ucBool value);
  */
 uc_EXPORTED ucBool ucCmd_get_is_quiet(ucCmd*);
 
-
 uc_EXPORTED const char*     ucCmd_get_command_acknowledgment(ucCmd*);
 uc_EXPORTED const char*     ucCmd_get_response_terminator(ucCmd*);
 uc_EXPORTED void            ucCmd_set_response_terminator(ucCmd*, const char *value);
 uc_EXPORTED void            ucCmd_set_command_acknowledgment(ucCmd*, const char *value);
-
 
 /*
  * Summary:
@@ -916,13 +914,14 @@ uc_EXPORTED void ucApp_set_escape_response(ucApp*, const char *value);
  */
 uc_EXPORTED const char *ucApp_get_escape_response(ucApp*);
 
-/*
- * Summary:
- *   Runs the application with the given options.
- * Parameters:
- *   cmd_opt: A pointer to the first command option for the app.
- */ 
-uc_EXPORTED void ucApp_run(ucApp*, ucCmdOpt *cmd_opt);
+uc_EXPORTED void ucApp_set_cmd_opt(ucApp *p, ucCmdOpt *value);
+uc_EXPORTED ucCmdOpt *ucApp_get_cmd_opt(ucApp *p);
+uc_EXPORTED void ucApp_set_banner(ucApp *p, ucBool value);
+uc_EXPORTED ucBool ucApp_get_banner(ucApp *p);
+uc_EXPORTED void ucApp_set_name(ucApp *p, const char *value);
+uc_EXPORTED const char *ucApp_get_name(ucApp *p);
+
+uc_EXPORTED void ucApp_run(ucApp*);
 
 uc_EXPORTED ucApp *ucApp_create(void);
 uc_EXPORTED void ucApp_destroy(ucApp *p);

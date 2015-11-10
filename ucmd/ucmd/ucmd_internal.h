@@ -130,9 +130,11 @@ uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, u
             ucCmdOpt*                           next; };
 
 uc_EXPORTED ucApp*                              ucApp_init(ucApp*, ucCmd*);
-uc_EXPORTED char*                               ucApp_receive(ucApp*);
             struct                              ucApp {
             ucCmd*                              cmd;
+            ucCmdOpt*                           cmd_opt;
+            ucBool                              banner;
+            const char*                         name;
             const char*                         help_command;
             const char*                         quit_command;
             const char*                         escape_response; };

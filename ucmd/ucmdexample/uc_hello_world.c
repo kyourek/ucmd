@@ -204,7 +204,9 @@ void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
 
     /* Starts the command-line app. The app will exit
     when it receives the 'quit' command. */
-    ucApp_run(app, commands);
+    ucApp_set_name(app, "Hello, World!");
+    ucApp_set_cmd_opt(app, commands);
+    ucApp_run(app);
 
     /* Clean up the resources that were explicitly
     created. */
