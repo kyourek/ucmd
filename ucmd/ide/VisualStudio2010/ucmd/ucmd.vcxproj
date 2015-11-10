@@ -22,7 +22,7 @@
     <ClCompile Include="..\..\..\ucmd\ucCmd.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdApp.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c" />
-    <ClCompile Include="..\..\..\ucmd\ucCmdParser.c" />
+    <ClCompile Include="..\..\..\ucmd\ucParser.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdTok.c" />
     <ClCompile Include="..\..\..\ucmd\ucOpt.c" />
     <ClCompile Include="..\..\..\ucmd\ucSwitchOpt.c" />

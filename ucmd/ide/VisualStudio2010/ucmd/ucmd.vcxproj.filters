@@ -34,9 +34,6 @@
     <ClCompile Include="..\..\..\ucmd\ucCmdTok.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdParser.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -56,6 +53,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\ucParser.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

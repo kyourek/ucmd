@@ -94,7 +94,7 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdApp.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdOpt.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmd.c" />
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdParser.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucParser.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdTok.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucOpt.c" />
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchOpt.c" />
