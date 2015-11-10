@@ -130,7 +130,7 @@ uc_EXPORTED ucTestGroup*                            ucTestGroup_ucBool;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmd;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdApp;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdOpt;
-uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdParser;
+uc_EXPORTED ucTestGroup*                            ucTestGroup_ucParser;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdTok;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucOpt;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucSwitchOpt;

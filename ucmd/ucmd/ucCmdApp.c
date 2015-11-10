@@ -106,12 +106,12 @@ ucCmd *ucCmdApp_get_cmd(ucCmdApp *p) {
     return p->cmd;
 }
 
-ucCmdParser *ucCmdApp_get_cmd_parser(ucCmdApp *p) {
+ucParser *ucCmdApp_get_cmd_parser(ucCmdApp *p) {
     assert(p);
     return p->cmd_parser;
 }
 
-ucCmdApp *ucCmdApp_init(ucCmdApp *p, ucCmdParser *cmd_parser, ucCmd *cmd) {
+ucCmdApp *ucCmdApp_init(ucCmdApp *p, ucParser *cmd_parser, ucCmd *cmd) {
     assert(p);
     p->cmd = cmd;
     p->cmd_parser = cmd_parser;
@@ -126,14 +126,14 @@ ucCmdApp *ucCmdApp_init(ucCmdApp *p, ucCmdParser *cmd_parser, ucCmd *cmd) {
 ucCmdApp *ucCmdApp_create(void) {
     return ucCmdApp_init(
         ucInstance_create(),
-        ucCmdParser_create(),
+        ucParser_create(),
         ucCmd_create());
 }
 
 void ucCmdApp_destroy(ucCmdApp *p) {
     if (p) {
         ucCmd_destroy(p->cmd);
-        ucCmdParser_destroy(p->cmd_parser);
+        ucParser_destroy(p->cmd_parser);
     }
     ucInstance_destroy(p);
 }
@@ -183,7 +183,7 @@ void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
         command = ucCmdApp_receive(p);
 
         /* Parse the input into a command token. */
-        cmd_tok = ucCmdParser_parse(ucCmdApp_get_cmd_parser(p), command);
+        cmd_tok = ucParser_parse(ucCmdApp_get_cmd_parser(p), command);
 
         /* Set the command's parsed command token. */
         ucCmd_set_command(cmd, cmd_tok);

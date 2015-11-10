@@ -1,7 +1,7 @@
 #include "ucmdtests.h"
 
 static ucCmd *cmd_line;
-static ucCmdParser *cmd_parser;
+static ucParser *cmd_parser;
 static ucCmdApp *subject;
 
 void *receive_1_state;

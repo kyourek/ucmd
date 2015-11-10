@@ -2,70 +2,70 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
-static ucCmdParser *subject;
+static ucParser *subject;
 
 static ucCmdTok *parse_cmd(char *cmd) {
-    return ucCmdParser_parse(subject, cmd);
+    return ucParser_parse(subject, cmd);
 }
 
 uc_TEST(prior)
-    subject = ucCmdParser_create();
+    subject = ucParser_create();
 uc_PASS
 
 uc_TEST(after)
-    ucCmdParser_destroy(subject);
+    ucParser_destroy(subject);
 uc_PASS
 
 uc_TEST(setup)
     ucTestGroup_setup_test(p, prior, after);
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_command_value)
+uc_TEST(ucParser_parse_parses_command_value)
     char cmd[20] = "command_name";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(NULL != t);
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)t, cmd));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_short_argument)
+uc_TEST(ucParser_parse_parses_short_argument)
     char cmd[24] = "command short_arg";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "short_arg"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_long_argument)
+uc_TEST(ucParser_parse_parses_long_argument)
     char cmd[31] = "command \"long argument\"";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_single_quotes)
+uc_TEST(ucParser_parse_parses_single_quotes)
     char cmd[47] = "command 'long argument'";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "long argument"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_switch)
+uc_TEST(ucParser_parse_parses_switch)
     char cmd[19] = "command -switch";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-switch"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_numeric_argument)
+uc_TEST(ucParser_parse_parses_numeric_argument)
     char cmd[38] = "command -12.34";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(NULL == ucCmdTok_get_switch(t));
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_arg(t), "-12.34"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parses_non_numeric_switch)
+uc_TEST(ucParser_parses_non_numeric_switch)
     char cmd[23] = "command -32.4.0";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(NULL == ucCmdTok_get_arg(t));
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)ucCmdTok_get_switch(t), "-32.4.0"));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_arguments_parsed_in_correct_order)
+uc_TEST(ucParser_parse_arguments_parsed_in_correct_order)
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[81] = "command arg1 arg2 arg3 arg4 arg5 arg6 -s1 arg arg1 -s2 arg1 arg2 arg3";
@@ -84,7 +84,7 @@ uc_TEST(ucCmdParser_parse_arguments_parsed_in_correct_order)
     uc_TRUE(6 == i);
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_switches_parsed_in_correct_order)
+uc_TEST(ucParser_parse_switches_parsed_in_correct_order)
     int i = 0;
     char buf[10];
     char cmd[76] = "command arg1 arg2 -sw1 arg1 arg2 -sw2 -sw3 arg1 arg2 -sw4";
@@ -103,7 +103,7 @@ uc_TEST(ucCmdParser_parse_switches_parsed_in_correct_order)
     uc_TRUE(4 == i);
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_switch_arguments_in_correct_order)
+uc_TEST(ucParser_parse_parses_switch_arguments_in_correct_order)
     int i = 0;
     char buf[10] = { '\0' };
     char cmd[94] = "command arg1 arg2 -sw1 arg1 arg2 arg3 arg4 arg5 -sw2 arg1 arg2";
@@ -125,7 +125,7 @@ uc_TEST(ucCmdParser_parse_parses_switch_arguments_in_correct_order)
     uc_TRUE(i == 5);
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_trailing_quotes)
+uc_TEST(ucParser_parse_parses_trailing_quotes)
     char cmd[38] = "cmd-name -s 'quoted \"arg\"'";
     ucCmdTok *t = parse_cmd(cmd);
     uc_TRUE(ucTok_equals((ucTok*)t, "cmd-name"));
@@ -133,7 +133,7 @@ uc_TEST(ucCmdParser_parse_parses_trailing_quotes)
     uc_TRUE(ucTok_equals((ucTok*)ucSwitchTok_get_arg(ucCmdTok_get_switch(t)), "quoted \"arg\""));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_parses_command)
+uc_TEST(ucParser_parse_parses_command)
     int i = 0;
     char cmd[139] = "somecmd 'this is a long argument' shortarg -73.452 -s1 sarg1 sarg2 sarg3 -s2 sarg3 'long switch argument' -12.43";
     ucArgTok *arg = NULL;
@@ -198,7 +198,7 @@ uc_TEST(ucCmdParser_parse_parses_command)
     }
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_allows_empty_double_quotes)
+uc_TEST(ucParser_parse_allows_empty_double_quotes)
     char cmd[50] = "cmd -s \"\"";
     ucArgTok *arg = NULL;
     ucSwitchTok *swtch = NULL;
@@ -211,7 +211,7 @@ uc_TEST(ucCmdParser_parse_allows_empty_double_quotes)
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)arg, "\"\""));
 uc_PASS
 
-uc_TEST(ucCmdParser_parse_allows_empty_single_quotes)
+uc_TEST(ucParser_parse_allows_empty_single_quotes)
     char cmd[50] = "c ''";
     ucArgTok *arg = NULL;
     ucCmdTok *t = parse_cmd(cmd);
@@ -221,18 +221,18 @@ uc_TEST(ucCmdParser_parse_allows_empty_single_quotes)
     uc_TRUE(ucBool_true == ucTok_equals((ucTok*)arg, "''"));
 uc_PASS
 
-uc_TEST_GROUP(ucCmdParser, setup,
-    ucCmdParser_parse_parses_command_value,
-    ucCmdParser_parse_parses_short_argument,
-    ucCmdParser_parse_parses_long_argument,
-    ucCmdParser_parse_parses_single_quotes,
-    ucCmdParser_parse_parses_switch,
-    ucCmdParser_parse_parses_numeric_argument,
-    ucCmdParser_parses_non_numeric_switch,
-    ucCmdParser_parse_arguments_parsed_in_correct_order,
-    ucCmdParser_parse_switches_parsed_in_correct_order,
-    ucCmdParser_parse_parses_switch_arguments_in_correct_order,
-    ucCmdParser_parse_parses_command,
-    ucCmdParser_parse_parses_trailing_quotes,
-    ucCmdParser_parse_allows_empty_double_quotes,
-    ucCmdParser_parse_allows_empty_single_quotes)
+uc_TEST_GROUP(ucParser, setup,
+    ucParser_parse_parses_command_value,
+    ucParser_parse_parses_short_argument,
+    ucParser_parse_parses_long_argument,
+    ucParser_parse_parses_single_quotes,
+    ucParser_parse_parses_switch,
+    ucParser_parse_parses_numeric_argument,
+    ucParser_parses_non_numeric_switch,
+    ucParser_parse_arguments_parsed_in_correct_order,
+    ucParser_parse_switches_parsed_in_correct_order,
+    ucParser_parse_parses_switch_arguments_in_correct_order,
+    ucParser_parse_parses_command,
+    ucParser_parse_parses_trailing_quotes,
+    ucParser_parse_allows_empty_double_quotes,
+    ucParser_parse_allows_empty_single_quotes)

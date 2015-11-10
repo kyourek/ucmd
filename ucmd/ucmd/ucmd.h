@@ -45,24 +45,24 @@
 #define ucOpt_INVALID "Invalid: "
 #endif
 
-#ifndef ucCmdParser_CMD_TERMINATOR
+#ifndef ucParser_CMD_TERMINATOR
 /** @brief The character that terminates command strings.
  *
  *  This character must exist in each command string, and it signals the end of
  *  the command. Usually, a line-feed (LF) is a good choice, as Enter (or Return)
  *  will complete the command.
  */
-#define ucCmdParser_CMD_TERMINATOR '\n'
+#define ucParser_CMD_TERMINATOR '\n'
 #endif
 
-#ifndef ucCmdParser_COUNT
-/** @brief The number of instances of ucCmdParser available to the program.
+#ifndef ucParser_COUNT
+/** @brief The number of instances of ucParser available to the program.
  *
  *  When static memory allocation is used, this number defines the number of
- *  instances of type ucCmdParser that can be created. Since only one parser
+ *  instances of type ucParser that can be created. Since only one parser
  *  is required for an application, this number is typically 1.
  */
-#define ucCmdParser_COUNT 1
+#define ucParser_COUNT 1
 #endif
 
 #ifndef ucCmd_COUNT

@@ -30,11 +30,11 @@
 typedef     struct ucArgOptOwner                ucArgOptOwner;
 typedef     const char                          ucArgTok;
 typedef     const char                          ucArgTokOwner;
-typedef     struct ucCmdParser                  ucCmdParser;
+typedef     struct ucParser                     ucParser;
 typedef     const char                          ucCmdTok;
 typedef     const char                          ucSwitchTok;
 
-            struct                              ucCmdParser {
+            struct                              ucParser {
             char                                placeholder; };
 
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
@@ -72,9 +72,9 @@ uc_EXPORTED ucBool                              ucArgTok_contains(ucArgTok*, con
 
 uc_EXPORTED ucArgTok*                           ucArgTokOwner_get_arg(ucArgTokOwner*);
 
-uc_EXPORTED ucCmdParser*                        ucCmdParser_create(void);
-uc_EXPORTED void                                ucCmdParser_destroy(ucCmdParser *p);
-uc_EXPORTED ucCmdTok*                           ucCmdParser_parse(ucCmdParser*, char *cmd);
+uc_EXPORTED ucParser*                           ucParser_create(void);
+uc_EXPORTED void                                ucParser_destroy(ucParser *p);
+uc_EXPORTED ucCmdTok*                           ucParser_parse(ucParser*, char *cmd);
 
 uc_EXPORTED ucArgTok*                           ucCmdTok_get_arg(ucCmdTok*);
 uc_EXPORTED ucSwitchTok*                        ucCmdTok_get_switch(ucCmdTok*);
@@ -122,12 +122,12 @@ uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, u
             ucSwitchOpt*                        switch_opt;
             ucCmdOpt*                           next; };
 
-uc_EXPORTED ucCmdParser*                        ucCmdApp_get_cmd_parser(ucCmdApp*);
-uc_EXPORTED ucCmdApp*                           ucCmdApp_init(ucCmdApp*, ucCmdParser*, ucCmd*);
+uc_EXPORTED ucParser*                           ucCmdApp_get_cmd_parser(ucCmdApp*);
+uc_EXPORTED ucCmdApp*                           ucCmdApp_init(ucCmdApp*, ucParser*, ucCmd*);
 uc_EXPORTED char*                               ucCmdApp_receive(ucCmdApp*);
             struct                              ucCmdApp {
             ucCmd*                              cmd;
-            ucCmdParser*                        cmd_parser;
+            ucParser*                           cmd_parser;
             ucCmdApp_ReceiveFunc*               receive;
             void*                               receive_state;
             const char*                         help_command;

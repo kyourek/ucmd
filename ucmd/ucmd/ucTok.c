@@ -205,7 +205,7 @@ ucTok *ucTok_get_next(ucTok *p) {
     assert(p);
 
     /* Get the command terminator. */
-    done = ucCmdParser_CMD_TERMINATOR;
+    done = ucParser_CMD_TERMINATOR;
 
     /* Loop until we've hit the max length. */
     i = 0;

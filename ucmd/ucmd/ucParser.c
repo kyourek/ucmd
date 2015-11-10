@@ -1,6 +1,6 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucCmdParser, ucCmdParser_COUNT);
+ucInstance_INIT(ucParser, ucParser_COUNT);
 
 static ucBool is_char_white_space(char c) {
     return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) 
@@ -14,30 +14,30 @@ static char is_char_a_quote(char c) {
     return '\0';
 }
 
-static void remove_cmd_char(ucCmdParser *p, char *cmd, int index) {
+static void remove_cmd_char(ucParser *p, char *cmd, int index) {
     char done;
     assert(cmd);
-    done = ucCmdParser_CMD_TERMINATOR;
+    done = ucParser_CMD_TERMINATOR;
     while (cmd[index] != done) {
         cmd[index] = cmd[index + 1];
         index++;
     }
 }
 
-ucCmdParser *ucCmdParser_init(ucCmdParser *p) {
+ucParser *ucParser_init(ucParser *p) {
     assert(p);
     return p;
 }
 
-ucCmdParser *ucCmdParser_create(void) {
-    return ucCmdParser_init(ucInstance_create());
+ucParser *ucParser_create(void) {
+    return ucParser_init(ucInstance_create());
 }
 
-void ucCmdParser_destroy(ucCmdParser *p) {
+void ucParser_destroy(ucParser *p) {
     ucInstance_destroy(p);
 }
 
-ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd) {
+ucCmdTok *ucParser_parse(ucParser *p, char *cmd) {
     int i, j, len;
     char done, quote, current_quote;
 
@@ -45,7 +45,7 @@ ucCmdTok *ucCmdParser_parse(ucCmdParser *p, char *cmd) {
     assert(cmd);
 
     /* Get the character that terminates the parse. */
-    done = ucCmdParser_CMD_TERMINATOR;
+    done = ucParser_CMD_TERMINATOR;
 
     /* Get the length of the whole command. */
     len = strlen(cmd);

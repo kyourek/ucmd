@@ -10,9 +10,9 @@
 static ucCmd *subject;
 
 static ucCmdTok *parse_cmd(char *cmd) {
-    ucCmdParser *cmd_parser = ucCmdParser_create();
-    ucCmdTok *cmd_tok = ucCmdParser_parse(cmd_parser, cmd);
-    ucCmdParser_destroy(cmd_parser);
+    ucParser *cmd_parser = ucParser_create();
+    ucCmdTok *cmd_tok = ucParser_parse(cmd_parser, cmd);
+    ucParser_destroy(cmd_parser);
     return cmd_tok;
 }
 
