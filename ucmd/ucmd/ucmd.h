@@ -75,22 +75,22 @@
 #define ucCmd_COUNT 1
 #endif
 
-#ifndef ucCmdApp_COUNT
-/** @brief The number of instances of ucCmdApp available to the program.
+#ifndef ucApp_COUNT
+/** @brief The number of instances of ucApp available to the program.
  *
  *  When static memory allocation is used, this number defines the number of
- *  instances of type ucCmdApp that can be created. Since only one of these
+ *  instances of type ucApp that can be created. Since only one of these
  *  objects is required for an application, this number is typically 1.
  */
-#define ucCmdApp_COUNT 1
+#define ucApp_COUNT 1
 #endif
 
-#ifndef ucCmdApp_CMD_STR_SIZE
+#ifndef ucApp_CMD_STR_SIZE
 /** @brief The size of the command buffer when using the command-line application framework.
  *
  *  All entered commands must have a size equal to or less than this buffer's size.
  */
-#define ucCmdApp_CMD_STR_SIZE 200
+#define ucApp_CMD_STR_SIZE 200
 #endif
 
 #ifndef ucCmd_RESPONSE_SIZE
@@ -130,7 +130,7 @@
 /** @brief The maximum expected length of a single token in a command line.
  *
  */
-#define ucTok_LENGTH_MAX ucCmdApp_CMD_STR_SIZE
+#define ucTok_LENGTH_MAX ucApp_CMD_STR_SIZE
 #endif
 
 #ifndef ucTok_BOOLEAN_TRUE
@@ -933,7 +933,7 @@ uc_EXPORTED void ucCmdOpt_destroy_chain(ucCmdOpt*);
  * Summary:
  *   An application that runs with a set of command options.
  */
-typedef struct ucCmdApp ucCmdApp;
+typedef struct ucApp ucApp;
 
 /*
  * Summary:
@@ -946,7 +946,7 @@ typedef struct ucCmdApp ucCmdApp;
  * Returns:
  *   The data that was received.
  */
-typedef char *(ucCmdApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
+typedef char *(ucApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
 
 /*
  * Summary:
@@ -955,7 +955,7 @@ typedef char *(ucCmdApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
  *   value: The escape string that, when returned in a response,
  *          causes the app to exit.
  */
-uc_EXPORTED void ucCmdApp_set_escape_response(ucCmdApp*, const char *value);
+uc_EXPORTED void ucApp_set_escape_response(ucApp*, const char *value);
 
 /*
  * Summary:
@@ -964,7 +964,7 @@ uc_EXPORTED void ucCmdApp_set_escape_response(ucCmdApp*, const char *value);
  *   The escape string that, when returned in a response,
  *   causes the app to exit.
  */
-uc_EXPORTED const char *ucCmdApp_get_escape_response(ucCmdApp*);
+uc_EXPORTED const char *ucApp_get_escape_response(ucApp*);
 
 /*
  * Summary:
@@ -972,10 +972,10 @@ uc_EXPORTED const char *ucCmdApp_get_escape_response(ucCmdApp*);
  * Parameters:
  *   cmd_opt: A pointer to the first command option for the app.
  */ 
-uc_EXPORTED void ucCmdApp_run(ucCmdApp*, ucCmdOpt *cmd_opt);
+uc_EXPORTED void ucApp_run(ucApp*, ucCmdOpt *cmd_opt);
 
-uc_EXPORTED ucCmdApp *ucCmdApp_create(void);
-uc_EXPORTED void ucCmdApp_destroy(ucCmdApp *p);
+uc_EXPORTED ucApp *ucApp_create(void);
+uc_EXPORTED void ucApp_destroy(ucApp *p);
 
 /*
  * Summary:
@@ -983,7 +983,7 @@ uc_EXPORTED void ucCmdApp_destroy(ucCmdApp *p);
  * Parameters:
  *   value: A pointer to the function used to receive data.
  */
-uc_EXPORTED void ucCmdApp_set_receive(ucCmdApp*, ucCmdApp_ReceiveFunc *value);
+uc_EXPORTED void ucApp_set_receive(ucApp*, ucApp_ReceiveFunc *value);
 
 /*
  * Summary:
@@ -991,7 +991,7 @@ uc_EXPORTED void ucCmdApp_set_receive(ucCmdApp*, ucCmdApp_ReceiveFunc *value);
  * Returns:
  *   A pointer to the function used to receive data.
  */ 
-uc_EXPORTED ucCmdApp_ReceiveFunc *ucCmdApp_get_receive(ucCmdApp*);
+uc_EXPORTED ucApp_ReceiveFunc *ucApp_get_receive(ucApp*);
 
 /*
  * Summary:
@@ -999,7 +999,7 @@ uc_EXPORTED ucCmdApp_ReceiveFunc *ucCmdApp_get_receive(ucCmdApp*);
  * Returns:
  *   A pointer to the stateful object passed to the application's receive function.
  */
-uc_EXPORTED void *ucCmdApp_get_receive_state(ucCmdApp*);
+uc_EXPORTED void *ucApp_get_receive_state(ucApp*);
 
 /*
  * Summary:
@@ -1007,7 +1007,7 @@ uc_EXPORTED void *ucCmdApp_get_receive_state(ucCmdApp*);
  * Parameters:
  *   value: The stateful object passed to the application's receive function.
  */
-uc_EXPORTED void ucCmdApp_set_receive_state(ucCmdApp*, void *value);
+uc_EXPORTED void ucApp_set_receive_state(ucApp*, void *value);
 
 /*
  * Summary:
@@ -1015,7 +1015,7 @@ uc_EXPORTED void ucCmdApp_set_receive_state(ucCmdApp*, void *value);
  * Parameters:
  *   value: The value of the command that quits the application.
  */
-uc_EXPORTED void ucCmdApp_set_quit_command(ucCmdApp*, const char *value);
+uc_EXPORTED void ucApp_set_quit_command(ucApp*, const char *value);
 
 /*
  * Summary:
@@ -1023,7 +1023,7 @@ uc_EXPORTED void ucCmdApp_set_quit_command(ucCmdApp*, const char *value);
  * Returns:
  *   The value of the command that quits the application.
  */
-uc_EXPORTED const char *ucCmdApp_get_quit_command(ucCmdApp*);
+uc_EXPORTED const char *ucApp_get_quit_command(ucApp*);
 
 /*
  * Summary:
@@ -1031,7 +1031,7 @@ uc_EXPORTED const char *ucCmdApp_get_quit_command(ucCmdApp*);
  * Parameters:
  *   value: The value of the command that shows help information.
  */
-uc_EXPORTED void ucCmdApp_set_help_command(ucCmdApp*, const char *value);
+uc_EXPORTED void ucApp_set_help_command(ucApp*, const char *value);
 
 /*
  * Summary:
@@ -1039,7 +1039,7 @@ uc_EXPORTED void ucCmdApp_set_help_command(ucCmdApp*, const char *value);
  * Returns:
  *   The value of the command that shows help information.
  */
-uc_EXPORTED const char *ucCmdApp_get_help_command(ucCmdApp*);
+uc_EXPORTED const char *ucApp_get_help_command(ucApp*);
 
 /*
  * Summary:
@@ -1047,7 +1047,7 @@ uc_EXPORTED const char *ucCmdApp_get_help_command(ucCmdApp*);
  * Returns:
  *   A pointer to the command structure used by the application.
  */
-uc_EXPORTED ucCmd *ucCmdApp_get_cmd(ucCmdApp*);
+uc_EXPORTED ucCmd *ucApp_get_cmd(ucApp*);
 
 /*
  * Summary:
@@ -1055,6 +1055,6 @@ uc_EXPORTED ucCmd *ucCmdApp_get_cmd(ucCmdApp*);
  * Returns:
  *   The size of the command-string buffer.
  */
-uc_EXPORTED size_t ucCmdApp_get_cmd_str_size_max(ucCmdApp *p);
+uc_EXPORTED size_t ucApp_get_cmd_str_size_max(ucApp *p);
 
 #endif

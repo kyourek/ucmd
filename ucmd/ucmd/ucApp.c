@@ -1,20 +1,20 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucCmdApp, ucCmdApp_COUNT);
+ucInstance_INIT(ucApp, ucApp_COUNT);
 
 typedef struct {
-    ucCmdApp *app;
+    ucApp *app;
     ucCmdOpt *cmd_opt;
 } HelpState;
 
 typedef struct {
-    ucCmdApp *app;
+    ucApp *app;
 } QuitState;
 
 static const char *quit(ucCmd *cmd, void *state) {
     QuitState *s = (QuitState*)state;
     assert(s);
-    return ucCmdApp_get_escape_response(s->app);
+    return ucApp_get_escape_response(s->app);
 }
 
 static const char *help(ucCmd *cmd, void *state) {
@@ -48,70 +48,70 @@ static const char *help(ucCmd *cmd, void *state) {
     return ucCmd_format_response(
         cmd, 
         "Type \"%s\" followed by a command name for additional help with that command.", 
-        ucCmdApp_get_help_command(s->app));
+        ucApp_get_help_command(s->app));
 }
 
-void ucCmdApp_set_escape_response(ucCmdApp *p, const char *value) {
+void ucApp_set_escape_response(ucApp *p, const char *value) {
     assert(p);
     p->escape_response = value;
 }
 
-const char *ucCmdApp_get_escape_response(ucCmdApp *p) {
+const char *ucApp_get_escape_response(ucApp *p) {
     assert(p);
     return p->escape_response;
 }
 
-void ucCmdApp_set_receive(ucCmdApp *p, ucCmdApp_ReceiveFunc *value) {
+void ucApp_set_receive(ucApp *p, ucApp_ReceiveFunc *value) {
     assert(p);
     p->receive = value;
 }
 
-ucCmdApp_ReceiveFunc *ucCmdApp_get_receive(ucCmdApp *p) {
+ucApp_ReceiveFunc *ucApp_get_receive(ucApp *p) {
     assert(p);
     return p->receive;
 }
 
-void *ucCmdApp_get_receive_state(ucCmdApp *p) {
+void *ucApp_get_receive_state(ucApp *p) {
     assert(p);
     return p->receive_state;
 }
 
-void ucCmdApp_set_receive_state(ucCmdApp *p, void *value) {
+void ucApp_set_receive_state(ucApp *p, void *value) {
     assert(p);
     p->receive_state = value;
 }
 
-void ucCmdApp_set_quit_command(ucCmdApp *p, const char *value) {
+void ucApp_set_quit_command(ucApp *p, const char *value) {
     assert(p);
     p->quit_command = value;
 }
 
-const char *ucCmdApp_get_quit_command(ucCmdApp *p) {
+const char *ucApp_get_quit_command(ucApp *p) {
     assert(p);
     return p->quit_command;
 }
 
-void ucCmdApp_set_help_command(ucCmdApp *p, const char *value) {
+void ucApp_set_help_command(ucApp *p, const char *value) {
     assert(p);
     p->help_command = value;
 }
 
-const char *ucCmdApp_get_help_command(ucCmdApp *p) {
+const char *ucApp_get_help_command(ucApp *p) {
     assert(p);
     return p->help_command;
 }
 
-ucCmd *ucCmdApp_get_cmd(ucCmdApp *p) {
+ucCmd *ucApp_get_cmd(ucApp *p) {
     assert(p);
     return p->cmd;
 }
 
-ucParser *ucCmdApp_get_cmd_parser(ucCmdApp *p) {
+ucParser *ucApp_get_cmd_parser(ucApp *p) {
     assert(p);
     return p->cmd_parser;
 }
 
-ucCmdApp *ucCmdApp_init(ucCmdApp *p, ucParser *cmd_parser, ucCmd *cmd) {
+ucApp *ucApp_init(ucApp *p, ucParser *cmd_parser, ucCmd *cmd) {
     assert(p);
     p->cmd = cmd;
     p->cmd_parser = cmd_parser;
@@ -123,14 +123,14 @@ ucCmdApp *ucCmdApp_init(ucCmdApp *p, ucParser *cmd_parser, ucCmd *cmd) {
     return p;
 }
 
-ucCmdApp *ucCmdApp_create(void) {
-    return ucCmdApp_init(
+ucApp *ucApp_create(void) {
+    return ucApp_init(
         ucInstance_create(),
         ucParser_create(),
         ucCmd_create());
 }
 
-void ucCmdApp_destroy(ucCmdApp *p) {
+void ucApp_destroy(ucApp *p) {
     if (p) {
         ucCmd_destroy(p->cmd);
         ucParser_destroy(p->cmd_parser);
@@ -138,7 +138,7 @@ void ucCmdApp_destroy(ucCmdApp *p) {
     ucInstance_destroy(p);
 }
 
-char *ucCmdApp_receive(ucCmdApp *p) {
+char *ucApp_receive(ucApp *p) {
     assert(p);
     if (p->receive) {
         return p->receive(p->cmd_str, sizeof(p->cmd_str), p->receive_state);
@@ -146,12 +146,12 @@ char *ucCmdApp_receive(ucCmdApp *p) {
     return NULL;
 }
 
-size_t ucCmdApp_get_cmd_str_size_max(ucCmdApp *p) {
+size_t ucApp_get_cmd_str_size_max(ucApp *p) {
     assert(p);
     return (sizeof(p->cmd_str) / sizeof(p->cmd_str[0])) - 1;
 }
 
-void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
+void ucApp_run(ucApp *p, ucCmdOpt *cmd_opt) {
     char *command;
     const char *response;
     ucCmdTok *cmd_tok;
@@ -161,8 +161,8 @@ void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
     QuitState QuitState_s;
 
     /* Create options for help and quit. */
-    quit_opt = ucCmdOpt_create(quit, &QuitState_s, ucCmdApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
-    help_opt = ucCmdOpt_create(help, &HelpState_s, ucCmdApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
+    quit_opt = ucCmdOpt_create(quit, &QuitState_s, ucApp_get_quit_command(p), "Exits the command interface.", NULL, NULL, cmd_opt);
+    help_opt = ucCmdOpt_create(help, &HelpState_s, ucApp_get_help_command(p), "Shows command information.", ucArgOpt_create("<command>", "If provided, help is shown for the given command.", NULL), NULL, quit_opt);
 
     /* Set the state used for the help and quit commands. */
     QuitState_s.app = p;
@@ -170,20 +170,20 @@ void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
     HelpState_s.cmd_opt = help_opt;
 
     /* Get this app's command object. */
-    cmd = ucCmdApp_get_cmd(p);
+    cmd = ucApp_get_cmd(p);
 
     /* Show the banner. */
-    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s to quit.", ucCmdApp_get_quit_command(p)));
-    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s for help.", ucCmdApp_get_help_command(p)));
+    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s to quit.", ucApp_get_quit_command(p)));
+    ucCmd_respond(cmd, ucCmd_format_response(cmd, "Type %s for help.", ucApp_get_help_command(p)));
 
     /* Loop until quit. */
     for (;;) {
 
         /* Read the command. */
-        command = ucCmdApp_receive(p);
+        command = ucApp_receive(p);
 
         /* Parse the input into a command token. */
-        cmd_tok = ucParser_parse(ucCmdApp_get_cmd_parser(p), command);
+        cmd_tok = ucParser_parse(ucApp_get_cmd_parser(p), command);
 
         /* Set the command's parsed command token. */
         ucCmd_set_command(cmd, cmd_tok);
@@ -195,7 +195,7 @@ void ucCmdApp_run(ucCmdApp *p, ucCmdOpt *cmd_opt) {
         if (response) {
 
             /* Check if the response is the escape response. */
-            if (uc_STR_EQ(response, ucCmdApp_get_escape_response(p))) {
+            if (uc_STR_EQ(response, ucApp_get_escape_response(p))) {
                 
                 /* We've been signaled to quit the app. */
                 break;

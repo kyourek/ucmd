@@ -12,6 +12,6 @@ uc_TEST_RUNNER(ucmd,
     &ucTestGroup_ucSwitchOpt,
     &ucTestGroup_ucSwitchTok,
     &ucTestGroup_ucTok,
-    &ucTestGroup_ucCmdApp,
+    &ucTestGroup_ucApp,
     &ucTestGroup_ucCmdOpt,
     &ucTestGroup_ucCmd)

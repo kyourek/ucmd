@@ -128,7 +128,7 @@ uc_EXPORTED ucTestGroup*                            ucTestGroup_ucArgTok;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucArgTokOwner;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucBool;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmd;
-uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdApp;
+uc_EXPORTED ucTestGroup*                            ucTestGroup_ucApp;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdOpt;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucParser;
 uc_EXPORTED ucTestGroup*                            ucTestGroup_ucCmdTok;

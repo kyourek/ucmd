@@ -122,18 +122,18 @@ uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, u
             ucSwitchOpt*                        switch_opt;
             ucCmdOpt*                           next; };
 
-uc_EXPORTED ucParser*                           ucCmdApp_get_cmd_parser(ucCmdApp*);
-uc_EXPORTED ucCmdApp*                           ucCmdApp_init(ucCmdApp*, ucParser*, ucCmd*);
-uc_EXPORTED char*                               ucCmdApp_receive(ucCmdApp*);
-            struct                              ucCmdApp {
+uc_EXPORTED ucParser*                           ucApp_get_cmd_parser(ucApp*);
+uc_EXPORTED ucApp*                              ucApp_init(ucApp*, ucParser*, ucCmd*);
+uc_EXPORTED char*                               ucApp_receive(ucApp*);
+            struct                              ucApp {
             ucCmd*                              cmd;
             ucParser*                           cmd_parser;
-            ucCmdApp_ReceiveFunc*               receive;
+            ucApp_ReceiveFunc*                  receive;
             void*                               receive_state;
             const char*                         help_command;
             const char*                         quit_command;
             const char*                         escape_response;            
-            char                                cmd_str[ucCmdApp_CMD_STR_SIZE + 1]; };
+            char                                cmd_str[ucApp_CMD_STR_SIZE + 1]; };
 
 /** @brief Determines if two strings are equal.
  *  @param [in] S1 The first string to compare.

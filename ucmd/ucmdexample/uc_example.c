@@ -33,7 +33,7 @@ static const char *cmd(ucCmd *cmd, void *state) {
     return NULL;
 }
 
-void uc_example(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive) {
+void uc_example(ucCmd_TransmitFunc *transmit, ucApp_ReceiveFunc *receive) {
 
     ucCmdOpt *commands = 
         ucCmdOpt_create(
@@ -65,17 +65,17 @@ void uc_example(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive) {
             NULL)),
         NULL);
 
-    ucCmdApp *app = ucCmdApp_create();
-    ucCmd *cmd = ucCmdApp_get_cmd(app);
+    ucApp *app = ucApp_create();
+    ucCmd *cmd = ucApp_get_cmd(app);
 
     ucCmd_set_transmit(cmd, transmit);
     ucCmd_set_command_acknowledgment(cmd, "\\\\\\\\\\\\\\");
     ucCmd_set_response_terminator(cmd, "///////");
 
-    ucCmdApp_set_receive(app, receive);
+    ucApp_set_receive(app, receive);
 
-    ucCmdApp_run(app, commands);
+    ucApp_run(app, commands);
 
-    ucCmdApp_destroy(app);
+    ucApp_destroy(app);
     ucCmdOpt_destroy_chain(commands);
 }

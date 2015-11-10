@@ -107,7 +107,7 @@ static const char *say(ucCmd *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive) {
+void uc_hello_world(ucCmd_TransmitFunc *transmit, ucApp_ReceiveFunc *receive) {
     
     /* This is the program's state object that gets
     passed to the various command functions. */
@@ -187,27 +187,27 @@ void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmdApp_ReceiveFunc *receive)
         are no more commands. */
         NULL));
 
-    /* This ucCmdApp instance is a singleton that
+    /* This ucApp instance is a singleton that
     is available to run a command-line app. */
-    ucCmdApp *app = ucCmdApp_create();
+    ucApp *app = ucApp_create();
 
     /* Gets the ucCmd used by the app to send
     responses back to the user. */
-    ucCmd *cmd = ucCmdApp_get_cmd(app);
+    ucCmd *cmd = ucApp_get_cmd(app);
 
     /* Sets callback functions on the app and command
     that allow transmission and reception of data. 
     These callbacks will be specific to the platform
     on which the app is running. */
     ucCmd_set_transmit(cmd, transmit);
-    ucCmdApp_set_receive(app, receive);
+    ucApp_set_receive(app, receive);
 
     /* Starts the command-line app. The app will exit
     when it receives the 'quit' command. */
-    ucCmdApp_run(app, commands);
+    ucApp_run(app, commands);
 
     /* Clean up the resources that were explicitly
     created. */
-    ucCmdApp_destroy(app);
+    ucApp_destroy(app);
     ucCmdOpt_destroy_chain(commands);
 }
