@@ -20,7 +20,7 @@
     <ClCompile Include="..\..\..\ucmd\ucArgTok.c" />
     <ClCompile Include="..\..\..\ucmd\ucArgTokOwner.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmd.c" />
-    <ClCompile Include="..\..\..\ucmd\ucCmdApp.c" />
+    <ClCompile Include="..\..\..\ucmd\ucApp.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c" />
     <ClCompile Include="..\..\..\ucmd\ucParser.c" />
     <ClCompile Include="..\..\..\ucmd\ucCmdTok.c" />

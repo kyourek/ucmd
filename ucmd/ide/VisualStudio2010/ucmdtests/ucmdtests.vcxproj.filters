@@ -61,13 +61,13 @@
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmd.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdApp.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdOpt.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucParser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucApp.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

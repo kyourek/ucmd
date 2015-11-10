@@ -49,13 +49,13 @@
     <ClCompile Include="..\..\..\ucmd\ucCmd.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmd\ucCmdApp.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucCmdOpt.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ucmd\ucParser.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ucmd\ucApp.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
