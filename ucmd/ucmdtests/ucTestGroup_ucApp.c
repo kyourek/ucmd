@@ -1,7 +1,5 @@
 #include "ucmdtests.h"
 
-static ucCmd *cmd_line;
-static ucParser *cmd_parser;
 static ucApp *subject;
 
 void *receive_1_state;
@@ -14,7 +12,6 @@ static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
 
 uc_TEST(prior)
     subject = ucApp_create();
-    cmd_line = ucApp_get_cmd(subject);
 uc_PASS
 
 uc_TEST(after)
@@ -52,7 +49,7 @@ uc_TEST(ucApp_get_quit_command_returns_value)
 uc_PASS
 
 uc_TEST(ucApp_get_cmd_returns_value)
-    uc_TRUE(cmd_line == ucApp_get_cmd(subject));
+    uc_TRUE(NULL != ucApp_get_cmd(subject));
 uc_PASS
 
 uc_TEST(ucApp_get_escape_response_returns_value)
