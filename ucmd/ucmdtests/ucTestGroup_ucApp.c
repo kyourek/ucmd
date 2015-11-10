@@ -188,6 +188,16 @@ uc_TEST(ucApp_get_name_default_is_ucmd)
     uc_TRUE(uc_STR_EQ("ucmd", ucApp_get_name(subject)));
 uc_PASS
 
+uc_TEST(ucApp_get_cmd_opt_default_is_null)
+    uc_TRUE(NULL == ucApp_get_cmd_opt(subject));
+uc_PASS
+
+uc_TEST(ucApp_set_cmd_opt_sets_value)
+    ucCmdOpt *cmd_opt = ucCmdOpt_create(NULL, NULL, "work", NULL, NULL, NULL, NULL);
+    ucApp_set_cmd_opt(subject, cmd_opt);
+    uc_TRUE(cmd_opt == ucApp_get_cmd_opt(subject));
+uc_PASS
+
 static char set_banner_shows_banner_response[3][100] = { 0 };
 static int set_banner_shows_banner_i = 0;
 static char *set_banner_shows_banner_receive(char *buf, size_t buf_size, void *state) {
@@ -225,6 +235,7 @@ uc_CASE(ucApp_set_banner_shows_banner, false, ucBool_false)
 uc_TEST_GROUP(ucApp, setup,
     ucApp_get_banner_default_is_true,
     ucApp_get_cmd_returns_value,
+    ucApp_get_cmd_opt_default_is_null,
     ucApp_get_escape_response_returns_value,
     ucApp_get_help_command_returns_value,
     ucApp_get_name_default_is_ucmd,
@@ -237,6 +248,7 @@ uc_TEST_GROUP(ucApp, setup,
     ucApp_set_banner_shows_banner_false,
     ucApp_set_banner_test_false,
     ucApp_set_banner_test_true,
+    ucApp_set_cmd_opt_sets_value,
     ucApp_set_escape_response_sets_value,
     ucApp_set_help_command_sets_value,
     ucApp_set_name_test_empty,
