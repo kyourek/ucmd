@@ -85,12 +85,12 @@
 #define ucApp_COUNT 1
 #endif
 
-#ifndef ucApp_CMD_STR_SIZE
+#ifndef ucCmd_COMMAND_SIZE
 /** @brief The size of the command buffer when using the command-line application framework.
  *
  *  All entered commands must have a size equal to or less than this buffer's size.
  */
-#define ucApp_CMD_STR_SIZE 200
+#define ucCmd_COMMAND_SIZE 200
 #endif
 
 #ifndef ucCmd_RESPONSE_SIZE
@@ -127,10 +127,8 @@
 #endif
 
 #ifndef ucTok_LENGTH_MAX
-/** @brief The maximum expected length of a single token in a command line.
- *
- */
-#define ucTok_LENGTH_MAX ucApp_CMD_STR_SIZE
+/** The maximum expected length of a single token in a command line. */
+#define ucTok_LENGTH_MAX ucCmd_COMMAND_SIZE
 #endif
 
 #ifndef ucTok_BOOLEAN_TRUE
@@ -346,6 +344,8 @@ typedef struct ucCmd ucCmd;
  */
 typedef void (ucCmd_TransmitFunc)(const char *response, void *state);
 
+typedef char *(ucCmd_ReceiveFunc)(char *buf, size_t buf_size, void *state);
+
 /*
  * Summary:
  *   The type of function used by a command structure
@@ -370,6 +370,13 @@ typedef ucBool (ucCmd_IsCanceledFunc)(void *state);
  *   ucBool_true if the invalid command was handeled. Otherwise, ucBool_false.
  */
 typedef ucBool (ucCmd_HandleInvalidCommandFunc)(const char *invalid_command, void *state);
+
+uc_EXPORTED ucTok *ucCmd_parse(ucCmd *p, char *command);
+uc_EXPORTED ucTok *ucCmd_parse_const(ucCmd *p, const char *command);
+uc_EXPORTED int ucCmd_get_command_length_max(ucCmd *p);
+uc_EXPORTED ucTok *ucCmd_listen(ucCmd *p);
+uc_EXPORTED void ucCmd_set_receive(ucCmd *p, ucCmd_ReceiveFunc *value);
+uc_EXPORTED void ucCmd_set_receive_state(ucCmd *p, void *value);
 
 /*
  * Summary:
@@ -405,35 +412,11 @@ uc_EXPORTED ucTok *ucCmd_find_switch(ucCmd*, const char *switch_name);
 
 /*
  * Summary:
- *   Sets the command token for the structure.
- * Parameters:
- *   value: The command token.
- */
-uc_EXPORTED void ucCmd_set_command(ucCmd*, ucTok *value);
-
-/*
- * Summary:
  *   Sets the function used by the command structure to transmit responses.
  * Parameters:
  *   value: A pointer to the function used to transmit responses.
  */
 uc_EXPORTED void ucCmd_set_transmit(ucCmd*, ucCmd_TransmitFunc *value);
-
-/*
- * Summary:
- *   Gets the function used by the command structure to transmit responses.
- * Returns:
- *   A pointer to the function used by the structure to transmit responses.
- */
-uc_EXPORTED ucCmd_TransmitFunc *ucCmd_get_transmit(ucCmd*);
-
-/*
- * Summary:
- *   Gets the stateful object passed to the command's transmit function.
- * Returns:
- *   A pointer to the stateful object passed to the command's transmit function.
- */
-uc_EXPORTED void *ucCmd_get_transmit_state(ucCmd*);
 
 /*
  * Summary:
@@ -461,22 +444,6 @@ uc_EXPORTED void ucCmd_set_is_canceled(ucCmd*, ucCmd_IsCanceledFunc *value);
 
 /*
  * Summary:
- *   Gets the function used by the command structure to check for cancellation.
- * Returns:
- *   A pointer to the function used to check for cancellation.
- */
-uc_EXPORTED ucCmd_IsCanceledFunc *ucCmd_get_is_canceled(ucCmd*);
-
-/*
- * Summary:
- *   Gets the stateful object passed to the command's cancellation function.
- * Returns:
- *   A pointer to the stateful object passed to the command's cancellation function.
- */
-uc_EXPORTED void *ucCmd_get_is_canceled_state(ucCmd*);
-
-/*
- * Summary:
  *   Sets the stateful object passed to the command's cancellation function.
  * Parameters:
  *   value: The stateful object passed to the command's cancellation function.
@@ -485,13 +452,9 @@ uc_EXPORTED void ucCmd_set_is_canceled_state(ucCmd*, void *value);
 
 uc_EXPORTED void ucCmd_set_handle_invalid_command(ucCmd*, ucCmd_HandleInvalidCommandFunc *value);
 
-uc_EXPORTED ucCmd_HandleInvalidCommandFunc *ucCmd_get_handle_invalid_command(ucCmd*);
-
 uc_EXPORTED void ucCmd_set_handle_invalid_command_state(ucCmd*, void *value);
 
-uc_EXPORTED void *ucCmd_get_handle_invalid_command_state(ucCmd*);
-
-uc_EXPORTED size_t ucCmd_get_response_size_max(ucCmd*);
+uc_EXPORTED int ucCmd_get_response_length_max(ucCmd*);
 
 uc_EXPORTED ucCmd *ucCmd_create(void);
 uc_EXPORTED void ucCmd_destroy(ucCmd*);
@@ -937,19 +900,6 @@ typedef struct ucApp ucApp;
 
 /*
  * Summary:
- *   The type of the function used by an application to
- *   receive data.
- * Parameters:
- *   buf: A string buffer that can be used to store the data received.
- *   buf_size: The size of the string buffer used to store received data.
- *   state: A stateful object.
- * Returns:
- *   The data that was received.
- */
-typedef char *(ucApp_ReceiveFunc)(char *buf, size_t buf_size, void *state);
-
-/*
- * Summary:
  *   Sets the escape string that will cause the app to exit.
  * Parameters:
  *   value: The escape string that, when returned in a response,
@@ -976,38 +926,6 @@ uc_EXPORTED void ucApp_run(ucApp*, ucCmdOpt *cmd_opt);
 
 uc_EXPORTED ucApp *ucApp_create(void);
 uc_EXPORTED void ucApp_destroy(ucApp *p);
-
-/*
- * Summary:
- *   Sets the function that the app uses to receive data.
- * Parameters:
- *   value: A pointer to the function used to receive data.
- */
-uc_EXPORTED void ucApp_set_receive(ucApp*, ucApp_ReceiveFunc *value);
-
-/*
- * Summary:
- *   Gets the function that the app uses to receive data.
- * Returns:
- *   A pointer to the function used to receive data.
- */ 
-uc_EXPORTED ucApp_ReceiveFunc *ucApp_get_receive(ucApp*);
-
-/*
- * Summary:
- *   Gets the stateful object passed to the application's receive function.
- * Returns:
- *   A pointer to the stateful object passed to the application's receive function.
- */
-uc_EXPORTED void *ucApp_get_receive_state(ucApp*);
-
-/*
- * Summary:
- *   Sets the stateful object passed to the application's receive function.
- * Parameters:
- *   value: The stateful object passed to the application's receive function.
- */
-uc_EXPORTED void ucApp_set_receive_state(ucApp*, void *value);
 
 /*
  * Summary:
@@ -1048,13 +966,5 @@ uc_EXPORTED const char *ucApp_get_help_command(ucApp*);
  *   A pointer to the command structure used by the application.
  */
 uc_EXPORTED ucCmd *ucApp_get_cmd(ucApp*);
-
-/*
- * Summary:
- *   Gets the size of the application's command-string buffer.
- * Returns:
- *   The size of the command-string buffer.
- */
-uc_EXPORTED size_t ucApp_get_cmd_str_size_max(ucApp *p);
 
 #endif

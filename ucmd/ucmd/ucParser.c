@@ -14,7 +14,7 @@ static char is_char_a_quote(char c) {
     return '\0';
 }
 
-static void remove_cmd_char(ucParser *p, char *cmd, int index) {
+static void remove_cmd_char(char *cmd, int index) {
     char done;
     assert(cmd);
     done = ucParser_CMD_TERMINATOR;
@@ -24,24 +24,10 @@ static void remove_cmd_char(ucParser *p, char *cmd, int index) {
     }
 }
 
-ucParser *ucParser_init(ucParser *p) {
-    assert(p);
-    return p;
-}
-
-ucParser *ucParser_create(void) {
-    return ucParser_init(ucInstance_create());
-}
-
-void ucParser_destroy(ucParser *p) {
-    ucInstance_destroy(p);
-}
-
-ucCmdTok *ucParser_parse(ucParser *p, char *cmd) {
+static ucCmdTok *parse(char *cmd, void* state) {
     int i, j, len;
     char done, quote, current_quote;
 
-    assert(p);
     assert(cmd);
 
     /* Get the character that terminates the parse. */
@@ -89,11 +75,11 @@ ucCmdTok *ucParser_parse(ucParser *p, char *cmd) {
                     /* We've started a quote. */
                     current_quote = quote;
 
-                    /* Remove the quote character 
+                    /* Remove the quote character
                     only if this is not an empty
                     quote. */
                     if (current_quote != cmd[i + 1]) {
-                        remove_cmd_char(p, cmd, i);
+                        remove_cmd_char(cmd, i);
                     }
                 }
             }
@@ -111,7 +97,7 @@ ucCmdTok *ucParser_parse(ucParser *p, char *cmd) {
                 /* Remove any remaining white space. */
                 j = i + 1;
                 while (is_char_white_space(cmd[j])) {
-                    remove_cmd_char(p, cmd, j);
+                    remove_cmd_char(cmd, j);
                 }
             }
         }
@@ -122,4 +108,25 @@ ucCmdTok *ucParser_parse(ucParser *p, char *cmd) {
 
     /* We're done parsing. */
     return (ucCmdTok*)cmd;
+}
+
+ucParser *ucParser_init(ucParser *p) {
+    assert(p);
+    p->parse = parse;
+    p->state = NULL;
+    return p;
+}
+
+ucParser *ucParser_create(void) {
+    return ucParser_init(ucInstance_create());
+}
+
+void ucParser_destroy(ucParser *p) {
+    ucInstance_destroy(p);
+}
+
+ucCmdTok *ucParser_parse(ucParser *p, char *command) {
+    assert(p);
+    assert(p->parse);
+    return p->parse(command, p->state);
 }

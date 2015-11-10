@@ -2,19 +2,7 @@
 #include <stdarg.h>
 #include "ucmdtests.h"
 
-#define ucCmd_TEST_CMD(COMMAND) \
-    char c[50]; \
-    sprintf(c, #COMMAND); \
-    ucCmd_set_command(subject, parse_cmd(c)); \
-
 static ucCmd *subject;
-
-static ucCmdTok *parse_cmd(char *cmd) {
-    ucParser *cmd_parser = ucParser_create();
-    ucCmdTok *cmd_tok = ucParser_parse(cmd_parser, cmd);
-    ucParser_destroy(cmd_parser);
-    return cmd_tok;
-}
 
 static void *transmit_1_state;
 static const char *transmit_1_response;
@@ -111,12 +99,6 @@ uc_TEST(ucCmd_set_transmit_sets_transmit)
     uc_TRUE(transmit_1 == c.transmit);
 uc_PASS
 
-uc_TEST(ucCmd_get_transmit_returns_transmit)
-    ucCmd c;
-    c.transmit = transmit_2;
-    uc_TRUE(transmit_2 == ucCmd_get_transmit(&c));
-uc_PASS
-
 uc_TEST(ucCmd_respond_uses_transmit)
     ucCmd c;
     c.is_quiet = ucBool_false;
@@ -126,12 +108,6 @@ uc_TEST(ucCmd_respond_uses_transmit)
     c.transmit = transmit_1;
     ucCmd_respond(&c, "expected response");
     uc_TRUE(0 == strcmp(transmit_1_response, "expected response"));
-uc_PASS
-
-uc_TEST(ucCmd_get_is_canceled_returns_value)
-    ucCmd c;
-    c.is_canceled = is_canceled_1;
-    uc_TRUE(is_canceled_1 == ucCmd_get_is_canceled(&c));
 uc_PASS
 
 uc_TEST(ucCmd_set_is_canceled_sets_value)
@@ -162,17 +138,6 @@ uc_TEST(ucCmd_set_transmit_state_sets_value)
     ptr->transmit_state = prev_value;
 uc_PASS
 
-uc_TEST(ucCmd_get_transmit_state_gets_value)
-    char *state = "state";
-    ucCmd *ptr = subject;
-    void *prev_value = ptr->transmit_state;
-
-    ptr->transmit_state = &state;
-    uc_TRUE(&state == ucCmd_get_transmit_state(ptr));
-
-    ptr->transmit_state = prev_value;
-uc_PASS
-
 uc_TEST(ucCmd_transmit_uses_state)
     double state;
     ucCmd *ptr = subject;
@@ -197,17 +162,6 @@ uc_TEST(ucCmd_set_is_canceled_state_sets_value)
 
     ucCmd_set_is_canceled_state(ptr, &state);
     uc_TRUE(&state == ptr->is_canceled_state);
-
-    ptr->is_canceled_state = prev_value;
-uc_PASS
-
-uc_TEST(ucCmd_get_is_canceled_state_returns_value)
-    char *state = "st";
-    ucCmd *ptr = subject;
-    void *prev_value = ptr->is_canceled_state;
-
-    ptr->is_canceled_state = &state;
-    uc_TRUE(&state == ucCmd_get_is_canceled_state(ptr));
 
     ptr->is_canceled_state = prev_value;
 uc_PASS
@@ -268,9 +222,9 @@ uc_TEST(ucCmd_set_handle_invalid_command_sets_callback)
     uc_TRUE(ucBool_true == ret_val);
 uc_PASS
 
-uc_TEST(ucCmd_get_response_size_max_returns_size)
+uc_TEST(ucCmd_get_response_length_max_returns_size)
     ucCmd *ptr = subject;
-    size_t size = ucCmd_get_response_size_max(ptr);
+    int size = ucCmd_get_response_length_max(ptr);
     uc_TRUE(ucCmd_RESPONSE_SIZE == size);
 uc_PASS
 
@@ -294,7 +248,7 @@ uc_TEST(ucCmd_get_command_acknowledgment_is_initially_null)
     uc_TRUE(NULL == ucCmd_get_command_acknowledgment(subject));
 uc_PASS
 
-uc_TEST(ucCmd_get_command_acknoledgment_returns_set_value)
+uc_TEST(ucCmd_get_command_acknowledgment_returns_set_value)
     const char *expected, *actual, *values[] = { "Got it!", "\x1b", "***" };
     int i;
     for (i = 0; i < 3; i++) {
@@ -307,87 +261,74 @@ uc_TEST(ucCmd_get_command_acknoledgment_returns_set_value)
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_returns_arg_tok)
-    char c[20] = "cmd argz -s argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s argb");
     uc_TRUE(uc_STR_EQ("argz", ucCmd_get_arg(subject)));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_returns_null_if_no_arg_exists)
-    char c[15] = "cmd -s argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd -s argb");
     uc_TRUE(NULL == ucCmd_get_arg(subject));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_returns_switch_tok)
-    char c[20] = "cmd argz -s argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s argb");
     uc_TRUE(uc_STR_EQ("-s", ucCmd_get_switch(subject)));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_returns_null_if_no_switch_exists)
-    char c[20] = "cmd argz argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz argb");
     uc_TRUE(NULL == ucCmd_get_switch(subject));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_returns_arg_tok_of_switch)
-    char c[30] = "cmd argz -s1 argb -s2 argc";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 argc");
     uc_TRUE(uc_STR_EQ("argc", ucCmd_get_switch_arg(subject, "-s2")));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_returns_null_if_arg_does_not_exist)
-    char c[30] = "cmd argz -s1 argb -s2";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2");
     uc_TRUE(NULL == ucCmd_get_switch_arg(subject, "-s2"));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_returns_null_if_switch_does_not_exist)
-    char c[30] = "cmd argz -s1 argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb");
     uc_TRUE(NULL == ucCmd_get_switch_arg(subject, "-s2"));
 uc_PASS
 
 uc_TEST(ucCmd_find_switch_returns_switch_if_it_exists)
-    char c[30] = "cmd argz -s1 argb -s2 c";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 c");
     uc_TRUE(ucTok_equals(ucCmd_find_switch(subject, "-s2"), "-s2"));
 uc_PASS
 
 uc_TEST(ucCmd_find_switch_returns_null_if_it_does_not_exist)
-    char c[30] = "cmd argz -s1 argb";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb");
     uc_TRUE(NULL == ucCmd_find_switch(subject, "-s2"));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_d_returns_argument_as_integer)
-    char c[30] = "cmd argz -s1 argb -s2 42";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 42");
     uc_TRUE(42 == ucCmd_get_switch_arg_d(subject, "-s2", -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_d_returns_default_value_if_argument_is_not_an_integer)
-    char c[30] = "cmd argz -s1 argb -s2 7z";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 7z");
     uc_TRUE(-386 == ucCmd_get_switch_arg_d(subject, "-s2", -386));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_f_returns_argument_as_double)
-    char c[30] = "cmd argz -s1 argb -s2 42.1";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 42.1");
     uc_TRUE(42.1 == ucCmd_get_switch_arg_f(subject, "-s2", -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_f_returns_default_value_if_argument_is_not_numeric)
-    char c[30] = "cmd argz -s1 argb -s2 4.2.1";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 4.2.1");
     uc_TRUE(-1.1 == ucCmd_get_switch_arg_f(subject, "-s2", -1.1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_b_returns_argument_as_boolean_test, const char *a, ucBool b)
     char c[35];
     sprintf(c, "cmd argz -s1 %s -s2 4.2.1", a);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse(subject, c);
     uc_TRUE(b == ucCmd_get_switch_arg_b(subject, "-s1", !b));
 uc_PASS
 uc_CASE(ucCmd_get_switch_arg_b_returns_argument_as_boolean_test, true, "true", ucBool_true)
@@ -402,7 +343,7 @@ uc_CASE(ucCmd_get_switch_arg_b_returns_argument_as_boolean_test, off, "off", ucB
 uc_TEST(ucCmd_get_switch_arg_b_returns_default_value_if_argument_is_not_boolean)
     char c[35];
     sprintf(c, "cmd argz -s1 %s -s2 4.2.1", "tru");
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse(subject, c);
     uc_TRUE(ucBool_true == ucCmd_get_switch_arg_b(subject, "-s1", ucBool_true));
     uc_TRUE(ucBool_false == ucCmd_get_switch_arg_b(subject, "-s1", ucBool_false));
 uc_PASS
@@ -410,23 +351,20 @@ uc_PASS
 uc_TEST(ucCmd_get_switch_arg_x_b_test, const char *command, const char *switch_name, int arg_index, ucBool expected)
     char c[35];
     sprintf(c, "%s", command);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse(subject, c);
     uc_TRUE(expected == ucCmd_get_switch_arg_x_b(subject, switch_name, arg_index, !expected));
 uc_PASS
 uc_CASE(ucCmd_get_switch_arg_x_b_test, yes, "do -some -thing cool yes", "-thing", 1, ucBool_true)
 uc_CASE(ucCmd_get_switch_arg_x_b_test, off, "do -some -thing cool yes off", "-thing", 2, ucBool_false)
 uc_CASE(ucCmd_get_switch_arg_x_b_test, 1, "do -some 1 -thing cool yes", "-some", 0, ucBool_true)
 
-uc_TEST(ucmdLine_get_switch_arg_x_b_returns_default_value)
-    char c[35] = "do -some -thing cool nope";
-    sprintf(c, "%s", c);
-    ucCmd_set_command(subject, parse_cmd(c));
+uc_TEST(ucCmd_get_switch_arg_x_b_returns_default_value)
+    ucCmd_parse_const(subject, "do -some -thing cool nope");
     uc_TRUE(ucBool_true == ucCmd_get_switch_arg_x_b(subject, "-thing", 1, ucBool_true));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_returns_arg_at_index)
-    char c[40] = "this -is -the command that was sent";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "this -is -the command that was sent");
     uc_TRUE(uc_STR_EQ("command", ucCmd_get_switch_arg_x(subject, "-the", 0)));
     uc_TRUE(uc_STR_EQ("that", ucCmd_get_switch_arg_x(subject, "-the", 1)));
     uc_TRUE(NULL == ucCmd_get_switch_arg_x(subject, "-the", 4));
@@ -435,7 +373,7 @@ uc_PASS
 uc_TEST(ucCmd_get_switch_arg_x_f_returns_arg_as_double, const char *command, const char *switch_name, int arg_index, double expected)
     char c[35];
     sprintf(c, "%s", command);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse(subject, c);
     uc_TRUE(expected == ucCmd_get_switch_arg_x_f(subject, switch_name, arg_index, -0.1 * expected));
 uc_PASS
 uc_CASE(ucCmd_get_switch_arg_x_f_returns_arg_as_double, 1, "parse -that 1", "-that", 0, 1.0)
@@ -443,46 +381,37 @@ uc_CASE(ucCmd_get_switch_arg_x_f_returns_arg_as_double, 50, "parse -that -or 1 a
 uc_CASE(ucCmd_get_switch_arg_x_f_returns_arg_as_double, 0_00432, "parse -that -or 1 .00432 -50", "-or", 1, 0.00432)
 
 uc_TEST(ucCmd_get_switch_arg_x_f_returns_default_value_if_arg_is_not_numeric)
-    char c[35] = "no -doubles here";
-    sprintf(c, "%s", c);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "no -doubles here");
     uc_TRUE(-2.1 == ucCmd_get_switch_arg_x_f(subject, "-doubles", 0, -2.1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_f_returns_default_value_if_arg_does_not_exist)
-    char c[35] = "no -doubles here";
-    sprintf(c, "%s", c);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "no -doubles here");
     uc_TRUE(-3.2 == ucCmd_get_switch_arg_x_f(subject, "-doubles", 1, -3.2));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_d_returns_integer_argument)
-    char c[35] = "this -should be an int 32 right?";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "this -should be an int 32 right?");
     uc_TRUE(32 == ucCmd_get_switch_arg_x_d(subject, "-should", 3, -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_d_returns_negative_argument)
-    char c[35] = "this -should be an int -32 right?";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "this -should be an int -32 right?");
     uc_TRUE(-32 == ucCmd_get_switch_arg_x_d(subject, "-should", 3, -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_d_returns_default_if_argument_doesnt_exist)
-    char c[35] = "this -should be an int 32 right?";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "this -should be an int 32 right?");
     uc_TRUE(-55 == ucCmd_get_switch_arg_x_d(subject, "-should", 5, -55));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_d_returns_default_if_argument_is_not_an_integer)
-    char c[40] = "this -should be an int 32.1 right?";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "this -should be an int 32.1 right?");
     uc_TRUE(0 == ucCmd_get_switch_arg_x_d(subject, "-should", 3, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_returns_argument_at_index)
-    char c[40] = "here are multiple arguments for test";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "here are multiple arguments for test");
     uc_TRUE(uc_STR_EQ("are", ucCmd_get_arg_x(subject, 0)));
     uc_TRUE(uc_STR_EQ("multiple", ucCmd_get_arg_x(subject, 1)));
     uc_TRUE(uc_STR_EQ("arguments", ucCmd_get_arg_x(subject, 2)));
@@ -491,8 +420,7 @@ uc_TEST(ucCmd_get_arg_x_returns_argument_at_index)
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_returns_null_if_it_doesnt_exist)
-    char c[40] = "here are multiple ";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "here are multiple ");
     uc_TRUE(NULL == ucCmd_get_arg_x(subject, 2));
     uc_TRUE(NULL == ucCmd_get_arg_x(subject, 3));
     uc_TRUE(NULL == ucCmd_get_arg_x(subject, 4));
@@ -501,62 +429,54 @@ uc_PASS
 uc_TEST(ucCmd_get_arg_b_returns_boolean_value, const char *arg, ucBool expected)
     char c[25];
     sprintf(c, "command %s", arg);
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse(subject, c);
     uc_TRUE(expected == ucCmd_get_arg_b(subject, !expected));
 uc_PASS
 uc_CASE(ucCmd_get_arg_b_returns_boolean_value, yes, "yes", ucBool_true)
 uc_CASE(ucCmd_get_arg_b_returns_boolean_value, 0, "0", ucBool_false)
 
 uc_TEST(ucCmd_get_arg_b_returns_default_value_if_arg_doesnt_exist)
-    char c[25] = "hello -true";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -true");
     uc_TRUE(ucBool_false == ucCmd_get_arg_b(subject, ucBool_false));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_b_returns_default_value_if_arg_is_not_boolean)
-    char c[25] = "hello tru";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello tru");
     uc_TRUE(ucBool_false == ucCmd_get_arg_b(subject, ucBool_false));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_integer_arg)
-    char c[25] = "hello -455";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -455");
     uc_TRUE(-455 == ucCmd_get_arg_d(subject, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_default_value_if_arg_is_not_an_integer) 
-    char c[25] = "hello -455.1";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -455.1");
     uc_TRUE(0 == ucCmd_get_arg_d(subject, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_default_value_if_arg_does_not_exist) 
-    char c[25] = "hello -s455";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -s455");
     uc_TRUE(2 == ucCmd_get_arg_d(subject, 2));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_numeric_argument)
-    char c[25] = "hello -455.4";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -455.4");
     uc_TRUE(-455.4 == ucCmd_get_arg_f(subject, -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_default_value_if_arg_is_not_numeric)
-    char c[25] = "hello -455.1.2";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -455.1.2");
     uc_TRUE(0.1 == ucCmd_get_arg_f(subject, 0.1));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_default_value_if_arg_does_not_exist)
-    char c[25] = "hello -s455.1";
-    ucCmd_set_command(subject, parse_cmd(c));
+    ucCmd_parse_const(subject, "hello -s455.1");
     uc_TRUE(2.5 == ucCmd_get_arg_f(subject, 2.5));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_b_returns_boolean_arg)
-    ucCmd_TEST_CMD(cmd yes no false true 0 off 1 on)
+    ucCmd_parse_const(subject, "cmd yes no false true 0 off 1 on");
     uc_TRUE(ucBool_true == ucCmd_get_arg_x_b(subject, 0, ucBool_false));
     uc_TRUE(ucBool_false == ucCmd_get_arg_x_b(subject, 1, ucBool_true));
     uc_TRUE(ucBool_false == ucCmd_get_arg_x_b(subject, 2, ucBool_true));
@@ -568,7 +488,7 @@ uc_TEST(ucCmd_get_arg_x_b_returns_boolean_arg)
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_b_returns_default_value_if_arg_is_not_boolean)
-    ucCmd_TEST_CMD(cmd yup nope fals truu 0.0 of 1- onn)
+    ucCmd_parse_const(subject, "cmd yup nope fals truu 0.0 of -1 onn");
     uc_TRUE(ucBool_false == ucCmd_get_arg_x_b(subject, 0, ucBool_false));
     uc_TRUE(ucBool_true == ucCmd_get_arg_x_b(subject, 1, ucBool_true));
     uc_TRUE(ucBool_true == ucCmd_get_arg_x_b(subject, 2, ucBool_true));
@@ -580,57 +500,131 @@ uc_TEST(ucCmd_get_arg_x_b_returns_default_value_if_arg_is_not_boolean)
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_b_returns_default_value_if_arg_doesnt_exist)
-    ucCmd_TEST_CMD(cmd yup nope fals truu 0.0 of 1 - onn)
+    ucCmd_parse_const(subject, "cmd yup nope fals truu 0.0 of 1 -onn");
     uc_TRUE(ucBool_false == ucCmd_get_arg_x_b(subject, 8, ucBool_false));
     uc_TRUE(ucBool_true == ucCmd_get_arg_x_b(subject, 9, ucBool_true));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_d_returns_integer_arg)
-    ucCmd_TEST_CMD(command -11 22)
+    ucCmd_parse_const(subject, "command -11 22");
     uc_TRUE(-11 == ucCmd_get_arg_x_d(subject, 0, 0));
     uc_TRUE(22 == ucCmd_get_arg_x_d(subject, 1, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_d_returns_default_value_if_arg_is_not_an_integer)
-    ucCmd_TEST_CMD(command -1.1 22a)
+    ucCmd_parse_const(subject, "command -1.1 22a");
     uc_TRUE(0 == ucCmd_get_arg_x_d(subject, 0, 0));
     uc_TRUE(-5 == ucCmd_get_arg_x_d(subject, 1, -5));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_d_returns_default_value_if_arg_does_not_exist)
-    ucCmd_TEST_CMD(command -s1 2)
+    ucCmd_parse_const(subject, "command -s1 2");
     uc_TRUE(5 == ucCmd_get_arg_x_d(subject, 0, 5));
     uc_TRUE(-5 == ucCmd_get_arg_x_d(subject, 1, -5));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_numeric_arg)
-    ucCmd_TEST_CMD(command -1.1 2.2)
+    ucCmd_parse_const(subject, "command -1.1 2.2");
     uc_TRUE(-1.1 == ucCmd_get_arg_x_f(subject, 0, 0));
     uc_TRUE(2.2 == ucCmd_get_arg_x_f(subject, 1, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_default_value_if_arg_is_not_numeric)
-    ucCmd_TEST_CMD(command -1.1.1 2.2a)
+    ucCmd_parse_const(subject, "command -1.1.1 2.2a");
     uc_TRUE(12.3 == ucCmd_get_arg_x_f(subject, 0, 12.3));
     uc_TRUE(-5 == ucCmd_get_arg_x_f(subject, 1, -5));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_default_value_if_arg_does_not_exist)
-    ucCmd_TEST_CMD(command -s1.1 2.2)
+    ucCmd_parse_const(subject, "command -s1.1 2.2");
     uc_TRUE(5 == ucCmd_get_arg_x_f(subject, 0, 5));
     uc_TRUE(-5.1 == ucCmd_get_arg_x_f(subject, 1, -5.1));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_x_returns_switch_at_index)
-    ucCmd_TEST_CMD(cmd -s1 -s2 -s3)
+    ucCmd_parse_const(subject, "cmd -s1 -s2 -s3");
     uc_TRUE(uc_STR_EQ("-s1", ucCmd_get_switch_x(subject, 0)));
     uc_TRUE(uc_STR_EQ("-s2", ucCmd_get_switch_x(subject, 1)));
     uc_TRUE(uc_STR_EQ("-s3", ucCmd_get_switch_x(subject, 2)));
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_x_returns_null_if_no_switch_exists)
-    ucCmd_TEST_CMD(cmd -s1 -s2)
+    ucCmd_parse_const(subject, "cmd -s1 -s2");
     uc_TRUE(NULL == ucCmd_get_switch_x(subject, 2));
+uc_PASS
+
+static char *set_receive_sets_value(char *buf, size_t buf_size, void *state) { 
+    return NULL;
+}
+uc_TEST(ucCmd_set_receive_sets_value)
+    ucCmd_set_receive(subject, set_receive_sets_value);
+    uc_TRUE(set_receive_sets_value == subject->receive);
+uc_PASS
+
+uc_TEST(ucCmd_set_receive_state_sets_value)
+    char *state = "the state";
+    ucCmd_set_receive_state(subject, state);
+    uc_TRUE(state == subject->receive_state);
+uc_PASS
+
+static char *listen_uses_receive_buf;
+static size_t listen_uses_receive_buf_size;
+static void *listen_uses_receive_state;
+static char *listen_uses_receive(char *buf, size_t buf_size, void *state) { 
+    strcpy(buf, "check me");
+    listen_uses_receive_buf = buf;
+    listen_uses_receive_buf_size = buf_size;
+    listen_uses_receive_state = state;
+    return buf;
+}
+uc_TEST(ucCmd_listen_uses_receive)
+    const char *cmd;
+    int state = 399;
+    ucCmd_set_receive(subject, listen_uses_receive);
+    ucCmd_set_receive_state(subject, &state);
+    cmd = ucCmd_listen(subject);
+    uc_TRUE(uc_STR_EQ("check", cmd));
+    uc_TRUE(&state == listen_uses_receive_state);
+    uc_TRUE(cmd == listen_uses_receive_buf);
+    uc_TRUE(ucCmd_get_command_length_max(subject) == listen_uses_receive_buf_size);
+uc_PASS
+
+uc_TEST(ucCmd_get_parser_returns_instance)
+    uc_TRUE(NULL != ucCmd_get_parser(subject));
+uc_PASS
+
+uc_TEST(ucCmd_parse_parses_command)
+    char c[30] = "command a -s sa";
+    ucCmd_parse(subject, c);
+    uc_TRUE(uc_STR_EQ("command", ucCmd_get_command(subject)));
+    uc_TRUE(uc_STR_EQ("a", ucCmd_get_arg(subject)));
+    uc_TRUE(uc_STR_EQ("-s", ucCmd_get_switch(subject)));
+    uc_TRUE(uc_STR_EQ("sa", ucCmd_get_switch_arg(subject, "-s")));
+uc_PASS
+
+uc_TEST(ucCmd_parse_const_parses_const_string)
+    const char *the_command = "the command";
+    ucCmd_parse_const(subject, the_command);
+    uc_TRUE(uc_STR_EQ("the", ucCmd_get_command(subject)));
+    uc_TRUE(uc_STR_EQ("command", ucCmd_get_arg(subject)));
+uc_PASS
+
+uc_TEST(ucCmd_get_command_length_max_returns_max_length)
+    uc_TRUE(ucCmd_COMMAND_SIZE == ucCmd_get_command_length_max(subject));
+uc_PASS
+
+static char *listen_parses_command(char *buf, size_t buf_size, void *state) {
+    strcpy(buf, "rx -c a");
+    return buf;
+}
+uc_TEST(ucCmd_listen_parses_command)
+    ucTok *cmd_tok;
+    ucCmd_set_receive(subject, listen_parses_command);
+    cmd_tok = ucCmd_listen(subject);
+    uc_TRUE(cmd_tok == ucCmd_get_command(subject));
+    uc_TRUE(ucTok_equals(cmd_tok, "rx"));
+    uc_TRUE(ucTok_equals(ucTok_get_next(cmd_tok), "-c"));
+    uc_TRUE(ucTok_equals(ucTok_get_next(ucTok_get_next(cmd_tok)), "a"));
 uc_PASS
 
 uc_TEST_GROUP(ucCmd, setup,
@@ -662,8 +656,14 @@ uc_TEST_GROUP(ucCmd, setup,
     ucCmd_get_arg_x_f_returns_numeric_arg,
     ucCmd_get_arg_x_f_returns_default_value_if_arg_is_not_numeric,
     ucCmd_get_arg_x_f_returns_default_value_if_arg_does_not_exist,
-    ucCmd_set_command_sets_cmd_tok,
+    ucCmd_get_command_acknowledgment_is_initially_null,
+    ucCmd_get_command_acknowledgment_returns_set_value,
     ucCmd_get_command_returns_cmd_tok,
+    ucCmd_get_command_length_max_returns_max_length,
+    ucCmd_get_parser_returns_instance,
+    ucCmd_get_response_length_max_returns_size,
+    ucCmd_get_response_terminator_is_initially_null,
+    ucCmd_get_response_terminator_returns_set_value,
     ucCmd_get_switch_arg_returns_arg_tok_of_switch,
     ucCmd_get_switch_arg_returns_null_if_arg_does_not_exist,
     ucCmd_get_switch_arg_returns_null_if_switch_does_not_exist,
@@ -680,7 +680,7 @@ uc_TEST_GROUP(ucCmd, setup,
     ucCmd_get_switch_arg_d_returns_default_value_if_argument_is_not_an_integer,
     ucCmd_get_switch_arg_f_returns_argument_as_double,
     ucCmd_get_switch_arg_f_returns_default_value_if_argument_is_not_numeric,
-    ucmdLine_get_switch_arg_x_b_returns_default_value,
+    ucCmd_get_switch_arg_x_b_returns_default_value,
     ucCmd_get_switch_arg_x_b_test_1,
     ucCmd_get_switch_arg_x_b_test_off,
     ucCmd_get_switch_arg_x_b_test_yes,
@@ -698,23 +698,21 @@ uc_TEST_GROUP(ucCmd, setup,
     ucCmd_get_switch_returns_switch_tok,
     ucCmd_get_switch_x_returns_switch_at_index,
     ucCmd_get_switch_x_returns_null_if_no_switch_exists,
-    ucCmd_set_transmit_sets_transmit,
-    ucCmd_get_transmit_returns_transmit,
-    ucCmd_respond_uses_transmit,
-    ucCmd_get_is_canceled_returns_value,
-    ucCmd_set_is_canceled_sets_value,
     ucCmd_is_canceled_calls_is_canceled,
-    ucCmd_set_transmit_state_sets_value,
-    ucCmd_get_transmit_state_gets_value,
-    ucCmd_transmit_uses_state,
-    ucCmd_set_is_canceled_state_sets_value,
-    ucCmd_get_is_canceled_state_returns_value,
     ucCmd_is_canceled_uses_state,
-    ucCmd_set_is_quiet_sets_value,
+    ucCmd_listen_parses_command,
+    ucCmd_listen_uses_receive,
+    ucCmd_parse_parses_command,
+    ucCmd_parse_const_parses_const_string,
     ucCmd_respond_does_nothing_if_is_quiet,
+    ucCmd_respond_uses_transmit,
+    ucCmd_set_command_sets_cmd_tok,
     ucCmd_set_handle_invalid_command_sets_callback,
-    ucCmd_get_response_size_max_returns_size,
-    ucCmd_get_response_terminator_is_initially_null,
-    ucCmd_get_response_terminator_returns_set_value,
-    ucCmd_get_command_acknowledgment_is_initially_null,
-    ucCmd_get_command_acknoledgment_returns_set_value)
+    ucCmd_set_is_canceled_sets_value,
+    ucCmd_set_is_canceled_state_sets_value,
+    ucCmd_set_is_quiet_sets_value,
+    ucCmd_set_receive_sets_value,
+    ucCmd_set_receive_state_sets_value,
+    ucCmd_set_transmit_sets_transmit,
+    ucCmd_set_transmit_state_sets_value,
+    ucCmd_transmit_uses_state)

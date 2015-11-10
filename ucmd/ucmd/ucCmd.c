@@ -39,10 +39,13 @@ static double get_arg_x_f(ucArgTokOwner *owner, int arg_index, double default_va
     return default_value;
 }
 
-ucCmd *ucCmd_init(ucCmd *p) {
+ucCmd *ucCmd_init(ucCmd *p, ucParser *parser) {
     assert(p);
     p->command = NULL;
     p->command_acknowledgment = NULL;
+    p->parser = parser;
+    p->receive = NULL;
+    p->receive_state = NULL;
     p->transmit = NULL;
     p->transmit_state = NULL;
     p->is_quiet = ucBool_false;
@@ -55,11 +58,44 @@ ucCmd *ucCmd_init(ucCmd *p) {
 }
 
 ucCmd *ucCmd_create(void) {
-    return ucCmd_init(ucInstance_create());
+    return ucCmd_init(ucInstance_create(), ucParser_create());
 }
 
 void ucCmd_destroy(ucCmd *p) {
-    ucInstance_destroy(p);
+    if (p) {
+        if (p->parser) {
+            ucParser_destroy(p->parser);
+        }
+        ucInstance_destroy(p);
+    }
+}
+
+char *ucCmd_get_command_buffer(ucCmd *p) {
+    assert(p);
+    return p->command_buffer;
+}
+
+int ucCmd_get_command_length_max(ucCmd *p) {
+    assert(p);
+    return (sizeof(p->command_buffer) / sizeof(p->command_buffer[0])) - 1;
+}
+
+ucParser *ucCmd_get_parser(ucCmd *p) {
+    assert(p);
+    return p->parser;
+}
+
+ucCmdTok *ucCmd_parse(ucCmd *p, char *command) {
+    ucParser *parser = ucCmd_get_parser(p);
+    ucCmdTok *cmd_tok = ucParser_parse(parser, command);
+    ucCmd_set_command(p, cmd_tok);
+    return ucCmd_get_command(p);
+}
+
+ucCmdTok *ucCmd_parse_const(ucCmd *p, const char *command) {
+    char *command_buffer = ucCmd_get_command_buffer(p);
+    strcpy(command_buffer, command);
+    return ucCmd_parse(p, command_buffer);
 }
 
 ucCmdTok *ucCmd_get_command(ucCmd *p) {
@@ -105,9 +141,19 @@ void ucCmd_set_transmit(ucCmd *p, ucCmd_TransmitFunc *value) {
     p->transmit = value;
 }
 
-ucCmd_TransmitFunc *ucCmd_get_transmit(ucCmd *p) {
+void ucCmd_set_transmit_state(ucCmd *p, void *value) {
     assert(p);
-    return p->transmit;
+    p->transmit_state = value;
+}
+
+void ucCmd_set_is_canceled(ucCmd *p, ucCmd_IsCanceledFunc *value) {
+    assert(p);
+    p->is_canceled = value;
+}
+
+void ucCmd_set_is_canceled_state(ucCmd *p, void *value) {
+    assert(p);
+    p->is_canceled_state = value;
 }
 
 ucBool ucCmd_is_canceled(ucCmd *p) {
@@ -116,36 +162,6 @@ ucBool ucCmd_is_canceled(ucCmd *p) {
         return p->is_canceled(p->is_canceled_state);
     }
     return ucBool_false;
-}
-
-void ucCmd_set_is_canceled(ucCmd *p, ucCmd_IsCanceledFunc *value) {
-    assert(p);
-    p->is_canceled = value;
-}
-
-ucCmd_IsCanceledFunc *ucCmd_get_is_canceled(ucCmd *p) {
-    assert(p);
-    return p->is_canceled;
-}
-
-void *ucCmd_get_transmit_state(ucCmd *p) {
-    assert(p);
-    return p->transmit_state;
-}
-
-void ucCmd_set_transmit_state(ucCmd *p, void *value) {
-    assert(p);
-    p->transmit_state = value;
-}
-
-void *ucCmd_get_is_canceled_state(ucCmd *p) {
-    assert(p);
-    return p->is_canceled_state;
-}
-
-void ucCmd_set_is_canceled_state(ucCmd *p, void *value) {
-    assert(p);
-    p->is_canceled_state = value;
 }
 
 void ucCmd_set_is_quiet(ucCmd *p, ucBool value) {
@@ -163,19 +179,9 @@ void ucCmd_set_handle_invalid_command(ucCmd *p, ucCmd_HandleInvalidCommandFunc *
     p->handle_invalid_command = value;
 }
 
-ucCmd_HandleInvalidCommandFunc *ucCmd_get_handle_invalid_command(ucCmd *p) {
-    assert(p);
-    return p->handle_invalid_command;
-}
-
 void ucCmd_set_handle_invalid_command_state(ucCmd *p, void *value) {
     assert(p);
     p->handle_invalid_command_state = value;
-}
-
-void *ucCmd_get_handle_invalid_command_state(ucCmd *p) {
-    assert(p);
-    return p->handle_invalid_command_state;
 }
 
 ucBool ucCmd_handle_invalid_command(ucCmd *p, const char *invalid_command) {
@@ -186,9 +192,33 @@ ucBool ucCmd_handle_invalid_command(ucCmd *p, const char *invalid_command) {
     return ucBool_false;
 }
 
-size_t ucCmd_get_response_size_max(ucCmd *p) {
+void ucCmd_set_receive(ucCmd *p, ucCmd_ReceiveFunc *value) {
     assert(p);
-    return sizeof(p->response);
+    p->receive = value;
+}
+
+void ucCmd_set_receive_state(ucCmd *p, void *value) {
+    assert(p);
+    p->receive_state = value;
+}
+
+ucCmdTok *ucCmd_listen(ucCmd *p) {
+    int i, len;
+    assert(p);
+
+    len = sizeof(p->command_buffer) / sizeof(p->command_buffer[0]);
+    for (i = 0; i < len; p->command_buffer[i++] = '\0');
+
+    if (p->receive) {
+        p->receive(p->command_buffer, len - 1, p->receive_state);
+    }
+
+    return ucCmd_parse(p, p->command_buffer);
+}
+
+int ucCmd_get_response_length_max(ucCmd *p) {
+    assert(p);
+    return sizeof(p->response) / sizeof(p->response[0]);
 }
 
 void ucCmd_set_response_terminator(ucCmd *p, const char *value) {

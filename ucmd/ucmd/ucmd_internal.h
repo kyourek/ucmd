@@ -34,9 +34,6 @@ typedef     struct ucParser                     ucParser;
 typedef     const char                          ucCmdTok;
 typedef     const char                          ucSwitchTok;
 
-            struct                              ucParser {
-            char                                placeholder; };
-
 uc_EXPORTED ucOpt*                              ucOpt_init(ucOpt*, const char *name, const char *desc, ucBool is_required);
 uc_EXPORTED void                                ucOpt_send_help(ucOpt*, ucCmd *cmd, const char *prefix);
             struct                              ucOpt {
@@ -72,9 +69,13 @@ uc_EXPORTED ucBool                              ucArgTok_contains(ucArgTok*, con
 
 uc_EXPORTED ucArgTok*                           ucArgTokOwner_get_arg(ucArgTokOwner*);
 
+typedef     ucCmdTok*                           ucParser_ParseFunc(char *command, void *state);
 uc_EXPORTED ucParser*                           ucParser_create(void);
 uc_EXPORTED void                                ucParser_destroy(ucParser *p);
-uc_EXPORTED ucCmdTok*                           ucParser_parse(ucParser*, char *cmd);
+uc_EXPORTED ucCmdTok*                           ucParser_parse(ucParser*, char *command);
+            struct                              ucParser {
+            void*                               state;
+            ucParser_ParseFunc*                 parse; };
 
 uc_EXPORTED ucArgTok*                           ucCmdTok_get_arg(ucCmdTok*);
 uc_EXPORTED ucSwitchTok*                        ucCmdTok_get_switch(ucCmdTok*);
@@ -93,15 +94,21 @@ uc_EXPORTED ucBool                              ucSwitchTok_contains(ucSwitchTok
 uc_EXPORTED ucArgTok*                           ucSwitchTok_get_arg(ucSwitchTok*);
 
 uc_EXPORTED void                                ucCmd_acknowledge_command(ucCmd*);
+uc_EXPORTED char*                               ucCmd_get_command_buffer(ucCmd*);
+uc_EXPORTED ucParser*                           ucCmd_get_parser(ucCmd*);
 uc_EXPORTED ucBool                              ucCmd_handle_invalid_command(ucCmd*, const char *invalid_command);
-uc_EXPORTED ucCmd*                              ucCmd_init(ucCmd*);
+uc_EXPORTED void                                ucCmd_set_command(ucCmd*, ucCmdTok *value);
 uc_EXPORTED void                                ucCmd_terminate_response(ucCmd*);
             struct                              ucCmd {
             ucCmdTok*                           command;
+            char                                command_buffer[ucCmd_COMMAND_SIZE + 1];
+            ucParser*                           parser;
             ucCmd_TransmitFunc*                 transmit;
+            ucCmd_ReceiveFunc*                  receive;
             ucCmd_IsCanceledFunc*               is_canceled;
             ucCmd_HandleInvalidCommandFunc*     handle_invalid_command;
             void*                               transmit_state;
+            void*                               receive_state;
             void*                               is_canceled_state;
             void*                               handle_invalid_command_state;
             const char*                         response_terminator;
@@ -122,18 +129,13 @@ uc_EXPORTED void                                ucCmdOpt_send_usage(ucCmdOpt*, u
             ucSwitchOpt*                        switch_opt;
             ucCmdOpt*                           next; };
 
-uc_EXPORTED ucParser*                           ucApp_get_cmd_parser(ucApp*);
-uc_EXPORTED ucApp*                              ucApp_init(ucApp*, ucParser*, ucCmd*);
+uc_EXPORTED ucApp*                              ucApp_init(ucApp*, ucCmd*);
 uc_EXPORTED char*                               ucApp_receive(ucApp*);
             struct                              ucApp {
             ucCmd*                              cmd;
-            ucParser*                           cmd_parser;
-            ucApp_ReceiveFunc*                  receive;
-            void*                               receive_state;
             const char*                         help_command;
             const char*                         quit_command;
-            const char*                         escape_response;            
-            char                                cmd_str[ucApp_CMD_STR_SIZE + 1]; };
+            const char*                         escape_response; };
 
 /** @brief Determines if two strings are equal.
  *  @param [in] S1 The first string to compare.

@@ -61,26 +61,6 @@ const char *ucApp_get_escape_response(ucApp *p) {
     return p->escape_response;
 }
 
-void ucApp_set_receive(ucApp *p, ucApp_ReceiveFunc *value) {
-    assert(p);
-    p->receive = value;
-}
-
-ucApp_ReceiveFunc *ucApp_get_receive(ucApp *p) {
-    assert(p);
-    return p->receive;
-}
-
-void *ucApp_get_receive_state(ucApp *p) {
-    assert(p);
-    return p->receive_state;
-}
-
-void ucApp_set_receive_state(ucApp *p, void *value) {
-    assert(p);
-    p->receive_state = value;
-}
-
 void ucApp_set_quit_command(ucApp *p, const char *value) {
     assert(p);
     p->quit_command = value;
@@ -106,17 +86,9 @@ ucCmd *ucApp_get_cmd(ucApp *p) {
     return p->cmd;
 }
 
-ucParser *ucApp_get_cmd_parser(ucApp *p) {
-    assert(p);
-    return p->cmd_parser;
-}
-
-ucApp *ucApp_init(ucApp *p, ucParser *cmd_parser, ucCmd *cmd) {
+ucApp *ucApp_init(ucApp *p, ucCmd *cmd) {
     assert(p);
     p->cmd = cmd;
-    p->cmd_parser = cmd_parser;
-    p->receive = NULL;
-    p->receive_state = NULL;
     p->help_command = "help";
     p->quit_command = "quit";
     p->escape_response = "\x1b";
@@ -126,35 +98,20 @@ ucApp *ucApp_init(ucApp *p, ucParser *cmd_parser, ucCmd *cmd) {
 ucApp *ucApp_create(void) {
     return ucApp_init(
         ucInstance_create(),
-        ucParser_create(),
         ucCmd_create());
 }
 
 void ucApp_destroy(ucApp *p) {
     if (p) {
-        ucCmd_destroy(p->cmd);
-        ucParser_destroy(p->cmd_parser);
+        if (p->cmd) {
+            ucCmd_destroy(p->cmd);
+        }
+        ucInstance_destroy(p);
     }
-    ucInstance_destroy(p);
-}
-
-char *ucApp_receive(ucApp *p) {
-    assert(p);
-    if (p->receive) {
-        return p->receive(p->cmd_str, sizeof(p->cmd_str), p->receive_state);
-    }
-    return NULL;
-}
-
-size_t ucApp_get_cmd_str_size_max(ucApp *p) {
-    assert(p);
-    return (sizeof(p->cmd_str) / sizeof(p->cmd_str[0])) - 1;
 }
 
 void ucApp_run(ucApp *p, ucCmdOpt *cmd_opt) {
-    char *command;
     const char *response;
-    ucCmdTok *cmd_tok;
     ucCmd *cmd;
     ucCmdOpt *quit_opt, *help_opt;
     HelpState HelpState_s;
@@ -180,13 +137,7 @@ void ucApp_run(ucApp *p, ucCmdOpt *cmd_opt) {
     for (;;) {
 
         /* Read the command. */
-        command = ucApp_receive(p);
-
-        /* Parse the input into a command token. */
-        cmd_tok = ucParser_parse(ucApp_get_cmd_parser(p), command);
-
-        /* Set the command's parsed command token. */
-        ucCmd_set_command(cmd, cmd_tok);
+        ucCmd_listen(cmd);
 
         /* Process the command. */
         response = ucCmdOpt_process(help_opt, cmd);

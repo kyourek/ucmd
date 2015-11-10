@@ -168,7 +168,6 @@ uc_PASS
 uc_TEST(ucCmdOpt_send_usage_responds_with_usage_string)
     const char *expected;
     ucCmd *cmd = cmd_line;
-    ucCmd_TransmitFunc *prev_transmit_func = ucCmd_get_transmit(cmd);
 
     ucCmdOpt *cmd_opt = 
         ucCmdOpt_create(NULL, NULL, "dothis", NULL,
@@ -198,13 +197,11 @@ uc_TEST(ucCmdOpt_send_usage_responds_with_usage_string)
     uc_TRUE(0 == strcmp(expected, transmit_func_one_response));
 
     ucCmdOpt_destroy_chain(cmd_opt);
-    ucCmd_set_transmit(cmd, prev_transmit_func);
 uc_PASS
 
 uc_TEST(ucCmdOpt_send_usage_uses_boolean_argument_name)
     const char *expected;
     ucCmd *cmd = cmd_line;
-    ucCmd_TransmitFunc *prev_transmit_func = ucCmd_get_transmit(cmd);
 
     ucCmdOpt *cmd_opt =
         ucCmdOpt_create(NULL, NULL, "some-action", NULL,
@@ -220,7 +217,6 @@ uc_TEST(ucCmdOpt_send_usage_uses_boolean_argument_name)
     uc_TRUE(0 == strcmp(expected, transmit_func_one_response));
 
     ucCmdOpt_destroy_chain(cmd_opt);
-    ucCmd_set_transmit(cmd, prev_transmit_func);
 uc_PASS
 
 uc_TEST(ucCmdOpt_format_validation_err_catches_required_arg)

@@ -107,7 +107,7 @@ static const char *say(ucCmd *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(ucCmd_TransmitFunc *transmit, ucApp_ReceiveFunc *receive) {
+void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
     
     /* This is the program's state object that gets
     passed to the various command functions. */
@@ -195,12 +195,12 @@ void uc_hello_world(ucCmd_TransmitFunc *transmit, ucApp_ReceiveFunc *receive) {
     responses back to the user. */
     ucCmd *cmd = ucApp_get_cmd(app);
 
-    /* Sets callback functions on the app and command
-    that allow transmission and reception of data. 
-    These callbacks will be specific to the platform
-    on which the app is running. */
+    /* Sets callback functions on the command that 
+    allow transmission and reception of data. These 
+    callbacks will be specific to the platform on 
+    which the app is running. */
+    ucCmd_set_receive(cmd, receive);
     ucCmd_set_transmit(cmd, transmit);
-    ucApp_set_receive(app, receive);
 
     /* Starts the command-line app. The app will exit
     when it receives the 'quit' command. */
