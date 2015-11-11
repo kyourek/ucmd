@@ -105,7 +105,7 @@ static const char *say(ucCmd *cmd, void *state) {
     return NULL;
 }
 
-void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
+void ucExample_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
 
     AppState app_state = { 0 };                     /* This is the program's state object that gets */
                                                     /* passed to the various command functions.     */

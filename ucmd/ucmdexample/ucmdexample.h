@@ -25,7 +25,6 @@
 
 #include    "ucmd.h"
 
-uc_EXPORTED void uc_example(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive);
-uc_EXPORTED void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive);
+uc_EXPORTED void ucExample_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive);
 
 #endif
