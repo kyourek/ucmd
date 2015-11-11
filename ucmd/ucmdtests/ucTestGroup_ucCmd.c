@@ -11,9 +11,6 @@ static void transmit_1(const char *response, void *state) {
     transmit_1_response = response;
 }
 
-static void transmit_2(const char *response, void *state) {
-}
-
 static void *is_canceled_1_state;
 static ucBool is_canceled_1_returned_value = ucBool_false;
 static ucBool is_canceled_1(void *state) {

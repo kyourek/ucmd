@@ -2,14 +2,6 @@
 
 static ucApp *subject;
 
-void *receive_1_state;
-static char *receive_1(char *buf, size_t buf_size, void *state) { 
-    receive_1_state = state;
-    return 0; 
-}
-
-static char *receive_2(char *buf, size_t buf_size, void *state) { return 0; }
-
 uc_TEST(prior)
     subject = ucApp_create();
 uc_PASS
@@ -133,7 +125,7 @@ static char *ucApp_run_sends_command_acknowledgment_receive(char *buf, size_t bu
 
 static const char *ucApp_run_sends_command_acknowledgment_value;
 static int ucApp_run_sends_command_acknowledgment_error;
-static ucApp_run_sends_command_acknowledgment_transmit(const char *response, void *state) {
+static void ucApp_run_sends_command_acknowledgment_transmit(const char *response, void *state) {
     if (1 == ucApp_run_sends_command_acknowledgment_testing) {
         if ( 0 != strcmp(ucApp_run_sends_command_acknowledgment_value, response)) {
             ucApp_run_sends_command_acknowledgment_error = 1;
@@ -198,7 +190,7 @@ uc_TEST(ucApp_set_cmd_opt_sets_value)
     uc_TRUE(cmd_opt == ucApp_get_cmd_opt(subject));
 uc_PASS
 
-static char set_banner_shows_banner_response[3][100] = { 0 };
+static char set_banner_shows_banner_response[3][100];
 static int set_banner_shows_banner_i = 0;
 static char *set_banner_shows_banner_receive(char *buf, size_t buf_size, void *state) {
     strcpy(buf, "quit\n");

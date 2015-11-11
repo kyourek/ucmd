@@ -35,7 +35,7 @@ void ucTestRunner_fail_true(ucTestRunner *p, const char *true) {
     print(p, "Not true: %s", true);
 }
 
-int ucTestRunner_run_group(ucTestRunner *p, ucTestGroup *group) {
+static int ucTestRunner_run_group(ucTestRunner *p, ucTestGroup *group) {
     int err;
     ucTestGroup_TestFunc **tests;
 
@@ -68,7 +68,6 @@ int ucTestRunner_run_group(ucTestRunner *p, ucTestGroup *group) {
 }
 
 int ucTestRunner_run(ucTestRunner *p) {
-    int err;
     ucTestGroup ***groups;
     
     assert(p);
@@ -76,7 +75,7 @@ int ucTestRunner_run(ucTestRunner *p) {
     print(p, "Running %s tests...", p->name);
 
     for (groups = p->group; *groups; groups++) {
-        err = ucTestRunner_run_group(p, **groups);
+        ucTestRunner_run_group(p, **groups);
     }
 
     print(p, "%d tests run", (p->failed_test + p->passed_test));
