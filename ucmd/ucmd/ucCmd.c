@@ -114,8 +114,7 @@ const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_l
     assert(p);
 	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
 	   TODO: There's probably a better-performing way to handle that, though. */
-	/* vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list); */
-	vsprintf(p->response_buffer, format, arg_list);
+	vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list);
 	strcpy(p->response, p->response_buffer);
     return p->response;
 }

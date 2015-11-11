@@ -64,6 +64,9 @@
 							<builder buildPath="${workspace_loc:/ucmd}/Cross ARM GCC" id="ilg.gnuarmeclipse.managedbuild.cross.builder.57188225" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.836192285" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.938695812" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.122484984" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.619382562" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.736634563" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
@@ -71,6 +74,9 @@
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.missingprototypes.214519365" name="Warn if a global function has no prototype (-Wmissing-prototypes)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.missingprototypes" useByScannerDiscovery="true" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.strictprototypes.324916785" name="Warn if a function has no arg type (-Wstrict-prototypes)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.strictprototypes" useByScannerDiscovery="true" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.badfunctioncast.1752467536" name="Warn if wrong cast  (-Wbad-function-cast)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.badfunctioncast" useByScannerDiscovery="true" value="true" valueType="boolean"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.1814676005" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1857038371" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.112836303" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler"/>
@@ -139,6 +145,7 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1969077069" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.736634563">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.438730092" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/ucmd}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.1169109979" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.c99" valueType="enumerated"/>
@@ -156,7 +163,16 @@
 					</folderInfo>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="ucmd;ilg.gnuarmeclipse.managedbuild.cross.config.lib.debug.1348238305" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/ucmd"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/ucmd/Cross ARM GCC"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="ucmd" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
+			</storageModule>
+			<storageModule moduleId="ilg.gnuarmeclipse.managedbuild.packs"/>
 		</cconfiguration>
 		<cconfiguration id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148" moduleId="org.eclipse.cdt.core.settings" name="Microsoft Visual C++">
@@ -173,7 +189,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="lib" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148" name="Microsoft Visual C++" parent="org.eclipse.cdt.msvc.lib.debug">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148" name="Microsoft Visual C++" parent="org.eclipse.cdt.msvc.lib.debug">
 					<folderInfo id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148." name="/" resourcePath="">
 						<toolChain id="org.eclipse.cdt.msvc.toolchain.lib.debug.144008665" name="Microsoft Visual C++" superClass="org.eclipse.cdt.msvc.toolchain.lib.debug">
 							<targetPlatform id="org.eclipse.cdt.msvc.targetPlatform.lib.debug.1424829000" superClass="org.eclipse.cdt.msvc.targetPlatform.lib.debug"/>
@@ -184,6 +200,10 @@
 								<option id="org.eclipse.cdt.msvc.cl.option.exceptions.1929053949" name="Enable C++ Exception Handling (/EHs)" superClass="org.eclipse.cdt.msvc.cl.option.exceptions" value="false" valueType="boolean"/>
 								<option id="org.eclipse.cdt.msvc.cl.option.rtti.1499460125" name="Enable Run-Time Type Information (/GR)" superClass="org.eclipse.cdt.msvc.cl.option.rtti" value="false" valueType="boolean"/>
 								<option id="org.eclipse.cdt.msvc.cl.option.langExtensions.1220015793" name="Enable Language Extensions (/Ze,/Za)" superClass="org.eclipse.cdt.msvc.cl.option.langExtensions" value="false" valueType="boolean"/>
+								<option id="org.eclipse.cdt.msvc.cl.option.includes.2123185170" name="Include Path (/I)" superClass="org.eclipse.cdt.msvc.cl.option.includes" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/ucmd}&quot;"/>
+								</option>
 								<inputType id="org.eclipse.cdt.msvc.cl.inputType.c.1781153531" superClass="org.eclipse.cdt.msvc.cl.inputType.c"/>
 							</tool>
 							<tool id="org.eclipse.cdt.msvc.cl.lib.debug.1885214501" name="C++ Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.lib.debug">
@@ -191,34 +211,58 @@
 								<option id="org.eclipse.cdt.msvc.cl.option.debugFormat.1105020754" name="Debug Information Format" superClass="org.eclipse.cdt.msvc.cl.option.debugFormat" value="org.eclipse.cdt.msvc.cl.option.debugFormat.complete" valueType="enumerated"/>
 							</tool>
 							<tool id="org.eclipse.cdt.msvc.rc.lib.debug.1223283960" name="Resource Compiler (rc)" superClass="org.eclipse.cdt.msvc.rc.lib.debug">
+								<option id="org.eclipse.cdt.msvc.rc.option.includes.109642622" name="Include Path (/I)" superClass="org.eclipse.cdt.msvc.rc.option.includes" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+								</option>
 								<inputType id="org.eclipse.cdt.msvc.rc.inputType.771597153" superClass="org.eclipse.cdt.msvc.rc.inputType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.msvc.link.743967119" name="Linker (link)" superClass="org.eclipse.cdt.msvc.link">
 								<option id="org.eclipse.cdt.msvc.link.option.debug.437156219" name="Generate Debug Info (/debug)" superClass="org.eclipse.cdt.msvc.link.option.debug" value="true" valueType="boolean"/>
+								<option id="org.eclipse.cdt.msvc.link.option.libpath.1504987128" name="Additional Libpath (/libpath)" superClass="org.eclipse.cdt.msvc.link.option.libpath" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/Microsoft Visual C++/ucmd}&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.msvc.link.option.libraries.1043387376" name="Libraries" superClass="org.eclipse.cdt.msvc.link.option.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="ucmd"/>
+									<listOptionValue builtIn="false" value="${workspace_loc:/ucmd/Microsoft Visual C++/ucmd.lib}"/>
+								</option>
+								<inputType id="org.eclipse.cdt.msvc.link.inputType.1490191325" superClass="org.eclipse.cdt.msvc.link.inputType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.msvc.lib.lib.debug.438490142" name="Library Manager (lib)" superClass="org.eclipse.cdt.msvc.lib.lib.debug"/>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148.1447443606" name="/" resourcePath="ucmdtests">
-						<toolChain id="org.eclipse.cdt.msvc.toolchain.lib.debug.1665658555" name="Microsoft Visual C++" superClass="org.eclipse.cdt.msvc.toolchain.lib.debug" unusedChildren="">
+					<folderInfo id="org.eclipse.cdt.msvc.lib.debug.246774653.852314148.1186325719" name="/" resourcePath="ucmdtests">
+						<toolChain id="org.eclipse.cdt.msvc.toolchain.lib.debug.709745118" name="Microsoft Visual C++" superClass="org.eclipse.cdt.msvc.toolchain.lib.debug" unusedChildren="">
 							<targetPlatform id="org.eclipse.cdt.msvc.targetPlatform.lib.debug" superClass="org.eclipse.cdt.msvc.targetPlatform.lib.debug"/>
-							<tool id="org.eclipse.cdt.msvc.cl.c.lib.debug.227941600" name="C Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.c.lib.debug.1457842787">
-								<option id="org.eclipse.cdt.msvc.cl.option.includes.1657114651" name="Include Path (/I)" superClass="org.eclipse.cdt.msvc.cl.option.includes" valueType="includePath">
+							<tool id="org.eclipse.cdt.msvc.cl.c.lib.debug.695967859" name="C Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.c.lib.debug.1457842787">
+								<option id="org.eclipse.cdt.msvc.cl.option.includes.1199126696" name="Include Path (/I)" superClass="org.eclipse.cdt.msvc.cl.option.includes" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/ucmd}&quot;"/>
 								</option>
-								<inputType id="org.eclipse.cdt.msvc.cl.inputType.c.1477632195" superClass="org.eclipse.cdt.msvc.cl.inputType.c"/>
+								<inputType id="org.eclipse.cdt.msvc.cl.inputType.c.47729954" superClass="org.eclipse.cdt.msvc.cl.inputType.c"/>
 							</tool>
-							<tool id="org.eclipse.cdt.msvc.cl.lib.debug.1201101087" name="C++ Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.lib.debug.1885214501"/>
-							<tool id="org.eclipse.cdt.msvc.rc.lib.debug.2071566565" name="Resource Compiler (rc)" superClass="org.eclipse.cdt.msvc.rc.lib.debug.1223283960">
-								<inputType id="org.eclipse.cdt.msvc.rc.inputType.836739526" superClass="org.eclipse.cdt.msvc.rc.inputType"/>
+							<tool id="org.eclipse.cdt.msvc.cl.lib.debug.839548728" name="C++ Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.lib.debug.1885214501"/>
+							<tool id="org.eclipse.cdt.msvc.rc.lib.debug.220672131" name="Resource Compiler (rc)" superClass="org.eclipse.cdt.msvc.rc.lib.debug.1223283960">
+								<option id="org.eclipse.cdt.msvc.rc.option.includes.280931921" name="Include Path (/I)" superClass="org.eclipse.cdt.msvc.rc.option.includes" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.msvc.rc.inputType.496268612" superClass="org.eclipse.cdt.msvc.rc.inputType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.msvc.link.1992265734" name="Linker (link)" superClass="org.eclipse.cdt.msvc.link.743967119"/>
-							<tool id="org.eclipse.cdt.msvc.lib.lib.debug.598213486" name="Library Manager (lib)" superClass="org.eclipse.cdt.msvc.lib.lib.debug.438490142"/>
+							<tool id="org.eclipse.cdt.msvc.link.2007675219" name="Linker (link)" superClass="org.eclipse.cdt.msvc.link.743967119"/>
+							<tool id="org.eclipse.cdt.msvc.lib.lib.debug.1954078886" name="Library Manager (lib)" superClass="org.eclipse.cdt.msvc.lib.lib.debug.438490142"/>
 						</toolChain>
 					</folderInfo>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="ucmd;org.eclipse.cdt.msvc.lib.debug.246774653" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/ucmd"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/ucmd/Microsoft Visual C++"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="ucmd" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
+			</storageModule>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848" moduleId="org.eclipse.cdt.core.settings" name="MinGW">
@@ -233,41 +277,70 @@
 					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="a" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848" name="MinGW" parent="cdt.managedbuild.config.gnu.mingw.lib.debug">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848" name="MinGW" parent="cdt.managedbuild.config.gnu.mingw.lib.debug">
 					<folderInfo id="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.lib.debug.1047421957" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.lib.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.lib.debug.1519199497" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.lib.debug"/>
 							<builder buildPath="${workspace_loc:/ucmd}/MinGW" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1616490283" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.lib.debug.759489180" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.lib.debug">
+								<option id="gnu.both.asm.option.include.paths.1103505727" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1615086623" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.lib.debug.329830247" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.lib.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.lib.debug.103642370" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.lib.debug">
-								<option id="gnu.cpp.compiler.mingw.lib.debug.option.optimization.level.1594778987" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.lib.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
-								<option id="gnu.cpp.compiler.mingw.lib.debug.option.debugging.level.452876554" name="Debug Level" superClass="gnu.cpp.compiler.mingw.lib.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.mingw.lib.debug.option.optimization.level.1594778987" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.lib.debug.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.mingw.lib.debug.option.debugging.level.452876554" name="Debug Level" superClass="gnu.cpp.compiler.mingw.lib.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.lib.debug.119982486" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.lib.debug">
-								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.lib.debug.option.optimization.level.1603070620" name="Optimization Level" superClass="gnu.c.compiler.mingw.lib.debug.option.optimization.level" valueType="enumerated"/>
-								<option id="gnu.c.compiler.mingw.lib.debug.option.debugging.level.1039853317" name="Debug Level" superClass="gnu.c.compiler.mingw.lib.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.dialect.std.566760511" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.c90" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.warnings.pedantic.1474389967" name="Pedantic (-pedantic)" superClass="gnu.c.compiler.option.warnings.pedantic" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.warnings.pedantic.error.1910692501" name="Pedantic warnings as errors (-pedantic-errors)" superClass="gnu.c.compiler.option.warnings.pedantic.error" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.warnings.extrawarn.1474255638" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.warnings.toerrors.1281664958" name="Warnings as errors (-Werror)" superClass="gnu.c.compiler.option.warnings.toerrors" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.warnings.wconversion.1120819730" name="Implicit conversion warnings (-Wconversion)" superClass="gnu.c.compiler.option.warnings.wconversion" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.misc.ansi.111141651" name="Support ANSI programs (-ansi)" superClass="gnu.c.compiler.option.misc.ansi" value="true" valueType="boolean"/>
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.lib.debug.option.optimization.level.1603070620" name="Optimization Level" superClass="gnu.c.compiler.mingw.lib.debug.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.mingw.lib.debug.option.debugging.level.1039853317" name="Debug Level" superClass="gnu.c.compiler.mingw.lib.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.566760511" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c90" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.warnings.pedantic.1474389967" name="Pedantic (-pedantic)" superClass="gnu.c.compiler.option.warnings.pedantic" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.pedantic.error.1910692501" name="Pedantic warnings as errors (-pedantic-errors)" superClass="gnu.c.compiler.option.warnings.pedantic.error" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.extrawarn.1474255638" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.toerrors.1281664958" name="Warnings as errors (-Werror)" superClass="gnu.c.compiler.option.warnings.toerrors" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.wconversion.1120819730" name="Implicit conversion warnings (-Wconversion)" superClass="gnu.c.compiler.option.warnings.wconversion" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.ansi.111141651" name="Support ANSI programs (-ansi)" superClass="gnu.c.compiler.option.misc.ansi" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.include.files.427533811" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles"/>
+								<option id="gnu.c.compiler.option.include.paths.589310797" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/ucmd}&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.300812016" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.1097632809" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.1097632809" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base">
+								<option id="gnu.c.link.option.paths.88291969" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/MinGW}&quot;"/>
+								</option>
+								<option id="gnu.c.link.option.libs.803900456" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="ucmd"/>
+								</option>
+								<option id="gnu.c.link.option.ldflags.124859092" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1846919865" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base.785260717" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base"/>
 						</toolChain>
 					</folderInfo>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="ucmd;cdt.managedbuild.config.gnu.mingw.lib.debug.775720340" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/ucmd"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/ucmd/MinGW"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="ucmd" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
+			</storageModule>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -278,6 +351,7 @@
 		<configuration configurationName="Cross ARM GCC">
 			<resource resourceType="PROJECT" workspacePath="/ucmdtests"/>
 		</configuration>
+		<configuration configurationName="MinGW"/>
 		<configuration configurationName="Microsoft Visual C++">
 			<resource resourceType="PROJECT" workspacePath="/ucmdtests"/>
 		</configuration>
@@ -288,10 +362,14 @@
 			<resource resourceType="PROJECT" workspacePath="/ucmdtests"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.msvc.lib.debug.246774653.852314148;org.eclipse.cdt.msvc.lib.debug.246774653.852314148.;org.eclipse.cdt.msvc.cl.c.lib.debug.1457842787;org.eclipse.cdt.msvc.cl.inputType.c.1781153531">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.msw.build.clScannerInfo"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848;cdt.managedbuild.config.gnu.mingw.lib.debug.775720340.2056733848.;cdt.managedbuild.tool.gnu.c.compiler.mingw.lib.debug.119982486;cdt.managedbuild.tool.gnu.c.compiler.input.300812016">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.1143082293;cdt.managedbuild.config.gnu.mingw.exe.debug.1143082293.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1666774334;cdt.managedbuild.tool.gnu.c.compiler.input.85924837">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -303,5 +381,4 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

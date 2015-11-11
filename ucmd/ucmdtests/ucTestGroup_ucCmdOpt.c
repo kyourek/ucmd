@@ -79,7 +79,7 @@ uc_TEST(ucCmdOpt_create_creates_structure)
     uc_TRUE(ucOpt_get_name((ucOpt*)arg_opt));
     uc_TRUE(ucOpt_get_desc((ucOpt*)arg_opt));
 
-    // TODO: Finish making assertions here.
+    /* TODO: Finish making assertions here. */
 
     ucCmdOpt_destroy_chain(ptr);
 uc_PASS
