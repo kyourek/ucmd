@@ -444,7 +444,7 @@ uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_integer_arg)
     ucCmd_parse_const(subject, "hello -455");
-    uc_TRUE(-455 == ucCmd_get_arg_d(subject, 0));
+    uc_TRUE(-455.0 == ucCmd_get_arg_d(subject, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_default_value_if_arg_is_not_an_integer) 
@@ -459,7 +459,7 @@ uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_numeric_argument)
     ucCmd_parse_const(subject, "hello -455.4");
-    uc_TRUE(-455.4 == ucCmd_get_arg_f(subject, -1));
+    uc_TRUE(-455.40 == ucCmd_get_arg_f(subject, -1));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_default_value_if_arg_is_not_numeric)

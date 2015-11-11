@@ -28,13 +28,13 @@ uc_PASS
 uc_TEST(ucArgOpt_get_numeric_min_returns_value)
     ucArgOpt o;
     o.numeric_min = -765.432;
-    uc_TRUE(-765.432 == ucArgOpt_get_numeric_min(&o));
+    uc_TRUE(o.numeric_min == ucArgOpt_get_numeric_min(&o));
 uc_PASS
 
 uc_TEST(ucArgOpt_get_numeric_max_returns_value)
     ucArgOpt o;
     o.numeric_max = 0.123456789;
-    uc_TRUE(0.123456789 == ucArgOpt_get_numeric_max(&o));
+    uc_TRUE(o.numeric_max == ucArgOpt_get_numeric_max(&o));
 uc_PASS
 
 uc_TEST(ucArgOpt_create_creates_arg_opt)
@@ -124,16 +124,17 @@ uc_PASS
 uc_TEST(ucArgOpt_create_numeric_creates_arg_opt)
     ucArgOpt *ptr;
     ucArgOpt a;
-    
-    ptr = ucArgOpt_create_numeric("ds", -5.678, 12.34, &a);
+    double numeric_min = -5.678;
+    double numeric_max = 12.34;
+    ptr = ucArgOpt_create_numeric("ds", numeric_min, numeric_max, &a);
     
     uc_TRUE(ucOpt_get_name((ucOpt*)ptr));
     uc_TRUE(ucOpt_get_desc((ucOpt*)ptr));
     uc_TRUE(&a == ucArgOpt_get_next(ptr));
     uc_TRUE(ucBool_false == ucOpt_is_required((ucOpt*)ptr));
     uc_TRUE(ucBool_true == ucArgOpt_is_numeric(ptr));
-    uc_TRUE(-5.678 == ucArgOpt_get_numeric_min(ptr));
-    uc_TRUE(12.34 == ucArgOpt_get_numeric_max(ptr));
+    uc_TRUE(numeric_min == ucArgOpt_get_numeric_min(ptr));
+    uc_TRUE(numeric_max == ucArgOpt_get_numeric_max(ptr));
     uc_TRUE(0 == ucArgOpt_get_min_tok_count(ptr));
     uc_TRUE(1 == ucArgOpt_get_max_tok_count(ptr));
 
@@ -143,16 +144,18 @@ uc_PASS
 uc_TEST(ucArgOpt_create_required_numeric_creates_arg_opt)
     ucArgOpt *ptr;
     ucArgOpt a;
+    double numeric_min = 100.436;
+    double numeric_max = 567.890;
     
-    ptr = ucArgOpt_create_required_numeric("REQ", 100.436, 567.890, &a);
+    ptr = ucArgOpt_create_required_numeric("REQ", numeric_min, numeric_max, &a);
     
     uc_TRUE(ucOpt_get_name((ucOpt*)ptr));
     uc_TRUE(ucOpt_get_desc((ucOpt*)ptr));
     uc_TRUE(&a == ucArgOpt_get_next(ptr));
     uc_TRUE(ucBool_true == ucOpt_is_required((ucOpt*)ptr));
     uc_TRUE(ucBool_true == ucArgOpt_is_numeric(ptr));
-    uc_TRUE(100.436 == ucArgOpt_get_numeric_min(ptr));
-    uc_TRUE(567.890 == ucArgOpt_get_numeric_max(ptr));
+    uc_TRUE(numeric_min == ucArgOpt_get_numeric_min(ptr));
+    uc_TRUE(numeric_max == ucArgOpt_get_numeric_max(ptr));
     uc_TRUE(1 == ucArgOpt_get_min_tok_count(ptr));
     uc_TRUE(1 == ucArgOpt_get_max_tok_count(ptr));
 
