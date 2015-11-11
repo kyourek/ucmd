@@ -1,6 +1,6 @@
 #include "ucmdtests.h"
 
-static ucCmd *cmd_line;
+static ucCmd *cmd;
 
 static const char *transmit_func_one_response = NULL;
 static void transmit_func_one(const char *response, void *state) {
@@ -25,12 +25,11 @@ static ucBool handle_invalid_command_1(const char *invalid_command, void *state)
 }
 
 uc_TEST(prior)
-    cmd_line = ucCmd_create();
-    assert(cmd_line);
+cmd = ucCmd_create();
 uc_PASS
 
 uc_TEST(after)
-    ucCmd_destroy(cmd_line);
+ucCmd_destroy(cmd);
 uc_PASS
 
 uc_TEST(setup)
@@ -86,15 +85,10 @@ uc_TEST(ucCmdOpt_create_creates_structure)
 uc_PASS
 
 uc_TEST(ucCmdOpt_process_calls_func)
-    ucCmd *cmd;
     ucCmdOpt *cmd_opt;
-
-    cmd = cmd_line;
     cmd_opt = ucCmdOpt_create(uart_func_two, NULL, "uart_func", "The UART function.", NULL, NULL, NULL);
     ucCmd_set_command(cmd, "uart_func\0\n");
-     
     uc_TRUE(ucCmdOpt_process(cmd_opt, cmd));
-
     ucCmdOpt_destroy_chain(cmd_opt);
 uc_PASS
 
@@ -167,7 +161,6 @@ uc_PASS
 
 uc_TEST(ucCmdOpt_send_usage_responds_with_usage_string)
     const char *expected;
-    ucCmd *cmd = cmd_line;
 
     ucCmdOpt *cmd_opt = 
         ucCmdOpt_create(NULL, NULL, "dothis", NULL,
@@ -201,7 +194,6 @@ uc_PASS
 
 uc_TEST(ucCmdOpt_send_usage_uses_boolean_argument_name)
     const char *expected;
-    ucCmd *cmd = cmd_line;
 
     ucCmdOpt *cmd_opt =
         ucCmdOpt_create(NULL, NULL, "some-action", NULL,
@@ -221,7 +213,6 @@ uc_PASS
 
 uc_TEST(ucCmdOpt_format_validation_err_catches_required_arg)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, ucArgOpt_create_required("a", NULL, NULL), NULL, NULL);
 
     ucCmd_set_command(cmd, "opt\0\n");
@@ -237,7 +228,6 @@ uc_PASS
 
 uc_TEST(ucCmdOpt_format_validation_err_catches_required_switch)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, ucSwitchOpt_create_required("-s", NULL, NULL, NULL), NULL);
 
     ucCmd_set_command(cmd, "opt\0-z\0\n");
@@ -254,7 +244,6 @@ uc_PASS
 uc_TEST(ucCmdOpt_process_handles_invalid_commands)
     int state;
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
 
     ucCmd_set_handle_invalid_command(cmd, handle_invalid_command_1);
@@ -272,26 +261,37 @@ uc_PASS
 
 uc_TEST(ucCmdOpt_process_does_not_handle_invalid_command)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
 
     ucCmd_set_handle_invalid_command(cmd, NULL);
     ucCmd_set_command(cmd, "noopt\0\n");
 
     err = ucCmdOpt_process(opt, cmd);
-    uc_TRUE(0 == strcmp(err, "Invalid: No command option found for \"noopt\""));
+    uc_TRUE(0 == strcmp(err, ucOpt_INVALID "Command 'noopt' does not exist."));
 
     ucCmdOpt_destroy_chain(opt);
 uc_PASS
 
 uc_TEST(ucCmdOpt_process_responds_correctly_if_no_work_exists)
     const char *response;
-    ucCmd *cmd = cmd_line;
     ucCmdOpt *opt = ucCmdOpt_create(NULL, NULL, "opt", NULL, NULL, NULL, NULL);
     ucCmd_set_command(cmd, "opt\0\n");
     response = ucCmdOpt_process(opt, cmd);
     uc_TRUE(0 == strcmp(response, "No work found for command \"opt\""));
 uc_PASS
+
+uc_TEST(ucCmdOpt_format_validation_err_creates_correct_message, ucCmdOpt *cmd_opt, const char *command, const char *correct_message)
+    const char *validation_err;
+    ucCmd_parse_const(cmd, command);
+    validation_err = ucCmdOpt_format_validation_err(cmd_opt, cmd);
+    ucCmdOpt_destroy(cmd_opt);
+    uc_TRUE(uc_STR_EQ(validation_err, correct_message));
+uc_PASS
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_args_are_not_required, ucCmdOpt_create(NULL, NULL, "cmd", NULL, NULL, NULL, NULL), "cmd arg", ucOpt_INVALID "Command 'cmd' requires no arguments.")
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_too_many_args_given, ucCmdOpt_create(NULL, NULL, "cmd", NULL, ucArgOpt_create("arg1", NULL, NULL), NULL, NULL), "cmd a1 a2", ucOpt_INVALID "Command 'cmd' has no option for argument 'a2'.")
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_switches_are_not_allowed, ucCmdOpt_create(NULL, NULL, "c", NULL, ucArgOpt_create("a", NULL, NULL), NULL, NULL), "c arg -switch", ucOpt_INVALID "Command 'c' requires no switches.")
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_too_many_switches_passed, ucCmdOpt_create(NULL, NULL, "c", NULL, NULL, ucSwitchOpt_create("-s1", NULL, NULL, NULL), NULL), "c -s1 -s2", ucOpt_INVALID "Command 'c' has no option for switch '-s2'.")
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_switch_is_required, ucCmdOpt_create(NULL, NULL, "c", NULL, NULL, ucSwitchOpt_create_required("-s1", NULL, NULL, NULL), NULL), "c", ucOpt_INVALID "Command 'c' requires switch '-s1'.")
 
 uc_TEST_GROUP(ucCmdOpt, setup,
     ucCmdOpt_create_creates_structure,
@@ -302,6 +302,11 @@ uc_TEST_GROUP(ucCmdOpt, setup,
     ucCmdOpt_send_usage_responds_with_usage_string,
     ucCmdOpt_format_validation_err_catches_required_arg,
     ucCmdOpt_format_validation_err_catches_required_switch,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_args_are_not_required,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_switches_are_not_allowed,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_switch_is_required,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_too_many_args_given,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_too_many_switches_passed,
     ucCmdOpt_process_handles_invalid_commands,
     ucCmdOpt_process_does_not_handle_invalid_command,
     ucCmdOpt_process_responds_correctly_if_no_work_exists,

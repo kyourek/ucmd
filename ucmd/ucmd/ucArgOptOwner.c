@@ -33,7 +33,7 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
                     switch_name)
                 : ucCmd_format_response(
                     cmd, 
-                    ucOpt_INVALID "No argument options exist for command \"%s\".", 
+                    ucOpt_INVALID "Command '%s' requires no arguments.", 
                     ucCmd_get_command(cmd));
         }
 
@@ -72,7 +72,8 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
                     arg_tok)
                 : ucCmd_format_response(
                     cmd, 
-                    ucOpt_INVALID "No option exists for argument \"%s\".", 
+                    ucOpt_INVALID "Command '%s' has no option for argument '%s'.", 
+                    ucCmd_get_command(cmd),
                     arg_tok);
         }
     }

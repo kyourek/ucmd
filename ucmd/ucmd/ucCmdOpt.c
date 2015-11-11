@@ -146,7 +146,7 @@ const char *ucCmdOpt_format_validation_err(ucCmdOpt *p, ucCmd *cmd) {
 
     if (!switch_opt) {
         if (switch_tok) {
-            return ucCmd_format_response(cmd, ucOpt_INVALID "No switch options exist for command \"%s\".", cmd_tok);
+            return ucCmd_format_response(cmd, ucOpt_INVALID "Command '%s' requires no switches.", cmd_tok);
         }
         return NULL;
     }
@@ -156,7 +156,7 @@ const char *ucCmdOpt_format_validation_err(ucCmdOpt *p, ucCmd *cmd) {
     while (next_switch_tok) {
         found_switch_opt = ucSwitchOpt_find(switch_opt, next_switch_tok);
         if (!found_switch_opt) {
-            return ucCmd_format_response(cmd, ucOpt_INVALID "No option exists for switch \"%s\".", next_switch_tok);
+            return ucCmd_format_response(cmd, ucOpt_INVALID "Command '%s' has no option for switch '%s'.", cmd_tok, next_switch_tok);
         }
         next_switch_tok = ucSwitchTok_get_next(next_switch_tok);
     }
@@ -171,7 +171,7 @@ const char *ucCmdOpt_format_validation_err(ucCmdOpt *p, ucCmd *cmd) {
 
         if (ucOpt_is_required((ucOpt*)next_switch_opt)) {
             if (!found_switch_tok) {
-                return ucCmd_format_response(cmd, ucOpt_INVALID "the switch \"%s\" is required.", switch_name);
+                return ucCmd_format_response(cmd, ucOpt_INVALID "Command '%s' requires switch '%s'.", cmd_tok, switch_name);
             }
         }
 
@@ -218,7 +218,7 @@ static const char *internal_process(ucCmdOpt *p, ucCmd *cmd, ucBool *invalid_com
     /* Check to see if the command is unknown. */
     if (!opt) return ucCmd_format_response(
         cmd, 
-        ucOpt_INVALID "No command option found for \"%s\"", 
+        ucOpt_INVALID "Command '%s' does not exist.",
         cmd_value);
 
     /* Validate the command structure against the option.
