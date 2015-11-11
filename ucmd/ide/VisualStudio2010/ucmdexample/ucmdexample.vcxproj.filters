@@ -19,9 +19,6 @@
     <ClCompile Include="..\..\..\ucmdexample\uc_hello_world.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdexample\uc_example.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ucmdexample\main.c">
       <Filter>source</Filter>
     </ClCompile>

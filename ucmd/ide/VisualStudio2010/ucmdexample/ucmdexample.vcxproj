@@ -84,7 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ucmdexample\main.c" />
-    <ClCompile Include="..\..\..\ucmdexample\uc_example.c" />
     <ClCompile Include="..\..\..\ucmdexample\uc_hello_world.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

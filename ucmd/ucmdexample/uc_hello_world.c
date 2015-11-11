@@ -3,13 +3,12 @@
 
 #define NAME_LENGTH 50
 
-struct AppState {
+typedef struct {
     char first_name[NAME_LENGTH];
     char last_name[NAME_LENGTH];
-    char full_name[NAME_LENGTH * 2 + 1];
-};
-
-typedef struct AppState AppState;
+    char full_name[NAME_LENGTH * 2 + 1]; 
+} 
+AppState;
 
 static const char *format_name(AppState *state) {
     int i, j, len_first, len_last;
@@ -68,148 +67,127 @@ static void copy_name(const char *source, char *dest) {
 
 static const char *name(ucCmd *cmd, void *state) {
     ucTok *name_arg;
-    AppState *my_state;
+    AppState *app_state;
 
-    my_state = (AppState*)state;
-    if (!my_state) return "Oops... NULL pointer!";
+    app_state = (AppState*)state;
 
     if (ucCmd_find_switch(cmd, "-first")) {
         name_arg = ucCmd_get_switch_arg(cmd, "-first");
-        copy_name(name_arg, my_state->first_name);
+        copy_name(name_arg, app_state->first_name);
     }
 
     if (ucCmd_find_switch(cmd, "-last")) {
         name_arg = ucCmd_get_switch_arg(cmd, "-last");
-        copy_name(name_arg, my_state->last_name);
+        copy_name(name_arg, app_state->last_name);
     }
 
     return ucCmd_format_response(
         cmd, 
         "Name: %s",
-        format_name(my_state)
+        format_name(app_state)
     );
 }
 
 static const char *say(ucCmd *cmd, void *state) {
     ucTok *phrase; 
-    AppState *my_state;
+    AppState *app_state;
 
     phrase = ucCmd_get_arg(cmd);
-    my_state = (struct AppState*)state;
+    app_state = (AppState*)state;
 
     ucCmd_respond(cmd, ucCmd_format_response(
         cmd,
         "%s, %s!",
         phrase,
-        format_name(my_state)
+        format_name(app_state)
     ));
 
     return NULL;
 }
 
 void uc_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *receive) {
-    
-    /* This is the program's state object that gets
-    passed to the various command functions. */
-    AppState my_state = { 0 };
 
+    AppState app_state = { 0 };                     /* This is the program's state object that gets */
+                                                    /* passed to the various command functions.     */
     ucCmdOpt *commands = 
+        ucCmdOpt_create(                            /* Create a command that calls the function     */
+            name,                                   /* 'name'. Its purpose is to set the user's     */
+                                                    /* name.                                        */
+            
+            &app_state,                             /* This pointer, to the object that maintains   */
+                                                    /* the program's state, is passed to the func-  */
+                                                    /* tion 'name' when it is called.               */
+            
+            "name",                                 /* This command is invoked when the user types  */
+                                                    /* 'name'.                                      */
+            
+            "Sets the user's name",                 /* This description of the command is shown     */
+                                                    /* when the user types 'help'.                  */
 
-        /* Creates a command 'name' that
-        calls the function 'name'. Its
-        purpose is to set the user's name. */
-        ucCmdOpt_create(
-            name,
-
-            /* This pointer to the object that maintains
-            the program's state is passed to the 'name'
-            function when it is called. */
-            &my_state,
-            "name",
-            "Sets the user's name",
-
-            /* No arguments are required (or allowed)
-            for the 'name' command, so NULL is passed
-            here. */
-            NULL,
-
-            /* Creates a switch '-first' for the 'name'
-            command. This switch is optional. */
-            ucSwitchOpt_create(
-                "-first",
-                "Sets the user's first name",
-
-                /* Creates an argument 'first-name' for the
-                '-first' switch. This argument is required
-                if the '-first' switch is used. */
-                ucArgOpt_create_required(
-                    "first-name",
-                    "The first-name of the user",
+            NULL,                                   /* No arguments are required (or allowed) for   */
+                                                    /* the command 'name', so NULL is passed here.  */
+                                                    
+            ucSwitchOpt_create(                     /* Create the switch '-first' for the command   */
+                "-first",                           /* 'name' (and gives it a description). This    */
+                "Sets the user's first name",       /* switch is optional.                          */
                 
-                /* No other arguments are required (or allowed)
-                for the '-first' switch, so NULL is passed
-                here. */    
-                NULL),
-
-            /* Another switch is created for the user's
-            last name. This switch is very similar to the
-            '-first' switch. */
-            ucSwitchOpt_create(
-                "-last",
-                "Sets the user's last name",
+                ucArgOpt_create_required(           /* Create the argument 'first-name' for the     */
+                    "first-name",                   /* switch '-first'. This argument is required   */
+                    "The first-name of the user",   /* if the switch is used.                       */
+                
+                NULL),                              /* No other arguments are required (or allowed) */
+                                                    /* for the switch '-first', so NULL is passed   */
+                                                    /* here.                                        */
+            
+            ucSwitchOpt_create(                     /* Another switch is created for the user's     */
+                "-last",                            /* last name. This switch is very similar to    */
+                "Sets the user's last name",        /* the switch '-first'.                         */
                 ucArgOpt_create_required(
                     "last-name",
                     "The last-name of the user",
                 NULL),
-
-            /* That was the last switch for the 'name' command,
-            so we pass NULL here. */
-            NULL)),
-
-        /* Creates another command called 'say'.
-        This command will say a phrase to the user. */
-        ucCmdOpt_create(
-            say,
-            &my_state,
+            
+            NULL)),                                 /* That was the last switch for the command     */
+                                                    /* 'name', so we pass NULL here.                */
+        
+        ucCmdOpt_create(                            /* Create another command called 'say'. This    */
+            say,                                    /* command will say a phrase to the user.       */
+            &app_state,
             "say",
             "Says a phrase",
-
-            /* There is only one argument supplied
-            to this command, and it is required. It
-            is the phrase to say to the user. */
-            ucArgOpt_create_required(
-                "phrase",
-                "The phrase to say",
+            
+            ucArgOpt_create_required(               /* There is only one argument supplied to this  */
+                "phrase",                           /* command, and it is required. It is the       */
+                "The phrase to say",                /* phrase to say to the user.                   */
                 NULL),
             NULL,
+        
+        NULL));                                     /* NULL is passed here to signal that there are */
+                                                    /* no more commands.                            */
 
-        /* NULL is passed here to signal that there
-        are no more commands. */
-        NULL));
+    ucApp *app = ucApp_create();                    /* Create an instance of the application type.  */
 
-    /* This ucApp instance is a singleton that
-    is available to run a command-line app. */
-    ucApp *app = ucApp_create();
+    ucCmd *cmd = ucApp_get_cmd(app);                /* Get the object used by the application that  */
+                                                    /* receives commands from the user (and sends   */
+                                                    /* responses).                                  */
+    
+    ucCmd_set_receive(cmd, receive);                /* Set callback functions on that object that   */
+    ucCmd_set_transmit(cmd, transmit);              /* allow transmission and reception of data.    */
+                                                    /* These callbacks will be specific to the      */
+                                                    /* platform on which the app is running.        */
 
-    /* Gets the ucCmd used by the app to send
-    responses back to the user. */
-    ucCmd *cmd = ucApp_get_cmd(app);
+    ucApp_set_name(                                 /* Give the application a name. This name will  */
+        app,                                        /* be displayed on the banner when the appli-   */
+        "ucmd example -- Hello, World!");           /* cation starts.                               */
+                   
 
-    /* Sets callback functions on the command that 
-    allow transmission and reception of data. These 
-    callbacks will be specific to the platform on 
-    which the app is running. */
-    ucCmd_set_receive(cmd, receive);
-    ucCmd_set_transmit(cmd, transmit);
-
-    /* Starts the command-line app. The app will exit
-    when it receives the 'quit' command. */
-    ucApp_set_name(app, "Hello, World!");
-    ucApp_set_cmd_opt(app, commands);
-    ucApp_run(app);
-
-    /* Clean up the resources that were explicitly
-    created. */
-    ucApp_destroy(app);
-    ucCmdOpt_destroy_chain(commands);
+    ucApp_set_cmd_opt(app, commands);               /* Set the command-line options (which were     */
+                                                    /* created above) that are available to the     */
+                                                    /* application.                                 */
+                                                    
+    ucApp_run(app);                                 /* Start the application. This call will return */
+                                                    /* when the 'quit' command is received.         */
+    
+    ucApp_destroy(app);                             /* Clean up the resources that were explicitly  */
+    ucCmdOpt_destroy_chain(commands);               /* created.                                     */
 }
