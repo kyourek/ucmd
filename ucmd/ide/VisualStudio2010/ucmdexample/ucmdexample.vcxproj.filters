@@ -16,10 +16,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ucmdexample\uc_hello_world.c">
+    <ClCompile Include="..\..\..\ucmdexample\main.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ucmdexample\main.c">
+    <ClCompile Include="..\..\..\ucmdexample\ucExample_hello_world.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

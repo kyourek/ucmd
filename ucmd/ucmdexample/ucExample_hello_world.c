@@ -128,7 +128,7 @@ void ucExample_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *rece
                                                     /* the command 'name', so NULL is passed here.  */
                                                     
             ucSwitchOpt_create(                     /* Create the switch '-first' for the command   */
-                "-first",                           /* 'name' (and gives it a description). This    */
+                "-first",                           /* 'name' (and give it a description). This     */
                 "Sets the user's first name",       /* switch is optional.                          */
                 
                 ucArgOpt_create_required(           /* Create the argument 'first-name' for the     */
@@ -171,7 +171,7 @@ void ucExample_hello_world(ucCmd_TransmitFunc *transmit, ucCmd_ReceiveFunc *rece
                                                     /* receives commands from the user (and sends   */
                                                     /* responses).                                  */
     
-    ucCmd_set_receive(cmd, receive);                /* Set callback functions on that object that   */
+    ucCmd_set_receive(cmd, receive);                /* Set callback functions on that object to     */
     ucCmd_set_transmit(cmd, transmit);              /* allow transmission and reception of data.    */
                                                     /* These callbacks will be specific to the      */
                                                     /* platform on which the app is running.        */
