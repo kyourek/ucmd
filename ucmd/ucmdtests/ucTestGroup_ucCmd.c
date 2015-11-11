@@ -627,11 +627,44 @@ uc_TEST(ucCmd_listen_parses_command)
     uc_TRUE(ucTok_equals(ucTok_get_next(ucTok_get_next(cmd_tok)), "a"));
 uc_PASS
 
+uc_TEST(ucCmd_parse_const_test_too_long_of_string)
+    int i;
+    char *buffer;
+    char command[ucCmd_COMMAND_SIZE + 10];
+    for (i = 0; i < ucCmd_COMMAND_SIZE + 9; i++) {
+        command[i] = 'c';
+    }
+    command[i] = '\0';
+    ucCmd_parse_const(subject, command);
+    buffer = ucCmd_get_command_buffer(subject);
+    for (i = 0; i < (ucCmd_COMMAND_SIZE - 1); i++) {
+        uc_TRUE(command[i] == buffer[i]);
+    }
+    uc_TRUE('\0' == buffer[i]);
+    uc_TRUE(ucParser_CMD_TERMINATOR == buffer[i + 1]);
+uc_PASS
+
+uc_TEST(ucCmd_format_response_test_too_long_of_string)
+    int i;
+    char response[ucCmd_RESPONSE_SIZE + 10];
+    for (i = 0; i < ucCmd_RESPONSE_SIZE + 9; i++) {
+        response[i] = 'r';
+    }
+    response[i] = '\0';
+    ucCmd_format_response(subject, "%s", response);
+    for (i = 0; i < (ucCmd_RESPONSE_SIZE - 1); i++) {
+        uc_TRUE(response[i] == subject->response[i]);
+    }
+    uc_TRUE('\0' == subject->response[i]);
+    uc_TRUE(0 == strncmp(response, subject->response, ucCmd_RESPONSE_SIZE - 1));
+uc_PASS
+
 uc_TEST_GROUP(ucCmd, setup,
     ucCmd_create_does_not_return_null,
     ucCmd_find_switch_returns_null_if_it_does_not_exist,
     ucCmd_find_switch_returns_switch_if_it_exists,
     ucCmd_format_response_sets_response_string,
+    ucCmd_format_response_test_too_long_of_string,
     ucCmd_format_response_va_sets_response_string,
     ucCmd_get_arg_returns_arg_tok,
     ucCmd_get_arg_returns_null_if_no_arg_exists,
@@ -704,6 +737,7 @@ uc_TEST_GROUP(ucCmd, setup,
     ucCmd_listen_uses_receive,
     ucCmd_parse_parses_command,
     ucCmd_parse_const_parses_const_string,
+    ucCmd_parse_const_test_too_long_of_string,
     ucCmd_respond_does_nothing_if_is_quiet,
     ucCmd_respond_uses_transmit,
     ucCmd_set_command_sets_cmd_tok,

@@ -93,9 +93,11 @@ ucCmdTok *ucCmd_parse(ucCmd *p, char *command) {
 }
 
 ucCmdTok *ucCmd_parse_const(ucCmd *p, const char *command) {
-    char *command_buffer = ucCmd_get_command_buffer(p);
-    strcpy(command_buffer, command);
-    return ucCmd_parse(p, command_buffer);
+    int length_max = ucCmd_get_command_length_max(p);
+    char *buffer = ucCmd_get_command_buffer(p);
+    strncpy(buffer, command, length_max);
+    buffer[length_max - 1] = '\0';
+    return ucCmd_parse(p, buffer);
 }
 
 ucCmdTok *ucCmd_get_command(ucCmd *p) {
