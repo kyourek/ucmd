@@ -169,7 +169,7 @@ uc_TEST(ucSwitchOpt_format_validation_error_creates_correct_error, ucSwitchOpt *
 uc_PASS
 uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_it_is_required, ucSwitchOpt_create_required("-mys", NULL, NULL, NULL), NULL, ucOpt_INVALID "Switch '-mys' is required.")
 uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_an_arg_does_not_exist, ucSwitchOpt_create("-s", NULL, NULL, NULL), "-sw\0arg\0\n", ucOpt_INVALID "Switch '-s' requires no arguments.")
-uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_an_arg_is_required, ucSwitchOpt_create("-sw", NULL, ucArgOpt_create_required("mya", NULL, NULL), NULL), "-sw\0\n", ucOpt_INVALID "Argument 'mya' is required for switch '-sw'.")
+uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_an_arg_is_required, ucSwitchOpt_create("-sw", NULL, ucArgOpt_create_required("mya", NULL, NULL), NULL), "-sw\0\n", ucOpt_INVALID "Argument 'mya' of '-sw' is required.")
 uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_too_many_args_are_passed, ucSwitchOpt_create("-w1", NULL, ucArgOpt_create("a1", NULL, NULL), NULL), "-w1\0arg1\0arg2\0\n", ucOpt_INVALID "Switch '-w1' has no option for argument 'arg2'.")
 
 uc_TEST_GROUP(ucSwitchOpt, setup,

@@ -1,15 +1,14 @@
 #include <float.h>
 #include "ucmdtests.h"
 
-static ucCmd *cmd_line;
+static ucCmd *cmd;
 
 uc_TEST(prior)
-    cmd_line = ucCmd_create();
-    assert(cmd_line);
+    cmd = ucCmd_create();
 uc_PASS
 
 uc_TEST(after)
-    ucCmd_destroy(cmd_line);
+    ucCmd_destroy(cmd);
 uc_PASS
 
 uc_TEST(setup)
@@ -215,11 +214,11 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_numeric_err)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "non-num", NULL);
     uc_TRUE(NULL != err);
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument 'non-num' is not numeric."));
 
     err = ucArgOpt_format_validation_err(a, cmd, "-2.243", NULL);
     uc_TRUE(NULL == err);
@@ -227,16 +226,25 @@ uc_TEST(ucArgOpt_format_validation_err_catches_numeric_err)
     ucArgOpt_destroy(a);
 uc_PASS
 
+uc_TEST(ucArgOpt_format_validation_err_catches_numeric_err_of_switch)
+    const char *err;
+    ucArgOpt *a = ucArgOpt_create_numeric(NULL, -DBL_MAX, DBL_MAX, NULL);
+
+    err = ucArgOpt_format_validation_err(a, cmd, "non-num", "-switch");
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument 'non-num' of '-switch' is not numeric."));
+
+    ucArgOpt_destroy(a);
+uc_PASS
+
 uc_TEST(ucArgOpt_format_validation_err_catches_out_of_range_numeric)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_numeric(NULL, -5.4, +2.1, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "-5.5", NULL);
-    uc_TRUE(NULL != err);
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument '-5.500000' is below the minimum '-5.400000'."));
 
     err = ucArgOpt_format_validation_err(a, cmd, "2.2", NULL);
-    uc_TRUE(NULL != err);
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument '2.200000' is above the maximum '2.100000'."));
 
     err = ucArgOpt_format_validation_err(a, cmd, "-5.399", NULL);
     uc_TRUE(NULL == err);
@@ -247,9 +255,21 @@ uc_TEST(ucArgOpt_format_validation_err_catches_out_of_range_numeric)
     ucArgOpt_destroy(a);
 uc_PASS
 
+uc_TEST(ucArgOpt_format_validation_err_catches_out_of_range_numeric_for_switch)
+    const char *err;
+    ucArgOpt *a = ucArgOpt_create_numeric(NULL, -5.4, +2.1, NULL);
+
+    err = ucArgOpt_format_validation_err(a, cmd, "-5.5", "-mys");
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument '-5.500000' of '-mys' is below the minimum '-5.400000'."));
+
+    err = ucArgOpt_format_validation_err(a, cmd, "2.2", "-thes");
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument '2.200000' of '-thes' is above the maximum '2.100000'."));
+
+    ucArgOpt_destroy(a);
+uc_PASS
+
 uc_TEST(ucArgOpt_format_validation_err_catches_required_arg)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("arg", NULL, NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, NULL, NULL);
@@ -263,7 +283,6 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_not_enough_tokens)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -274,7 +293,6 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_too_many_tokens)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 4, 5);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0arg4\0arg5\0arg6\0\n", NULL);
@@ -285,7 +303,6 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_allows_correct_number_of_tokens)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("arg", NULL, 3, 3);
 
     err = ucArgOpt_format_validation_err(a, cmd, "arg1\0arg2\0arg3\0\n", NULL);
@@ -296,7 +313,6 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_multiple_numbers)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple_numeric(NULL, 2, 8, -100, +100);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0" "4.789" "\0" "notnum" "\0" "91.23" "\0\n", NULL);
@@ -327,20 +343,18 @@ uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_boolean_errors)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);
 
     err = ucArgOpt_format_validation_err(a, cmd, "3" "\0\n", NULL);
-    uc_TRUE(NULL != err);
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument '3' is not boolean."));
 
-    err = ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL);
-    uc_TRUE(NULL != err);
+    err = ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", "-bs");
+    uc_TRUE(uc_STR_EQ(err, ucOpt_INVALID "Argument 'invalid' of '-bs' is not boolean."));
 
     ucArgOpt_destroy(a);
 uc_PASS
 
 #define ucArgOpt_format_validation_err_ALLOWS_BOOLEAN(VALUE)                \
-    ucCmd *cmd = cmd_line;                                              \
     ucArgOpt *a = ucArgOpt_create_boolean("b", NULL);                       \
     uc_TRUE(!ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL));   \
     uc_TRUE(!ucArgOpt_format_validation_err(a, cmd, VALUE "\0\n", NULL));   \
@@ -415,17 +429,15 @@ uc_TEST(ucArgOpt_create_integer_creates_option)
 uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_catches_integer_errors)
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
-    uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "3.1" "\0\n", NULL));
-    uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", NULL));
-    uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "-6" "\0\n", NULL));
-    uc_TRUE(NULL != ucArgOpt_format_validation_err(a, cmd, "11" "\0\n", NULL));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument '3.1' is not an integer.", ucArgOpt_format_validation_err(a, cmd, "3.1" "\0\n", NULL)));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument 'invalid' of '-ns1' is not an integer.", ucArgOpt_format_validation_err(a, cmd, "invalid" "\0\n", "-ns1")));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument '-6.000000' is below the minimum '-5.000000'.", ucArgOpt_format_validation_err(a, cmd, "-6" "\0\n", NULL)));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument '11.000000' of '-ns' is above the maximum '10.000000'.", ucArgOpt_format_validation_err(a, cmd, "11" "\0\n", "-ns")));
     ucArgOpt_destroy(a);
 uc_PASS
 
 uc_TEST(ucArgOpt_format_validation_err_allows_valid_integers)
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_integer("Enter an int", -5, 10, NULL);
     uc_TRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-5" "\0\n", NULL));
     uc_TRUE(NULL == ucArgOpt_format_validation_err(a, cmd, "-1" "\0\n", NULL));
@@ -434,28 +446,33 @@ uc_TEST(ucArgOpt_format_validation_err_allows_valid_integers)
     ucArgOpt_destroy(a);
 uc_PASS
 
+uc_TEST(ucArgOpt_format_validation_err_creates_correct_message_with_too_many_instances)
+    ucArgOpt *a = ucArgOpt_create_multiple("mult", NULL, 1, 3);
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument 'mult' has too many instances.", ucArgOpt_format_validation_err(a, cmd, "a1\0a2\0a3\0a4\0\n", NULL)));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument 'mult' of '-smult' has too many instances.", ucArgOpt_format_validation_err(a, cmd, "a1\0a2\0a3\0a4\0\n", "-smult")));
+    ucArgOpt_destroy(a);
+uc_PASS
+
+uc_TEST(ucArgOpt_format_validation_err_creates_correct_message_with_too_few_instances)
+    ucArgOpt *a = ucArgOpt_create_multiple("mult", NULL, 5, 6);
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument 'mult' has too few instances.", ucArgOpt_format_validation_err(a, cmd, "a1\0a2\0a3\0a4\0\n", NULL)));
+    uc_TRUE(uc_STR_EQ(ucOpt_INVALID "Argument 'mult' of '-smult' has too few instances.", ucArgOpt_format_validation_err(a, cmd, "a1\0a2\0a3\0a4\0\n", "-smult")));
+    ucArgOpt_destroy(a);
+uc_PASS
+
 uc_TEST_GROUP(ucArgOpt, setup,
-    ucArgOpt_is_numeric_returns_is_numeric,
-    ucArgOpt_get_numeric_min_returns_value,
-    ucArgOpt_get_numeric_max_returns_value,
     ucArgOpt_create_creates_arg_opt,
     ucArgOpt_create_required_creates_arg_opt,
     ucArgOpt_create_numeric_creates_arg_opt,
     ucArgOpt_create_required_numeric_creates_arg_opt,
     ucArgOpt_create_creates_different_instances,
-    ucArgOpt_destroy_releases_instance,
-    ucArgOpt_destroy_chain_releases_all_instances,
-    ucArgOpt_format_validation_err_catches_numeric_err,
-    ucArgOpt_format_validation_err_catches_out_of_range_numeric,
-    ucArgOpt_format_validation_err_catches_required_arg,
     ucArgOpt_create_multiple_creates_arg_opt,
     ucArgOpt_create_multiple_numeric_creates_arg_opt,
-    ucArgOpt_format_validation_err_catches_not_enough_tokens,
-    ucArgOpt_format_validation_err_catches_too_many_tokens,
-    ucArgOpt_format_validation_err_allows_correct_number_of_tokens,
-    ucArgOpt_format_validation_err_catches_multiple_numbers,
     ucArgOpt_create_boolean_creates_boolean_option,
-    ucArgOpt_format_validation_err_catches_boolean_errors,
+    ucArgOpt_create_integer_creates_option,
+    ucArgOpt_destroy_releases_instance,
+    ucArgOpt_destroy_chain_releases_all_instances,
+    ucArgOpt_format_validation_err_allows_correct_number_of_tokens,
     ucArgOpt_format_validation_err_allows_boolean_1,
     ucArgOpt_format_validation_err_allows_boolean_0,
     ucArgOpt_format_validation_err_allows_boolean_on,
@@ -464,6 +481,19 @@ uc_TEST_GROUP(ucArgOpt, setup,
     ucArgOpt_format_validation_err_allows_boolean_no,
     ucArgOpt_format_validation_err_allows_boolean_true,
     ucArgOpt_format_validation_err_allows_boolean_false,
-    ucArgOpt_create_integer_creates_option,
+    ucArgOpt_format_validation_err_allows_valid_integers,
+    ucArgOpt_format_validation_err_catches_numeric_err,
+    ucArgOpt_format_validation_err_catches_numeric_err_of_switch,
+    ucArgOpt_format_validation_err_catches_out_of_range_numeric,
+    ucArgOpt_format_validation_err_catches_out_of_range_numeric_for_switch,
+    ucArgOpt_format_validation_err_catches_required_arg,
+    ucArgOpt_format_validation_err_catches_not_enough_tokens,
+    ucArgOpt_format_validation_err_catches_too_many_tokens,
     ucArgOpt_format_validation_err_catches_integer_errors,
-    ucArgOpt_format_validation_err_allows_valid_integers)
+    ucArgOpt_format_validation_err_catches_multiple_numbers,
+    ucArgOpt_format_validation_err_catches_boolean_errors,
+    ucArgOpt_format_validation_err_creates_correct_message_with_too_few_instances,
+    ucArgOpt_format_validation_err_creates_correct_message_with_too_many_instances,
+    ucArgOpt_get_numeric_min_returns_value,
+    ucArgOpt_get_numeric_max_returns_value,
+    ucArgOpt_is_numeric_returns_is_numeric)

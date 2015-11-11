@@ -27,14 +27,8 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
 
             /* The option does NOT exist, but the token DOES, so there's an error. */
             return switch_name
-                ? ucCmd_format_response(
-                    cmd, 
-                    ucOpt_INVALID "Switch '%s' requires no arguments.", 
-                    switch_name)
-                : ucCmd_format_response(
-                    cmd, 
-                    ucOpt_INVALID "Command '%s' requires no arguments.", 
-                    ucCmd_get_command(cmd));
+                ? ucCmd_format_response(cmd, ucOpt_INVALID "Switch"  " '%s' requires no arguments.", switch_name)
+                : ucCmd_format_response(cmd, ucOpt_INVALID "Command" " '%s' requires no arguments.", ucCmd_get_command(cmd));
         }
 
         /* Neither the option nor the token exist, so no error here. */
@@ -65,16 +59,8 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
 
             /* We have remaining tokens but no arguments for them, so there's an error. */
             return switch_name
-                ? ucCmd_format_response(
-                    cmd, 
-                    ucOpt_INVALID "Switch '%s' has no option for argument '%s'.", 
-                    switch_name, 
-                    arg_tok)
-                : ucCmd_format_response(
-                    cmd, 
-                    ucOpt_INVALID "Command '%s' has no option for argument '%s'.", 
-                    ucCmd_get_command(cmd),
-                    arg_tok);
+                ? ucCmd_format_response(cmd, ucOpt_INVALID "Switch"  " '%s' has no option for argument '%s'.", switch_name, arg_tok)
+                : ucCmd_format_response(cmd, ucOpt_INVALID "Command" " '%s' has no option for argument '%s'.", ucCmd_get_command(cmd), arg_tok);
         }
     }
 

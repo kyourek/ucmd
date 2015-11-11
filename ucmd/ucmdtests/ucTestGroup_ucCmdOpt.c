@@ -288,6 +288,7 @@ uc_TEST(ucCmdOpt_format_validation_err_creates_correct_message, ucCmdOpt *cmd_op
     uc_TRUE(uc_STR_EQ(validation_err, correct_message));
 uc_PASS
 uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_args_are_not_required, ucCmdOpt_create(NULL, NULL, "cmd", NULL, NULL, NULL, NULL), "cmd arg", ucOpt_INVALID "Command 'cmd' requires no arguments.")
+uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_arg_is_required, ucCmdOpt_create(NULL, NULL, "cmd", NULL, ucArgOpt_create("unreq-arg", NULL, ucArgOpt_create_required("req-arg", NULL, NULL)), NULL, NULL), "cmd a1", ucOpt_INVALID "Argument 'req-arg' is required.")
 uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_too_many_args_given, ucCmdOpt_create(NULL, NULL, "cmd", NULL, ucArgOpt_create("arg1", NULL, NULL), NULL, NULL), "cmd a1 a2", ucOpt_INVALID "Command 'cmd' has no option for argument 'a2'.")
 uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_switches_are_not_allowed, ucCmdOpt_create(NULL, NULL, "c", NULL, ucArgOpt_create("a", NULL, NULL), NULL, NULL), "c arg -switch", ucOpt_INVALID "Command 'c' requires no switches.")
 uc_CASE(ucCmdOpt_format_validation_err_creates_correct_message, if_too_many_switches_passed, ucCmdOpt_create(NULL, NULL, "c", NULL, NULL, ucSwitchOpt_create("-s1", NULL, NULL, NULL), NULL), "c -s1 -s2", ucOpt_INVALID "Command 'c' has no option for switch '-s2'.")
@@ -302,6 +303,7 @@ uc_TEST_GROUP(ucCmdOpt, setup,
     ucCmdOpt_send_usage_responds_with_usage_string,
     ucCmdOpt_format_validation_err_catches_required_arg,
     ucCmdOpt_format_validation_err_catches_required_switch,
+    ucCmdOpt_format_validation_err_creates_correct_message_if_arg_is_required,
     ucCmdOpt_format_validation_err_creates_correct_message_if_args_are_not_required,
     ucCmdOpt_format_validation_err_creates_correct_message_if_switches_are_not_allowed,
     ucCmdOpt_format_validation_err_creates_correct_message_if_switch_is_required,
