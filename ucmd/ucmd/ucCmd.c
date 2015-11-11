@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucCmd, ucCmd_COUNT);
+ucInstance_INIT(ucCmd, ucCmd_COUNT)
 
 static ucArgTok *get_arg_x(ucArgTokOwner *owner, int arg_index) {
     ucArgTok *arg_tok = NULL;
@@ -39,7 +39,7 @@ static double get_arg_x_f(ucArgTokOwner *owner, int arg_index, double default_va
     return default_value;
 }
 
-ucCmd *ucCmd_init(ucCmd *p, ucParser *parser) {
+static ucCmd *ucCmd_init(ucCmd *p, ucParser *parser) {
     assert(p);
     p->command = NULL;
     p->command_acknowledgment = NULL;
@@ -95,7 +95,7 @@ ucCmdTok *ucCmd_parse(ucCmd *p, char *command) {
 ucCmdTok *ucCmd_parse_const(ucCmd *p, const char *command) {
     int length_max = ucCmd_get_command_length_max(p);
     char *buffer = ucCmd_get_command_buffer(p);
-    strncpy(buffer, command, length_max);
+    strncpy(buffer, command, (size_t)length_max);
     buffer[length_max - 1] = '\0';
     return ucCmd_parse(p, buffer);
 }
@@ -114,7 +114,8 @@ const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_l
     assert(p);
 	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
 	   TODO: There's probably a better-performing way to handle that, though. */
-	vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list);
+	/* vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list); */
+	vsprintf(p->response_buffer, format, arg_list);
 	strcpy(p->response, p->response_buffer);
     return p->response;
 }
@@ -205,7 +206,7 @@ void ucCmd_set_receive_state(ucCmd *p, void *value) {
 }
 
 ucCmdTok *ucCmd_listen(ucCmd *p) {
-    int i, len;
+    size_t i, len;
     assert(p);
 
     len = sizeof(p->command_buffer) / sizeof(p->command_buffer[0]);

@@ -1,6 +1,6 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucParser, ucParser_COUNT);
+ucInstance_INIT(ucParser, ucParser_COUNT)
 
 static ucBool is_char_white_space(char c) {
     return (((c >= 0x09) && (c <= 0x0D)) || (c == 0x020)) 
@@ -14,21 +14,20 @@ static char is_char_a_quote(char c) {
     return '\0';
 }
 
-static void remove_cmd_char(char *cmd, int index) {
-    char done;
+static void remove_cmd_char(char *cmd, size_t index) {
     assert(cmd);
-    done = ucParser_CMD_TERMINATOR;
-    while (cmd[index] != done) {
+    while (cmd[index] != ucParser_CMD_TERMINATOR) {
         cmd[index] = cmd[index + 1];
         index++;
     }
 }
 
 static ucCmdTok *parse(char *cmd, void* state) {
-    int i, j, len;
+    size_t i, j, len;
     char done, quote, current_quote;
 
     assert(cmd);
+    (void)state;
 
     /* Get the character that terminates the parse. */
     done = ucParser_CMD_TERMINATOR;
@@ -110,7 +109,7 @@ static ucCmdTok *parse(char *cmd, void* state) {
     return (ucCmdTok*)cmd;
 }
 
-ucParser *ucParser_init(ucParser *p) {
+static ucParser *ucParser_init(ucParser *p) {
     assert(p);
     p->parse = parse;
     p->state = NULL;

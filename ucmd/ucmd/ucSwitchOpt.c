@@ -1,6 +1,6 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucSwitchOpt, ucSwitchOpt_COUNT);
+ucInstance_INIT(ucSwitchOpt, ucSwitchOpt_COUNT)
 
 ucArgOpt *ucSwitchOpt_get_arg_opt(ucSwitchOpt *p) {
     return ucArgOptOwner_get_arg_opt((ucArgOptOwner*)p);

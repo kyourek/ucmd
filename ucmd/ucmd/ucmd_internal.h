@@ -169,7 +169,7 @@ uc_EXPORTED ucApp*                              ucApp_init(ucApp*, ucCmd*);
         TYPE inst;                                                                  \
     } ucInstance;                                                                   \
                                                                                     \
-    static ucInstance ucInstance_array[COUNT] = { 0 };                              \
+    static ucInstance ucInstance_array[COUNT];                                      \
                                                                                     \
     static TYPE *ucInstance_create(void) {                                          \
         int i;                                                                      \

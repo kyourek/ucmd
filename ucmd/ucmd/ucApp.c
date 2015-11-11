@@ -1,6 +1,6 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucApp, ucApp_COUNT);
+ucInstance_INIT(ucApp, ucApp_COUNT)
 
 typedef struct {
     ucApp *app;
@@ -14,6 +14,7 @@ typedef struct {
 static const char *quit(ucCmd *cmd, void *state) {
     QuitState *s = (QuitState*)state;
     assert(s);
+    (void)cmd;
     return ucApp_get_escape_response(s->app);
 }
 

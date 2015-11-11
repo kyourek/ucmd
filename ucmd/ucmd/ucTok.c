@@ -10,29 +10,8 @@ int ucTok_get_length(ucTok *p) {
 }
 
 ucBool ucTok_equals(ucTok *p, const char *value) {
-    int i, len;
-
     assert(p);
-
-    /* Check if these pointers are the same. */
-    if (value == p) return ucBool_true;
-
-    /* Make sure the other arg exists. */
-    if (!value) return ucBool_false;
-
-    /* Check if the string lengths are the same. */
-    len = ucTok_get_length(p);
-    if (strlen(value) != len) return ucBool_false;
-
-    /* Check for character equality. */
-    for (i = 0; i < len; i++) {
-        if (p[i] != value[i]) {
-            return ucBool_false;
-        }
-    }
-
-    /* If we got here, then the strings are equal. */
-    return ucBool_true;
+    return uc_STR_EQ(p, value);
 }
 
 ucBool ucTok_is_integer(ucTok *p) {
@@ -44,9 +23,9 @@ ucBool ucTok_is_integer(ucTok *p) {
     /* Handle empty string or just "-". */
     if (!*p) return ucBool_false;
 
-    /* Check for non-digit chars in the rest of the stirng. */
+    /* Check for non-digit chars in the rest of the string. */
     while (*p) {
-        if (!isdigit(*p)) return ucBool_false;
+        if (!isdigit((int)*p)) return ucBool_false;
         ++p;
     }
 
@@ -108,7 +87,7 @@ ucBool ucTok_is_numeric(ucTok *p) {
                 
             /* Everything else has to be a number. */
             default:
-                if (!isdigit(p[i])) return ucBool_false;
+                if (!isdigit((int)p[i])) return ucBool_false;
                 break;
         }
     }

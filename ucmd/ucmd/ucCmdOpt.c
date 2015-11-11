@@ -1,6 +1,6 @@
 #include "ucmd_internal.h"
 
-ucInstance_INIT(ucCmdOpt, ucCmdOpt_COUNT);
+ucInstance_INIT(ucCmdOpt, ucCmdOpt_COUNT)
 
 static const char *add_opt_to_usage_response(ucOpt *opt, ucCmd *cmd, const char *response) {
     static const char *required_format = "%s %s";

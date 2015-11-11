@@ -5,7 +5,7 @@ static const char *boolean_arg_name = "<boolean>";
 static const char *integer_arg_name = "<integer>";
 static const char *numeric_arg_name = "<numeric>";
 
-ucInstance_INIT(ucArgOpt, ucArgOpt_COUNT);
+ucInstance_INIT(ucArgOpt, ucArgOpt_COUNT)
 
 static ucArgOpt *create(const char *name, const char *desc, ucBool is_required, int min_tok_count, int max_tok_count, ucBool is_boolean, ucBool is_numeric, ucBool is_integer, double numeric_min, double numeric_max, ucArgOpt *next) {
     return ucArgOpt_init(
