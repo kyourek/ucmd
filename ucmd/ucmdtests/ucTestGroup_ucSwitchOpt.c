@@ -1,15 +1,14 @@
 #include <stdlib.h>
 #include "ucmdtests.h"
 
-static ucCmd *cmd_line;
+static ucCmd *cmd;
 
 uc_TEST(prior)
-    cmd_line = ucCmd_create();
-    assert(cmd_line);
+    cmd = ucCmd_create();
 uc_PASS
 
 uc_TEST(after)
-    ucCmd_destroy(cmd_line);
+    ucCmd_destroy(cmd);
 uc_PASS
 
 uc_TEST(setup)
@@ -122,7 +121,6 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_catches_required_switch)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucSwitchOpt *s = ucSwitchOpt_create_required("-s\0\n", NULL, NULL, NULL);
 
     err = ucSwitchOpt_format_validation_err(s, cmd, NULL);
@@ -136,7 +134,6 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_catches_required_arg)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_required("a", NULL, NULL);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -152,7 +149,6 @@ uc_PASS
 
 uc_TEST(ucSwitchOpt_format_validation_err_allows_multiple_arguments)
     const char *err;
-    ucCmd *cmd = cmd_line;
     ucArgOpt *a = ucArgOpt_create_multiple("a", NULL, 0, 3);
     ucSwitchOpt *s = ucSwitchOpt_create("-s", NULL, a, NULL);
 
@@ -166,6 +162,16 @@ uc_TEST(ucSwitchOpt_format_validation_err_allows_multiple_arguments)
     ucSwitchOpt_destroy(s);
 uc_PASS
 
+uc_TEST(ucSwitchOpt_format_validation_error_creates_correct_error, ucSwitchOpt *switch_opt, ucSwitchTok *switch_tok, const char *correct_error)
+    const char *switch_opt_validation_error = ucSwitchOpt_format_validation_err(switch_opt, cmd, switch_tok);
+    ucSwitchOpt_destroy(switch_opt);
+    uc_TRUE(uc_STR_EQ(correct_error, switch_opt_validation_error));
+uc_PASS
+uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_it_is_required, ucSwitchOpt_create_required("-mys", NULL, NULL, NULL), NULL, ucOpt_INVALID "Switch '-mys' is required.")
+uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_an_arg_does_not_exist, ucSwitchOpt_create("-s", NULL, NULL, NULL), "-sw\0arg\0\n", ucOpt_INVALID "Switch '-s' requires no arguments.")
+uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_an_arg_is_required, ucSwitchOpt_create("-sw", NULL, ucArgOpt_create_required("mya", NULL, NULL), NULL), "-sw\0\n", ucOpt_INVALID "Argument 'mya' is required for switch '-sw'.")
+uc_CASE(ucSwitchOpt_format_validation_error_creates_correct_error, if_too_many_args_are_passed, ucSwitchOpt_create("-w1", NULL, ucArgOpt_create("a1", NULL, NULL), NULL), "-w1\0arg1\0arg2\0\n", ucOpt_INVALID "Switch '-w1' has no option for argument 'arg2'.")
+
 uc_TEST_GROUP(ucSwitchOpt, setup,
     ucSwitchOpt_get_next_returns_next,
     ucSwitchOpt_create_creates_switch_opt,
@@ -173,6 +179,10 @@ uc_TEST_GROUP(ucSwitchOpt, setup,
     ucSwitchOpt_create_creates_different_instances,
     ucSwitchOpt_destroy_releases_instance,
     ucSwitchOpt_destroy_chain_releases_all_instances,
+    ucSwitchOpt_format_validation_err_allows_multiple_arguments,
     ucSwitchOpt_format_validation_err_catches_required_switch,
     ucSwitchOpt_format_validation_err_catches_required_arg,
-    ucSwitchOpt_format_validation_err_allows_multiple_arguments)
+    ucSwitchOpt_format_validation_error_creates_correct_error_if_an_arg_does_not_exist,
+    ucSwitchOpt_format_validation_error_creates_correct_error_if_an_arg_is_required,
+    ucSwitchOpt_format_validation_error_creates_correct_error_if_it_is_required,
+    ucSwitchOpt_format_validation_error_creates_correct_error_if_too_many_args_are_passed)

@@ -65,7 +65,7 @@ const char *ucSwitchOpt_format_validation_err(ucSwitchOpt *p, ucCmd *cmd, ucSwit
         if (!switch_tok) {
             return ucCmd_format_response(
                 cmd, 
-                ucOpt_INVALID "The switch \"%s\" is required.",
+                ucOpt_INVALID "Switch '%s' is required.",
                 ucOpt_get_name((ucOpt*)p));
         }
     }

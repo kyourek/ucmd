@@ -29,7 +29,7 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
             return switch_name
                 ? ucCmd_format_response(
                     cmd, 
-                    ucOpt_INVALID "No argument options exist for switch \"%s\".", 
+                    ucOpt_INVALID "Switch '%s' requires no arguments.", 
                     switch_name)
                 : ucCmd_format_response(
                     cmd, 
@@ -67,7 +67,7 @@ const char *ucArgOptOwner_format_validation_err(ucArgOptOwner *p, ucCmd *cmd, uc
             return switch_name
                 ? ucCmd_format_response(
                     cmd, 
-                    ucOpt_INVALID "No option exists for \"%s\" argument \"%s\".", 
+                    ucOpt_INVALID "Switch '%s' has no option for argument '%s'.", 
                     switch_name, 
                     arg_tok)
                 : ucCmd_format_response(

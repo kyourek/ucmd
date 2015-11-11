@@ -37,7 +37,7 @@ static const char *format_is_required_validation_err(ucArgOpt *p, ucCmd *cmd, uc
             return switch_name
                 ? ucCmd_format_response(
                     cmd, 
-                    ucOpt_INVALID "The argument \"%s\" is required for switch \"%s\".", 
+                    ucOpt_INVALID "Argument '%s' is required for switch '%s'.", 
                     ucOpt_get_name((ucOpt*)p), 
                     switch_name)
                 : ucCmd_format_response(
