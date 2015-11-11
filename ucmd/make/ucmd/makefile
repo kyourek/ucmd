@@ -1,8 +1,8 @@
 CC=gcc
 OUTDIR=../out/
 PROJECTDIR=../../ucmd/
-CFLAGS=-I$(PROJECTDIR)include -I$(PROJECTDIR)include_p -Wall -c
-SOURCES=$(wildcard $(PROJECTDIR)source/*.c)
+CFLAGS=-Wall -c
+SOURCES=$(wildcard $(PROJECTDIR)*.c)
 OBJECTS=$(SOURCES:.c=.o)
 LIBRARY=libucmd.a
 LIBRARYPATH=$(OUTDIR)$(LIBRARY)

@@ -2,9 +2,9 @@ CC=gcc
 OUTDIR=../out/
 UCMDDIR=../../ucmd/
 PROJECTDIR=../../ucmdtests/
-CFLAGS=-I$(PROJECTDIR)include -I$(UCMDDIR)include -I$(UCMDDIR)include_p -Wall -c
+CFLAGS=-I$(UCMDDIR) -Wall -c
 LDFLAGS=-L$(OUTDIR) -lucmd
-SOURCES=$(wildcard $(PROJECTDIR)source/*.c)
+SOURCES=$(wildcard $(PROJECTDIR)*.c)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ucmdtests
 EXECUTABLEPATH=$(OUTDIR)$(EXECUTABLE)
