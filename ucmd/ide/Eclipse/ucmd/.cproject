@@ -53,6 +53,47 @@
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
+		<cconfiguration id="org.eclipse.cdt.msvc.lib.debug.1783456786">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.eclipse.cdt.msvc.lib.debug.1783456786" moduleId="org.eclipse.cdt.core.settings" name="Microsoft_Visual_C++">
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/ucmd"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/ucmd/Microsoft_Visual_C++"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="ucmd" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="lib" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="org.eclipse.cdt.msvc.lib.debug.1783456786" name="Microsoft_Visual_C++" parent="org.eclipse.cdt.msvc.lib.debug">
+					<folderInfo id="org.eclipse.cdt.msvc.lib.debug.1783456786." name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.msvc.toolchain.lib.debug.937102733" name="Microsoft Visual C++" superClass="org.eclipse.cdt.msvc.toolchain.lib.debug">
+							<targetPlatform id="org.eclipse.cdt.msvc.targetPlatform.lib.debug.106304741" superClass="org.eclipse.cdt.msvc.targetPlatform.lib.debug"/>
+							<builder buildPath="${workspace_loc:/ucmd}/Microsoft_Visual_C++" id="org.eclipse.cdt.msvc.builder.1390381999" name="CDT Internal Builder.Microsoft_Visual_C++" superClass="org.eclipse.cdt.msvc.builder"/>
+							<tool id="org.eclipse.cdt.msvc.cl.c.lib.debug.1382360723" name="C Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.c.lib.debug">
+								<option id="org.eclipse.cdt.msvc.cl.option.optimization.632659747" superClass="org.eclipse.cdt.msvc.cl.option.optimization" value="org.eclipse.cdt.msvc.cl.option.optimization.default" valueType="enumerated"/>
+								<option id="org.eclipse.cdt.msvc.cl.option.debugFormat.1993816548" superClass="org.eclipse.cdt.msvc.cl.option.debugFormat" value="org.eclipse.cdt.msvc.cl.option.debugFormat.complete" valueType="enumerated"/>
+								<inputType id="org.eclipse.cdt.msvc.cl.inputType.c.240557875" superClass="org.eclipse.cdt.msvc.cl.inputType.c"/>
+							</tool>
+							<tool id="org.eclipse.cdt.msvc.cl.lib.debug.388222538" name="C++ Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.lib.debug">
+								<option id="org.eclipse.cdt.msvc.cl.option.optimization.1851315803" superClass="org.eclipse.cdt.msvc.cl.option.optimization" value="org.eclipse.cdt.msvc.cl.option.optimization.default" valueType="enumerated"/>
+								<option id="org.eclipse.cdt.msvc.cl.option.debugFormat.669531853" superClass="org.eclipse.cdt.msvc.cl.option.debugFormat" value="org.eclipse.cdt.msvc.cl.option.debugFormat.complete" valueType="enumerated"/>
+							</tool>
+							<tool id="org.eclipse.cdt.msvc.rc.lib.debug.278317936" name="Resource Compiler (rc)" superClass="org.eclipse.cdt.msvc.rc.lib.debug">
+								<inputType id="org.eclipse.cdt.msvc.rc.inputType.1615663731" superClass="org.eclipse.cdt.msvc.rc.inputType"/>
+							</tool>
+							<tool id="org.eclipse.cdt.msvc.link.2048466632" name="Linker (link)" superClass="org.eclipse.cdt.msvc.link">
+								<option id="org.eclipse.cdt.msvc.link.option.debug.104150521" superClass="org.eclipse.cdt.msvc.link.option.debug" value="true" valueType="boolean"/>
+							</tool>
+							<tool id="org.eclipse.cdt.msvc.lib.lib.debug.2027402172" name="Library Manager (lib)" superClass="org.eclipse.cdt.msvc.lib.lib.debug"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="ucmd.cdt.managedbuild.target.gnu.mingw.so.2081078265" name="Shared Library" projectType="cdt.managedbuild.target.gnu.mingw.so"/>
