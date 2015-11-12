@@ -314,12 +314,12 @@ uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_f_returns_argument_as_double)
     ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 42.1");
-    uc_TRUE(42.1 == ucCmd_get_switch_arg_f(subject, "-s2", -1));
+    uc_NEAR(42.1, ucCmd_get_switch_arg_f(subject, "-s2", -1), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_f_returns_default_value_if_argument_is_not_numeric)
     ucCmd_parse_const(subject, "cmd argz -s1 argb -s2 4.2.1");
-    uc_TRUE(-1.1 == ucCmd_get_switch_arg_f(subject, "-s2", -1.1));
+    uc_NEAR(-1.1, ucCmd_get_switch_arg_f(subject, "-s2", -1.1), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_b_returns_argument_as_boolean_test, const char *a, ucBool b)
@@ -379,12 +379,12 @@ uc_CASE(ucCmd_get_switch_arg_x_f_returns_arg_as_double, 0_00432, "parse -that -o
 
 uc_TEST(ucCmd_get_switch_arg_x_f_returns_default_value_if_arg_is_not_numeric)
     ucCmd_parse_const(subject, "no -doubles here");
-    uc_TRUE(-2.1 == ucCmd_get_switch_arg_x_f(subject, "-doubles", 0, -2.1));
+    uc_NEAR(-2.1, ucCmd_get_switch_arg_x_f(subject, "-doubles", 0, -2.1), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_f_returns_default_value_if_arg_does_not_exist)
     ucCmd_parse_const(subject, "no -doubles here");
-    uc_TRUE(-3.2 == ucCmd_get_switch_arg_x_f(subject, "-doubles", 1, -3.2));
+    uc_NEAR(-3.2, ucCmd_get_switch_arg_x_f(subject, "-doubles", 1, -3.2), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_arg_x_d_returns_integer_argument)
@@ -444,7 +444,7 @@ uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_integer_arg)
     ucCmd_parse_const(subject, "hello -455");
-    uc_TRUE(-455.0 == ucCmd_get_arg_d(subject, 0));
+    uc_TRUE(-455 == ucCmd_get_arg_d(subject, 0));
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_d_returns_default_value_if_arg_is_not_an_integer) 
@@ -459,17 +459,17 @@ uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_numeric_argument)
     ucCmd_parse_const(subject, "hello -455.4");
-    uc_TRUE(-455.40 == ucCmd_get_arg_f(subject, -1));
+    uc_NEAR(-455.4, ucCmd_get_arg_f(subject, -1), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_default_value_if_arg_is_not_numeric)
     ucCmd_parse_const(subject, "hello -455.1.2");
-    uc_TRUE(0.1 == ucCmd_get_arg_f(subject, 0.1));
+    uc_NEAR(0.1, ucCmd_get_arg_f(subject, 0.1), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_f_returns_default_value_if_arg_does_not_exist)
     ucCmd_parse_const(subject, "hello -s455.1");
-    uc_TRUE(2.5 == ucCmd_get_arg_f(subject, 2.5));
+    uc_NEAR(2.5, ucCmd_get_arg_f(subject, 2.5), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_b_returns_boolean_arg)
@@ -522,20 +522,20 @@ uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_numeric_arg)
     ucCmd_parse_const(subject, "command -1.1 2.2");
-    uc_TRUE(-1.1 == ucCmd_get_arg_x_f(subject, 0, 0));
-    uc_TRUE(2.2 == ucCmd_get_arg_x_f(subject, 1, 0));
+    uc_NEAR(-1.1, ucCmd_get_arg_x_f(subject, 0, 0), 0.01);
+    uc_NEAR(2.2, ucCmd_get_arg_x_f(subject, 1, 0), 0.01);
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_default_value_if_arg_is_not_numeric)
     ucCmd_parse_const(subject, "command -1.1.1 2.2a");
-    uc_TRUE(12.3 == ucCmd_get_arg_x_f(subject, 0, 12.3));
-    uc_TRUE(-5 == ucCmd_get_arg_x_f(subject, 1, -5));
+    uc_NEAR(12.3, ucCmd_get_arg_x_f(subject, 0, 12.3), 0.01);
+    uc_NEAR(-5, ucCmd_get_arg_x_f(subject, 1, -5), 0.1);
 uc_PASS
 
 uc_TEST(ucCmd_get_arg_x_f_returns_default_value_if_arg_does_not_exist)
     ucCmd_parse_const(subject, "command -s1.1 2.2");
-    uc_TRUE(5 == ucCmd_get_arg_x_f(subject, 0, 5));
-    uc_TRUE(-5.1 == ucCmd_get_arg_x_f(subject, 1, -5.1));
+    uc_NEAR(5, ucCmd_get_arg_x_f(subject, 0, 5), 0.1);
+    uc_NEAR(-5.1, ucCmd_get_arg_x_f(subject, 1, -5.1), 0.01 );
 uc_PASS
 
 uc_TEST(ucCmd_get_switch_x_returns_switch_at_index)

@@ -35,6 +35,10 @@ void ucTestRunner_fail_true(ucTestRunner *p, const char *true) {
     print(p, "Not true: %s", true);
 }
 
+void ucTestRunner_fail_near(ucTestRunner *p, const char *num_1, const char *num_2, const char *delta) {
+    print(p, "Not near: %s, %s, delta = %s", num_1, num_2, delta);
+}
+
 static int ucTestRunner_run_group(ucTestRunner *p, ucTestGroup *group) {
     int err;
     ucTestGroup_TestFunc **tests;

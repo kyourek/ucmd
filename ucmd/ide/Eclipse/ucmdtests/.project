@@ -26,9 +26,34 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>ucmdtests</name>
+			<name>include</name>
+			<type>2</type>
+			<locationURI>PARENT-3-PROJECT_LOC/ucmdtests</locationURI>
+		</link>
+		<link>
+			<name>source</name>
 			<type>2</type>
 			<locationURI>PARENT-3-PROJECT_LOC/ucmdtests</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1447337325778</id>
+			<name>include</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.h</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1447337286579</id>
+			<name>source</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
