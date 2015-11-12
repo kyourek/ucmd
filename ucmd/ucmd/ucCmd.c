@@ -124,8 +124,9 @@ const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_l
 	else if ((size_t)r >= n) {
         /* TODO: Characters were discarded and not stored. */
 	}
-	assert(sizeof(p->response) == sizeof(p->response_buffer));
-	strcpy(p->response, p->response_buffer);
+    n = sizeof(p->response);
+    strncpy(p->response, p->response_buffer, n - 1);
+    p->response[n - 1] = '\0';
     return p->response;
 }
 
