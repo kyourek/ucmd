@@ -100,6 +100,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ucmd/include}&quot;"/>
 								</option>
+								<option id="org.eclipse.cdt.msvc.cl.option.exceptions.139825486" superClass="org.eclipse.cdt.msvc.cl.option.exceptions" value="false" valueType="boolean"/>
+								<option id="org.eclipse.cdt.msvc.cl.option.rtti.1715271736" superClass="org.eclipse.cdt.msvc.cl.option.rtti" value="false" valueType="boolean"/>
+								<option id="org.eclipse.cdt.msvc.cl.option.langExtensions.1994481041" superClass="org.eclipse.cdt.msvc.cl.option.langExtensions" value="false" valueType="boolean"/>
 								<inputType id="org.eclipse.cdt.msvc.cl.inputType.c.1040332435" superClass="org.eclipse.cdt.msvc.cl.inputType.c"/>
 							</tool>
 							<tool id="org.eclipse.cdt.msvc.cl.exe.debug.1266761267" name="C++ Compiler (cl)" superClass="org.eclipse.cdt.msvc.cl.exe.debug">
@@ -117,7 +120,7 @@
 								<option id="org.eclipse.cdt.msvc.link.option.libraries.320924788" name="Libraries" superClass="org.eclipse.cdt.msvc.link.option.libraries" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="&quot;${workspace_loc:/ucmd/Microsoft_Visual_C++/ucmd.lib}&quot;"/>
 								</option>
-								<option id="org.eclipse.cdt.msvc.link.option.libpath.2119321874" superClass="org.eclipse.cdt.msvc.link.option.libpath" valueType="stringList">
+								<option id="org.eclipse.cdt.msvc.link.option.libpath.2119321874" name="Additional Libpath (/libpath)" superClass="org.eclipse.cdt.msvc.link.option.libpath" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.msvc.link.inputType.1405722624" superClass="org.eclipse.cdt.msvc.link.inputType"/>
