@@ -111,10 +111,20 @@ void ucCmd_set_command(ucCmd *p, ucCmdTok *value) {
 }
 
 const char *ucCmd_format_response_va(ucCmd *p, const char *format, va_list arg_list) {
+    int r;
+    size_t n;
     assert(p);
-	/* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
-	   TODO: There's probably a better-performing way to handle that, though. */
-	vsnprintf(p->response_buffer, sizeof(p->response_buffer) - 1, format, arg_list);
+    /* TODO: Buffer and copy were added because "usage" uses the command's response in the arg list.
+    There's probably a better-performing way to handle that, though. */
+    n = sizeof(p->response_buffer);
+	r = vsnprintf(p->response_buffer, n, format, arg_list);
+	if (r < 0) {
+	    /* TODO: An encoding error occurred. */
+	}
+	else if ((size_t)r >= n) {
+        /* TODO: Characters were discarded and not stored. */
+	}
+	assert(sizeof(p->response) == sizeof(p->response_buffer));
 	strcpy(p->response, p->response_buffer);
     return p->response;
 }
