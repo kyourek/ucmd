@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{54A75F65-D04B-4FF1-9A7D-767D19C065B2}</ProjectGuid>
+    <RootNamespace>ucmdtests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <CompileAs>CompileAsC</CompileAs>
+      <AdditionalIncludeDirectories>..\..\..\ucmd;..\..\..\ucmdtests\include;..\..\..\ucmdtests\include_p</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(OutDir)ucmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <CompileAs>CompileAsC</CompileAs>
+      <AdditionalIncludeDirectories>..\..\..\ucmd;..\..\..\ucmdtests\include;..\..\..\ucmdtests\include_p</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(OutDir)ucmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ucmd\ucmd.vcxproj">
+      <Project>{eda5ab74-9bfe-4963-b20f-f2776706917f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\ucmdtests\ucmdtests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ucmdtests\main.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOptOwner.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTokOwner.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucArgTok.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucBool.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucApp.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmd.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucParser.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucCmdTok.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchOpt.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucSwitchTok.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestRunner.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestRunner_ucmd.c" />
+    <ClCompile Include="..\..\..\ucmdtests\ucTestGroup_ucTok.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

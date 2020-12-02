@@ -4,6 +4,7 @@
 *.suo
 *.user
 .DS_Store
+.vs
 Debug
 ipch
 Release
