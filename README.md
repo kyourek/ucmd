@@ -12,7 +12,7 @@ Usage
 ========
 
 A program that requires one command with multiple arguments and switches could build it's requirements like this:
-
+```c
     ucCmdLineOpt *commands = 
         ucCmdLineOpt_create(cmd, NULL, "cmd", "A simple example command.",
             ucArgOpt_create("arg", "Help text for the command argument.",
@@ -26,7 +26,7 @@ A program that requires one command with multiple arguments and switches could b
                 NULL),
             NULL)),
         NULL);
-
+```
 `cmd` is a pointer to a function of type `ucCmdLineOpt_Func`. This function is called when the application receives the command "**cmd**". Help text is defined at the time of command/switch/argument creation, and can be seen when the application receives the command "**help**":
 
     cmd [arg] [-sw1] [s1-a1] [s1-a2] -sw2 s2-a1
@@ -42,7 +42,7 @@ Above, `-sw2` was created as a `required` switch. Therefore, if it is not suppli
 
     cmd
     Invalid switch: the switch "-sw2" is required.
-    
+
 `-sw2` also defines it's argument as required. So, if `-sw2` is supplied but its argument is not, a different error message is sent:
 
     cmd -sw2
